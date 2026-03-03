@@ -19,4 +19,8 @@ esac"
 
 ### Test działania hooka 
 
-![Test](image.png)
+![Test](commitError.png)
+
+### Pull request aktualizacja
+
+![PR](pullReq.png)
