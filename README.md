@@ -1,2 +1,3 @@
-# MDO dla grup 2.4.5 i 6.
+# MDO dla grup 1 i 3
+
 Studia stacjonarne
