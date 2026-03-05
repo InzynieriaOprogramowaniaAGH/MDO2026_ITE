@@ -99,8 +99,13 @@ Tworzenie pliku ze sprawozdaniem:
 * touch MP420244/Sprawozdanie/README.md
 
 Wysłanie pull request'a:
-* git commit -am 'MP420244: oddanie sprawozdania'
-* git push
+* git add .
+* git commit -m 'MP420244: oddanie sprawozdania'
+* git push origin MP420244
+
+Używając interfejsu GitHub'a stworzony zostaje pull request wciągnięcia zmian wprowadzonych na obecnej gałęzi do grupy 5:
+
+![Pull request](images/12.%20Pull%20request.png)
 
 Treść hook'a:
 ```
