@@ -70,8 +70,9 @@ Utowrzono skrypt commit-msg:
 ![...](img/git_hook.png)
 
 Lista poleceń:
-nano commit-msg
-cp commit-msg ../../.git/hooks/commit-msg
-chmod +x ../../.git/hooks/commit-msg
+- nano commit-msg
+- cp commit-msg ../../.git/hooks/commit-msg
+- chmod +x ../../.git/hooks/commit-msg
 
 ![...](img/Prezentacja_git_hook.png)
+
