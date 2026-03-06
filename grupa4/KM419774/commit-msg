@@ -1,0 +1,8 @@
+#!/bin/sh
+# .git/hooks/commit-msg
+
+MSG=$(cat "$1")
+if ! echo "$MSG" | grep -q "^KM419774"; then
+  echo "ERROR: Commit message must start with 'KM419774'"
+  exit 1
+fi
