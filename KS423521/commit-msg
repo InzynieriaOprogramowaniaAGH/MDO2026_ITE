@@ -1,0 +1,12 @@
+PREFIX="KS423521"
+
+MSG_FILE="$1"
+MSG=$(cat "$MSG_FILE")
+
+if [[ "$MSG" != $PREFIX* ]]; then
+  echo "Commit message must start with '$PREFIX'!"
+  echo "Your message: $MSG"
+  exit 1
+fi
+
+exit 0
