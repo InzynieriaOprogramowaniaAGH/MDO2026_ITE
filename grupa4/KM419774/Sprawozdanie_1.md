@@ -1,5 +1,17 @@
 # Sprawozdanie 1
 ## Krzysztof Mazur ITE
+
+## Środowisko
+
+Ćwiczenie wykonano w następującym środowisku:
+
+- System hosta: Windows 11
+- Maszyna wirtualna: Ubuntu Server 24.04
+- Hypervisor: VirtualBox
+- Dostęp do maszyny: SSH
+- Edytor: Windows PowerShell
+- Klient Git: Git 2.43.0
+
 ### Git oraz SSH - Instalacja i konfiguracja
 
 ![...](img/Git_init.png)
@@ -75,4 +87,5 @@ Lista poleceń:
 - chmod +x ../../.git/hooks/commit-msg
 
 ![...](img/Prezentacja_git_hook.png)
+
 
