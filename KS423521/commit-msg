@@ -1,3 +1,5 @@
+#!/bin/bash
+
 PREFIX="KS423521"
 
 MSG_FILE="$1"

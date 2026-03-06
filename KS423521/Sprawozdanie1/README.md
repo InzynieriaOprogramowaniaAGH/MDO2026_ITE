@@ -100,4 +100,8 @@ Przetestowano wcześniej napisanego Git Hook'a
 
 Stworzono odpowiednie katalogi oraz sprawozdanie.
 
-![Tworzenie Katalogów](screenshots/dirs.png)
+Dodano pliki do staging area, a następnie stworzono i wypchnięto pierwszego commita (`git commit -m "KS423521: Wykonanie zadań z laboratorium nr 1"`).
+
+Zainicjowano próbę wciągnięcia zmian do gałęzi grupowej `grupa5` poprzez utworzenie Pull Request w interfejsie GitHub.
+
+![Pull Request](screenshots/pull-request.png)
