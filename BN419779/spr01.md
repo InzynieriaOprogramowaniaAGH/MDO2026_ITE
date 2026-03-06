@@ -1,4 +1,5 @@
 # Sprawozdanie 1
+Bartłomiej Nosek 
 ---
 ### Cel ćwiczenia
 Ustawianie środowiska, stworzenie brancha i stworzenie skryptu hooka  
@@ -22,6 +23,12 @@ if [[ ! "$MESSAGE" =~ ^$ID ]]; then
     exit 1
 fi
 ```
--- nadanie uprawnień: `chmod +x commit-msg`
--- skopowianie od odpooweidniego folderu: `cp commit-msg ../.git/hooks/commit-msg`
+- nadanie uprawnień: `chmod +x commit-msg`
+- skopowianie od odpooweidniego folderu: `cp commit-msg ../.git/hooks/commit-msg`
+
+  ## Zrzuty ekranu:
+<img width="630" height="118" alt="Screenshot 2026-03-06 145548" src="https://github.com/user-attachments/assets/6da85533-fcf8-40b1-9d5e-65c852af42c5" />
+
+ <img width="621" height="384" alt="obraz" src="https://github.com/user-attachments/assets/782fb045-3879-478a-bdce-cc6303389bf1" />
+
 
