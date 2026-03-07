@@ -79,6 +79,19 @@ history Windows:
 77  cd MDO2026_ITE/
 78  ls
 79  history
+80  git status
+81  git add .
+82  git commit -m "FP422032: Napisane sprawozdanie (przed pull requestem)"
+83  git push origin FP422032
+84  git status
+85  git add .
+86  git commit -m "FP422032: Poprawa sprawozdania"
+87  git push origin FP422032
+88  git status
+89  git add .
+90  git commit -m "FP422032: Poprawa sprawozdania"
+91  git push origin FP422032
+92  history
 
 history Ubuntu:
 

@@ -46,6 +46,11 @@ Na poniższym zrzucie widać test: pierwsza próba bez indeksu została zablokow
 
 ![Test działania skryptu commit-msg i blokowanie błędnych wiadomości](images/TestHooka.png)
 
+## 6. Utworzenie Pull Requesta
+Ostatnim etapem było wystawienie Pull Requesta z mojej gałęzi `FP422032` do gałęzi grupowej `grupa5`. GitHub potwierdził możliwość automatycznego scalenia zmian.
+
+![Widok przygotowania Pull Requesta na GitHubie](images/PullRequest.png)
+
 ## Informacja o użyciu AI
 
 1. **Przekierowanie portów**:
