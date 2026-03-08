@@ -18,3 +18,6 @@
 ## 5. Hook
 
 ![hook](hook.png)
+
+## 6. Stworzenie PR
+![pr](pr.png)
