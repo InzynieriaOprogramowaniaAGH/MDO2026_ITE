@@ -1,0 +1,12 @@
+#!/bin/bash
+
+PREFIX="DS419547"
+
+COMMIT_MSG=$1
+
+if ! grep -q "^$PREFIX" "$COMMIT_MSG"; then
+	echo "Commit musi zaczynać się od $PREFIX"
+	exit 1
+fi
+
+exit 0
