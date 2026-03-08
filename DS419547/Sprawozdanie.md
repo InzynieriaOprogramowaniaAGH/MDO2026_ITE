@@ -37,3 +37,7 @@ fi
 
 exit 0
 ```
+
+## 7. Pull Request
+
+![PR](pr.png)
