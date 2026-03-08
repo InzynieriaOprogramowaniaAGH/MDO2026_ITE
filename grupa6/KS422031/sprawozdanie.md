@@ -98,3 +98,13 @@ Działanie hooka zostało sprawdzone na dwóch przykładach. W pierwszej próbie
 
 #### Poprawny commit
 ![Poprawny commit zaakceptowany przez hook](ss/1/commit_udany.png)
+
+### 4.6. Wystawienie *pull request*
+Po opublikowaniu własnej gałęzi `KS422031` utworzono *pull request* do gałęzi grupowej `grupa6`. *GitHub* potwierdził możliwość automatycznego scalenia zmian (*Able to merge*), co oznaczało brak konfliktów z gałęzią bazową.
+
+![Formularz tworzenia pull request](ss/1/pull_request.png)
+
+### 4.7. Weryfikacja statusu *pull request*
+Po utworzeniu *pull request* zweryfikowano jego status. Zgłoszenie zostało otwarte poprawnie, obejmowało dwa wykonane commity i nie zawierało konfliktów względem gałęzi bazowej.
+
+![Status utworzonego pull request](ss/1/pull_request_status.png)
