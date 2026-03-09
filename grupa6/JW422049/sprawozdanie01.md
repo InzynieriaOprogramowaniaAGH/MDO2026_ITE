@@ -93,3 +93,13 @@ Działanie hooka sprawdzono na dwóch przykładach. W pierwszej próbie wykonano
 W drugiej próbie zastosowano poprawny komunikat rozpoczynający się od `JW422049`, dzięki czemu commit został zaakceptowany.
 
 ![Poprawny commit](./ss/1/commit_ok.png)
+
+Po wykonaniu zmian własna gałąź `JW422049` została wysłana do zdalnego repozytorium.
+
+Następnie utworzono *pull request* z gałęzi `JW422049` do gałęzi grupowej `grupa6`.
+
+![Pull request](./ss/1/pull_request.png)
+
+Po utworzeniu *pull request* zweryfikowano jego status i brak konfliktów z gałęzią bazową.
+
+![Status pull request](./ss/1/pull_request_status.png)
