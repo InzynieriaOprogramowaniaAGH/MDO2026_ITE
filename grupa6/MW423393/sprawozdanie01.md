@@ -111,11 +111,31 @@ Skrypt dodano do katalogu `MW423393`, a następnie skopiowano do `.git/hooks/com
 
 ![Instalacja hooka](./SS/01/git_hook.png)
 
-Sprawdzenie działania hooka
+Sprawdzenie działania hooka.
+
 ![Test hooka](./SS/01/git_commit_test.png)
 
-Poprawny commit
+Poprawny commit.
+
 ![Poprawny commit](./SS/01/git_commit.png)
+
+Wysłanie zmian do zdalengo źródła.
+
+![Wysłanie zmian](./SS/01/git_push.png)
 
 ---
 
+## 7. Pull request
+
+Po wysłaniu zmian stworzono Pull Request z własnej gałęzi do gałęzi grupy z pomocą odpowiedniego mechanizmu na GitHubie.
+
+![Pull request](./SS/01/pull_request.png)
+
+Status utworzonego Pull Requesta.
+
+![Potwierdzenie Pull request](./SS/01/pull_request_confirm.png)
+
+Brak konfliktów merge'owania - może odbyć się automatycznie.
+Na koniec zaktualizowano sprawozdanie o brakujące kroki, utworzono nowy commit i przesłano aktualizację do zdalnego źródła.
+
+---
