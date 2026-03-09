@@ -156,3 +156,10 @@ Historia poleceń z terminala (polecenie history):
    63  git branch
    64  history
 ```
+
+
+## Aktualizacja o pull request
+Zrealizowałam ostatni punkt laboratorium - spróbowałam wciągnąć swoją gałąź do gałęzi grupowej.
+![alt text](image-7.png)
+Działanie prawdopodobnie zakończyło się sukcesem:
+![alt text](image-25.png)
