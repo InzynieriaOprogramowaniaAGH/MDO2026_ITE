@@ -117,4 +117,10 @@ Hook działa poprawnie — commit z prefiksu jest poprawnie akceptowany:
 
 ![Działający hook](img/working_hook.jpg)
 
+### Wciągnięcie gałęzi do gałęzi grupowej
+
+Utworzenie Pull Requesta z gałęzi `JSK421999` do gałęzi grupy:
+
+![Pull Request na GitHubie](img/GitHub%20PR.jpg)
+
 ---
