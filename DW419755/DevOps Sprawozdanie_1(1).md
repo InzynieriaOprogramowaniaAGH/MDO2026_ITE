@@ -27,6 +27,9 @@ Gałęzie github:
 ![][image11]  
 Git hook:  
 ![][image12]
+Push na github:
+![][image13]
+
 
 [image1]: image1.png
 [image2]: image2.png
@@ -40,3 +43,4 @@ Git hook:
 [image10]: image10.png
 [image11]: image11.png
 [image12]: image12.png
+[image13]: image13.png
