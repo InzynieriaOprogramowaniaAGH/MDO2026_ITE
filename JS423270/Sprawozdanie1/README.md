@@ -28,6 +28,7 @@
 - stworzenie skryptu <br> ![Stworzenie skryptu](img/Code_xS8JixHNrm.png)
 - przeniesienie pliku <br> ![Przeniesienie pliku](img/Code_tBQMzhoRVd.png)
 - zmiana nazwy pliku <br> ![Zmiana nazwy pliku](img/Code_WNhp2dU3PV.png)
+- otwarcie pull requesta <br> ![Otwarcie PR](img/firefox_9crmXwpphz.png)
 
 ### Zawartość skryptu:
     #!/bin/bash
