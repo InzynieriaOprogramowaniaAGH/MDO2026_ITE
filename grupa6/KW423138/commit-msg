@@ -1,6 +1,15 @@
-#!/bin/bash
+#!/bin/sh
 
-if [[ "$1" != KW423138* ]]; then
-echo "Commit message musi zaczynać się od KW423138"
-exit 1
-fi
+PREFIX="KW423138"
+COMMIT_MSG_FILE="$1"
+COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
+
+case "$COMMIT_MSG" in
+  "$PREFIX"*)
+    exit 0
+    ;;
+  *)
+    echo "Commit musi sie zaczynac od $PREFIX"
+    exit 1
+    ;;
+esac
