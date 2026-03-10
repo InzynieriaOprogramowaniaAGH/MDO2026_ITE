@@ -1,4 +1,5 @@
 ## 1. Konfiguracja Git i SSH
+
 Sklonowano repozytorium git za pomoca:
 ` git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE `
 
@@ -18,6 +19,7 @@ ssh-add ~/.ssh/id_ed25519_secure
 `git clone git@github.com:InzynieriaOprogramowaniaAGH/MDO2026_ITE.git`
 
 **Narzedzia**
+
 ![FileZilla](img/filezilla.png)
 ![VSC](img/vsc.png)
 
@@ -33,6 +35,7 @@ mkdir -p grupa4/AN420700
 ```
 
 ## 3. Git Hook
+
 Zaimplementowano skrypt `commit-msg`, ktory wymusza prefiks `AN420700`.
 
 **Kod skryptu:**
@@ -53,4 +56,5 @@ chmod +x ../../.git/hooks/commit-msg
 ```
 
 Prezentacja dzialania
+
 ![Hook](img/hook.png)
