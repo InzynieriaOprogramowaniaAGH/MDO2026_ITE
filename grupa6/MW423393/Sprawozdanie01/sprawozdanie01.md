@@ -18,72 +18,72 @@
 
 Zainstalowano klienta `git` oraz narzędzia SSH w systemie.
 
-![Instalacja Git i SSH](./SS/01/apt_install.png)
+![Instalacja Git i SSH](./SS/apt_install.png)
 
 Skonfigurowano dane użytkownika Git.
 
-![Konfiguracja Git](./SS/01/git_config.png)
+![Konfiguracja Git](./SS/git_config.png)
 
 Repozytorium przedmiotowe sklonowano przez HTTPS z użyciem Personal Access Token.
 
-![Klonowanie repozytorium przez HTTPS](./SS/01/git_clone_https.png)
+![Klonowanie repozytorium przez HTTPS](./SS/git_clone_https.png)
 
 ---
 
-## 3. SSH
+## 2. SSH
 
 Utworzono dwa klucze SSH typu `ed25519`, w tym jeden zabezpieczony hasłem.
 
-![Tworzenie kluczy SSH](./SS/01/ssh-keygen.png)
+![Tworzenie kluczy SSH](./SS/ssh-keygen.png)
 
 Dodano klucze do agenta SSH i skonfigurowano dostęp do GitHub przez SSH.
 
-![Dodanie klucza do ssh-agent](./SS/01/ssh-add.png)
+![Dodanie klucza do ssh-agent](./SS/ssh-add.png)
 
 Oba klucze publiczne zostały pomyślnie dodane do konta na GitHub-ie.
 
-![Klucze SSH na GitHub](./SS/01/SSH_keys_github.png)
+![Klucze SSH na GitHub](./SS/SSH_keys_github.png)
 
 Repozytorium sklonowano również z użyciem protokołu SSH.
 
-![Klonowanie repozytorium przez SSH](./SS/01/git_clone_ssh.png)
+![Klonowanie repozytorium przez SSH](./SS/git_clone_ssh.png)
 
 Włączono uwierzytelnianie dwuskładnikowe na koncie GitHub.
 
-![Konfiguracja 2FA](./SS/01/2FA.png)
+![Konfiguracja 2FA](./SS/2FA.png)
 
 ---
 
-## 4. Narzędzia
+## 3. Narzędzia
 
 Skonfigurowano dostęp do maszyny i repozytorium w Visual Studio Code.
 
-![VS Code Remote SSH](./SS/01/vscode.png)
+![VS Code Remote SSH](./SS/vscode.png)
 
 Skonfigurowano wymianę plików z użyciem FileZilla przez SFTP.
 
-![FileZilla SFTP](./SS/01/FileZilla.png)
-![FileZilla key](./SS/01/FileZilla_key.png)
+![FileZilla SFTP](./SS/FileZilla.png)
+![FileZilla key](./SS/FileZilla_key.png)
 
 ---
 
-## 5. Gałąź
+## 4. Gałąź
 
 Przełączono się na gałąź `main`, następnie na gałąź grupową `grupa6`.
 
-![Przełączenie na main i gałąź grupy](./SS/01/git_checkout.png)
+![Przełączenie na main i gałąź grupy](./SS/git_checkout.png)
 
 Na podstawie gałęzi grupowej utworzono własną gałąź `MW423393` i rozpoczęto na niej pracę.
 
-![Utworzenie własnej gałęzi](./SS/01/git_branch.png)
+![Utworzenie własnej gałęzi](./SS/git_branch.png)
 
 W katalogu właściwym dla grupy utworzono katalog `MW423393`.
 
-![Utworzenie katalogu](./SS/01/mkdir.png)
+![Utworzenie katalogu](./SS/mkdir.png)
 
 ---
 
-## 6. Git hook
+## 5. Git hook
 
 Przygotowano skrypt `commit-msg`, który sprawdza, czy każdy komunikat commita zaczyna się od `MW423393`.
 
@@ -105,35 +105,35 @@ case "$COMMIT_MSG" in
 esac
 ```
 
-![Treść pliku commit-msg](./SS/01/commit-msg.png)
+![Treść pliku commit-msg](./SS/commit-msg.png)
 
 Skrypt dodano do katalogu `MW423393`, a następnie skopiowano do `.git/hooks/commit-msg`, aby był uruchamiany przy każdym commicie.
 
-![Instalacja hooka](./SS/01/git_hook.png)
+![Instalacja hooka](./SS/git_hook.png)
 
 Sprawdzenie działania hooka.
 
-![Test hooka](./SS/01/git_commit_test.png)
+![Test hooka](./SS/git_commit_test.png)
 
 Poprawny commit.
 
-![Poprawny commit](./SS/01/git_commit.png)
+![Poprawny commit](./SS/git_commit.png)
 
 Wysłanie zmian do zdalengo źródła.
 
-![Wysłanie zmian](./SS/01/git_push.png)
+![Wysłanie zmian](./SS/git_push.png)
 
 ---
 
-## 7. Pull request
+## 6. Pull request
 
 Po wysłaniu zmian stworzono Pull Request z własnej gałęzi do gałęzi grupy z pomocą odpowiedniego mechanizmu na GitHubie.
 
-![Pull request](./SS/01/pull_request.png)
+![Pull request](./SS/pull_request.png)
 
 Status utworzonego Pull Requesta.
 
-![Potwierdzenie Pull request](./SS/01/pull_request_confirm.png)
+![Potwierdzenie Pull request](./SS/pull_request_confirm.png)
 
 Brak konfliktów merge'owania - może odbyć się automatycznie.
 Na koniec zaktualizowano sprawozdanie o brakujące kroki, utworzono nowy commit i przesłano aktualizację do zdalnego źródła.
