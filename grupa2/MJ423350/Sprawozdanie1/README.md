@@ -37,7 +37,6 @@ Sklonowano repozytorium w wykorzystaniem protokołu SSH:
 
 ![GitCloneSSH](./GitCloneSSH.PNG)
 
-Skonfigurowano uwierzytelnianie dwuskładnikowe na koncie GitHub:
 
 ## 2. Narzędzia:
 
