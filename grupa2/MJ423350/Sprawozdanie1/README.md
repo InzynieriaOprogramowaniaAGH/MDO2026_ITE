@@ -87,3 +87,8 @@ chmod +x commit-msg
 ```
 
 ![GitHook](./GitHook.PNG)
+
+Poprawne utworzenie Pull Requesta:
+
+![PullRequest](./PullRequest.PNG)
+![PullRequest2](./PullRequest2.PNG)
