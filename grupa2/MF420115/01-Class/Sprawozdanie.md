@@ -1,5 +1,5 @@
 Sprawozdanie: Przygotowanie stanowiska pracy – Git, SSH i Gałęzie
-Autor: dezxer (MF420115)
+Autor: Maciej Fraś 
 
 Data: 12 marca 2026 r.
 
@@ -20,7 +20,7 @@ Pierwszym krokiem była instalacja klienta Git oraz konfiguracja tożsamości u�
 ![alt text](Screenshots/instalacja_git.png)
 
 2.2 SSH – Tworzenie kluczy i zabezpieczenia
-Wygenerowano dwa klucze SSH typu ED25519 (zgodnie z wymogiem kluczy innych niż RSA).
+Wygenerowano dwa klucze SSH typu ED25519.
 
 Klucz zabezpieczony hasłem: id_ed25519_pass.
 
@@ -45,7 +45,7 @@ Wewnątrz katalogu grupy utworzono katalog osobisty: grupa2/MF420115/.
 2.5 Automatyzacja – Git Hook (commit-msg)
 Napisano skrypt w Bashu (commit-msg), który weryfikuje treść wiadomości commita. Skrypt sprawdza, czy każda wiadomość zaczyna się od identyfikatora MF420115. Jeśli warunek nie jest spełniony, commit zostaje przerwany.
 ![alt text](Screenshots/commit-msg.png)
-Skopiowanie pliku do odpowiedniego folderu i nadanie uprawnienień tak by uruchamiał się za każdym razem kiedy robisz commita
+Skopiowano pliki do odpowiedniego folderu i nadanie uprawnienień tak by uruchamiał się za każdym razem kiedy robi sie commita
 ![alt text](Screenshots/copy_chmod.png)
 3. Dokumentacja procesu i historia poleceń
 Zrzuty ekranu zostały osadzone bezpośrednio w treści sprawozdania (inline). Wszystkie pliki graficzne oraz skrypt commit-msg znajdują się w katalogu sprawozdania.
