@@ -2,8 +2,8 @@
 
 **Imię, nazwisko i numer indeksu:** Tatsiana Merzianiova TM424276  
 **Grupa:** 4  
-**Środowisko uruchomieniowe:** * Host: macOS (Apple Silicon)  
-* Maszyna Wirtualna: Ubuntu Server 24.04 ARM64 (VirtualBox)  
+**Środowisko uruchomieniowe:**  Host: macOS (Apple Silicon)  
+**Maszyna Wirtualna:** Ubuntu Server 24.04 ARM64 (VirtualBox)  
 
 
 
