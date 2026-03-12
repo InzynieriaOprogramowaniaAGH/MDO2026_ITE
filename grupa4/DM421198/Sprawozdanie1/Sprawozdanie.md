@@ -1,18 +1,21 @@
 1. Generowanie kluczy SSH
+   
 ![alt text](klucz1.png)
 ![alt text](klucz2.png)
 
-2. Dodanie klucza SSH na Github
+3. Dodanie klucza SSH na Github
 ![alt text](dodaniekl.png)
 
-3. Kolonowanie repozytorium
+4. Kolonowanie repozytorium
+   
 ![alt text](klonowanierepo.png)
 
-4. Dodanie własnego brancha
+6. Dodanie własnego brancha
 ![alt text](dodaniebrancha1.png)
 ![alt text](dodaniebrancha2.png)
 
-5. Tresc git Hooka
+7. Tresc git Hooka
+8. 
 ![alt text](hook2.png)
 
 ![alt text](hook1.png)
