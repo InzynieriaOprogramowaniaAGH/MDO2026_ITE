@@ -44,14 +44,19 @@ Wewnątrz katalogu grupy utworzono katalog osobisty: grupa2/MF420115/.
 
 2.5 Automatyzacja – Git Hook (commit-msg)
 Napisano skrypt w Bashu (commit-msg), który weryfikuje treść wiadomości commita. Skrypt sprawdza, czy każda wiadomość zaczyna się od identyfikatora MF420115. Jeśli warunek nie jest spełniony, commit zostaje przerwany.
+
 ![alt text](Screenshots/commit-msg.png)
+
 Skopiowano pliki do odpowiedniego folderu i nadanie uprawnienień tak by uruchamiał się za każdym razem kiedy robi sie commita
+
 ![alt text](Screenshots/copy_chmod.png)
+
 3. Dokumentacja procesu i historia poleceń
 Zrzuty ekranu zostały osadzone bezpośrednio w treści sprawozdania (inline). Wszystkie pliki graficzne oraz skrypt commit-msg znajdują się w katalogu sprawozdania.
 
 Listing historii poleceń (Bash):
-   1  git clone https://github.com/uzytkownik/repo-przedmiotowe.git
+
+    1  git clone https://github.com/uzytkownik/repo-przedmiotowe.git
     2  git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
     3  cd ~/MDO2026_ITE
     4  git fetch origin
@@ -95,5 +100,6 @@ Listing historii poleceń (Bash):
    42  chmod +x commit-msg
    43  cp commit-msg ../../.git/hooks/commit-msg
    44  history
+
 4. Finalizacja
 Ostatnim krokiem jest wypchnięcie zmian na zdalne repozytorium (gałąź MF420115) i wystawienie Pull Requesta do gałęzi grupa2.
