@@ -7,31 +7,31 @@ Ustawienie przekierowania portu Host:2137 na VM:22 (ssh)
 
 #### Konfiguracja VS Code i Remote SSH (wtyczka)
 Zainstalowanie wtyczki Remote SSH (Microsoft) i skonfigurowanie połączenia
-[](./img/img01_vscode_remote_ssh.png)
+![Konfiguracja VS Code i Remote SSH (wtyczka)](./img/img01_vscode_remote_ssh.png)
 
 ### Konfiguracja połączenia SFTP w File Zilla
-[](./img/img02_filezilla.png)
+![Konfiguracja połączenia SFTP w File Zilla](./img/img02_filezilla.png)
 
 ### Utworzenie klucza SSH i dodanie go na githubie
-[](./img/img03_klucz_ssh_vm.png)
+![Utworzenie klucza SSH ](./img/img03_klucz_ssh_vm.png)
 
-[](./img/img04_klucz_ssh_github.png)
+![dodanie go na githubie](./img/img04_klucz_ssh_github.png)
 
 ## Klonowanie
 
 ### Klonowanie repo HTTP
-[](./img/img05_klonowanie_http.png)
+![Klonowanie repo HTTP](./img/img05_klonowanie_http.png)
 
 ### Klonowanie repo SSH
-[](./img/img06_klonowanie_ssh.png)
+![Klonowanie repo SSH](./img/img06_klonowanie_ssh.png)
 
 ## Branching
 
 #### Przełączenie się na branch grupy
-[](./img/img07_branch_grupa.png)
+![Przełączenie się na branch grupy](./img/img07_branch_grupa.png)
 
 #### Utworzenie własnego brancha
-[](./img/img08_branch_wlasny.png)
+![Utworzenie własnego brancha](./img/img08_branch_wlasny.png)
 
 ## Git Hook
 
