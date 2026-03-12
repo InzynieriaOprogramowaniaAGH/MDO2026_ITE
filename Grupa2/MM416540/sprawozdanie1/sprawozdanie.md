@@ -6,11 +6,13 @@ MM416540
 
 ## Git
 Zainstalowano Git i sklonowano repozytorium.
+
 ![alt text](image-4.png)
 
 ## Konfiguracja VS code i Remote SSH (wtyczka)
 
-Zainstalowałem wtyczkę i skonfigurowałem połączenie
+Zainstalowałem wtyczkę i skonfigurowałem połączenie.
+
 ![alt text](image-2.png)
 
 Z niedokońca zrozumiałego powodu nie było możliwości podłączenia się do ssh podczas gdy byłem podłączony po kablu, problem rozwiązało przejscie na wi-fi
@@ -26,11 +28,13 @@ Utworzono klucze:
 ![alt text](<Zrzut ekranu 2026-03-12 161552-1.png>)
 ![alt text](image-3.png)
 - ecdsa
+
 ![alt text](image-5.png)
 
 ## Utworzenie Git Hook'a do werfikacji 
 
 Treść:
+```bash
 
 #!/bin/sh
 
@@ -47,6 +51,7 @@ $PREFIX*)
     exit 1
     ;;
 esac
+```
 
 ## Pull Request
 ![alt text](image-7.png)
