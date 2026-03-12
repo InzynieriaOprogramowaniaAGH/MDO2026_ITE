@@ -7,6 +7,7 @@ Ustawienie przekierowania portu Host:2137 na VM:22 (ssh)
 
 #### Konfiguracja VS Code i Remote SSH (wtyczka)
 Zainstalowanie wtyczki Remote SSH (Microsoft) i skonfigurowanie połączenia
+
 ![Konfiguracja VS Code i Remote SSH (wtyczka)](./img/img01_vscode_remote_ssh.png)
 
 ### Konfiguracja połączenia SFTP w File Zilla
