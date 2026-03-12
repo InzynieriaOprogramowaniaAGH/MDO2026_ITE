@@ -9,10 +9,13 @@
 ![alt text](klonowanierepo.png)
 
 4. Dodanie własnego brancha
-![alt text](dodaniebracha1.png)
+![alt text](dodaniebrancha1.png)
 ![alt text](dodaniebrancha2.png)
 
 5. Tresc git Hooka
-![alt text](hook1.png)
 ![alt text](hook2.png)
 
+![alt text](hook1.png)
+
+6. Pull request
+![alt text](pr.png)
