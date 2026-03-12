@@ -40,4 +40,11 @@ Skrypt skopiowana do odpowiedniego folderu i przetestwowano przykładowy commit
 
 ![Testowy commit](./img/image11.png)
 
+Poprawny commit
+
+![pierwszy commit](./img/image12.png)
+
+Przesłanie cwiczenia do zdalnego repo
+![pull](./img/image13.png)
+
 ## Pull Request 
