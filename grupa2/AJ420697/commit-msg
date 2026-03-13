@@ -1,0 +1,12 @@
+#!/bin/bash
+
+PREFIX="AJ420697"
+msg="$(cat "$1")"
+
+if [[ $msg =~ ^$PREFIX ]]; then
+    echo "[OK]: jest prefix w commit msg"
+    exit 0
+else
+    echo "[ERROR]: Commit musi zaczynać się od prefixa inicjały i nr"
+    exit 1
+fi
