@@ -43,7 +43,8 @@ Dokcerfile:
 
 <img width="864" height="289" alt="image" src="https://github.com/user-attachments/assets/3bba4366-2e99-4722-bb13-e5f46954add8" />
 
-<img width="864" height="289" alt="image" src="https://github.com/user-attachments/assets/9894a431-1c42-423c-a522-5847a9d38542" />
+<img width="945" height="197" alt="image" src="https://github.com/user-attachments/assets/453aa9e9-50b6-4753-a3ea-27eca9912f80" />
+
 
 <img width="769" height="130" alt="image" src="https://github.com/user-attachments/assets/5c3f8e92-228f-4899-90cc-8ef1b25999e1" />
 
