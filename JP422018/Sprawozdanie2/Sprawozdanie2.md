@@ -1,23 +1,41 @@
 # Stawianie dockera
-1. Utwórz katalog na klucze GPG
-2. Pobierz i zapisz klucz GPG Dockera
-3. Daj wszystkim prawo odczytu klucza
-4. Dodaj repozytorium Dockera do źródeł apt
-5. Odśwież listę pakietów
+```bash
+sudo apt install docker.io
+```
+### Pobieranie dockera z repo dystrybucji(apt) zamiast Community Edition
+Wersja dystrybucyjna:
+* odrazu gotowa do użytku
+* stablina
+* lepiej dostosowana
+* nie wymaga konfiguracji. 
+### W 90% lepiej korzystać z wersji danej dystrybucji, chyba że potrzebujemy najnowszej wersji Docker to wtedy trzeba pobrać community edition (długi i skomplikowany proces konfiguracji)
 
-<img src="ss/ss1.png" width="500">
 
-### Zainstaloawnie sładników Dockera: silnik, narzędzie poleceń i narzędzia do obsługi obrazów
-<img src="ss/ss2.png" width="800">
 
-# Zapoznanie się z obrazami sprawdzając kod wyjścia
+# Zapoznanie się z obrazami
+#### Kod wyjścia - liczba zwracana przez program po zakończeniu działania.
+```
+0 : sukces
+1-255 : coś poszło nie tak 
+Przydatne w automazacji i CI/CD do sprawdzania czy kolejne kroki zakończyły się sukcesem.
+```
 ### 1. Hello World
+Minimalny obraz testowy. Służy sprawdzeniu czy Docker działa poprawnie.
+
 <img src="ss/ss5.png" width="400">
 
 ### 2. Busybox
+Ultra lekki linux, z najważniejszymi narzędziami uniksowymi
+
 <img src="ss/busybox-ss.png" width="400">
 
 ### 3. aspnet
+**runtime** - podstawowe środowisko konieczne do uruchomienia aplikacji .NET
+
+**aspnet** - runtime + asp.net do aplikacji webowych
+
+**sdk** - pełny zestaw narzędzi .NET razem z kompilatorem. Tylko do wersji dev
+
 <img src="ss/aspnet-ss.png" width="600">
 
 ### Sprawdzenie rozmiarów powyższych obrazów
@@ -34,8 +52,8 @@
 <img src="ss/ss8.png" width="700">
 
 ### Wniosek
-* Kontener to tylko izolowany proces na hoście. Myśli, że jego PID to 1, ale w rzeczywistości na hoście ma zwykły wysoki PID
-* oba środowiska współdzielą ten sam kernel
+* Kontener to izolowany proces, nie wirtualna maszyna To samo co na hoście ma PID 4787, w kontenerze widzi siebie jako PID 1. To zwykły proces Linuksa z inną "perspektywą".
+* Oba środowiska używają tego samego jądra systemu. Stąd docker jest lżejszy niż VM, ale też mniej odizolowany.
 
 # Stworzenie własnego obrazu
 ### 1. Własnoręcznie napisany Dockerfile i zbudowanie obrazu
