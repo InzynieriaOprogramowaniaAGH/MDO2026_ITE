@@ -128,6 +128,11 @@ ls /home/devops/MDO2026_ITE
 ![Opis obrazka](img/L2_9.png)
 ![Opis obrazka](img/L2_10.png)
 
+Zmieniono nazwę folderu Lab2 na Sprawozdanie2
+```bash
+mv Lab2 Sprawozdanie2
+```
+
 ## Zarządzanie kontenerami i obrazami
 Wyświetlono listę kontenerów, a następnie usunięto zakończone kontenery oraz obrazy.
 ```bash
