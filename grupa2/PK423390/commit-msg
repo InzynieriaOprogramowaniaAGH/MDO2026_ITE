@@ -1,0 +1,10 @@
+#!/bin/bash
+
+message=$(cat $1)
+
+prefix="PK123456"
+
+if [[ $message != $prefix* ]]; then
+    echo "Commit message musi zaczynać się od $prefix"
+    exit 1
+fi
