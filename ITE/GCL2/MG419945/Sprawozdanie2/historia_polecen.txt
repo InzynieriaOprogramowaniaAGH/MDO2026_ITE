@@ -1,5 +1,5 @@
     1  sudo apt install openssh-client git
-    2  docker inspect --size hello-world 
+    2  docker inspect --size hello-world
     3  echo $?
     4  sudo docker run hello-world; echo $?
     5  sudo docker run busybox; echo $?
@@ -27,30 +27,30 @@
    27  mkdir Sprawozdanie2
    28  cd ~
    29  vim Dockerfile
-   30  docker build 
+   30  docker build
    31  docker build -t Dockerfile
    32  docker build -t pkt6 .
    33  ls
    34  vim Dockerfile
    35  docker build -t pkt6 .
-   36  git clone https://glamac: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@github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+   36  git clone https://glamac:[snip]]@github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
    37  ls
    38  cd test
    39  mkdir test
    40  cd test
-   41  git clone https://glamac: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@github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+   41  git clone https://glamac:[snip]@github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
    42  ls
    43  cd ~
-   44  vim Dockerfile 
+   44  vim Dockerfile
    45  ls
    46  mv Dockerfile MDO2026_ITE/ITE/GCL2/MG419945/Sprawozdanie2/
    47  cd MDO2026_ITE/ITE/GCL2/MG419945/Sprawozdanie
    48  cd MDO2026_ITE/ITE/GCL2/MG419945/Sprawozdanie2
    49  ls
    50  docker build -t pkt6 .
-   51  vim Dockerfile 
+   51  vim Dockerfile
    52  docker build -t pkt6 .
-   53  vim Dockerfile 
+   53  vim Dockerfile
    54  docker build -t pkt6 .
    55  history | grep docker run
    56  history | grep "docker run"
