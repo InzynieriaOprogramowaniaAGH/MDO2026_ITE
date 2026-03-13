@@ -14,6 +14,7 @@ Zgodnie z zaleceniami, zainstalowano pakiet docker.io
 ![[Dodanie użytkownika do grupy docker]](Screenshots/helloworld_docker.png)
 
 3. Eksploracja obrazów Docker Hub
+
 ![Pobranie obrazów](Screenshots/docker_images_controllers.png)
 ![Zestawienie obrazów](Screenshots/docker_images.png)
 
@@ -22,12 +23,17 @@ Zgodnie z zaleceniami, zainstalowano pakiet docker.io
 ![](Screenshots/busybox_uruchomiony.png)
 
 5. Izolacja procesów (PID 1)
+
 ![Izolowany proces](Screenshots/docker_bash_pid.png)
 
 6. Własny obraz (Dockerfile)
+
 ![Dockerfile](Screenshots/nanoDockerfile.png)
+
 ![docker build](Screenshots/docker_buildd.png)
+
 ![docker run](Screenshots/docker_run_it.png)
 
 7. Czyszczenie
+
 ![Czyszczenie](Screenshots/docker_czysczenie_kontenerow.png)
