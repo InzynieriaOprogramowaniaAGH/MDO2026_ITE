@@ -48,6 +48,9 @@ Poprawny commit
 
 Przesłanie cwiczenia do zdalnego repo
 
-![pull](./img/image13.png)
+![push](./img/image13.png)
 
 ## Pull Request 
+
+![pullrequest](./img/pullrequest.png)
+
