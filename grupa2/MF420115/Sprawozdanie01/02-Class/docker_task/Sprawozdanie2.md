@@ -27,7 +27,7 @@ Zgodnie z zaleceniami, zainstalowano pakiet docker.io
 6. Własny obraz (Dockerfile)
 ![Dockerfile](Screenshots/nanoDockerfile.png)
 ![docker build](Screenshots/docker_buildd.png)
-![docker run](docker_run_it.png)
+![docker run](Screenshots/docker_run_it.png)
 
 7. Czyszczenie
 ![Czyszczenie](Screenshots/docker_czysczenie_kontenerow.png)
