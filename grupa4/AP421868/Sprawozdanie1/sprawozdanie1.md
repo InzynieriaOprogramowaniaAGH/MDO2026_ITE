@@ -14,3 +14,5 @@
 ![Dodanie galezi](img/nowa_galaz.png)
 # 8. Githook
 ![Tresc githook](img/tresc_githook.png)
+# 9. Utworzenie pull request
+![Pull request](img/pull_request.png)
