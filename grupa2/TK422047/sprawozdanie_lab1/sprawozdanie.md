@@ -26,7 +26,9 @@ Wygenerowano parę kluczy SSH (jeden zabezpieczony hasłem, drugi bez)
 ![Uwierzytelnianie dwuetapowe 2FA](./img/image9.png)
 
 ## Branch i praca z repozytorium
-Sklonowano repozytorium przy użyciu protokołu SSH, a następnie utworzono nowy branch 
+Sklonowano repozytorium przy użyciu protokołu SSH, a następnie utworzono nowy branch. Przy klonowaniu repo przez https:
+git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git  
+
 ![Sklonowanie repo przez ssh](./img/image6.png) 
 
 ![Utworzenie nowego brancha](./img/image7.png)
@@ -45,6 +47,7 @@ Poprawny commit
 ![pierwszy commit](./img/image12.png)
 
 Przesłanie cwiczenia do zdalnego repo
+
 ![pull](./img/image13.png)
 
 ## Pull Request 

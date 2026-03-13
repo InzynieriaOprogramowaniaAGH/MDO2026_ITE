@@ -2,7 +2,7 @@
 
 prefix="TK422047"
 msg=$(cat "$1")
-if [[$msg =~$prefix]]; then
+if [[ $msg =~$prefix ]]; then
     echo "OK"
     exit 0
 else
