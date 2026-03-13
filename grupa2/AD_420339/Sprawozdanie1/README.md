@@ -163,3 +163,8 @@ Zrealizowałam ostatni punkt laboratorium - spróbowałam wciągnąć swoją ga�
 ![alt text](image-7.png)
 Działanie prawdopodobnie zakończyło się sukcesem:
 ![alt text](image-25.png)
+
+
+## Ponowna aktualizacja o pull request na nowej gałęzi (-NEW)
+![alt text](image-26.png)
+![alt text](image-27.png)
