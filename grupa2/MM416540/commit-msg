@@ -1,0 +1,15 @@
+#!/bin/sh
+
+PREFIX="MM416540"
+
+MESSAGE=$(cat "$1")
+
+case "$MESSAGE" in
+$PREFIX*)
+    exit 0
+    ;;
+*)
+    echo "Commit message musi zaczynać się od $PREFIX"
+    exit 1
+    ;;
+esac
