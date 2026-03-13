@@ -1,0 +1,7 @@
+#!/bin/bash
+MSG_FILE=$1
+MSG_CONTENT=$(cat $MSG_FILE)
+if [[ ! $MSG_CONTENT =~ ^DM421198 ]]; then
+  echo "BLAD: Twoj commit musi zaczynac sie od DM421198!"
+  exit 1
+fi
