@@ -1,3 +1,5 @@
+# Sprawozdanie z zajęć 6.03.2026
+
 # Git pobrany na maszynie
 ![Git dziala](git.png)
 # Klonowanie repo
