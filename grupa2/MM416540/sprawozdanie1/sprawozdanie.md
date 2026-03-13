@@ -55,3 +55,14 @@ esac
 
 ## Pull Request
 ![alt text](image-7.png)
+
+## Podsumowanie
+Podczas zajęć:
+
+przygotowano środowisko pracy z Git i SSH,
+wygenerowano dwa klucze SSH (ed25519 oraz ecdsa),
+dodano klucze do ssh-agent oraz do konta GitHub,
+przetestowano połączenie SSH z GitHub,
+sklonowano repozytorium przy użyciu protokołu SSH,
+utworzono gałąź MM416540,
+przygotowano git hook sprawdzający poprawność komunikatu commita.
