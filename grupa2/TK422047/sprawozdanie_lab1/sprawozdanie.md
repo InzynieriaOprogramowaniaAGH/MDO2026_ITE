@@ -29,7 +29,14 @@ Wygenerowano parę kluczy SSH (jeden zabezpieczony hasłem, drugi bez)
 Sklonowano repozytorium przy użyciu protokołu SSH, a następnie utworzono nowy branch. Przy klonowaniu repo przez https:
 git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git  
 
-![Sklonowanie repo przez ssh](./img/image6.png) 
+![Sklonowanie repo przez ssh](./img/image6.png)
+
+Sklonowanie repo przez Personal Acces Token 
+
+![Sklonowanie repo przez Personal acces Token ](./img/token.png)
+
+![](./img/clone_token.png)
+
 
 ![Utworzenie nowego brancha](./img/image7.png)
 
