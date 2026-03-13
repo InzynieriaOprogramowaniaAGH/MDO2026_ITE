@@ -1,0 +1,11 @@
+#!/bin/bash
+
+#sciezka do pliku z wiadomoscia commita
+tekst=$(cat "$1")
+
+regex="^AD420339"
+
+if [[ ! $tekst =~ $regex ]]; then
+    echo "BŁĄD: Wiadomość musi zaczynać się od inicjałów&numer_indeksu"
+    exit 1
+fi
