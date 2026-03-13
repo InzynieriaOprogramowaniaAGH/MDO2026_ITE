@@ -1,4 +1,4 @@
-# Sprawozdanie 1 
+# Sprawozdanie 2 
 
 ## 1. Instalacja Dockera
 
