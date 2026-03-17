@@ -1,0 +1,3 @@
+FROM humanizer-lab3
+
+CMD ["dotnet", "test", "-c", "Release", "--no-build"]

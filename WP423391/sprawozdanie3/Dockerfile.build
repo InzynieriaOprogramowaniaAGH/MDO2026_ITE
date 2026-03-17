@@ -1,0 +1,6 @@
+FROM mcr.microsoft.com/dotnet/nightly/sdk:10.0
+WORKDIR /app
+
+RUN git clone https://github.com/Humanizr/Humanizer.git .
+
+RUN dotnet build -c Release
