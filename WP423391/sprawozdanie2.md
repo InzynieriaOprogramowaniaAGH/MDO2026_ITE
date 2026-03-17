@@ -35,7 +35,7 @@
 ![12](sprawozdanie2/12.png)
 
 ### Uruchomione kontenery
-![13](sprawozdanie2/13png)
+![13](sprawozdanie2/13.png)
 
 ### Czyszczenie
-![14](sprawozdani2/14.png)
+![14](sprawozdanie2/14.png)
