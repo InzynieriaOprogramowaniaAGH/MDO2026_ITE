@@ -1,0 +1,15 @@
+#!/bin/sh
+
+PREFIX="MW423393"
+COMMIT_MSG_FILE="$1"
+COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
+
+case "$COMMIT_MSG" in
+  "$PREFIX"*)
+    exit 0
+    ;;
+  *)
+    echo "Error: commit message must start with $PREFIX"
+    exit 1
+    ;;
+esac
