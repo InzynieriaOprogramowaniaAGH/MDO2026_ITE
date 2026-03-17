@@ -1,4 +1,4 @@
-# Sprawozdanie z zajęć nr 2
+# Sprawozdanie z zajęć nr 3
 
 - **Imię i nazwisko:** Kacper Strzesak
 - **Indeks:** 423521
@@ -87,3 +87,5 @@ Proces zakończył się sukcesem, co potwierdza poprawność działania aplikacj
 **Uruchomienie testów:**
 
 ![Dockerfile Test Testowanie](screenshots/docker-run-jest-test.png)
+
+Kontener uruchamia skrypt testowy Jest oraz wyświetla raport z testów.
