@@ -1,4 +1,4 @@
-# Sprawozdanie 02 - Git, Docker
+# Sprawozdanie 03 - Dockerfiles, kontener jako definicja etapu
 
 **Data zajęć:** 17.03.2026 r.
 
