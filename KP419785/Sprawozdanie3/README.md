@@ -20,12 +20,17 @@ Pobrałam również repozytorium portfinder, dla dodatkowych testów: https://gi
 ![4.2](<img/Zrzut ekranu 2026-03-16 210401.png>)
 
 ![4.3](<img/Zrzut ekranu 2026-03-17 091603.png>)
+![4.4](<img/Zrzut ekranu 2026-03-17 091603.png>)
 
 4. Powtórzenie procesu w kontenerze
 ![5](<img/Zrzut ekranu 2026-03-16 211638.png>)
 ![6](<img/Zrzut ekranu 2026-03-16 215449.png>)
 ![7](<img/Zrzut ekranu 2026-03-16 222915.png>)
 ![8](<img/Zrzut ekranu 2026-03-16 223044.png>)
+
+![5.2](<img/Zrzut ekranu 2026-03-17 094310.png>)
+![5.3](<img/Zrzut ekranu 2026-03-17 095553.png>)
+![5.4](<img/Zrzut ekranu 2026-03-17 095539.png>)
 
 5. Automatyzacja procesu
 ![9](<img/Zrzut ekranu 2026-03-16 223210.png>)
@@ -40,6 +45,7 @@ Dla repozytorium portfinder:
 ![17](<img/Zrzut ekranu 2026-03-17 085014.png>)
 ![18](<img/Zrzut ekranu 2026-03-17 090857.png>)
 ![19](<img/Zrzut ekranu 2026-03-17 091011.png>)
+![19](<img/Zrzut ekranu 2026-03-17 094310.png>)
 
     Po rozwiązaniu drobnych błędów po drodze, automatyzacja przebiegła pomyślnie.
 
