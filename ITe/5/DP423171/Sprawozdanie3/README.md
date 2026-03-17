@@ -14,7 +14,7 @@ Wykorzystano jednostkę fizyczną z zainstalowanym systemem Linux.
 
 ## Przebieg ćwiczenia
 
-> ![NOTE]
+> [!NOTE]
 > Dla animacji terminala wykorzystano oprogramowanie `asciinema`
 > wraz z programem `agg` do ich konwersji do formatu GIF.
 
