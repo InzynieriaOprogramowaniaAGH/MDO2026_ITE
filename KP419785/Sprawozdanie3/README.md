@@ -66,7 +66,6 @@ Dla repozytorium portfinder:
 ![101](<img/Zrzut ekranu 2026-03-17 105448.png>)
 ![102](<img/Zrzut ekranu 2026-03-17 105514.png>)
 ![103](<img/Zrzut ekranu 2026-03-17 105535.png>)
-Dla repozytorium portfinder:
 
     Zamiast uruchamiać każdy kontener z osobna w terminalu, użyłam narzędzia Docker Compose, które robi to automatycznie.
     Zbudowłam aplikację, a następnie pomyślnie przeprowadziłam testy.
