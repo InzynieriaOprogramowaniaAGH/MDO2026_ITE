@@ -1,0 +1,3 @@
+FROM kalkulator-build
+WORKDIR /app
+CMD ["npm", "test"]
