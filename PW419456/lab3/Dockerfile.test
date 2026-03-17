@@ -1,0 +1,3 @@
+FROM libsodium-base
+
+CMD ["make", "check"]
