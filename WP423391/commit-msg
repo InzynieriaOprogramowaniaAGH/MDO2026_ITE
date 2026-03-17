@@ -1,0 +1,8 @@
+#!/bin/bash
+
+commit_message=$(cat "$1")
+
+if [[ ! $commit_message =~ ^WP423391 ]]; then
+    echo "BŁĄD: Wiadomość commita musi zaczynać się od: WP423391"
+    exit 1
+fi
