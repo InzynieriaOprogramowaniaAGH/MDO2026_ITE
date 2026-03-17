@@ -1,0 +1,6 @@
+#!/bin/bash
+msg=$(cat "$1")
+if [[ ! "$msg" =~ ^MS422035 ]]; then
+  echo "Blad: Wiadomosc musi zaczynac sie od MS422035!"
+  exit 1
+fi
