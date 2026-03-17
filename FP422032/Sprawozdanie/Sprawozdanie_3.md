@@ -33,11 +33,11 @@ Wewnątrz wyizolowanej powłoki ponownie sklonowałem repozytorium i wywołałem
 Kolejnym krokiem było zautomatyzowanie tego procesu poprzez dwa osobne pliki. 
 W pliku `Dockerfile.build` oparłem się na obrazie `node:latest`, zdefiniowałem pobranie kodu i instalację zależności. Zbudowałem z niego obraz o nazwie `kalkulator-build:latest`.
 
-![Budowa obrazu bazowego](images/BudowaObrazuBuild.png)
+![Budowa obrazu bazowego](images/BudowanieObrazuBuild.png)
 
 Następnie przygotowałem `Dockerfile.test`, który bazował na utworzonym przed chwilą obrazie i wywoływał jedynie polecenie `npm test`.
 
-![Budowa obrazu testowego](images/BudowaObrazuTest.png)
+![Budowa obrazu testowego](images/BudowanieObrazuTest.png)
 
 Po zbudowaniu i uruchomieniu drugiego kontenera, testy wykonały się automatycznie, co widać na załączonym zrzucie.
 
