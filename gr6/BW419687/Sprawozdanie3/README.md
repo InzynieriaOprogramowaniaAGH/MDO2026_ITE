@@ -73,3 +73,32 @@ RUN make check
 ```
 
 4. Zbudowano obraz testowy: ![](./14.png)
+
+# Historia bash
+
+```bash
+  125  sudo apt install make
+  126  ./autogen.sh
+  127  sudo apt install autoconf automake libtool pkg-config
+  128  ./autogen.sh
+  129  apt install libtool
+  130  sudo apt install libtool
+  131  ./autogen.sh
+  132  man libtool
+  133  sudo apt install libtool-bin
+  134  ./autogen.sh
+  135  ./configure
+  136  ls
+  137  make
+  138  ls
+  139  sudo apt install g++
+  140  make
+  141  make check
+  142  docker run -it --name flac-builder ubuntu:22.04 bash
+  143  ls
+  144  cd ..
+  145  cd Sprawozdanie3/
+  146  docker build -t flac:built -f Dockerfile-build .
+  147  docker build -t flac:tested -f Dockerfile-test .
+  148  history
+```
