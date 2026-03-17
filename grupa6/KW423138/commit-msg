@@ -1,0 +1,15 @@
+#!/bin/sh
+
+PREFIX="KW423138"
+COMMIT_MSG_FILE="$1"
+COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
+
+case "$COMMIT_MSG" in
+  "$PREFIX"*)
+    exit 0
+    ;;
+  *)
+    echo "Commit musi sie zaczynac od $PREFIX"
+    exit 1
+    ;;
+esac
