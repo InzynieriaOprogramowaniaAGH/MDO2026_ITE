@@ -1,0 +1,135 @@
+    1  ls
+    2  cd
+    3  cd .ssh
+    4  ls
+    5  vim authorized_keys 
+    6  sudo apt install neovim
+    7  ls
+    8  vim authorized_keys 
+    9  ls
+   10  git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+   11  sudo apt install git
+   12  git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+   13  ssh-keygen -t ed25519 -C "jakub.stanula.kaczka@gmail.com"
+   14  cd ~/.ssh
+   15  ls
+   16  cd -
+   17  l
+   18  mv ssh* ~/.ssh/
+   19  cd .ssh
+   20  ls
+   21  ll
+   22  cat ssh1.pub
+   23  ssh-add ssh1
+   24  ssh-add -L
+   25  cd
+   26  ls
+   27  rm -rf MDO2026_ITE/
+   28  git clone git@github.com:InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+   29  sudo apt install wget
+   30  ip a
+   31  ping 10.24.240.1
+   32  ping 1.1.1.1
+   33  ping google.com
+   34  ping wp.pl
+   35  git
+   36  sudo apt update
+   37  git
+   38  sudo apt install git
+   39  ip a
+   40  ping 1.1.1.1
+   41  ping google.com
+   42  \
+   43  id
+   44  ping google.com
+   45  ping 1.1.1.1
+   46  ping 10.24.240.4
+   47  ping 10.24.240.1
+   48  ping 10.24.240.4
+   49  lsof
+   50  lsof | grep 22
+   51  sshd
+   52  sudo apt install openssh-server
+   53  sshd
+   54  sudo sshd
+   55  cd/
+   56  cd /
+   57  sshd
+   58  yop
+   59  htop
+   60  top
+   61  ps -aux
+   62  ps -aux | grep code
+   63  ls
+   64  reboot
+   65  echo "inet4_only = on" >> ~/.wgetrc
+   66  ls
+   67  ps -aux
+   68  ps -aux | grep code
+   69  wget --inet4-only --tries=1 --connect-timeout=7 --dns-timeout=7 -O vscode-cli-c9d77990917f3102ada88be140d28b038d1dd7c7.tar.gz https://update.code.visualstudio.com/commit:c9d77990917f3102ada88be140d28b038d1dd7c7/cli-alpine-x64/stable
+   70  curl -v -O https://update.code.visualstudio.com/commit:c9d77990917f3102ada88be140d28b038d1dd7c7/cli-alpine-x64/stable
+   71  sudo pat install curl
+   72  sudo apt install curl
+   73  curl -v -O https://update.code.visualstudio.com/commit:c9d77990917f3102ada88be140d28b038d1dd7c7/cli-alpine-x64/stable
+   74  ip -br a
+   75  sudo ip link set dev ens18 mtu 1280
+   76  curl -v -O https://update.code.visualstudio.com/commit:c9d77990917f3102ada88be140d28b038d1dd7c7/cli-alpine-x64/stable
+   77  ls
+   78  ll
+   79  rm vscode-cli-c9d77990917f3102ada88be140d28b038d1dd7c7.tar.gz 
+   80  wget --inet4-only --tries=1 --connect-timeout=7 --dns-timeout=7 -O vscode-cli-c9d77990917f3102ada88be140d28b038d1dd7c7.tar.gz https://update.code.visualstudio.com/commit:c9d77990917f3102ada88be140d28b038d1dd7c7/cli-alpine-x64/stable
+   81  ls
+   82  rm vscode-cli-c9d77990917f3102ada88be140d28b038d1dd7c7.tar.gz 
+   83  ls
+   84  cd MDO2026_ITE/
+   85  ls
+   86  git status
+   87  git checkout main
+   88  git branch -a
+   89  git checkout grupa5
+   90  git log
+   91  git branch JSK421999
+   92  ls
+   93  mkdir -p ITE/grupa5/JSK421999
+   94  ls
+   95  cd ITE/grupa5/JSK421999/
+   96  ls
+   97  vim ../../../../
+   98  vim commit-msg
+   99  cp commit-msg ../../../.git/
+  100  git status
+  101  git add .
+  102  git status
+  103  git commit -s 
+  104  git config --global user.name "Jakub Stanula-Kaczka"
+  105  git commit -s 
+  106  git log
+  107  chmod +x ../../../.git/commit-msg 
+  108  git commit --amend
+  109  git status
+  110  git log
+  111  mv ../../../.git/commit-msg ../../../.git/hooks/
+  112  git commit --amend
+  113  git status
+  114  git commit --amend
+  115  git config --global core.editor "vim"
+  116  git commit --amend
+  117  ls
+  118  git log
+  119  ls
+  120  git status
+  121  git branch -a
+  122  git log
+  123  git checkout JSK421999 
+  124  git rebase grupa5
+  125  git log
+  126  git checkout grupa5
+  127  git reset --hard
+  128  git log
+  129  git reset --hard HEAD~1
+  130  git log
+  131  git checkout JSK421999 
+  132  git log
+  133  git log --one-line
+  134  git log --oneline
+  135  history > dump.log
