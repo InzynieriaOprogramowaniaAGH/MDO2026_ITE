@@ -8,17 +8,17 @@ Pracę rozpocząłem od znalezienia odpowiedniego repozytorium z otwartą licenc
 
 Sklonowałem repozytorium na maszynę wirtualną i przetestowałem je lokalnie. Po wykonaniu komendy `npm install` (pobranie zależności), uruchomiłem `npm test`. Na poniższym zrzucie widać, że testy we frameworku Mocha przeszły pomyślnie.
 
-![Test lokalny kalkulatora](TestUbuntu.png)
+![Test lokalny kalkulatora](images/TestUbuntu.png)
 
 Następnie w celu sprawdzenia poprawności działania oprogramowania zdecydowałem się je uruchomić przy pomocy komendy `npm start`.
 
-![Uruchomienie kalkulatora](UruchomienieOprogramowania.png)
+![Uruchomienie kalkulatora](images/UruchomienieOprogramowania.png)
 
 W celu połączenia z aplikacją kalkulatora musiałem stworzyć połączenie na odpowiedniem porcie (Port 3000 widoczny na poprzednim screenie)
 
-![Ustawienie portu](DodaniePortu.png)
+![Ustawienie portu](images/DodaniePortu.png)
 
-![Działający kalkulator](DzialajaceOprogramowanie.png)
+![Działający kalkulator](images/DzialajaceOprogramowanie.png)
 
 ## 2. Izolacja procesu w kontenerze interaktywnym
 
@@ -26,22 +26,22 @@ Powtórzyłem proces w czystym kontenerze. Uruchomiłem interaktywnie obraz bazo
 
 Wewnątrz wyizolowanej powłoki ponownie sklonowałem repozytorium i wywołałem proces budowania oraz testowania. Zrzut ekranu potwierdza, że aplikacja zbudowała się i przeszła testy w środowisku niezależnym od systemu hosta.
 
-![Test w wyizolowanym kontenerze](TestKontener.png)
+![Test w wyizolowanym kontenerze](images/TestKontener.png)
 
 ## 3. Automatyzacja za pomocą plików Dockerfile
 
 Kolejnym krokiem było zautomatyzowanie tego procesu poprzez dwa osobne pliki. 
 W pliku `Dockerfile.build` oparłem się na obrazie `node:latest`, zdefiniowałem pobranie kodu i instalację zależności. Zbudowałem z niego obraz o nazwie `kalkulator-build:latest`.
 
-![Budowa obrazu bazowego](BudowaObrazuBuild.png)
+![Budowa obrazu bazowego](images/BudowaObrazuBuild.png)
 
 Następnie przygotowałem `Dockerfile.test`, który bazował na utworzonym przed chwilą obrazie i wywoływał jedynie polecenie `npm test`.
 
-![Budowa obrazu testowego](BudowaObrazuTest.png)
+![Budowa obrazu testowego](images/BudowaObrazuTest.png)
 
 Po zbudowaniu i uruchomieniu drugiego kontenera, testy wykonały się automatycznie, co widać na załączonym zrzucie.
 
-![Uruchomienie kontenera testowego](TestObraz.png)
+![Uruchomienie kontenera testowego](images/TestObraz.png)
 
 ## 4. Wdrożenie Docker Compose
 
@@ -49,7 +49,7 @@ Aby nie musieć ręcznie zarządzać nazwami obrazów i pilnować kolejności ic
 
 Zdefiniowałem tam usługę budującą oraz usługę testującą, do której dodałem warunek `depends_on`, aby czekała na zakończenie pierwszego etapu. Wywołanie komendy `docker compose up --build test-stage` automatycznie przeprowadziło cały proces i zwróciło wynik testów.
 
-![Wynik działania Docker Compose](TestDockerCompose.png)
+![Wynik działania Docker Compose](images/TestDockerCompose.png)
 
 ## 5. Dyskusja: Przygotowanie do wdrożenia
 
