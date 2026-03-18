@@ -1,0 +1,18 @@
+# Dockerfile.build
+FROM node:20-alpine
+
+# Zainstaluj git (wymagany do klonowania)
+RUN apk add --no-cache git
+
+# Ustaw katalog roboczy
+WORKDIR /app
+
+# Sklonuj repozytorium
+RUN git clone https://github.com/expressjs/express.git .
+
+# Zainstaluj zależności
+RUN npm install
+
+# Domyślna komenda – pokazuje, że build zakończył się sukcesem
+
+CMD ["node", "-e", "const e = require('./package.json'); console.log('Express version:', e.version)"]

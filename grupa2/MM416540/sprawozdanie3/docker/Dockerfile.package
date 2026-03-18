@@ -1,0 +1,9 @@
+# Dockerfile.package
+FROM express-build:latest AS packager
+
+# Zainstaluj narzędzie do tworzenia paczek npm
+RUN npm pack
+
+# Wynikowy plik: express-4.x.x.tgz
+# Można go skopiować z kontenera:
+# docker cp <container_id>:/app/express-*.tgz ./artifacts/
