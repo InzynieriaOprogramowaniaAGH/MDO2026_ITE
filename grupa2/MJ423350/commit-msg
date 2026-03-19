@@ -1,0 +1,12 @@
+#!/bin/bash
+
+PREFIX="MJ423350"
+
+MESSAGE=$(head -n 1 "$1")
+
+if [[ "$MESSAGE" != "$PREFIX"* ]]; then
+  echo "Błąd: commit message musi zaczynać się od '$PREFIX'"
+  exit 1
+fi
+
+exit 0
