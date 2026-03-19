@@ -1,0 +1,5 @@
+#!/bin/bash
+if ! grep -q "^KJ422051" "$1"; then
+	echo "blad"
+	exit 1
+fi
