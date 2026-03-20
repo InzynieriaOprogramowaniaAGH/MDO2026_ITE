@@ -41,3 +41,13 @@ Może działać lokalnie, w przeciwieństwie go github actions, które działa t
 * Wykrywanie wycieku haseł i kluczy przed wysłaniem na serwer
 * Zautomatyzowanie mechanizmow po git checkout / git pull np. automatyczne npm install
 
+
+# Konfiguracja sieciowa VM
+### 1. External Switch
+VM dostaje własne IP, jest traktowane jako osobne urządzenie i ma dostęp do internetu
+
+### 2. Internal Switch
+VM gada tylko z hostem, nie ma dostępu do internetu
+
+### 3. Private Switch
+VM może gadać tylko z innymi VM'ami. Nie widzi hosta, ani nie ma dostępu do internetu
