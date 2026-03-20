@@ -99,7 +99,7 @@ docker images
 Kontener `express-test` zakończył się z kodem `0` (sukces) – testy przeszły poprawnie.
 Obrazy `express-build` i `express-test` mają rozmiar ~1.2GB każdy.
 
-![docker ps](./img/weryfikacja_dockera.png)
+![docker ps](./img/weryfikacja_dockerow.png)
 
 ---
 
