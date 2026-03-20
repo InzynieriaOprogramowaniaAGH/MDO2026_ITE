@@ -35,8 +35,17 @@
 ![alt text](image-10.png)
 
 8.	Zawartość pliku Dockerfile.test
-9.	Zbudownaie pierwszego obrazu
- 
+   
+![alt text](image-11.png)
+   
+10.	Zbudownaie pierwszego obrazu
+    
+ ![alt text](image-12.png)
+
 Zbudowanie drugiego obrazu
+
+ ![alt text](image-13.png)
  
 Wdrożenie kończy się sukcesem
+
+![alt text](image-14.png)
