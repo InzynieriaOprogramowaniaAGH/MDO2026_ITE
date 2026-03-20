@@ -1,27 +1,30 @@
 ## Budowanie lokalne
 
-Klonowanie repozytorium.
+### Klonowanie repozytorium.
+
 ![Git Clone Root](img/git-clone-root.png)
 
-Konfiguracja srodowiska i kompilacja kodu
+### Konfiguracja srodowiska
 
-![Configure Root](img/configure-root.png)
+![Configure Root](img/conf-make-root.png)
+
+### Kompilacja kodu
 
 ![Working Root](img/installed-root.png)
 
-Uruchomienie testow.
+### Uruchomienie testow.
 
 ![Tests Root](img/root-tests.png)
 
 ## Izolacja: kontener interaktywny
 
-Uruchomienie czystego Ubuntu.
+### Uruchomienie czystego Ubuntu.
 
 ![Container Run](img/container-run.png)
 
 ![Container Clone](img/container-clone.png)
 
-Pobranie narzedzi i build w srodku.
+### Pobranie narzedzi i build w srodku.
 
 ![Container run](img/conf-make-container.png)
 
@@ -29,7 +32,7 @@ Pobranie narzedzi i build w srodku.
 
 ## Automatyzacja (Dockerfile)
 
-Dockerfile.build: Środowisko i kompilacja.
+### Dockerfile.build: Środowisko i kompilacja.
 
 ```dockerfile
 FROM ubuntu:22.04
@@ -49,7 +52,7 @@ RUN ./configure && make -j$(nproc)
 
 ```ENV DEBIAN_FRONTEND=noninteractive``` jest aby uniknac promptujacego w czasie configuracji zapytania do uzytkownka o strefe czasowa
 
-Dockerfile.test: Obraz dziedziczący, odpala tylko testy.
+### Dockerfile.test: Obraz dziedziczący, odpala tylko testy.
 ```dockerfile
 FROM cpython-builder:latest
 
@@ -66,8 +69,6 @@ CMD [make, test]
 Jeden proces, bez serwera w tle czy demona. Głównym procesem (PID 1) jest komenda testowa zadeklarowana w CMD.
 
 ## Docker Compose
-
-Orkiestracja.
 
 ```yml
 version: '3.8'
