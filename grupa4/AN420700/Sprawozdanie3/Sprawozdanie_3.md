@@ -1,31 +1,31 @@
 ## Budowanie lokalne
 
 Klonowanie repozytorium.
-![Git Clone Root]("img/git-clone-root.png")
+![Git Clone Root](img/git-clone-root.png)
 
 Konfiguracja srodowiska i kompilacja kodu
 
-![Configure Root]("img/configure-root.png")
+![Configure Root](img/configure-root.png)
 
-![Working Root]("img/installed-root.png")
+![Working Root](img/installed-root.png)
 
 Uruchomienie testow.
 
-![Tests Root]("img/root-tests.png")
+![Tests Root](img/root-tests.png)
 
 ## Izolacja: kontener interaktywny
 
 Uruchomienie czystego Ubuntu.
 
-![Container Run]("img/container-run.png")
+![Container Run](img/container-run.png)
 
-![Container Clone]("img/container-clone.png")
+![Container Clone](img/container-clone.png)
 
 Pobranie narzedzi i build w srodku.
 
-![Container run]("img/conf-make-container.png")
+![Container run](img/conf-make-container.png)
 
-![Container Tests]("img/container-test.png")
+![Container Tests](img/container-test.png)
 
 ## Automatyzacja (Dockerfile)
 
@@ -55,12 +55,12 @@ FROM cpython-builder:latest
 
 WORKDIR /cpython
 
-CMD ["make", "test"]
+CMD [make, test]
 ```
 
-![Dockerfile build]("img/dockerfile-build.png")
+![Dockerfile build](img/dockerfile-build.png)
 
-![Dockerfile test]("img/dockerfile-test.png")
+![Dockerfile test](img/dockerfile-test.png)
 
 ### Co pracuje w tym kontenerze?
 Jeden proces, bez serwera w tle czy demona. Głównym procesem (PID 1) jest komenda testowa zadeklarowana w CMD.
