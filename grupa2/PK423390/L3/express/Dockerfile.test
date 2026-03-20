@@ -1,0 +1,3 @@
+FROM express-base
+WORKDIR /app
+CMD ["npm", "test"]
