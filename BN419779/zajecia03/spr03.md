@@ -49,11 +49,11 @@ Tak, ponieważ nasz kontener pobiera gita, make i gcc. Dużo danych więc i duż
 Mając an uwadze profesjonalne środowisko, tak z trzema etapami; dockerfile.build, dockerfile.test i dockerfile.deploy(tylko dal gotowej paczki)
 
   ## Zrzuty ekranu:
-<img width="630" height="118" alt="Screenshot 2026-03-06 145548" src="klon.png" />
-<img width="630" height="118" alt="Screenshot 2026-03-06 145548" src="budowanie_plikow.png" />
-<img width="630" height="118" alt="Screenshot 2026-03-06 145548" src="normalnie działający test" />
-<img width="630" height="118" alt="Screenshot 2026-03-06 145548" src="działanie w kontenerze.png" />
-<img width="630" height="118" alt="Screenshot 2026-03-06 145548" src="dzialanie dockerfilebuild.png" />
-<img width="630" height="118" alt="Screenshot 2026-03-06 145548" src="dokcertestdzialanie" />
-<img width="630" height="118" alt="Screenshot 2026-03-06 145548" src="compose.png" />
+<img width="630" height="400" alt="18" src="klon.png" />
+<img width="630" height="400" alt="2" src="budowanie_plikow.png" />
+<img width="630" height="400" alt="3" src="normalnie dzialajacy test.png" />
+<img width="630" height="400" alt="4" src="działanie w kontenerze.png" />
+<img width="630" height="118" alt="5" src="dzialanie dockerfilebuild.png" />
+<img width="630" height="400" alt="6" src="dokcertestdzialanie.png" />
+<img width="630" height="630" alt="7" src="compose.png" />
 
