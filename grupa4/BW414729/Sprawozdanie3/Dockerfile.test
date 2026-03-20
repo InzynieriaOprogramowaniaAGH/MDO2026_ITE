@@ -1,0 +1,2 @@
+FROM ytdlp-build:latest
+CMD ["python3", "-m", "pytest", "-v", "-m", "not download"]
