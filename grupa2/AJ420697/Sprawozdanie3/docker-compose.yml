@@ -1,0 +1,14 @@
+services:
+  build:
+    build:
+      context: .
+      dockerfile: Dockerfile.build
+    image: build-image
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    image: test-image
+    depends_on:
+      - build
