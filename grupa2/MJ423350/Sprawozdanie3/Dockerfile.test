@@ -1,0 +1,5 @@
+FROM build-image
+
+WORKDIR /app/C-and-Cpp-Tests-with-CI-CD-Example
+
+CMD ["./run_coverage_test.sh"]
