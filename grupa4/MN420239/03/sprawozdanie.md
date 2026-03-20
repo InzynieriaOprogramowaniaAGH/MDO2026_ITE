@@ -100,3 +100,11 @@ Proces build i test został uruchomiony przy użyciu polecenia:
 Zastosowanie Docker Compose pozwoliło na dalszą automatyzację procesu budowania i testowania aplikacji. Dzięki temu cały pipeline może zostać uruchomiony jednym poleceniem, co znacząco upraszcza pracę oraz zwiększa powtarzalność środowiska.
 
 Rozdzielenie etapów build i test odzwierciedla podejście stosowane w systemach CI/CD, gdzie każdy etap jest wykonywany w izolowanym środowisku. Kontener build przygotowuje aplikację, natomiast kontener test wykorzystuje gotowy obraz i uruchamia testy.
+
+Obraz Docker stanowi niezmienny szablon zawierający aplikację oraz jej zależności. Na jego podstawie tworzony jest kontener, który jest uruchomioną instancją obrazu.
+
+W przedstawionym rozwiązaniu:
+
+- obraz vscode-build zawiera przygotowane środowisko aplikacji,
+
+- kontener uruchamiany z obrazu vscode-test wykonuje proces testowania (npm test)
