@@ -109,6 +109,8 @@ docker compose run test
 ![Opis obrazka](img/L3_14.png)
 Wyniki testów przy pełnej automatyzacji procesu:
 ![Opis obrazka](img/L3_15.png)
+Przeniesienie docekrfillów do wysłania na repo (po przesłaniu pliki zostały ponownie przeniesione do katalogu ze skopiowanym repo express)
+mv express/Dockerfile.build express/docker-compose.yml express/Dockerfile.test .
 ## Dyskusja
 
 Czy Express nadaje się do wdrażania jako kontener?
@@ -139,3 +141,4 @@ Tak. Możliwe jest utworzenie np.:
 Dockerfile.release
 ```
 który realizowałby: build projektu, testy, publikację pakietu
+
