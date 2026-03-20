@@ -1,0 +1,3 @@
+FROM cjson-build:latest
+WORKDIR /app
+CMD ["make", "test"]
