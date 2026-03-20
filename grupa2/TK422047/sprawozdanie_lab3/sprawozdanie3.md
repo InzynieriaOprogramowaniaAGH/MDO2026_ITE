@@ -69,4 +69,3 @@ Status kontenera
 
 ![](./img/image14.png)
 
-Kod wyjscia 0 potwierdza ze testy przeszły pomyślnie 
