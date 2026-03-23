@@ -1,0 +1,5 @@
+FROM merge-anything-build
+
+WORKDIR /app
+
+CMD ["npm", "test"]
