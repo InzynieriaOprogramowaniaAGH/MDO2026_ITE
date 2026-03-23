@@ -1,0 +1,5 @@
+FROM humanizer-build
+
+WORKDIR /src
+
+CMD ["dotnet", "test"]
