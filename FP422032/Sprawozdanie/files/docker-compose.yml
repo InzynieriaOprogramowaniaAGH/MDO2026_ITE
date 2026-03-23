@@ -1,0 +1,13 @@
+services:
+  build-stage:
+    build:
+      context: .
+      dockerfile: Dockerfile.build
+    image: kalkulator-build:latest
+
+  test-stage:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    depends_on:
+      - build-stage
