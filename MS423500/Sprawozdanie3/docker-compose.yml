@@ -1,0 +1,17 @@
+services:
+  serwis_budowania:
+    build:
+      context : . #sciezka do  - dockerfile sa w tym samym katalogu  co docker-compose
+      dockerfile: Dockerfile.build  #nazwa konkretnego pliku
+    image: obraz_budowania
+  serwis_testowania:
+    build:
+      context: .  #aktualny katalog z docker-compose
+      dockerfile: Dockerfile.test #nazwa dockerfile dla testow
+      args:
+        BASE_IMAGE: obraz_budowania #wstrzykiwanie argumentu przy uruchanianiu dockerfile
+      additional_contexts: # kontekst do kompilacji sertisu testowego
+        - humanizer-build=service:serwis_budowania
+    image: obraz_testowania
+    depends_on:
+      - serwis_budowania
