@@ -6,15 +6,15 @@ Metoda dostępu: Zdalna sesja przez SSH (użytkownik: karro)
 Silnik kontenerów: Docker 27.x
 Projekt testowy: portfinder (język Go)
 
-1. Zachowywanie stanu między kontenerami
+## 1. Zachowywanie stanu między kontenerami
 
     Celem zadania jest zbudowanie projektu Go w izolowanym środowisku kontenerowym, w którym kod źródłowy i artefakty budowania są przechowywane niezależnie od cyklu życia kontenera.
     Zgodnie z dokumentacją Dockera, do przechowywania stanu aplikacji wybrano zarządzane woluminy (Named Volumes) zamiast montowania katalogów z hosta (Bind mounts). Woluminy są w pełni zarządzane przez silnik Dockera, niezależne od struktury plików na maszynie wirtualnej hosta i bezpieczniejsze.
     Aby spełnić wymóg zbudowania projektu w środowisku niezawierającym narzędzia Git, wykorzystano podejście z "Kontenerem Pomocniczym" (Helper Container).
     Dzięki temu:
-    -kontener budujący nigdy nie ma dostępu do narzędzia Git
-    -odpowiedzialności są rozdzielone zgodnie z zasadą single-responsibility
-    -środowisko budowania pozostaje czyste i powtarzalne
+    - kontener budujący nigdy nie ma dostępu do narzędzia Git
+    - odpowiedzialności są rozdzielone zgodnie z zasadą single-responsibility
+    - środowisko budowania pozostaje czyste i powtarzalne
     Alternatywne podejścia (bind mount z lokalnym katalogiem, kopiowanie do `/var/lib/docker`) odrzucono ze względu na silne powiązanie ze strukturą hosta lub konieczność uprawnień roota na hoście.
 
 Utworzone woluminy vol_in (kod źródłowy) oraz vol_out (wyniki budowania):
@@ -52,7 +52,7 @@ Powtórzenie operacji (Git wewnątrz kontenera)
     Powyższe kroki z woluminami można zautomatyzować podczas budowania obrazu: zastosowanie RUN --mount=type=bind w pliku Dockerfile pozwala na zamontowanie kodu źródłowego tylko na czas budowania, bez kopiowania go do warstw obrazu. Jest to rozwiązanie optymalne, ponieważ finalny obraz zawiera tylko plik binarny, co drastycznie zmniejsza jego rozmiar i poprawia bezpieczeństwo. 
     Rozwiązanie to wymaga włączonego silnika BuildKit, co jest obecnie standardem w nowoczesnych wersjach Dockera.
 
-2. Eksponowanie portu i łączność między kontenerami
+## 2. Eksponowanie portu i łączność między kontenerami
 Celem zadania jest zbadanie komunikacji sieciowej między kontenerami przy użyciu narzędzia `iperf3`.
 Uruchomiono serwer iperf3, sprawdzono jego IP (172.17.0.3) i połączono się z drugiego kontenera.
 ![10](<img/Zrzut ekranu 2026-03-23 191055.png>)
@@ -80,7 +80,7 @@ Wyeksponowano port 5201 na hosta. Test wykonano komendą iperf3 -c 127.0.0.1.
     Wyniki testu iperf3 między kontenerami w sieci my-net pokazały przepustowość na poziomie ok. 6.65 Gbit/s (w domyślnej sieci było to ok. 6.50 Gbit/s). Tak wysoki wynik wynika z tego, że komunikacja odbywa się wewnątrz jednego hosta przez wirtualny interfejs sieciowy (bez fizycznej karty sieciowej). Jest to typowy wynik dla kontenerów na tej samej maszynie.
     Wyeksponowano port 5201 na hosta (-p 5201:5201) i przetestowano połączenie z poziomu hosta komendą iperf3 -c 127.0.0.1. Przepustowość wyniosła ok. 4.18 Gbit/s. Była ona zauważalnie niższa w porównaniu z komunikacją między samymi kontenerami, co w praktyce potwierdza i doskonale obrazuje narzut wydajnościowy (overhead) wprowadzany przez warstwę NAT i mechanizm mapowania portów w Dockerze.
 
-3. Usługi SSH w kontenerze
+## 3. Usługi SSH w kontenerze
 Zestawiono usługę SSHD w kontenerze bazującym na systemie Ubuntu i udostępniono ją na porcie 2222.
 ![19](<img/Zrzut ekranu 2026-03-23 194728.png>)
 ![20](<img/Zrzut ekranu 2026-03-23 200726.png>)
@@ -97,11 +97,11 @@ Pomyślnie połączono się z usługą korzystając z hosta:
     Z punktu widzenia dobrych praktyk konteneryzacji, uruchamianie demona SSH wewnątrz kontenera jest uznawane za anty-wzorzec. Łamie zasadę jednej odpowiedzialności kontenera, zwiększa wagę obrazu oraz otwiera nową powierzchnię ataku dla potencjalnych intruzów. Do debugowania służy natywna komenda docker exec.
     Zaletą i przypadkiem użycia dla SSH w kontenerze może być natomiast stworzenie tzw. "Bastion Host" (bezpiecznego punktu wejściowego do podsieci), środowisk typu Honeypot do łapania ataków, lub utrzymywanie kompatybilności ze starymi agentami systemów CI/CD.
     Uzasadnione przypadki użycia SSH w kontenerze to:
-    -Bastion Host - bezpieczny, jednopunktowy punkt wejściowy do izolowanej podsieci kontenerów
-    -Honeypot - środowisko pułapkowe do wykrywania i analizowania ataków
-    -Legacy CI/CD - kompatybilność ze starymi agentami systemów CI/CD, które komunikują się wyłącznie przez SSH
+    - Bastion Host - bezpieczny, jednopunktowy punkt wejściowy do izolowanej podsieci kontenerów
+    - Honeypot - środowisko pułapkowe do wykrywania i analizowania ataków
+    - Legacy CI/CD - kompatybilność ze starymi agentami systemów CI/CD, które komunikują się wyłącznie przez SSH
 
-4. Instancja Jenkins
+## 4. Instancja Jenkins
 Zestawiono Jenkinsa z pomocnikiem Docker-in-Docker (DIND), co pozwala agentom Jenkinsa na swobodne budowanie własnych kontenerów.
 Uruchomiono kontener docker:dind
 ![22](<img/Zrzut ekranu 2026-03-23 203609.png>)
