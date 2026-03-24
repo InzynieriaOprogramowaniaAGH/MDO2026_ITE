@@ -1,0 +1,13 @@
+#!/bin/bash
+
+
+COMMIT_MSG=$(head -n 1 "$1")
+
+if [[ ! "$COMMIT_MSG" =~ ^"PW420474"  ]]; then
+	echo "=!!="
+	echo"COMMIT_MSG musi zawierac PW420474!"
+	exit 1
+
+fi
+
+exit 0
