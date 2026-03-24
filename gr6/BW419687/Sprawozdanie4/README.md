@@ -37,3 +37,14 @@ RUN --mount=type=bind,target=/input \
 RUN --mount=type=bind,target=/output \
     cp -r /input/microbench /output/
 ```
+
+# Eksponowanie portu i łączność między kontenerami
+
+1. Uruchomiono kontener iperf w trybie serwera (-s): ![](./7.png)
+2. Sprawdzono adres IP serwera za pomocą docker inspect: ![](./8.png) ![](./9.png)
+3. Wykonano test tymczasowym kontenerem w trybie klienta (-c): ![](./10.png)
+4. Utworzono nową sieć: ![](./11.png)
+5. Utworzono nowy serwer przyłączony do tej sieci: ![](./12.png)
+6. Wykonano kolejny test, tym razem za pomocą wewnętrznego DNS: ![](./13.png)
+7. Uruchomiono nowy serwer z opublikowanym portem: ![](./14.png)
+8. Oraz sprawdzono łączość z hostem: ![](./15.png)
