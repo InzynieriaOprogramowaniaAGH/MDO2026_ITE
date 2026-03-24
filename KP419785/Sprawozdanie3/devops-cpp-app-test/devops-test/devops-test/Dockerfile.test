@@ -1,3 +1,0 @@
-FROM app-build:latest
-WORKDIR /src/devops-test/devops-test
-CMD ["make", "test"]
