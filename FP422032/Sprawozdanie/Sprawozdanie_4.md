@@ -61,7 +61,7 @@ Uruchomiłem kontener bazujący na obrazie Ubuntu, a następnie zainstalowałem 
 
 Następnie bez problemu połączyłem się z usługą zdalnie.
 
-![Logowanie z zewnątrz do serwera SSH](images/PolaczenieZSerweremSsh.png)
+![Logowanie z zewnątrz do serwera SSH](images/PolaczenieZServeremSsh.png)
 
 **Dyskusja - wady, zalety i przypadki użycia SSH:**
 
