@@ -1,0 +1,9 @@
+#!/bin/bash
+commit_msg_file=$1
+commit_msg=$(cat "$commit_msg_file")
+pattern="^WW420972"
+
+if ! [[ "$commit_msg" =~ $pattern ]]; then
+  echo "BŁĄD: Commit musi zaczynać się od WW420972!"
+  exit 1
+fi

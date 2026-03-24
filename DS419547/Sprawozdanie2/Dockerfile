@@ -1,12 +1,11 @@
-FROM ubuntu:latest
+FROM ubuntu:22.04
 
-RUN apt-get update && \
-    apt-get install -y git curl && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y \
+    git \
+    && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /workspace
+WORKDIR /app
 
-RUN git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+RUN git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE
 
 CMD ["/bin/bash"]

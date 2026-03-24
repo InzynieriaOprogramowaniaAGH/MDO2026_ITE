@@ -1,0 +1,13 @@
+#!/bin/bash
+
+COMMIT_MSG="$1"
+INICJALY="BW419687"
+
+LINE=$(head -n 1 "$COMMIT_MSG")
+
+if [[ "$LINE" != "$INICJALY"* ]]; then
+	echo "Commit nie zaczyna się od inicjałów"
+	exit 1
+fi
+
+exit 0

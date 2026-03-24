@@ -1,0 +1,6 @@
+services:
+  tester:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    image: redis-test-compose
