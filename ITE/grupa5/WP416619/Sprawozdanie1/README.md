@@ -23,14 +23,25 @@ Publiczny klucz został dodany do profilu GitHub, co umożliwiło bezpieczną ko
 * **2FA:** Na koncie GitHub skonfigurowano uwierzytelnianie dwuskładnikowe.
 * **IDE:** Skonfigurowano dostęp do repozytorium przedmiotowego w edytorze **Visual Studio Code** przy użyciu rozszerzenia Remote-SSH, co zapewnia natychmiastową wymianę plików ze środowiskiem pracy.
 
+![pliki](pliki.png)
+
 ## 2. Praca z gałęziami (Branching)
 Zgodnie ze scenariuszem zajęć, zarządzanie gałęziami przebiegło następująco:
-1. Przełączenie na gałąź `main`, a następnie na gałąź grupową `grupa5`.
-2. Utworzenie gałęzi roboczej o nazwie `WP416619` (odgałęzienie od brancha grupy).
-3. Rozpoczęcie pracy na nowej gałęzi i utworzenie katalogu: `ITE/grupa5/WP416619/Sprawozdanie1/`.
+1. Sklonowanie przedmiotowego repo przy użyciu SSH.
+
+![](klonowanie_repo_przy_uzyciu_SSH.png)
+
+2. Przełączenie na gałąź `main`, a następnie na gałąź grupową `grupa5`.
+3. Utworzenie gałęzi roboczej o nazwie `WP416619` (odgałęzienie od brancha grupy).
+
+![](Utworzenie_brancha.png)
+
+4. Rozpoczęcie pracy na nowej gałęzi i utworzenie katalogu: `ITE/grupa5/WP416619/Sprawozdanie1/`.
 
 ## 3. Implementacja Git Hooka
 W katalogu roboczym utworzono skrypt `commit-msg`, który automatycznie weryfikuje poprawność wiadomości commitów.
+
+![](Git-Hook.png)
 
 ### Treść githooka:
 ```bash
