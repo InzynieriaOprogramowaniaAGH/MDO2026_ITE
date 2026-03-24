@@ -148,7 +148,7 @@ Pominąłem dostrajanie obrazu o własne dodatki i bezpośrednio wykorzystałem
 oficjalny obraz dla obecnej instalacji. Zainicjalizowałem instalację dalej
 graficznie, w przeglądarce:
 
-![Okno przeglądarki](video/jenkins.mp4)
+https://github.com/user-attachments/assets/b428454a-6fd8-4f44-94d3-88dbb73c628e
 
 <!-- Linki: --->
 [ex3]: ../../../../READMEs/03-Class.md "Dockerfiles, kontener jako definicja etapu"
