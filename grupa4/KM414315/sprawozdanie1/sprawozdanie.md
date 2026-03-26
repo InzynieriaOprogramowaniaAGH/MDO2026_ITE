@@ -31,3 +31,7 @@
 ## Działanie hooka
 
 ![alt text](image-5.png)
+
+## pull request
+
+![alt text](image-6.png)
