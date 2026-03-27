@@ -1,0 +1,4 @@
+FROM dockerfile1
+
+# cmd żeby testy ruszyły dopiero w momencie startu kontenera
+CMD npm run test
