@@ -1,0 +1,3 @@
+FROM moj-etap-build:latest
+
+CMD ["npm", "run", "test"]
