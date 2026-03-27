@@ -1,0 +1,11 @@
+# syntax=docker/dockerfile:1
+FROM node:20-alpine
+WORKDIR /app
+COPY package.json .
+
+RUN --mount=type=cache,target=/root/.npm \
+    npm install
+
+# Przykład: montowanie sekretu (np. klucza SSH do prywatnego repo)
+RUN --mount=type=secret,id=github_token \
+    git clone https://$(cat /run/secrets/github_token)@github.com/org/repo.git .
