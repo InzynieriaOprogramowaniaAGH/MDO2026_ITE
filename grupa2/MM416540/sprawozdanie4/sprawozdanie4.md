@@ -65,13 +65,13 @@ Tutaj kontener bazowy ma gita i sam klonuje repo na wolumin:
 ![alt text](image-12.png)
 
 
-Sprawdzenie adresów IP kontenerów.
+### 2.2 Sprawdzenie adresów IP kontenerów.
 ![alt text](image-13.png)
 
-Uruchomienie testu iperf3 -c 
+### 2.3 Uruchomienie testu iperf3 -c 
 ![alt text](image-14.png)
 
-### 2.3 Dedykowana sieć mostkowa z rozwiązywaniem nazw
+### 2.4 Dedykowana sieć mostkowa z rozwiązywaniem nazw
 
 Utworzenie własnej sieci poprzez docker network create i uruchomnienie nowych kontenerów z tą siecią.
 
@@ -85,13 +85,13 @@ test z wykorzystaniem nazwy
 
 Rozwiązywanie nazw działa dzięki wbudowanemu DNS Dockera dostępnemu w sieciach użytkownika.
 
-### 2.4 Połączenie spoza kontenera (z hosta)
+### 2.5 Połączenie spoza kontenera (z hosta)
 
 ![alt text](image-20.png)
 ![alt text](image-21.png)
 localhost, ponieważ z punktu widzenia hosta usługa jest dostępna lokalnie na jego własnym porcie 5201.
 
-### 2.5 Połączenie spoza hosta
+### 2.6 Połączenie spoza hosta
 ![alt text](image-36.png)
 
 **Problem z pomiarem przepustowości:**
@@ -139,26 +139,26 @@ utworzenie sieci i woluminów
 
 ![alt text](image-25.png)
 
-uruchomienie docker-in-docker **(DIND)**
+### 4.2 uruchomienie docker-in-docker **(DIND)**
 
 ![alt text](image-26.png)
 ![alt text](image-27.png)
 
-budowa obrazu jenkis z blue ocean
+### 4.3 budowa obrazu jenkis z blue ocean
 
 ![alt text](image-28.png)
 
-uruchomienie jenkis
+### 4.4 uruchomienie jenkis i pobranie hasła
 
 ![alt text](image-30.png)
 
 pobranie hasla 
 ![alt text](image-29.png)
 
-Weryfikacja działających kontenerów
+### 4.5 Weryfikacja działających kontenerów
 ![alt text](image-31.png)
 
-Dostęp do interfejsu
+### 4.6 Dostęp do interfejsu
 http://10.120.130.27:8080/
 
 ![alt text](image-32.png)
@@ -169,5 +169,19 @@ insgtalacja sugerowanych wtyczek
 tworzenie konta administratora
 ![alt text](image-34.png)
 
-gotowy jenkins
-![alt text](image-35.png)
+### 4.7 gotowy jenkins
+![alt text](image-35.png) 
+
+
+---
+
+## Podsumowanie
+
+| Zadanie | Metoda | Wynik |
+|---------|--------|-------|
+| Wolumin wejściowy | Kontener pomocniczy `alpine/git` | Kod w `vol-input` bez gita w kontenerze build |
+| Wolumin wyjściowy | `-v vol-output:/output` | Artefakt `.tgz` persystuje po zatrzymaniu kontenera |
+| iperf3 (domyślna sieć) | Adres IP | Działa, ~20 Gbits/sec (loopback) |
+| iperf3 (własna sieć) | Nazwa kontenera DNS | Działa, rozwiązywanie nazw przez Docker DNS |
+| SSHD | `openssh-server` w Ubuntu | Połączenie na port 2222; zalecany tylko do debugowania |
+| Jenkins | DIND + Blue Ocean | UI dostępne na `localhost:8080` |
