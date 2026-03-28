@@ -15,19 +15,29 @@ W celu umieszczenia repozytorium w woluminie wejściowym **vol-in**, przeniesion
 
 Następnie kontener został uruchomiony i zamontowano w nim folder, przechowujący pliki z woluminu:
 * `docker run --mount type=volume, src=vol-in, dst=/repo -it --name kont ubuntu:latest`
+
 `--mount`: flaga montująca folder
+
 `type=volume`: folder będzie zawierać treść woluminu
+
 `src=vol-in`: źródło to wolumin **vol-in**
+
 `dst=/repo`: pliki zostaną umieszczone w folderze `/repo` w kontenerze
+
 
 ![Uruchomienie kontenera z woluminem](images/3.%20Uruchomienie%20kontenera%20z%20woluminem.png)
 
 Żeby zapisać pliki do woluminu wyjściowego **vol-out** użyte zostało następujące polecenie:
 * `docker run --rm --volumes-from kont -v vol-out:/to ubuntu:latest sh -c "cp -r /repo/. /to"`
+
 `docker run --rm`: uruchamia tymczasowy kontener
+
 `--volumes-from kont`: udostępnia woluminy kontenera **kont**
+
 `-v vol-out:/to`: montuje wolumin wyjściowy w kontenerze tymczasowym w folderze `/to`
+
 `sh -c "cp -r /repo/. /to"`: kopiuje pliki do woluminu wyjściowego
+
 
 ![Kopiowanie repo do woluminu wyjściowego](images/4.%20Kopiowanie%20repo%20do%20woluminu%20wyjściowego.png)
 
@@ -68,7 +78,9 @@ Przepustowość wyniosła 44.6 Gb/s.
 Zamiast wyszukiwać adresy kontenerów, można do połączenia wykorzystać ich nazwę, dzięki wbudowanemu w Docker narzędzie do tworzenia własnych sieci: `docker network`.
 
 Najpierw należy stworzyć sieć: `docker network create -d bridge (nazwa sieci)`
+
 `-d bridge`: określenie, że typ sieci to most
+
 
 Następny krok to dodanie kontenerów do nowo utworzonej sieci: `docker network connect (nazwa sieci) (nazwa kontenera)`
 
@@ -97,8 +109,11 @@ Połączenie się urządzenia z poza maszyny wirtualnej do serwera na kontenerze
 * Uruchomić VM ponownie;
 * Zweryfikować czy adres VM jest poprawny. W przypadku sieci mostkowanej powinien mieć postać: **192.168.XX.XX**;
 * Uruchomić kontener w następujący sposób: `docker run -it -p 5201:5201 --name (nazwa kontenera) (obraz)`.
+
 `-it`: zapewnienie TTY
+
 `-p 5201:5201`: otwarcie portu na nadchodzące połączenie (5201 dla iperf)
+
 
 Polecenie `docker ps` wyświetla pracujące kontenery i ich otwarte porty:
 
@@ -126,7 +141,9 @@ Następnie:
 `PermitRootLogin yes`: umożliwienie połączenia się przez SSH jako root;
 `PasswordAuthentication yes`: umożliwienie połączenia się za pomocą hasła;
 * Stworzyć kontener w następujący sposób: `docker run -it -p 22222:22 --name (nazwa kontenera) (nazwa obrazu)`.
+
 `-p 22222:22`: otwarcie portu 22222 dla protokołu SSH
+
 
 *Numer portu jest dowolny; w tym przypadku wybrano 22222*
 
