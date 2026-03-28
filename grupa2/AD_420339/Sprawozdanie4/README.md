@@ -2,7 +2,7 @@
 **Autor:** Aleksandra Duda, grupa 2
 
 ## Cel
-Na zajęciach laboratoryjnych uruchomiłam instancję Jenkins w środowisku skonteneryzowanym, do czego potrzebna jest dodatkowa wiedza dotycząca kontenerów
+Na zajęciach laboratoryjnych uruchomiłam instancję Jenkins w środowisku skonteneryzowanym, do czego potrzebna była dodatkowa wiedza dotycząca kontenerów.
 
 ## Zachowywanie stanu między kontenerami
 1. Po zapoznaniu się z dokumentacją przygotowałam woluminy wejściowy i wyjściowy i podłączyłam je do kontenera bazowego (woluminy są podłącane w fazie tworzenia kontenera). Zrobiłam to w folderze Sprawozdanie3 ponieważ tam znajdują się pliki z poprzednich zajęć.
@@ -10,9 +10,9 @@ Zrzut ekranu z history ponieważ output z polecenia docker run był zbyt długi:
 ![alt text](image.png)
 ![alt text](image-1.png)
 
-2. Następnie uruchomiłam kontener bazowy w folderze Sprawozdanie4
+2. Następnie uruchomiłam kontener bazowy w folderze Sprawozdanie4:
 ![alt text](image-2.png)
-Dowody na brak gita i podpięcie volumenu z plikami ze Sprawozdania3
+Dowody na brak gita i podpięcie volumenu z plikami ze Sprawozdania3:
 ![alt text](image-3.png)
 
 
@@ -30,7 +30,7 @@ Dlaczego:
 4. Następnie aby uruchomić build w kontenerze sprawdziłam, czy potrzebny jest dostęp do kodu poleceniem ls /app_input. Tym razem uruchomiłam kontener używając obrazu node:20 ponieważ to jego używałam na ostatnich zajęciach w plikach Dockerfile:
 ![alt text](image-7.png)
 widzę pliki, co oznacza, że mam dostęp do kodu. Mogę teraz pracować na plikach, kompilować je lub pakować
-Następnie przeniosłam się do folderu z plikiem package.json. Zainstalowałam zależnościi uruchomiłam budowanie projektu:
+Następnie przeniosłam się do folderu z plikiem package.json. Zainstalowałam zależności i uruchomiłam budowanie projektu:
 ![alt text](image-8.png)
 Zbudowane pliki znajdują się w katalogu dist:
 ![alt text](image-9.png)
