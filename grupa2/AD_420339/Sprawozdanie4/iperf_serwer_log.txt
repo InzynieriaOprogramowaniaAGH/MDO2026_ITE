@@ -1,0 +1,24 @@
+-----------------------------------------------------------
+Server listening on 5201 (test #1)
+-----------------------------------------------------------
+Accepted connection from 172.18.0.1, port 37986
+[  5] local 172.18.0.2 port 5201 connected to 172.18.0.1 port 37994
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-1.00   sec  13.1 MBytes   110 Mbits/sec                  
+[  5]   1.00-2.00   sec  24.6 MBytes   206 Mbits/sec                  
+[  5]   2.00-3.00   sec  26.1 MBytes   220 Mbits/sec                  
+[  5]   3.00-4.00   sec  19.4 MBytes   163 Mbits/sec                  
+[  5]   4.00-5.00   sec  19.0 MBytes   159 Mbits/sec                  
+[  5]   5.00-6.00   sec  19.2 MBytes   162 Mbits/sec                  
+[  5]   6.00-7.00   sec  17.8 MBytes   149 Mbits/sec                  
+[  5]   7.00-8.00   sec  17.1 MBytes   144 Mbits/sec                  
+[  5]   8.00-9.00   sec  16.8 MBytes   141 Mbits/sec                  
+[  5]   9.00-10.00  sec  19.2 MBytes   161 Mbits/sec                  
+[  5]  10.00-10.05  sec   896 KBytes   151 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-10.05  sec   193 MBytes   161 Mbits/sec                  receiver
+iperf3: error - idle timeout for receiving data
+-----------------------------------------------------------
+Server listening on 5201 (test #2)
+-----------------------------------------------------------
