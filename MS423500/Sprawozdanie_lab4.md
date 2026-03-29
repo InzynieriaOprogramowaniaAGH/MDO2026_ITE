@@ -84,7 +84,6 @@ Połączenie wykonuje się przy pomocy następującego polecenia:
 
 ![alt text](Sprawozdanie4/kontenery_po_ip_klient.png)
 
-![alt text](Sprawozdanie4/kontenery_po_ip_serwer.png)
 
 #### Połączenie przy pomocy `docker network create`
 
