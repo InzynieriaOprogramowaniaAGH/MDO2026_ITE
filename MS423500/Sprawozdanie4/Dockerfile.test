@@ -1,0 +1,8 @@
+#argument z domsylna wartoscia - humanizer-build
+ARG BASE_IMAGE=humanizer-build
+
+# bazujemy na obrazie przekazanym w argumencie / humanizer-build
+FROM ${BASE_IMAGE}
+
+#wykonanie testow
+CMD ["dotnet", "test", "--no-build", "-f", "net10.0"]

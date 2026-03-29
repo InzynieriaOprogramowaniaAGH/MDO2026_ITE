@@ -1,0 +1,11 @@
+#pobranie i wejście do obrazu z sdk
+FROM mcr.microsoft.com/dotnet/sdk:10.0
+
+#ustawienie katalogu roboczego
+WORKDIR /app
+
+#pobieramy repo
+RUN git clone https://github.com/Humanizr/Humanizer.git .
+
+#build i kopia folcerow src i tests do output ale tylko gdy build sie powiodl
+CMD ["bash", "-c", "dotnet build && cp -r src tests /output/"]
