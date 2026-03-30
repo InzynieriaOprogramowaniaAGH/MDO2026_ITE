@@ -190,6 +190,15 @@ Połączenie zrealizowano z kolejnego terminala, podłączonego do maszyny wirtu
 
 ![alt text](Sprawozdanie4/klaster_polaczony.png)
 
+SSHD (SSH Daemon) to usługa serwerowa umożliwiająca zdalne logowanie i administrację przez SSH. W typowej pracy z Dockerem zwykle nie uruchamia się SSHD wewnątrz kontenera, ponieważ do wejścia do działającego kontenera wygodniej i bezpieczniej użyć bez utrzymywania dodatkowej usługi bash lub 
+
+                docker exec -it <kontener> sh
+                
+**Zaletami SSHD są:** znany sposób pracy administracyjnej, możliwość użycia kluczy SSH, polityk dostępu i narzędzi audytowych oraz wygoda w scenariuszach, gdzie kontener ma działać jak mini-host.
+**Wadami są:** większa złożoność obrazu i konfiguracji (utrzymanie sshd, użytkowników i kluczy), odejście od modelu „jeden proces = jeden kontener” oraz zwiększenie powierzchni potencjalnego ataku.
+
+
+
 #### Jenkins
 
 Część ta polegała głównie na podążaniu za dokumentacją Jenkinsa
