@@ -1,4 +1,4 @@
-# ../Sprawozdanie Zbiorcze z Zajęć 1-4
+# Sprawozdanie Zbiorcze z Zajęć 1-4
 
 - **Imię i nazwisko:** Kacper Strzesak
 - **Indeks:** 423521
