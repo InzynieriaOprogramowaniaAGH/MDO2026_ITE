@@ -1,9 +1,17 @@
+  #przygotowanie woluminow
+volumes:
+  wolumin_wejscie: {}
+  wolumin_wyjscie: {}
+      
 services:
   serwis_budowania:
     build:
       context : . #sciezka do  - dockerfile sa w tym samym katalogu  co docker-compose
       dockerfile: Dockerfile.build  #nazwa konkretnego pliku
     image: obraz_budowania
+    volumes:    #podlaczanie woluminow do kontenera bazowego czyli serwis_budowania
+      - wolumin_wejscie:/app/input:ro    # wejsciowy
+      - wolumin_wyjscie:/app/output   #wyjsciowy
   serwis_testowania:
     build:
       context: .  #aktualny katalog z docker-compose
