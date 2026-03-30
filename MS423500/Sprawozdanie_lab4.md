@@ -190,7 +190,7 @@ Połączenie zrealizowano z kolejnego terminala, podłączonego do maszyny wirtu
 
 ![alt text](Sprawozdanie4/klaster_polaczony.png)
 
-##### Opisz zalety i wady komunikacji z kontenerem z wykorzystaniem SSH
+###### Zalety i wady komunikacji z kontenerem z wykorzystaniem SSH
 
 **SSHD (SSH Daemon)** to usługa serwerowa umożliwiająca zdalne logowanie i administrację przez SSH. W typowej pracy z Dockerem zwykle nie uruchamia się SSHD wewnątrz kontenera, ponieważ do wejścia do działającego kontenera wygodniej i bezpieczniej użyć bez utrzymywania dodatkowej usługi bash lub 
 
