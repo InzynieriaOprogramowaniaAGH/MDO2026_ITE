@@ -1,6 +1,6 @@
 # Sprawozdanie 4
 
-Sprawozdanie dla [ćwiczenia trzeciego][ex3].
+Sprawozdanie dla [ćwiczenia czwartego][ex4].
 
 ## Cel ćwiczenia
 
@@ -15,7 +15,7 @@ Wykorzystano jednostkę fizyczną z zainstalowanym systemem Linux.
 ## Przebieg ćwiczenia
 
 > [!NOTE]
-> Przyjąłem, że jest to kontynuacja ćwiczenia 4. Będę więc wykorzystywać
+> Przyjąłem, że jest to kontynuacja ćwiczenia 3. Będę więc wykorzystywać
 > dalej oprogramowanie [`pacman`], chyba że charakter ćwiczenia
 > z jakiejkolwiek przyczyny mi na to nie pozwoli (co jest wątpliwe).
 
@@ -151,7 +151,7 @@ graficznie, w przeglądarce:
 https://github.com/user-attachments/assets/b428454a-6fd8-4f44-94d3-88dbb73c628e
 
 <!-- Linki: --->
-[ex3]: ../../../../READMEs/03-Class.md "Dockerfiles, kontener jako definicja etapu"
+[ex4]: ../../../../READMEs/04-Class.md "Dodatkowa terminologia w konteneryzacji, instancja Jenkins"
 [`pacman`]: https://www.archlinux.org/pacman/ "Menedżer pakietów systemu Arch Linux"
 [`main/Dockerfile`]: docker/main/Dockerfile
 [`test/Dockerfile`]: docker/test/Dockerfile
