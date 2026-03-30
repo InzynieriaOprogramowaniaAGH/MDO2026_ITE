@@ -587,3 +587,14 @@ Weryfikacja nastąpiła przez uruchamianie i testowanie na maszynie, analizie lo
 
 
 *Listing historii poleceń zawarty w pliku `history.txt` w folderze Sprawozdanie4*
+
+# Podsumowanie:
+
+### Git
+Git to system kontroli wersji umożliwiający śledzenie zmian w plikach i współpracę nad kodem. Repozytorium tworzy się przez git init lub klonuje przez git clone. Zmiany zapisuje się sekwencją add -> commit  ->  push, a pobiera przez git pull. Gałęzie (branch) pozwalają pracować nad różnymi funkcjonalnościami równolegle i łączyć je przez merge. Git hooki to skrypty uruchamiane automatycznie przy operacjach git (np. przed commitem), służące do egzekwowania konwencji.
+
+### SSH
+SSH (Secure Shell) to protokół zdalnego dostępu do terminala. Uwierzytelnianie odbywa się hasłem lub parą kluczy (publiczny/prywatny). Klucz publiczny umieszcza się na serwerze, prywatny pozostaje lokalnie. Weryfikacja fingerprinta przy pierwszym połączeniu chroni przed atakiem man-in-the-middle.
+
+### Docker
+Docker to narzędzie do uruchamiania aplikacji w izolowanych kontenerach. Obraz to przepis na środowisko (definiowany przez Dockerfile), a kontener to jego uruchomiona instancja. Woluminy umożliwiają trwałe przechowywanie danych niezależnie od cyklu życia kontenera. Sieci pozwalają kontenerom komunikować się ze sobą. Dedykowane sieci użytkownika oferują dodatkowo rozwiązywanie nazw DNS między kontenerami.
