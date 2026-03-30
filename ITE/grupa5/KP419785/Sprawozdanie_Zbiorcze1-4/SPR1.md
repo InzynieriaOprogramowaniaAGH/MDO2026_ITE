@@ -1,4 +1,5 @@
 # SPRAWOZDANIE ZBIORCZE 1-4
+### Kinga Pytel
 
 ## Środowisko uruchomieniowe
     Środowisko uruchomieniowe
