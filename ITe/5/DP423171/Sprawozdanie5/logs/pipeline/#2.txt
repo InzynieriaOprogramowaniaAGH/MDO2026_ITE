@@ -1,0 +1,141 @@
+Started by user SpacingBat3
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/MDO2026_ITE
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (checkout)
+[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/MDO2026_ITE/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git # timeout=10
+Fetching upstream changes from https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/DP423171^{commit} # timeout=10
+Checking out Revision 3d833986ce7648ebc5342359914f60f365153a1b (refs/remotes/origin/DP423171)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 3d833986ce7648ebc5342359914f60f365153a1b # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D DP423171 # timeout=10
+ > git checkout -b DP423171 3d833986ce7648ebc5342359914f60f365153a1b # timeout=10
+Commit message: "Sprawozdanie zbiorcze 1-4"
+ > git rev-list --no-walk 3d833986ce7648ebc5342359914f60f365153a1b # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (build)
+[Pipeline] stage
+[Pipeline] { (build:main)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker build -t build-env-main:latest ITe/5/DP423171/Sprawozdanie3/docker/main
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile:
+#1 transferring dockerfile: 618B done
+#1 DONE 0.3s
+
+#2 [internal] load metadata for docker.io/library/archlinux:latest
+#2 DONE 1.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.2s
+
+#4 [1/8] FROM docker.io/library/archlinux:latest@sha256:237637c52069930ed7fc76c76f04b6b6b9cf82c5222ae002b7932df983cb69c1
+#4 DONE 0.0s
+
+#5 [2/8] RUN pacman -Syu --noconfirm --asdeps base-devel meson git doxygen asciidoc
+#5 CACHED
+
+#6 [4/8] WORKDIR /repo
+#6 CACHED
+
+#7 [5/8] RUN meson --prefix=/usr     --buildtype=plain     -Ddoc=enabled     -Ddoxygen=enabled     -Dscriptlet-shell=/usr/bin/bash     -Dldconfig=/usr/bin/ldconfig     build
+#7 CACHED
+
+#8 [6/8] WORKDIR /repo/build
+#8 CACHED
+
+#9 [7/8] RUN meson compile
+#9 CACHED
+
+#10 [3/8] RUN git clone -b v7.1.0 https://gitlab.archlinux.org/pacman/pacman.git /repo
+#10 CACHED
+
+#11 [8/8] RUN pacman -Rcsu --noconfirm $(pacman -Qqdt)
+#11 CACHED
+
+#12 exporting to image
+#12 exporting layers done
+#12 writing image sha256:bd543d05c07c00143ca57bf4e3321aba7407a5bd4e1c5182afce3b834b777808 0.0s done
+#12 naming to docker.io/library/build-env-main:latest
+#12 naming to docker.io/library/build-env-main:latest 0.0s done
+#12 DONE 0.1s
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (build:test)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker build -t build-env-test:latest ITe/5/DP423171/Sprawozdanie3/docker/test
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 283B done
+#1 DONE 0.2s
+
+#2 [internal] load metadata for docker.io/library/build-env-main:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.2s
+
+#4 [1/4] FROM docker.io/library/build-env-main:latest
+#4 DONE 0.0s
+
+#5 [2/4] RUN pacman -Syu --noconfirm --asdeps meson
+#5 CACHED
+
+#6 [3/4] RUN meson test || true
+#6 CACHED
+
+#7 [4/4] RUN pacman -Rcsu --noconfirm $(pacman -Qqdt)
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:1e1e0f72adc68f609dfa7ac0ef94f09e94dad39773a766a877f9004d0cb2e6bf 0.1s done
+#8 naming to docker.io/library/build-env-test:latest
+#8 naming to docker.io/library/build-env-test:latest 0.1s done
+#8 DONE 0.1s
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

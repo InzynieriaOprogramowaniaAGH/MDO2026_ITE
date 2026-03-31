@@ -1,0 +1,594 @@
+Started by user SpacingBat3
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/MDO2026_ITE
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (checkout)
+[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/MDO2026_ITE/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git # timeout=10
+Fetching upstream changes from https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/DP423171^{commit} # timeout=10
+Checking out Revision 3d833986ce7648ebc5342359914f60f365153a1b (refs/remotes/origin/DP423171)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 3d833986ce7648ebc5342359914f60f365153a1b # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D DP423171 # timeout=10
+ > git checkout -b DP423171 3d833986ce7648ebc5342359914f60f365153a1b # timeout=10
+Commit message: "Sprawozdanie zbiorcze 1-4"
+First time build. Skipping changelog.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (build)
+[Pipeline] stage
+[Pipeline] { (build:main)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker build -t build-env-main:latest ITe/5/DP423171/Sprawozdanie3/docker/main
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 618B done
+#1 DONE 0.3s
+
+#2 [internal] load metadata for docker.io/library/archlinux:latest
+#2 DONE 1.1s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.3s
+
+#4 [1/8] FROM docker.io/library/archlinux:latest@sha256:237637c52069930ed7fc76c76f04b6b6b9cf82c5222ae002b7932df983cb69c1
+#4 DONE 0.0s
+
+#5 [4/8] WORKDIR /repo
+#5 CACHED
+
+#6 [6/8] WORKDIR /repo/build
+#6 CACHED
+
+#7 [3/8] RUN git clone -b v7.1.0 https://gitlab.archlinux.org/pacman/pacman.git /repo
+#7 CACHED
+
+#8 [5/8] RUN meson --prefix=/usr     --buildtype=plain     -Ddoc=enabled     -Ddoxygen=enabled     -Dscriptlet-shell=/usr/bin/bash     -Dldconfig=/usr/bin/ldconfig     build
+#8 CACHED
+
+#9 [7/8] RUN meson compile
+#9 CACHED
+
+#10 [2/8] RUN pacman -Syu --noconfirm --asdeps base-devel meson git doxygen asciidoc
+#10 CACHED
+
+#11 [8/8] RUN pacman -Rcsu --noconfirm $(pacman -Qqdt)
+#11 CACHED
+
+#12 exporting to image
+#12 exporting layers done
+#12 writing image sha256:bd543d05c07c00143ca57bf4e3321aba7407a5bd4e1c5182afce3b834b777808 0.0s done
+#12 naming to docker.io/library/build-env-main:latest 0.1s done
+#12 DONE 0.2s
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (build:test)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker build -t build-env-test:latest ITe/5/DP423171/Sprawozdanie3/docker/test
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 283B done
+#1 DONE 0.3s
+
+#2 [internal] load metadata for docker.io/library/build-env-main:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context:
+#3 transferring context: 2B done
+#3 DONE 0.7s
+
+#4 [1/4] FROM docker.io/library/build-env-main:latest
+#4 DONE 3.0s
+
+#5 [2/4] RUN pacman -Syu --noconfirm --asdeps meson
+#5 1.172 :: Synchronizing package databases...
+#5 1.541  core downloading...
+#5 1.541  extra downloading...
+#5 1.712 :: Starting full system upgrade...
+#5 1.715 resolving dependencies...
+#5 1.750 looking for conflicting packages...
+#5 1.757 
+#5 1.757 Package (5)        New Version  Net Change
+#5 1.757 
+#5 1.757 core/mpdecimal     4.0.1-3        0.32 MiB
+#5 1.757 extra/ninja        1.13.2-3       0.41 MiB
+#5 1.757 core/python        3.14.3-1      72.18 MiB
+#5 1.757 extra/python-tqdm  4.67.3-1       0.62 MiB
+#5 1.757 extra/meson        1.10.2-1      16.09 MiB
+#5 1.757 
+#5 1.757 Total Installed Size:  89.62 MiB
+#5 1.757 
+#5 1.757 :: Proceed with installation? [Y/n] 
+#5 1.858 checking keyring...
+#5 2.224 checking package integrity...
+#5 2.707 loading package files...
+#5 2.721 checking for file conflicts...
+#5 2.769 :: Processing package changes...
+#5 2.769 installing ninja...
+#5 2.991 installing mpdecimal...
+#5 3.025 installing python...
+#5 3.411 Optional dependencies for python
+#5 3.411     python-setuptools: for building Python packages using tooling that is usually bundled with Python
+#5 3.411     python-pip: for installing Python packages using tooling that is usually bundled with Python
+#5 3.411     python-pipx: for installing Python software not packaged on Arch Linux
+#5 3.411     sqlite: for a default database integration [installed]
+#5 3.411     xz: for lzma [installed]
+#5 3.411     tk: for tkinter
+#5 3.411 installing python-tqdm...
+#5 3.420 Optional dependencies for python-tqdm
+#5 3.420     python-requests: telegram
+#5 3.420 installing meson...
+#5 5.087 :: Running post-transaction hooks...
+#5 5.087 (1/1) Arming ConditionNeedsUpdate...
+#5 DONE 8.1s
+
+#6 [3/4] RUN meson test || true
+#6 1.181 ninja: Entering directory `/repo/build'
+#6 1.186 ninja: no work to do.
+#6 1.768   1/343 pacman:clean003.py                                       OK               0.47s   1 subtests passed
+#6 1.779   2/343 pacman:clean004.py                                       OK               0.48s   1 subtests passed
+#6 1.779   3/343 pacman:clean002.py                                       OK               0.49s   1 subtests passed
+#6 1.793   4/343 pacman:clean005.py                                       OK               0.49s   1 subtests passed
+#6 1.793   5/343 pacman:backup001.py                                      OK               0.51s   1 subtests passed
+#6 1.794   6/343 pacman:config001.py                                      OK               0.49s   1 subtests passed
+#6 1.794   7/343 pacman:database001.py                                    OK               0.48s   1 subtests passed
+#6 1.794   8/343 pacman:config002.py                                      OK               0.48s   1 subtests passed
+#6 1.794   9/343 pacman:database002.py                                    OK               0.48s   1 subtests passed
+#6 1.827  10/343 pacman:database010.py                                    OK               0.50s   1 subtests passed
+#6 1.835  11/343 pacman:clean001.py                                       OK               0.55s   1 subtests passed
+#6 1.897  12/343 pacman:database011.py                                    OK               0.13s   1 subtests passed
+#6 1.912  13/343 pacman:database012.py                                    OK               0.13s   1 subtests passed
+#6 1.922  14/343 pacman:dbonly-extracted-files.py                         OK               0.14s   1 subtests passed
+#6 1.933  15/343 pacman:depconflict100.py                                 OK               0.14s   1 subtests passed
+#6 1.947  16/343 pacman:depconflict110.py                                 OK               0.15s   1 subtests passed
+#6 1.954  17/343 pacman:depconflict111.py                                 OK               0.15s   1 subtests passed
+#6 1.960  18/343 pacman:dependency-cycle-fixed-by-upgrade.py              OK               0.15s   1 subtests passed
+#6 1.960  19/343 pacman:depconflict120.py                                 OK               0.15s   1 subtests passed
+#6 1.976  20/343 pacman:deprange001.py                                    EXPECTEDFAIL     0.16s   0/1 subtests passed
+#6 1.976  21/343 pacman:deptest001.py                                     OK               0.15s   1 subtests passed
+#6 1.989  22/343 pacman:dummy001.py                                       OK               0.15s   1 subtests passed
+#6 2.039  23/343 pacman:epoch001.py                                       OK               0.14s   1 subtests passed
+#6 2.046  24/343 pacman:epoch002.py                                       OK               0.13s   1 subtests passed
+#6 2.065  25/343 pacman:epoch003.py                                       OK               0.14s   1 subtests passed
+#6 2.075  26/343 pacman:epoch004.py                                       OK               0.14s   1 subtests passed
+#6 2.086  27/343 pacman:epoch010.py                                       OK               0.13s   1 subtests passed
+#6 2.119  28/343 pacman:file-conflict-with-installed-pkg.py               OK               0.14s   1 subtests passed
+#6 2.125  29/343 pacman:fileconflict002.py                                OK               0.13s   1 subtests passed
+#6 2.125  30/343 pacman:epoch012.py                                       OK               0.16s   1 subtests passed
+#6 2.137  31/343 pacman:epoch011.py                                       OK               0.18s   1 subtests passed
+#6 2.138  32/343 pacman:epoch005.py                                       OK               0.19s   1 subtests passed
+#6 2.154  33/343 pacman:fileconflict001.py                                OK               0.17s   1 subtests passed
+#6 2.166  34/343 pacman:fileconflict003.py                                OK               0.13s   1 subtests passed
+#6 2.192  35/343 pacman:fileconflict004.py                                OK               0.14s   1 subtests passed
+#6 2.200  36/343 pacman:fileconflict005.py                                OK               0.13s   1 subtests passed
+#6 2.221  37/343 pacman:fileconflict007.py                                OK               0.13s   1 subtests passed
+#6 2.231  38/343 pacman:fileconflict006.py                                OK               0.16s   1 subtests passed
+#6 2.250  39/343 pacman:fileconflict008.py                                OK               0.13s   1 subtests passed
+#6 2.260  40/343 pacman:fileconflict009.py                                OK               0.13s   1 subtests passed
+#6 2.274  41/343 pacman:fileconflict010.py                                OK               0.14s   1 subtests passed
+#6 2.275  42/343 pacman:fileconflict011.py                                OK               0.14s   1 subtests passed
+#6 2.295  43/343 pacman:cache-server-basic.py                             OK               1.01s   1 subtests passed
+#6 2.304  44/343 pacman:fileconflict013.py                                OK               0.15s   1 subtests passed
+#6 2.315  45/343 pacman:fileconflict012.py                                OK               0.17s   1 subtests passed
+#6 2.324  46/343 pacman:fileconflict015.py                                OK               0.16s   1 subtests passed
+#6 2.339  47/343 pacman:fileconflict016.py                                OK               0.15s   1 subtests passed
+#6 2.350  48/343 pacman:fileconflict017.py                                OK               0.15s   1 subtests passed
+#6 2.372  49/343 pacman:fileconflict021.py                                OK               0.14s   1 subtests passed
+#6 2.386  50/343 pacman:fileconflict022.py                                OK               0.14s   1 subtests passed
+#6 2.399  51/343 pacman:fileconflict020.py                                OK               0.18s   1 subtests passed
+#6 2.412  52/343 pacman:fileconflict023.py                                OK               0.15s   1 subtests passed
+#6 2.430  53/343 pacman:fileconflict024.py                                OK               0.16s   1 subtests passed
+#6 2.431  54/343 pacman:fileconflict025.py                                OK               0.15s   1 subtests passed
+#6 2.446  55/343 pacman:fileconflict030.py                                OK               0.15s   1 subtests passed
+#6 2.455  56/343 pacman:fileconflict031.py                                OK               0.15s   1 subtests passed
+#6 2.470  57/343 pacman:fileconflict032.py                                OK               0.15s   1 subtests passed
+#6 2.495  58/343 pacman:hook-exec-reused.py                               OK               0.14s   1 subtests passed
+#6 2.504  59/343 pacman:hook-abortonfail.py                               FAIL             0.18s   0/1 subtests passed
+#6 2.504 >>> LD_LIBRARY_PATH=/repo/build/ MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MALLOC_PERTURB_=239 MESON_TEST_ITERATION=1 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 RUNNING_UNDER_MESON=1 /usr/sbin/python3 /repo/test/pacman/pactest.py --scriptlet-shell /usr/bin/bash --bindir /repo/build --ldconfig /usr/bin/ldconfig --verbose /repo/test/pacman/tests/hook-abortonfail.py
+#6 2.504 
+#6 2.516  60/343 pacman:hook-exec-with-arguments.py                       FAIL             0.14s   0/1 subtests passed
+#6 2.517 >>> LD_LIBRARY_PATH=/repo/build/ MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MESON_TEST_ITERATION=1 MALLOC_PERTURB_=214 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 RUNNING_UNDER_MESON=1 /usr/sbin/python3 /repo/test/pacman/pactest.py --scriptlet-shell /usr/bin/bash --bindir /repo/build --ldconfig /usr/bin/ldconfig --verbose /repo/test/pacman/tests/hook-exec-with-arguments.py
+#6 2.517 
+#6 2.517  61/343 pacman:hook-description-reused.py                        OK               0.18s   1 subtests passed
+#6 2.552  62/343 pacman:hook-file-remove-trigger-match.py                 FAIL             0.15s   0/1 subtests passed
+#6 2.552 >>> LD_LIBRARY_PATH=/repo/build/ MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MESON_TEST_ITERATION=1 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 RUNNING_UNDER_MESON=1 MALLOC_PERTURB_=53 /usr/sbin/python3 /repo/test/pacman/pactest.py --scriptlet-shell /usr/bin/bash --bindir /repo/build --ldconfig /usr/bin/ldconfig --verbose /repo/test/pacman/tests/hook-file-remove-trigger-match.py
+#6 2.552 
+#6 2.560  63/343 pacman:hook-file-change-packages.py                      FAIL             0.17s   0/1 subtests passed
+#6 2.560 >>> LD_LIBRARY_PATH=/repo/build/ MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MALLOC_PERTURB_=54 MESON_TEST_ITERATION=1 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 RUNNING_UNDER_MESON=1 /usr/sbin/python3 /repo/test/pacman/pactest.py --scriptlet-shell /usr/bin/bash --bindir /repo/build --ldconfig /usr/bin/ldconfig --verbose /repo/test/pacman/tests/hook-file-change-packages.py
+#6 2.560 
+#6 2.573  64/343 pacman:hook-invalid-trigger.py                           OK               0.14s   1 subtests passed
+#6 2.587  65/343 pacman:hook-file-upgrade-nomatch.py                      OK               0.17s   1 subtests passed
+#6 2.616  66/343 pacman:hook-pkg-install-trigger-match.py                 FAIL             0.18s   0/1 subtests passed
+#6 2.616 >>> LD_LIBRARY_PATH=/repo/build/ MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MESON_TEST_ITERATION=1 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 RUNNING_UNDER_MESON=1 MALLOC_PERTURB_=163 /usr/sbin/python3 /repo/test/pacman/pactest.py --scriptlet-shell /usr/bin/bash --bindir /repo/build --ldconfig /usr/bin/ldconfig --verbose /repo/test/pacman/tests/hook-pkg-install-trigger-match.py
+#6 2.616 
+#6 2.626  67/343 pacman:hook-pkg-remove-trigger-match.py                  FAIL             0.17s   0/1 subtests passed
+#6 2.627 >>> LD_LIBRARY_PATH=/repo/build/ MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MALLOC_PERTURB_=39 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MESON_TEST_ITERATION=1 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 RUNNING_UNDER_MESON=1 /usr/sbin/python3 /repo/test/pacman/pactest.py --scriptlet-shell /usr/bin/bash --bindir /repo/build --ldconfig /usr/bin/ldconfig --verbose /repo/test/pacman/tests/hook-pkg-remove-trigger-match.py
+#6 2.627 
+#6 2.627  68/343 pacman:hook-pkg-upgrade-trigger-match.py                 FAIL             0.16s   0/1 subtests passed
+#6 2.628 >>> LD_LIBRARY_PATH=/repo/build/ MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MESON_TEST_ITERATION=1 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 RUNNING_UNDER_MESON=1 MALLOC_PERTURB_=64 /usr/sbin/python3 /repo/test/pacman/pactest.py --scriptlet-shell /usr/bin/bash --bindir /repo/build --ldconfig /usr/bin/ldconfig --verbose /repo/test/pacman/tests/hook-pkg-upgrade-trigger-match.py
+#6 2.628 
+#6 2.649  69/343 pacman:hook-pkg-postinstall-trigger-match.py             FAIL             0.20s   0/1 subtests passed
+#6 2.650 >>> LD_LIBRARY_PATH=/repo/build/ MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MESON_TEST_ITERATION=1 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 RUNNING_UNDER_MESON=1 MALLOC_PERTURB_=165 /usr/sbin/python3 /repo/test/pacman/pactest.py --scriptlet-shell /usr/bin/bash --bindir /repo/build --ldconfig /usr/bin/ldconfig --verbose /repo/test/pacman/tests/hook-pkg-postinstall-trigger-match.py
+#6 2.650 
+#6 2.657  70/343 pacman:hook-target-list.py                               FAIL             0.16s   0/1 subtests passed
+#6 2.658 >>> LD_LIBRARY_PATH=/repo/build/ MALLOC_PERTURB_=198 MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MESON_TEST_ITERATION=1 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 RUNNING_UNDER_MESON=1 /usr/sbin/python3 /repo/test/pacman/pactest.py --scriptlet-shell /usr/bin/bash --bindir /repo/build --ldconfig /usr/bin/ldconfig --verbose /repo/test/pacman/tests/hook-target-list.py
+#6 2.658 
+#6 2.660  71/343 pacman:hook-type-reused.py                               OK               0.15s   1 subtests passed
+#6 2.682  72/343 pacman:hook-upgrade-trigger-no-match.py                  OK               0.16s   1 subtests passed
+#6 2.683  73/343 pacman:hook-when-reused.py                               OK               0.16s   1 subtests passed
+#6 2.700  74/343 pacman:ignore001.py                                      OK               0.15s   1 subtests passed
+#6 2.702  75/343 pacman:ignore002.py                                      OK               0.14s   1 subtests passed
+#6 2.729  76/343 pacman:ignore004.py                                      OK               0.14s   1 subtests passed
+#6 2.737  77/343 pacman:ignore003.py                                      OK               0.16s   1 subtests passed
+#6 2.783  78/343 pacman:ignore008.py                                      OK               0.13s   1 subtests passed
+#6 2.794  79/343 pacman:ignore005.py                                      OK               0.18s   1 subtests passed
+#6 2.806  80/343 pacman:ignore006.py                                      OK               0.18s   1 subtests passed
+#6 2.806  81/343 pacman:ldconfig002.py                                    FAIL             0.14s   0/1 subtests passed
+#6 2.807 >>> LD_LIBRARY_PATH=/repo/build/ MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MESON_TEST_ITERATION=1 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 RUNNING_UNDER_MESON=1 MALLOC_PERTURB_=63 /usr/sbin/python3 /repo/test/pacman/pactest.py --scriptlet-shell /usr/bin/bash --bindir /repo/build --ldconfig /usr/bin/ldconfig --verbose /repo/test/pacman/tests/ldconfig002.py
+#6 2.807 
+#6 2.817  82/343 pacman:ldconfig001.py                                    FAIL             0.16s   0/1 subtests passed
+#6 2.817 >>> LD_LIBRARY_PATH=/repo/build/ MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MESON_TEST_ITERATION=1 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 RUNNING_UNDER_MESON=1 MALLOC_PERTURB_=192 /usr/sbin/python3 /repo/test/pacman/pactest.py --scriptlet-shell /usr/bin/bash --bindir /repo/build --ldconfig /usr/bin/ldconfig --verbose /repo/test/pacman/tests/ldconfig001.py
+#6 2.817 
+#6 2.825  83/343 pacman:ignore007.py                                      OK               0.19s   1 subtests passed
+#6 2.835  84/343 pacman:ldconfig003.py                                    FAIL             0.15s   0/1 subtests passed
+#6 2.835 >>> LD_LIBRARY_PATH=/repo/build/ MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MESON_TEST_ITERATION=1 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 RUNNING_UNDER_MESON=1 MALLOC_PERTURB_=3 /usr/sbin/python3 /repo/test/pacman/pactest.py --scriptlet-shell /usr/bin/bash --bindir /repo/build --ldconfig /usr/bin/ldconfig --verbose /repo/test/pacman/tests/ldconfig003.py
+#6 2.835 
+#6 2.845  85/343 pacman:mode002.py                                        OK               0.14s   1 subtests passed
+#6 2.867  86/343 pacman:mode001.py                                        OK               0.18s   1 subtests passed
+#6 2.880  87/343 pacman:multiple-architectures01.py                       OK               0.15s   1 subtests passed
+#6 2.887  88/343 pacman:mode003.py                                        OK               0.17s   1 subtests passed
+#6 2.898  89/343 pacman:multiple-architectures02.py                       OK               0.16s   1 subtests passed
+#6 2.925  90/343 pacman:overwrite-files-match-negated.py                  OK               0.13s   1 subtests passed
+#6 2.942  91/343 pacman:overwrite-files-nonmatch.py                       OK               0.13s   1 subtests passed
+#6 2.955  92/343 pacman:noupgrade-inverted.py                             OK               0.17s   1 subtests passed
+#6 2.963  93/343 pacman:pacman001.py                                      OK               0.14s   1 subtests passed
+#6 2.970  94/343 pacman:pacman002.py                                      OK               0.14s   1 subtests passed
+#6 2.971  95/343 pacman:overwrite-files-match.py                          OK               0.16s   1 subtests passed
+#6 2.993  96/343 pacman:pacman003.py                                      OK               0.15s   1 subtests passed
+#6 3.003  97/343 pacman:pacman005.py                                      OK               0.13s   1 subtests passed
+#6 3.013  98/343 pacman:pkg-meta-invalid-name-file.py                     OK               0.13s   1 subtests passed
+#6 3.022  99/343 pacman:pkg-meta-invalid-name-local.py                    OK               0.13s   1 subtests passed
+#6 3.036 100/343 pacman:pacman004.py                                      OK               0.19s   1 subtests passed
+#6 3.048 101/343 pacman:pkg-meta-invalid-name-sync.py                     OK               0.15s   1 subtests passed
+#6 3.062 102/343 pacman:provision001.py                                   OK               0.14s   1 subtests passed
+#6 3.091 103/343 pacman:provision002.py                                   OK               0.15s   1 subtests passed
+#6 3.100 104/343 pacman:provision003.py                                   OK               0.14s   1 subtests passed
+#6 3.121 105/343 pacman:provision010.py                                   OK               0.15s   1 subtests passed
+#6 3.135 106/343 pacman:provision004.py                                   OK               0.17s   1 subtests passed
+#6 3.146 107/343 pacman:provision011.py                                   OK               0.17s   1 subtests passed
+#6 3.146 108/343 pacman:provision012.py                                   OK               0.15s   1 subtests passed
+#6 3.162 109/343 pacman:provision020.py                                   OK               0.16s   1 subtests passed
+#6 3.164 110/343 pacman:provision021.py                                   OK               0.15s   1 subtests passed
+#6 3.180 111/343 pacman:provision022.py                                   OK               0.16s   1 subtests passed
+#6 3.189 112/343 pacman:query001.py                                       OK               0.15s   1 subtests passed
+#6 3.202 113/343 pacman:query003.py                                       OK               0.14s   1 subtests passed
+#6 3.217 114/343 pacman:query004.py                                       OK               0.12s   1 subtests passed
+#6 3.227 115/343 pacman:query002.py                                       OK               0.18s   1 subtests passed
+#6 3.253 116/343 pacman:query006.py                                       OK               0.13s   1 subtests passed
+#6 3.262 117/343 pacman:query005.py                                       OK               0.16s   1 subtests passed
+#6 3.275 118/343 pacman:query007.py                                       OK               0.14s   1 subtests passed
+#6 3.288 119/343 pacman:query010.py                                       OK               0.14s   1 subtests passed
+#6 3.302 120/343 pacman:query012.py                                       OK               0.14s   1 subtests passed
+#6 3.312 121/343 pacman:query011.py                                       OK               0.16s   1 subtests passed
+#6 3.320 122/343 pacman:querycheck002.py                                  OK               0.14s   1 subtests passed
+#6 3.321 123/343 pacman:querycheck001.py                                  OK               0.15s   1 subtests passed
+#6 3.336 124/343 pacman:querycheck_fast_file_type.py                      OK               0.15s   1 subtests passed
+#6 3.366 125/343 pacman:remove-assumeinstalled.py                         OK               0.15s   1 subtests passed
+#6 3.380 126/343 pacman:reason001.py                                      OK               0.17s   1 subtests passed
+#6 3.391 127/343 pacman:remove-directory-replaced-with-symlink.py         OK               0.16s   1 subtests passed
+#6 3.404 128/343 pacman:remove-print-empty-replacements.py                OK               0.14s   1 subtests passed
+#6 3.422 129/343 pacman:remove-optdepend-of-installed-package.py          OK               0.17s   1 subtests passed
+#6 3.430 130/343 pacman:remove-recursive-cycle.py                         OK               0.15s   1 subtests passed
+#6 3.439 131/343 pacman:remove001.py                                      OK               0.15s   1 subtests passed
+#6 3.453 132/343 pacman:remove010.py                                      OK               0.14s   1 subtests passed
+#6 3.472 133/343 pacman:remove011.py                                      OK               0.15s   1 subtests passed
+#6 3.473 134/343 pacman:remove012.py                                      OK               0.14s   1 subtests passed
+#6 3.491 135/343 pacman:remove020.py                                      OK               0.15s   1 subtests passed
+#6 3.514 136/343 pacman:remove021.py                                      OK               0.15s   1 subtests passed
+#6 3.528 137/343 pacman:remove030.py                                      OK               0.15s   1 subtests passed
+#6 3.541 138/343 pacman:remove031.py                                      OK               0.15s   1 subtests passed
+#6 3.550 139/343 pacman:remove040.py                                      OK               0.14s   1 subtests passed
+#6 3.557 140/343 pacman:remove041.py                                      OK               0.13s   1 subtests passed
+#6 3.567 141/343 pacman:remove042.py                                      OK               0.14s   1 subtests passed
+#6 3.593 142/343 pacman:remove002.py                                      OK               0.29s   1 subtests passed
+#6 3.626 143/343 pacman:remove043.py                                      OK               0.18s   1 subtests passed
+#6 3.636 144/343 pacman:remove045.py                                      OK               0.16s   1 subtests passed
+#6 3.637 145/343 pacman:remove047.py                                      OK               0.16s   1 subtests passed
+#6 3.652 146/343 pacman:remove044.py                                      OK               0.20s   1 subtests passed
+#6 3.662 147/343 pacman:remove049.py                                      OK               0.17s   1 subtests passed
+#6 3.664 148/343 pacman:remove050.py                                      OK               0.15s   1 subtests passed
+#6 3.692 149/343 pacman:remove051.py                                      OK               0.15s   1 subtests passed
+#6 3.699 150/343 pacman:remove052.py                                      OK               0.16s   1 subtests passed
+#6 3.706 151/343 pacman:remove060.py                                      OK               0.15s   1 subtests passed
+#6 3.715 152/343 pacman:remove070.py                                      OK               0.16s   1 subtests passed
+#6 3.718 153/343 pacman:remove071.py                                      OK               0.15s   1 subtests passed
+#6 3.739 154/343 pacman:replace-and-upgrade-package.py                    FAIL             0.15s   0/1 subtests passed
+#6 3.740 >>> LD_LIBRARY_PATH=/repo/build/ MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MALLOC_PERTURB_=246 MESON_TEST_ITERATION=1 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 RUNNING_UNDER_MESON=1 /usr/sbin/python3 /repo/test/pacman/pactest.py --scriptlet-shell /usr/bin/bash --bindir /repo/build --ldconfig /usr/bin/ldconfig --verbose /repo/test/pacman/tests/replace-and-upgrade-package.py
+#6 3.740 
+#6 3.777 155/343 pacman:replace100.py                                     FAIL             0.15s   0/1 subtests passed
+#6 3.777 >>> LD_LIBRARY_PATH=/repo/build/ MALLOC_PERTURB_=151 MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MESON_TEST_ITERATION=1 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 RUNNING_UNDER_MESON=1 /usr/sbin/python3 /repo/test/pacman/pactest.py --scriptlet-shell /usr/bin/bash --bindir /repo/build --ldconfig /usr/bin/ldconfig --verbose /repo/test/pacman/tests/replace100.py
+#6 3.777 
+#6 3.786 156/343 pacman:replace101.py                                     OK               0.15s   1 subtests passed
+#6 3.796 157/343 pacman:replace102.py                                     OK               0.15s   1 subtests passed
+#6 3.809 158/343 pacman:replace104.py                                     OK               0.14s   1 subtests passed
+#6 3.831 159/343 pacman:replace103.py                                     OK               0.18s   1 subtests passed
+#6 3.840 160/343 pacman:replace110.py                                     EXPECTEDFAIL     0.17s   0/1 subtests passed
+#6 3.856 161/343 pacman:scriptlet001.py                                   FAIL             0.16s   0/1 subtests passed
+#6 3.857 >>> LD_LIBRARY_PATH=/repo/build/ MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MESON_TEST_ITERATION=1 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 RUNNING_UNDER_MESON=1 MALLOC_PERTURB_=33 /usr/sbin/python3 /repo/test/pacman/pactest.py --scriptlet-shell /usr/bin/bash --bindir /repo/build --ldconfig /usr/bin/ldconfig --verbose /repo/test/pacman/tests/scriptlet001.py
+#6 3.857 
+#6 3.868 162/343 pacman:scriptlet002.py                                   FAIL             0.17s   0/1 subtests passed
+#6 3.869 >>> LD_LIBRARY_PATH=/repo/build/ MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MESON_TEST_ITERATION=1 MALLOC_PERTURB_=206 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 RUNNING_UNDER_MESON=1 /usr/sbin/python3 /repo/test/pacman/pactest.py --scriptlet-shell /usr/bin/bash --bindir /repo/build --ldconfig /usr/bin/ldconfig --verbose /repo/test/pacman/tests/scriptlet002.py
+#6 3.869 
+#6 3.878 163/343 pacman:scriptlet-signal-reset.py                         OK               0.16s   1 subtests passed
+#6 3.881 164/343 pacman:scriptlet-signal-handling.py                      FAIL             0.17s   0/1 subtests passed
+#6 3.881 >>> LD_LIBRARY_PATH=/repo/build/ MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MALLOC_PERTURB_=54 MESON_TEST_ITERATION=1 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 RUNNING_UNDER_MESON=1 /usr/sbin/python3 /repo/test/pacman/pactest.py --scriptlet-shell /usr/bin/bash --bindir /repo/build --ldconfig /usr/bin/ldconfig --verbose /repo/test/pacman/tests/scriptlet-signal-handling.py
+#6 3.881 
+#6 3.898 165/343 pacman:sign001.py                                        OK               0.17s   1 subtests passed
+#6 3.915 166/343 pacman:sign002.py                                        OK               0.17s   1 subtests passed
+#6 3.926 167/343 pacman:skip-remove-with-glob-chars.py                    OK               0.15s   1 subtests passed
+#6 3.945 168/343 pacman:smoke002.py                                       OK               0.15s   1 subtests passed
+#6 4.002 169/343 pacman:symlink001.py                                     OK               0.14s   1 subtests passed
+#6 4.015 170/343 pacman:symlink-replace-with-dir.py                       OK               0.17s   1 subtests passed
+#6 4.027 171/343 pacman:symlink002.py                                     OK               0.16s   1 subtests passed
+#6 4.038 172/343 pacman:symlink010.py                                     OK               0.16s   1 subtests passed
+#6 4.045 173/343 pacman:symlink011.py                                     OK               0.16s   1 subtests passed
+#6 4.053 174/343 pacman:symlink012.py                                     OK               0.15s   1 subtests passed
+#6 4.075 175/343 pacman:symlink021.py                                     OK               0.15s   1 subtests passed
+#6 4.091 176/343 pacman:symlink020.py                                     OK               0.17s   1 subtests passed
+#6 4.151 177/343 pacman:sync-install-assumeinstalled.py                   OK               0.15s   1 subtests passed
+#6 4.176 178/343 pacman:sync-nodepversion02.py                            OK               0.15s   1 subtests passed
+#6 4.193 179/343 pacman:sync-nodepversion01.py                            OK               0.17s   1 subtests passed
+#6 4.203 180/343 pacman:sync-nodepversion03.py                            OK               0.17s   1 subtests passed
+#6 4.203 181/343 pacman:sync-nodepversion04.py                            OK               0.16s   1 subtests passed
+#6 4.204 182/343 pacman:sync-nodepversion05.py                            OK               0.15s   1 subtests passed
+#6 4.226 183/343 pacman:sync-nodepversion06.py                            OK               0.15s   1 subtests passed
+#6 4.226 184/343 pacman:sync-sysupgrade-print-replaced-packages.py        OK               0.14s   1 subtests passed
+#6 4.282 185/343 pacman:sync-update-assumeinstalled.py                    OK               0.13s   1 subtests passed
+#6 4.305 186/343 pacman:sync-update-package-removing-required-provides.py EXPECTEDFAIL     0.13s   0/1 subtests passed
+#6 4.332 187/343 pacman:sync001.py                                        OK               0.14s   1 subtests passed
+#6 4.340 188/343 pacman:sync009.py                                        OK               0.12s   1 subtests passed
+#6 4.346 189/343 pacman:sync002.py                                        OK               0.14s   1 subtests passed
+#6 4.352 190/343 pacman:sync003.py                                        OK               0.14s   1 subtests passed
+#6 4.409 191/343 pacman:sync011.py                                        OK               0.18s   1 subtests passed
+#6 4.417 192/343 pacman:sync012.py                                        OK               0.13s   1 subtests passed
+#6 4.425 193/343 pacman:sync010.py                                        OK               0.20s   1 subtests passed
+#6 4.437 194/343 pacman:sync020.py                                        OK               0.13s   1 subtests passed
+#6 4.461 195/343 pacman:sync021.py                                        OK               0.13s   1 subtests passed
+#6 4.487 196/343 pacman:sync022.py                                        OK               0.15s   1 subtests passed
+#6 4.496 197/343 pacman:sync023.py                                        OK               0.15s   1 subtests passed
+#6 4.510 198/343 pacman:sync024.py                                        OK               0.16s   1 subtests passed
+#6 4.540 199/343 pacman:sync030.py                                        OK               0.13s   1 subtests passed
+#6 4.554 200/343 pacman:sync031.py                                        OK               0.14s   1 subtests passed
+#6 4.562 201/343 pacman:sync040.py                                        OK               0.14s   1 subtests passed
+#6 4.574 202/343 pacman:sync041.py                                        OK               0.14s   1 subtests passed
+#6 4.633 203/343 pacman:sync042.py                                        OK               0.17s   1 subtests passed
+#6 4.649 204/343 pacman:sync043.py                                        OK               0.16s   1 subtests passed
+#6 4.663 205/343 pacman:sync044.py                                        OK               0.17s   1 subtests passed
+#6 4.664 206/343 pacman:sync045.py                                        OK               0.15s   1 subtests passed
+#6 4.678 207/343 pacman:sync-failover-404-with-body.py                    OK               0.73s   1 subtests passed
+#6 4.687 208/343 pacman:sync050.py                                        OK               0.13s   1 subtests passed
+#6 4.698 209/343 pacman:sync046.py                                        FAIL             0.16s   0/1 subtests passed
+#6 4.700 >>> LD_LIBRARY_PATH=/repo/build/ MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MESON_TEST_ITERATION=1 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 RUNNING_UNDER_MESON=1 MALLOC_PERTURB_=20 /usr/sbin/python3 /repo/test/pacman/pactest.py --scriptlet-shell /usr/bin/bash --bindir /repo/build --ldconfig /usr/bin/ldconfig --verbose /repo/test/pacman/tests/sync046.py
+#6 4.700 
+#6 4.713 210/343 pacman:sync051.py                                        OK               0.15s   1 subtests passed
+#6 4.720 211/343 pacman:sync052.py                                        OK               0.15s   1 subtests passed
+#6 4.805 212/343 pacman:sync1003.py                                       OK               0.14s   1 subtests passed
+#6 4.817 213/343 pacman:sync100.py                                        OK               0.18s   1 subtests passed
+#6 4.824 214/343 pacman:sync1004.py                                       OK               0.15s   1 subtests passed
+#6 4.833 215/343 pacman:sync102.py                                        OK               0.13s   1 subtests passed
+#6 4.847 216/343 pacman:sync1000.py                                       OK               0.20s   1 subtests passed
+#6 4.854 217/343 pacman:sync1008.py                                       OK               0.17s   1 subtests passed
+#6 4.863 218/343 pacman:sync101.py                                        OK               0.17s   1 subtests passed
+#6 4.882 219/343 pacman:sync103.py                                        OK               0.17s   1 subtests passed
+#6 4.896 220/343 pacman:sync104.py                                        OK               0.17s   1 subtests passed
+#6 4.937 221/343 pacman:sync110.py                                        OK               0.13s   1 subtests passed
+#6 5.018 222/343 pacman:sync1103.py                                       OK               0.17s   1 subtests passed
+#6 5.025 223/343 pacman:sync1100.py                                       OK               0.21s   1 subtests passed
+#6 5.036 224/343 pacman:sync1102.py                                       OK               0.20s   1 subtests passed
+#6 5.043 225/343 pacman:sync1101.py                                       OK               0.22s   1 subtests passed
+#6 5.049 226/343 pacman:sync1104.py                                       OK               0.19s   1 subtests passed
+#6 5.050 227/343 pacman:sync1105.py                                       OK               0.18s   1 subtests passed
+#6 5.062 228/343 pacman:sync120.py                                        OK               0.18s   1 subtests passed
+#6 5.099 229/343 pacman:sync130.py                                        OK               0.20s   1 subtests passed
+#6 5.136 230/343 pacman:sync131.py                                        OK               0.20s   1 subtests passed
+#6 5.147 231/343 pacman:sync132.py                                        OK               0.13s   1 subtests passed
+#6 5.164 232/343 pacman:sync134.py                                        OK               0.13s   1 subtests passed
+#6 5.174 233/343 pacman:sync133.py                                        OK               0.15s   1 subtests passed
+#6 5.188 234/343 pacman:sync135.py                                        OK               0.14s   1 subtests passed
+#6 5.200 235/343 pacman:sync137.py                                        OK               0.14s   1 subtests passed
+#6 5.211 236/343 pacman:sync136.py                                        OK               0.16s   1 subtests passed
+#6 5.220 237/343 pacman:sync138.py                                        OK               0.16s   1 subtests passed
+#6 5.246 238/343 pacman:sync139.py                                        OK               0.15s   1 subtests passed
+#6 5.299 239/343 pacman:sync140.py                                        OK               0.16s   1 subtests passed
+#6 5.313 240/343 pacman:sync150.py                                        OK               0.15s   1 subtests passed
+#6 5.325 241/343 pacman:sync141.py                                        OK               0.17s   1 subtests passed
+#6 5.337 242/343 pacman:sync300.py                                        OK               0.15s   1 subtests passed
+#6 5.346 243/343 pacman:smoke003.py                                       OK               1.54s   1 subtests passed
+#6 5.358 244/343 pacman:smoke004.py                                       OK               1.53s   1 subtests passed
+#6 5.367 245/343 pacman:sync306.py                                        OK               0.16s   1 subtests passed
+#6 5.389 246/343 pacman:sync400.py                                        OK               0.18s   1 subtests passed
+#6 5.390 247/343 pacman:sync402.py                                        OK               0.14s   1 subtests passed
+#6 5.411 248/343 pacman:sync401.py                                        OK               0.19s   1 subtests passed
+#6 5.423 249/343 pacman:sync200.py                                        OK               0.25s   1 subtests passed
+#6 5.444 250/343 pacman:sync403.py                                        EXPECTEDFAIL     0.14s   0/1 subtests passed
+#6 5.456 251/343 pacman:sync404.py                                        OK               0.14s   1 subtests passed
+#6 5.468 252/343 pacman:sync405.py                                        OK               0.14s   1 subtests passed
+#6 5.484 253/343 pacman:sync406.py                                        EXPECTEDFAIL     0.15s   0/1 subtests passed
+#6 5.500 254/343 pacman:sync407.py                                        OK               0.15s   1 subtests passed
+#6 5.501 255/343 pacman:sync500.py                                        OK               0.14s   1 subtests passed
+#6 5.522 256/343 pacman:sync501.py                                        OK               0.15s   1 subtests passed
+#6 5.555 257/343 pacman:sync502.py                                        OK               0.16s   1 subtests passed
+#6 5.564 258/343 pacman:sync503.py                                        OK               0.16s   1 subtests passed
+#6 5.573 259/343 pacman:sync700.py                                        OK               0.15s   1 subtests passed
+#6 5.573 260/343 pacman:sync600.py                                        OK               0.16s   1 subtests passed
+#6 5.597 261/343 pacman:sync701.py                                        OK               0.15s   1 subtests passed
+#6 5.631 262/343 pacman:sync890.py                                        OK               0.16s   1 subtests passed
+#6 5.650 263/343 pacman:sync891.py                                        OK               0.16s   1 subtests passed
+#6 5.659 264/343 pacman:sync702.py                                        OK               0.20s   1 subtests passed
+#6 5.671 265/343 pacman:sync895.py                                        OK               0.15s   1 subtests passed
+#6 5.671 266/343 pacman:sync893.py                                        OK               0.16s   1 subtests passed
+#6 5.686 267/343 pacman:sync892.py                                        OK               0.18s   1 subtests passed
+#6 5.701 268/343 pacman:sync896.py                                        OK               0.14s   1 subtests passed
+#6 5.721 269/343 pacman:sync897.py                                        OK               0.16s   1 subtests passed
+#6 5.730 270/343 pacman:sync898.py                                        OK               0.16s   1 subtests passed
+#6 5.740 271/343 pacman:sync899.py                                        OK               0.16s   1 subtests passed
+#6 5.751 272/343 pacman:sync900.py                                        OK               0.15s   1 subtests passed
+#6 5.775 273/343 pacman:sync901.py                                        OK               0.14s   1 subtests passed
+#6 5.804 274/343 pacman:sync993.py                                        OK               0.13s   1 subtests passed
+#6 5.814 275/343 pacman:sync990.py                                        OK               0.16s   1 subtests passed
+#6 5.826 276/343 pacman:sync992.py                                        OK               0.16s   1 subtests passed
+#6 5.834 277/343 pacman:trans001.py                                       OK               0.15s   1 subtests passed
+#6 5.835 278/343 pacman:sync999.py                                        OK               0.16s   1 subtests passed
+#6 5.849 279/343 pacman:type001.py                                        OK               0.15s   1 subtests passed
+#6 5.897 280/343 pacman:upgrade001.py                                     OK               0.17s   1 subtests passed
+#6 5.913 281/343 pacman:upgrade002.py                                     OK               0.17s   1 subtests passed
+#6 5.927 282/343 pacman:upgrade003.py                                     OK               0.17s   1 subtests passed
+#6 5.931 283/343 pacman:unresolvable001.py                                OK               0.21s   1 subtests passed
+#6 5.950 284/343 pacman:upgrade004.py                                     OK               0.17s   1 subtests passed
+#6 5.961 285/343 pacman:upgrade005.py                                     OK               0.16s   1 subtests passed
+#6 5.961 286/343 pacman:upgrade010.py                                     OK               0.13s   1 subtests passed
+#6 5.988 287/343 pacman:upgrade013.py                                     OK               0.15s   1 subtests passed
+#6 5.990 288/343 pacman:upgrade011.py                                     OK               0.15s   1 subtests passed
+#6 6.010 289/343 pacman:upgrade020.py                                     OK               0.16s   1 subtests passed
+#6 6.060 290/343 pacman:upgrade022.py                                     OK               0.14s   1 subtests passed
+#6 6.069 291/343 pacman:upgrade021.py                                     OK               0.17s   1 subtests passed
+#6 6.078 292/343 pacman:upgrade023.py                                     OK               0.15s   1 subtests passed
+#6 6.091 293/343 pacman:upgrade025.py                                     OK               0.14s   1 subtests passed
+#6 6.109 294/343 pacman:upgrade024.py                                     OK               0.17s   1 subtests passed
+#6 6.110 295/343 pacman:upgrade006.py                                     OK               0.29s   1 subtests passed
+#6 6.130 296/343 pacman:smoke001.py                                       OK               2.34s   1 subtests passed
+#6 6.142 297/343 pacman:upgrade026.py                                     OK               0.18s   1 subtests passed
+#6 6.151 298/343 pacman:upgrade027.py                                     OK               0.18s   1 subtests passed
+#6 6.161 299/343 pacman:upgrade029.py                                     OK               0.16s   1 subtests passed
+#6 6.177 300/343 pacman:upgrade030.py                                     OK               0.16s   1 subtests passed
+#6 6.177 301/343 pacman:upgrade028.py                                     OK               0.18s   1 subtests passed
+#6 6.204 302/343 pacman:upgrade031.py                                     OK               0.14s   1 subtests passed
+#6 6.235 303/343 pacman:upgrade032.py                                     OK               0.16s   1 subtests passed
+#6 6.245 304/343 pacman:upgrade040.py                                     OK               0.17s   1 subtests passed
+#6 6.257 305/343 pacman:upgrade042.py                                     OK               0.15s   1 subtests passed
+#6 6.257 306/343 pacman:upgrade041.py                                     OK               0.16s   1 subtests passed
+#6 6.273 307/343 pacman:upgrade043.py                                     OK               0.16s   1 subtests passed
+#6 6.286 308/343 pacman:upgrade050.py                                     OK               0.14s   1 subtests passed
+#6 6.290 309/343 pacman:upgrade045.py                                     OK               0.15s   1 subtests passed
+#6 6.304 310/343 pacman:upgrade051.py                                     OK               0.15s   1 subtests passed
+#6 6.306 311/343 pacman:upgrade052.py                                     OK               0.14s   1 subtests passed
+#6 6.341 312/343 pacman:upgrade053.py                                     OK               0.17s   1 subtests passed
+#6 6.353 313/343 pacman:upgrade055.py                                     OK               0.15s   1 subtests passed
+#6 6.365 314/343 pacman:upgrade054.py                                     OK               0.18s   1 subtests passed
+#6 6.385 315/343 pacman:upgrade056.py                                     OK               0.15s   1 subtests passed
+#6 6.398 316/343 pacman:upgrade058.py                                     OK               0.14s   1 subtests passed
+#6 6.398 317/343 pacman:upgrade057.py                                     OK               0.15s   1 subtests passed
+#6 6.417 318/343 pacman:upgrade059.py                                     OK               0.15s   1 subtests passed
+#6 6.433 319/343 pacman:upgrade060.py                                     OK               0.16s   1 subtests passed
+#6 6.433 320/343 pacman:upgrade061.py                                     OK               0.14s   1 subtests passed
+#6 6.459 321/343 pacman:upgrade071.py                                     OK               0.15s   1 subtests passed
+#6 6.472 322/343 pacman:upgrade070.py                                     OK               0.18s   1 subtests passed
+#6 6.487 323/343 pacman:upgrade074.py                                     OK               0.13s   1 subtests passed
+#6 6.489 324/343 pacman:upgrade072.py                                     OK               0.17s   1 subtests passed
+#6 6.511 325/343 pacman:upgrade073.py                                     OK               0.17s   1 subtests passed
+#6 6.525 326/343 pacman:upgrade075.py                                     OK               0.16s   1 subtests passed
+#6 6.540 327/343 pacman:upgrade076.py                                     OK               0.15s   1 subtests passed
+#6 6.552 328/343 pacman:upgrade077.py                                     OK               0.15s   1 subtests passed
+#6 6.559 329/343 pacman:upgrade078.py                                     EXPECTEDFAIL     0.15s   0/1 subtests passed
+#6 6.569 330/343 pacman:upgrade080.py                                     OK               0.15s   1 subtests passed
+#6 6.578 331/343 pacman:upgrade082.py                                     OK               0.14s   1 subtests passed
+#6 6.587 332/343 pacman:upgrade081.py                                     OK               0.15s   1 subtests passed
+#6 6.611 333/343 pacman:upgrade083.py                                     OK               0.15s   1 subtests passed
+#6 6.616 334/343 pacman:upgrade084.py                                     OK               0.14s   1 subtests passed
+#6 6.631 335/343 pacman:upgrade090.py                                     OK               0.14s   1 subtests passed
+#6 6.632 336/343 pacman:upgrade100.py                                     FAIL             0.13s   0/1 subtests passed
+#6 6.632 >>> LD_LIBRARY_PATH=/repo/build/ MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MALLOC_PERTURB_=55 MESON_TEST_ITERATION=1 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 RUNNING_UNDER_MESON=1 /usr/sbin/python3 /repo/test/pacman/pactest.py --scriptlet-shell /usr/bin/bash --bindir /repo/build --ldconfig /usr/bin/ldconfig --verbose /repo/test/pacman/tests/upgrade100.py
+#6 6.632 
+#6 6.704 337/343 pacman:parseopts_test.sh                                 OK               0.14s   56 subtests passed
+#6 6.713 338/343 pacman:xfercommand001.py                                 OK               0.20s   1 subtests passed
+#6 6.721 339/343 pacman:vercmptest                                        OK               0.14s   92 subtests passed
+#6 7.149 340/343 pacman:upgrade-download-404.py                           OK               0.62s   1 subtests passed
+#6 7.161 341/343 pacman:upgrade-download-pkg-and-sig-with-filename.py     OK               0.62s   1 subtests passed
+#6 7.179 342/343 pacman:upgrade-download-with-xfercommand.py              OK               0.63s   1 subtests passed
+#6 7.457 343/343 pacman:makepkg-template_test.sh                          OK               0.89s   36 subtests passed
+#6 7.467 
+#6 7.467 Ok:                318 
+#6 7.467 Expected Fail:     6   
+#6 7.467 Fail:              19  
+#6 7.467 
+#6 7.467 Full log written to /repo/build/meson-logs/testlog.txt
+#6 DONE 8.3s
+
+#7 [4/4] RUN pacman -Rcsu --noconfirm $(pacman -Qqdt)
+#7 1.357 checking dependencies...
+#7 1.360 :: git optionally requires python: git svn & git p4
+#7 1.360 :: iproute2 optionally requires python: for routel
+#7 1.360 :: libevent optionally requires python: event_rpcgen.py
+#7 1.360 :: libxml2 optionally requires python: Python bindings
+#7 1.360 :: util-linux-libs optionally requires python: python bindings to libmount
+#7 1.360 
+#7 1.360 Package (5)  Old Version  Net Change
+#7 1.360 
+#7 1.360 mpdecimal    4.0.1-3       -0.32 MiB
+#7 1.360 ninja        1.13.2-3      -0.41 MiB
+#7 1.360 python       3.14.3-1     -72.18 MiB
+#7 1.360 python-tqdm  4.67.3-1      -0.62 MiB
+#7 1.360 meson        1.10.2-1     -16.09 MiB
+#7 1.360 
+#7 1.360 Total Removed Size:  89.62 MiB
+#7 1.360 
+#7 1.360 :: Do you want to remove these packages? [Y/n] 
+#7 1.383 :: Processing package changes...
+#7 1.383 removing meson...
+#7 2.670 removing python-tqdm...
+#7 2.840 removing python...
+#7 5.192 removing mpdecimal...
+#7 5.226 removing ninja...
+#7 5.419 :: Running post-transaction hooks...
+#7 5.419 (1/1) Arming ConditionNeedsUpdate...
+#7 DONE 6.1s
+
+#8 exporting to image
+#8 exporting layers
+#8 exporting layers 2.6s done
+#8 writing image sha256:1e1e0f72adc68f609dfa7ac0ef94f09e94dad39773a766a877f9004d0cb2e6bf 0.0s done
+#8 naming to docker.io/library/build-env-test:latest 0.1s done
+#8 DONE 2.9s
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
