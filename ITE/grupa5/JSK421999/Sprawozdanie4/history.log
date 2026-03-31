@@ -1,0 +1,82 @@
+  283  docker ps -a
+  284  docker volume create vol_wejsciowy
+  285  docker volume create vol_wyjsciowy
+  286  docker run --rm -v vol_wejsciowy:/data alpine/git clone https://github.com/nestjs/typescript-starter.git /data
+  287  docker run --rm   -v vol_wejsciowy:/app   -v vol_wyjsciowy:/output   -w /app   node:20   bash -c "npm install && npm run build && cp -r dist /output/"
+  288  docker run --rm -v vol_wyjsciowy:/output node:20 bash -c "apt-get update && apt-get install -y git && git clone https://github.com/nestjs/typescript-starter.git /app && cd /app && npm install && npm run build && cp -r dist /output/"
+  289  docker run -it --rm --name serwer_iperf networkstatic/iperf3 -s
+  290  ps -a
+  291  docker network create moja_siec
+  292  docker run -it --rm --name serwer_iperf --network moja_siec networkstatic/iperf3 -s
+  293  docker run -it --rm --name serwer_iperf -p 5201:5201 networkstatic/iperf3 -s
+  294  docker run -d -p 2222:22 --name test_ssh rastasheep/ubuntu-sshd:18.04
+  295  docker ps -a
+  296  docker stop db2e26295094
+  297  docker network create jenkins
+  298  docker run --name jenkins-docker --rm --detach   --privileged --network jenkins --network-alias docker   --env DOCKER_TLS_CERTDIR=/certs   -v jenkins-docker-certs:/certs/client   -v jenkins-data:/var/jenkins_home   docker:dind
+  299  docker run --name jenkins-blueocean --rm --detach   --network jenkins --env DOCKER_HOST=tcp://docker:2376   --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1   -v jenkins-data:/var/jenkins_home   -v jenkins-docker-certs:/certs/client:ro   -p 8080:8080 -p 50000:50000   jenkins/jenkins:lts
+  300  docker logs jenkins-blueocean
+  301  docker logs --tail 50 jenkins-blueocean
+  302  docker logs jenkins-blueocean
+  303  docker restart jenkins-blueocean
+  304  docker logs jenkins-blueocean
+  305  docker stop jenkins-blueocean jenkins-docker
+  306  docker volume rm jenkins-data
+  307  docker run --name jenkins-docker --rm --detach   --privileged --network jenkins --network-alias docker   --env DOCKER_TLS_CERTDIR=/certs   -v jenkins-docker-certs:/certs/client   -v jenkins-data:/var/jenkins_home   docker:dind
+  308  docker run --name jenkins-blueocean --rm --detach   --network jenkins --env DOCKER_HOST=tcp://docker:2376   --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1   -v jenkins-data:/var/jenkins_home   -v jenkins-docker-certs:/certs/client:ro   -p 8080:8080 -p 50000:50000   jenkins/jenkins:lts
+  309  docker logs jenkins-blueocean
+  310  docker logs jenkins-dind
+  311  docker logs jenkins-docker
+  312  docker stop jenkins-blueocean jenkins-docker
+  313  docker volume rm jenkins-data
+  314  docker run --name jenkins-docker --rm --detach   --privileged --network jenkins --network-alias docker   --env DOCKER_TLS_CERTDIR=/certs   -v jenkins-docker-certs:/certs/client   -v jenkins-data:/var/jenkins_home   docker:dind --storage-driver overlay2
+  315  docker run --name jenkins-blueocean --rm --detach   --network jenkins --env DOCKER_HOST=tcp://docker:2376   --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1   -v jenkins-data:/var/jenkins_home   -v jenkins-docker-certs:/certs/client:ro   -p 8080:8080 -p 50000:50000   jenkins/jenkins:lts-jdk17
+  316  docker logs jenkins-blueocean
+  317  docker exec -it jenkins-blueocean docker version
+  318  docker stop jenkins-blueocean jenkins-docker
+  319  docker volume rm jenkins-data jenkins-docker-certs
+  320  docker network rm jenkins
+  321  docker network create jenkins
+  322  docker run --name jenkins-docker --detach   --privileged --network jenkins --network-alias docker   --env DOCKER_TLS_CERTDIR=/certs   -v jenkins-docker-certs:/certs/client   docker:dind
+  323  docker run --name jenkins-blueocean --detach   --network jenkins   -e DOCKER_HOST=tcp://docker:2376   -e DOCKER_CERT_PATH=/certs/client   -e DOCKER_TLS_VERIFY=1   -v jenkins-data:/var/jenkins_home   -v jenkins-docker-certs:/certs/client:ro   -p 8080:8080 -p 50000:50000   jenkins/jenkins:lts
+  324  docker logs jenkins-blueocean
+  325  docker logs jenkins-docker
+  326  docker logs jenkins-blueocean | grep -i entropy
+  327  docker run -p 8080:8080 jenkins/jenkins:lts
+  328  docker stop jenkins-blueocean
+  329  docker run --name jenkins-blueocean --rm --detach   --network jenkins --env DOCKER_HOST=tcp://docker:2376   --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1   --dns 8.8.8.8   -v jenkins-data:/var/jenkins_home   -v jenkins-docker-certs:/certs/client:ro   -p 8080:8080 -p 50000:50000   jenkins/jenkins:lts
+  330  docker stop jenkins-blueocean jenkins-docker
+  331  docker run --name jenkins-docker --rm --detach   --privileged --network jenkins --network-alias docker   --env DOCKER_TLS_CERTDIR=/certs   -v jenkins-docker-certs:/certs/client   -v jenkins-data:/var/jenkins_home   docker:dind
+  332  docker ps -a
+  333  docker stop c0ba21dd0a5a
+  334  docker ps -a
+  335  docker rmi c0ba21dd0a5a
+  336  docker run --name jenkins-docker --rm --detach   --privileged --network jenkins --network-alias docker   --env DOCKER_TLS_CERTDIR=/certs   -v jenkins-docker-certs:/certs/client   -v jenkins-data:/var/jenkins_home   docker:dind
+  337  docker rmi ef0534e60c1239bc79b7a4f6210fcd2ae05fa2045481ab45353e0c4e520ccbb8
+  338  docker ps -a
+  339  docker rmi ef0534e60c12
+  340  docker rm ef0534e60c12 c0ba21dd0a5a fbfc24975827
+  341  docker run --name jenkins-docker --rm --detach   --privileged --network jenkins --network-alias docker   --env DOCKER_TLS_CERTDIR=/certs   -v jenkins-docker-certs:/certs/client   -v jenkins-data:/var/jenkins_home   docker:dind
+  342  docker run --name jenkins-blueocean --rm --detach   --network jenkins --env DOCKER_HOST=tcp://docker:2376   --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1   --dns 8.8.8.8   -v jenkins-data:/var/jenkins_home   -v jenkins-docker-certs:/certs/client:ro   -p 8080:8080 -p 50000:50000   jenkins/jenkins:lts
+  343  docker logs --tail 30 jenkins-blueocean
+  344  docker exec -it jenkins-blueocean ping -c 4 updates.jenkins.io
+  345  docker ps -a
+  346  docker exec -it jenkins-blueocean "ping -c 4 updates.jenkins.io"
+  347  docker exec -it jenkins-blueocean bash
+  348  docker exec -it jenkins-blueocean -u root bash
+  349  docker exec -u root -it jenkins-blueocean bash
+  350  docker rm -f jenkins-blueocean
+  351  docker run --name jenkins-blueocean --rm --detach   --network jenkins --env DOCKER_HOST=tcp://docker:2376   --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1   --env JAVA_OPTS="-Djenkins.install.runSetupWizard=false"   -v jenkins-data:/var/jenkins_home   -v jenkins-docker-certs:/certs/client:ro   -p 8080:8080 -p 50000:50000   jenkins/jenkins:lts
+  352  docker ps -a
+  353  docker stop jenkins-blueocean jenkins-docker
+  354  docker ps -a
+  355  ls
+  356  curl -v -O https://update.code.visualstudio.com/commit:c9d77990917f3102ada88be140d28b038d1dd7c7/cli-alpine-x64/stable
+  357  ls
+  358  ip -br a
+  359  sudo ip link set dev ens18 mtu 1360
+  360  curl -v -O https://update.code.visualstudio.com/commit:c9d77990917f3102ada88be140d28b038d1dd7c7/cli-alpine-x64/stable
+  361  sudo ip link set dev ens18 mtu 1100
+  362  curl -v -O https://update.code.visualstudio.com/commit:c9d77990917f3102ada88be140d28b038d1dd7c7/cli-alpine-x64/stable
+  363  ls
+  364  history > MDO2026_ITE/ITE/grupa5/JSK421999/Sprawozdanie4/history.log
