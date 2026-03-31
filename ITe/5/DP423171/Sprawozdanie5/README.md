@@ -17,7 +17,11 @@ Wykorzystano jednostkę fizyczną z zainstalowanym systemem Linux.
 
 1. Dokonano instalacji Jenkins'a:
 
-  - Instalacja się właściwie nie zmienia w stosunku do tego,
+  - Instalację zarejestrowałem z pozycji terminala:
+
+  ![](img/anim/01-jenkins-reinstall.gif)
+
+  - Konfiguracja się właściwie nie zmienia w stosunku do tego,
     co już konfigurowałem na ostatnich zajęciach.
   
   - Jenkins dodatkowo bazuje na własnym [`Dockerfile`],
