@@ -13,8 +13,9 @@ Aby umożliwić Jenkinsowi bezpieczne budowanie kontenerów, zastosowano podejś
 
 Pierwszym krokiem było uruchomienie usługi DIND. Następnie uruchomiono kontener `jenkins-blueocean`. Różnica między oficjalnym obrazem `jenkins/jenkins` a wariantem `blueocean` polega na tym, że ten drugi ma doinstalowanego klienta Docker CLI oraz zestaw wtyczek graficznych Blue Ocean, co jest niezbędne do poprawnej komunikacji z kontenerem DIND.
 
+Oba kontenery uruchomione (`docker ps`):
+
 ![5](img/Zrzut ekranu 2026-03-30 231703.png)
-![5](img/Zrzut ekranu 2026-03-30 231750.png)
 
 Aby uzyskać dostęp do panelu Jenkinsa z poziomu maszyny fizycznej, w programie VS Code (połączonym przez SSH) skonfigurowano przekierowanie portu `8080`.
 
@@ -78,24 +79,13 @@ W interfejsie Jenkinsa stworzono zadanie typu Pipeline i połączono je z repozy
 ![5](img/Zrzut ekranu 2026-03-31 022539.png)
 ![5](img/Zrzut ekranu 2026-03-31 011032.png)
 
+Gdy metoda nie działała, spróbowano alternatywnej opcji:
+
+![5](img/Zrzut ekranu 2026-03-31 084701.png)
+
 Uruchomienie procesu: 
 
 ![5](img/Zrzut ekranu 2026-03-31 091422.png)
-![5](img/Zrzut ekranu 2026-03-31 094808.png)
-![5](img/Zrzut ekranu 2026-03-31 094759.png)
-![5](img/Zrzut ekranu 2026-03-31 101629.png)
-
-Ponowne uruchomienie: 
-
-![5](<img/Zrzut ekranu 2026-03-31 100219.png>)
-
-Konfiguracja skryptu wpisanego bezpośrednio do obiektu:
-
-![5](<img/Zrzut ekranu 2026-03-31 095323.png>)
-![5](<img/Zrzut ekranu 2026-03-31 100246.png>)
-![5](<img/Zrzut ekranu 2026-03-31 101249.png>)
-
-Dwa uruchomienia potwierdzają powtarzalność procesu. 
 
 # 4. Architektura i etapy potoku (Pipeline Stages)
 
