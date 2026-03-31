@@ -23,3 +23,5 @@ docker rm portfinder-test
 
 docker build -t app-deploy -f Dockerfile.deploy .
 docker run --rm app-deploy --help
+
+docker save app-deploy | gzip > portfinder-${BUILD_NUMBER}.tar.gz
