@@ -141,7 +141,7 @@ Sprawdzenie poprawności uruchomienia binarki w najlżejszym obrazie:
 (TWORZENIE TRWAŁO ŁĄCZNIE 40 MINUT, PRACOWAŁAM CAŁY CZAS WIĘC PROSZE WZIĄŚĆ TO POD UWAGĘ PRZY OCENIE)
 
 ### Publish
-W ostatnim etapie Pipeline'u, gotowy, przetestowany lekki obraz Dockera z programem jest kompresowany (`docker save app-deploy | gzip > portfinder-${BUILD_NUMBER}.tar.gz`) i przygotowywany jako artefakt `portfinder-${BUILD_NUMBER}.tar.gz`. Jenkins wykorzystuje funkcję `archiveArtifacts`, udostępniając archiwum do pobrania wprost z interfejsu WWW. W scenariuszach produkcyjnych, w tym miejscu wykorzystalibyśmy np. komendę `docker push` do rejestru (np. Docker Hub).
+W ostatnim etapie Pipeline'u, gotowy, przetestowany lekki obraz Dockera z programem jest kompresowany i przygotowywany jako artefakt `portfinder-12.tar`. Jenkins wykorzystuje funkcję `archiveArtifacts`, udostępniając archiwum do pobrania wprost z interfejsu WWW. W scenariuszach produkcyjnych, w tym miejscu wykorzystalibyśmy np. komendę `docker push` do rejestru.
 
 
 Główne zapytania do LLM: 
