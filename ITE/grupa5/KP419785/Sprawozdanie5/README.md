@@ -82,25 +82,36 @@ Gdy metoda nie działała, spróbowano alternatywnej opcji:
 
 ![5](img/Zrzut ekranu 2026-03-31 084701.png)
 
+Uruchomienie procesu: 
+
 ![5](img/Zrzut ekranu 2026-03-31 091422.png)
 
 # 4. Architektura i etapy potoku (Pipeline Stages)
 
 Potok zdefiniowany w pliku `Jenkinsfile` realizuje pełny cykl życia wdrażania aplikacji dla programu napisanego w języku Go (`portfinder`).
+
 ![5](img/Zrzut ekranu 2026-03-31 090742.png)
 
 ### Build 
 Etap korzysta z dedykowanego pliku `Dockerfile.build`. Środowisko bazuje na obrazie `golang:1.24-alpine`, instaluje narzędzia (`make`, `git`), klonuje kod źródłowy aplikacji i wykonuje kompilację poleceniem `go build`.
+
 ![5](img/Zrzut ekranu 2026-03-31 000053.png)
+
 Uruchomienie procesu budowania obrazu budującego:
+
 ![5](img/Zrzut ekranu 2026-03-31 004629.png)
 
 ### Test
 Etap korzysta z pliku `Dockerfile.test`. Ten obraz dziedziczy warstwy po obrazie wygenerowanym w etapie Build (`FROM app-build:latest`) i jako komendę główną deklaruje wykonanie `go test ./...`.
+
 ![5](img/Zrzut ekranu 2026-03-31 000459.png)
+
 Właściwe testy budują się i uruchamiają błyskawicznie dzięki wykorzystaniu gotowego środowiska:
+
 ![5](img/Zrzut ekranu 2026-03-31 004657.png)
+
 Ręczna weryfikacja logów testowych i czyszczenie wykazuje brak problemów (projekt domyślnie nie zawiera plików testowych, co potwierdza status `[no test files]`):
+
 ![5](img/Zrzut ekranu 2026-03-31 004732.png)
 
 ### Deploy i dyskusja architektoniczna
