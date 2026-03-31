@@ -99,7 +99,7 @@ Na koniec uruchomiono ten sam pipeline drugi raz, tym razem czas jego wykonywani
 
 ## Podsumowanie
 
-Zbudowano i uruchomiono instancję Jenkins + Blue Ocean w trybie zagnieżdżonego Dockera, potwierdzając działanie logowaniem do UI i podstawowymi pipeline’ami; powtórne uruchomienie pipeline’u przyspieszyło dzięki cache warstw Dockera i artefaktom w workspace. Dalsze prace powinny skupić się na utrwaleniu procesów (backup konfiguracji, monitorowanie logów), automatyzacji kolejnych pipeline’ów oraz świadomym zarządzaniu cache, żeby skracać czasy buildów bez utraty spójności środowiska.
+W trakcie labolatoriów zbudowano i uruchomiono instancję Jenkins + Blue Ocean w trybie zagnieżdżonego Dockera, potwierdzając działanie stworzeniem konta administratora oraz logowaniem do UI i podstawowymi pipeline’ami. Powtórne uruchomienie pipeline’u przyspieszyło dzięki cache warstw Dockera i artefaktom w workspace. Zapoznano się również za składnią GROOVY.
 
 
 ### Historia konsoli:
