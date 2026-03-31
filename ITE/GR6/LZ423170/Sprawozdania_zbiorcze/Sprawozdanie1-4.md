@@ -7,7 +7,7 @@ Sprawozdanie zbiorcze z laboratoriów 1-4 obejmuje przygotowanie środowiska pra
 # Lab1 - Wprowadzenie, Git, Gałęzie, SSH
 
 Laboratorium 1 zawierało zadania związane z przygotowaniem środowiska pracy. 
-Wykonane kroki-
+Wykonane kroki
 
 1. **Instalacja klienta Git i obsługa kluczy SSH**- 
 
@@ -26,7 +26,7 @@ Wykonane kroki-
 Drugie zajęcia zawierały zadania związane z zestawieniem różnic między kontenerem a maszyna wirtualną.
 Kontener - współdzieli jądro systemu, daje możliwość szybkiego uruchomienia wymaganych programów.
 
-Wykonane kroki-
+Wykonane kroki
 
 1. **Instalacja Dockera w systemie linuksowym**
 
@@ -46,7 +46,7 @@ Wykonane kroki-
 
 Laboratorium 3 zawierało zadania związane z budowaniem oprogramowania w środowisku CI, Dzięki temu cały proces pozostaje przenośny.
 
-Wykonane kroki-
+Wykonane kroki
 
 1. **Wybór oprogramowania** - Redis (Remote Dictionary Server) zawiera Makefile i testy jednostkowe.
 
@@ -68,7 +68,7 @@ Laboratorium 4 -  zadania związane z dodatkową terminologią w konteneryzacji 
 
 Jenkins - serwer do wdrażania procesó ciągłej integracji i dostarczania. Pozwala na automatyczne testowanie i wdrażanie oprogramowania.
 
-Wykonane kroki-
+Wykonane kroki
 
 1. **Zachowywanie stanu między kontenerami** - przygotowanie woluminów- wejście i wyjście, podłączonych do kontenera bazowego. Sklonowanie repozytorium na wolumin wejściowy z lokalnego katalogu ( Git niedostępny w kontenerze), uruchomienie builda.
 
@@ -112,7 +112,7 @@ Kluczowe zagadnienia obejmują znaczenie izolacji środowisk, automatyzacji buil
 - `docker stop <id>`- zatrzymanie kontenera.
 - `docker rm <id>`- usunięcie kontenera.
 - `docker images`- wyświetla dostępne obrazy.
-- `docker --rm <obraz>`- usuniięcie obrazu po zatrzymaniu
+- `docker --rm <obraz>`- usuniięcie obrazu po zatrzymaniu.
 
 ## Budowanie własnych obrazów (Dockerfile)
 - `docker build -t <nazwa> .`- buduje obraz z Dockerfile
