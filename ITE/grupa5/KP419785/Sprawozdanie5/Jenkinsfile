@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+    stages {
+        stage('Clean') {
+            steps {
+                sh 'docker system prune -f'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh '''
+                    docker build -t app-build \
+                    -f ITE/grupa5/KP419785/Sprawozdanie5/portfinder/Dockerfile.build .
+                '''
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'docker run --name portfinder-test app-build go test ./... || true'
+                sh 'docker logs portfinder-test > test-results.txt 2>&1 || true'
+                sh 'docker rm portfinder-test || true'
+                archiveArtifacts artifacts: 'test-results.txt', allowEmptyArchive: true
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh '''
+                    docker build -t app-deploy \
+                    -f ITE/grupa5/KP419785/Sprawozdanie5/portfinder/Dockerfile.deploy .
+                '''
+                sh 'docker run --rm --name portfinder-deploy app-deploy --help'
+            }
+        }
+        stage('Publish') {
+            steps {
+                sh 'docker save app-deploy | gzip > portfinder-${BUILD_NUMBER}.tar.gz'
+                archiveArtifacts artifacts: 'portfinder-*.tar.gz', allowEmptyArchive: false
+            }
+        }
+    }
+}
