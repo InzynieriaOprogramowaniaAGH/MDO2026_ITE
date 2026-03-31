@@ -33,7 +33,9 @@ Wykorzystano jednostkę fizyczną z zainstalowanym systemem Linux.
     jest nawet wskazana).
   
   - Zadbano również o retencję (archiwizację) logów i ustawienie
-    jasnej polityki dostępu do treści (też logów):
+    jasnej polityki dostępu do treści (też logów). Dla dobrej praktyki
+    bezpieczeństwa, bluruję nazwę administratora (dobrą praktyką jest
+    nieznajomość loginu adminów):
   
   ![](img/setup/logs.png)
   ![](img/setup/security.png)
