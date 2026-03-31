@@ -4,7 +4,8 @@ Sprawozdanie dla ćwiczenia piątego.
 
 ## Cel ćwiczenia
 
-<!-- WIP --->
+Wstępna konfiguracja Jenkins i rozpoczęcie pracy z środowiskiem
+CI/CD. Początkowa definicja *pipeline* dla projektu.
 
 ## Sprzęt
 
