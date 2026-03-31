@@ -1,0 +1,25 @@
+docker network create jenkins
+
+docker run --name jenkins-docker --rm --detach --privileged \
+  --network jenkins --network-alias docker --env DOCKER_TLS_CERTDIR=/certs \
+  --volume jenkins-docker-certs:/certs/client --volume jenkins-data:/var/jenkins_home \
+  --publish 2376:2376 docker:dind --storage-driver overlay2
+
+docker exec jenkins-blueocean cat /var/jenkins_home/secrets/initialAdminPassword
+
+git add Dockerfile.build Dockerfile.test
+git commit -m "KP419785 dodanie Dockerfiles"
+nano Jenkinsfile
+git add Jenkinsfile
+git commit -m "KP419785 dodanie Jenkinsfile"
+git push
+
+docker build -t app-build -f Dockerfile.build .
+
+docker build -t app-test -f Dockerfile.test .
+docker run --name portfinder-test app-test
+docker logs portfinder-test
+docker rm portfinder-test
+
+docker build -t app-deploy -f Dockerfile.deploy .
+docker run --rm app-deploy --help
