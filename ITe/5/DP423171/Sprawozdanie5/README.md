@@ -19,7 +19,7 @@ Wykorzystano jednostkę fizyczną z zainstalowanym systemem Linux.
 
   - Instalację zarejestrowałem z pozycji terminala:
 
-  ![](img/anim/01-jenkins-reinstall.gif)
+  ![](anim/01-jenkins-reinstall.gif)
 
   - Konfiguracja się właściwie nie zmienia w stosunku do tego,
     co już konfigurowałem na ostatnich zajęciach.
