@@ -31,9 +31,7 @@ pipeline {
         stage('Build Docker image') {
             steps {
                 script {
-                    dir('Sprawozdanie5') {
-                        def image = docker.build("${IMAGE_NAME}", ".")
-                    }
+                    def image = docker.build("${IMAGE_NAME}", "-f gr6/BW419687/Dockerfile .")
                 }
             }
         }
@@ -46,3 +44,6 @@ pipeline {
     }
 }
 ```
+2. Zbudowano projekt pierwszy raz: ![](./6.png)
+3. Oraz drugi raz: ![](./7.png)
+Za drugim razem build wykonał się znacząco szybciej, ponieważ wcześniejsze etapy zostały już przygotowane wcześniejszym buildem. (Pipeline jest podobny do tego jak działa budowa obrazu Dockera)
