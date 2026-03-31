@@ -22,7 +22,9 @@ Wykorzystano jednostkę fizyczną z zainstalowanym systemem Linux.
   - Jenkins dodatkowo bazuje na własnym [`Dockerfile`],
     zgodnie z domyślnym cyklem instalacyjnym i założeniami
     zadania. Sprawia to, że dostępny staje się dodatek /
-    interfejs `blueocean`:
+    interfejs `blueocean` (zrzut też przedstawia wizualnie
+    różnicę, widać że `blueocean` to odrębna nakładka
+    sterująca Jenkins'em):
   
   ![](img/setup/blue.png)
     
