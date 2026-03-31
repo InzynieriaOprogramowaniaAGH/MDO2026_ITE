@@ -1,19 +1,27 @@
 pipeline {
     agent any
+
     stages {
+
         stage('Clean') {
             steps {
                 sh 'docker system prune -f'
+                sh 'rm -rf MDO2026_ITE'
             }
         }
+
+        stage('Clone') {
+            steps {
+                sh 'git clone --depth 1 -b KP419785 https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git'
+            }
+        }
+
         stage('Build') {
             steps {
-                sh '''
-                    docker build -t app-build \
-                    -f ITE/grupa5/KP419785/Sprawozdanie5/portfinder/Dockerfile.build .
-                '''
+                sh 'docker build -t app-build -f MDO2026_ITE/ITE/grupa5/KP419785/Sprawozdanie5/portfinder/Dockerfile.build .'
             }
         }
+
         stage('Test') {
             steps {
                 sh 'docker run --name portfinder-test app-build go test ./... || true'
@@ -22,15 +30,14 @@ pipeline {
                 archiveArtifacts artifacts: 'test-results.txt', allowEmptyArchive: true
             }
         }
+
         stage('Deploy') {
             steps {
-                sh '''
-                    docker build -t app-deploy \
-                    -f ITE/grupa5/KP419785/Sprawozdanie5/portfinder/Dockerfile.deploy .
-                '''
+                sh 'docker build -t app-deploy -f MDO2026_ITE/ITE/grupa5/KP419785/Sprawozdanie5/portfinder/Dockerfile.deploy .'
                 sh 'docker run --rm --name portfinder-deploy app-deploy --help'
             }
         }
+
         stage('Publish') {
             steps {
                 sh 'docker save app-deploy | gzip > portfinder-${BUILD_NUMBER}.tar.gz'
@@ -38,4 +45,4 @@ pipeline {
             }
         }
     }
-}
+}        
