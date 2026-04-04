@@ -1,0 +1,5 @@
+FROM express-app-base:latest
+
+WORKDIR /workspace/express
+
+CMD ["npm", "test"]
