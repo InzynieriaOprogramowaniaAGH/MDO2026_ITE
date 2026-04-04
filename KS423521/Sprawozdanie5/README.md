@@ -150,3 +150,7 @@ Pierwsze uruchomienie pipeline - pobranie i pełne zbudowanie obrazu.
 Ponownie uruchomiono stworzony pipeline. Wykonał się on szybciej niż wcześniejszy dzięki cachowaniu.
 
 ![](screenshots/18-pipeline-build-2.png)
+
+---
+
+W katalogu `logs` zamieszczono wyeksportowane pliki z logami dla każdego zrealizowanego zadania.

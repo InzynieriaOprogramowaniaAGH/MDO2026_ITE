@@ -1,0 +1,7 @@
+Started by user admin
+Running as SYSTEM
+Building in workspace /var/jenkins_home/workspace/zadanie-1-uname
+[zadanie-1-uname] $ /bin/sh -xe /tmp/jenkins17317887180480659045.sh
++ uname -a
+Linux 5dee1b4ba441 6.8.0-106-generic #106-Ubuntu SMP PREEMPT_DYNAMIC Fri Mar  6 07:58:08 UTC 2026 x86_64 GNU/Linux
+Finished: SUCCESS

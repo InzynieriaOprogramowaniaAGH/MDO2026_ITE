@@ -1,0 +1,12 @@
+Started by user admin
+Running as SYSTEM
+Building in workspace /var/jenkins_home/workspace/zadanie-2-godzina-nieparzysta
+[zadanie-2-godzina-nieparzysta] $ /bin/sh -xe /tmp/jenkins13422715179215421415.sh
++ date +%H
++ HOUR=07
++ [ 1 -ne 0 ]
++ echo Blad: Godzina 07 jest nieparzysta!
+Blad: Godzina 07 jest nieparzysta!
++ exit 1
+Build step 'Execute shell' marked build as failure
+Finished: FAILURE
