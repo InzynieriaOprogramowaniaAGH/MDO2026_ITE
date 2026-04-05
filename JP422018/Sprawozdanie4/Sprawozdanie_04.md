@@ -76,3 +76,4 @@
 
 ## 4. Logowanie do Jenkinsa przez `adres_maszyny:8080`
 <img src="ss/ss16.png" width="500">
+

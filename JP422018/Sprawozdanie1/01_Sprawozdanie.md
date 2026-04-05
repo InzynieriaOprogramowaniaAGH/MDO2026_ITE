@@ -18,7 +18,7 @@
 ### Autoryzacja
 Wykorzystuje się klucze SSH (private/public). Mega bezpieczne i odbywa się automatycznie
 
-### Schemat polaczenia
+### Schemat polaczenia ssh
 1. Zainstalowanie i uruchomienie serwera ssh
 2. Wygenerowanie pary kluczy
 3. Przesłanie klucza publicznego na serwer
