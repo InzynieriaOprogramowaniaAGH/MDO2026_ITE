@@ -74,11 +74,7 @@ Stworzono własny obraz:
 *   bazujący na systemie Linux
 *   instalujący Git
 *   klonujący repozytorium
-    
-
-**Przykład:**
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`FROM ubuntu:latestRUN apt-get update && apt-get install -y gitWORKDIR /appRUN git clone` 
+     
 
 ### **Zarządzanie zasobami**
 
