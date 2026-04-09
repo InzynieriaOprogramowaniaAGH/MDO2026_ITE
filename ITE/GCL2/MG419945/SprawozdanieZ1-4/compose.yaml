@@ -1,0 +1,12 @@
+services:
+    redis-build:
+        build: build
+        volumes:
+            - input-vol:/repo
+            - output-vol:/output
+
+volumes:
+    input-vol:
+        external: true
+    output-vol:
+        external: true
