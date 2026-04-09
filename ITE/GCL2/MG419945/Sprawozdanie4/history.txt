@@ -1,0 +1,397 @@
+    1  sudo apt install openssh-client git
+    2  cd ~
+    3  chmod +x ./quickfix.sh
+    4  cd ~/MDO2026_ITE
+    5  cat ~/.gitconfig
+    6  history
+    7  git log
+    8  ~/quickfix.sh
+    9  git log
+   10  sudo apt install git-filter-repo
+   11  ls
+   12  git filter-repo --mailmap ~/mailmap_
+   13  git filter-repo --mailmap ~/mailmap_ --force
+   14  git log
+   15  ls
+   16  docker inspect --size hello-world
+   17  echo $?
+   18  sudo docker run hello-world; echo $?
+   19  sudo docker run busybox; echo $?
+   20  docket container ls
+   21  docker container ls
+   22  docker container ls -a
+   23  docker inspect -s busybox
+   24  sudo docker run ubuntu; echo $?
+   25  docker container ls -a
+   26  sudo docker inspect -s ubuntu
+   27  sudo docker run --name "pkt4" -d -i -t busybox /bin/sh
+   28  docker container ls
+   29  docker exec -it pkt4 sh
+   30  docker container ls
+   31  docker container stop pkt4
+   32  docker container ls
+   33  docker run --name "ubuntu5" -d -i -t ubuntu /bin/sh
+   34  docker container ls
+   35  docker exec -it ubuntu5 sh
+   36  ls
+   37  cd MDO2026_ITE
+   38  ls
+   39  cd ITE/GCL2/MG419945/
+   40  ls
+   41  mkdir Sprawozdanie2
+   42  cd ~
+   43  vim Dockerfile
+   44  docker build
+   45  docker build -t Dockerfile
+   46  docker build -t pkt6 .
+   47  ls
+   48  vim Dockerfile
+   49  docker build -t pkt6 .
+   51  ls
+   52  cd test
+   53  mkdir test
+   54  cd test
+   56  ls
+   57  cd ~
+   58  vim Dockerfile
+   59  ls
+   60  mv Dockerfile MDO2026_ITE/ITE/GCL2/MG419945/Sprawozdanie2/
+   61  cd MDO2026_ITE/ITE/GCL2/MG419945/Sprawozdanie
+   62  cd MDO2026_ITE/ITE/GCL2/MG419945/Sprawozdanie2
+   63  ls
+   64  docker build -t pkt6 .
+   65  vim Dockerfile
+   66  docker build -t pkt6 .
+   67  vim Dockerfile
+   68  docker build -t pkt6 .
+   69  history | grep docker run
+   70  history | grep "docker run"
+   71  sudo docker run --name "pkt6" -d -i -t pkt6 /bin/sh
+   72  history | grep "docker exec"
+   73  docker exec -it pkt6 sh
+   74  docker container ls -a
+   75  docker stop ubuntu
+   76  docker stop pkt6
+   77  docker stop ubuntu5
+   78  docker ls
+   79  docker container ls
+   80  docker prune -a
+   81  docker system prune
+   82  docker container ls -a
+   83  history > historia_polecen.txt
+   84  cat historia_polecen.txt
+   85  ls
+   86  git commit -am "MG419945: Sprawozdanie 2 - poczatek"
+   87  ls
+   88  git add ./
+   89  ls
+   90  git status
+   91  git add -am "MG419945: spr2 docker poczatek"
+   92  git commit -am "MG419945: spr2 docker poczatek"
+   93  history | grep docker run
+   94  history | grep "docker run"
+   95  docker run --name "ubuntu5" -d -i -t ubuntu /bin/sh
+   96  history | grep "docker exec"
+   97  docker exec -it ubuntu5 sh
+   98  git status
+   99  git commit -am "MG419945: sprawko full"
+  100  git push origin
+  101  ssh-add ~/devops_password
+  102  eval "$(ssh-agent -s)"
+  103  ssh-add ~/devops_password
+  104  git push origin
+  105  git commit --amend -am "MG419945: spr 2"
+  106  git push origin
+  107  sudo apt install docker
+  108  sudo apt update
+  109  sudo apt install ca-certificates curl
+  110  sudo install -m 0755 -d /etc/apt/keyrings
+  111  sudo curl -fsSl https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+  112  sudo chmod a+r /etc/apt/keyrings/docker.asc
+  113  sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+  114  Types: deb
+  115  URIs: https://download.docker.com/linux/ubuntu
+  116  Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+  117  Components: stable
+  118  Signed-By: /etc/apt/keyrings/docker.asc
+  119  EOF
+  120  sudo apt update
+  121  sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  122  sudo systemctl status docker
+  123  # punkt trzeci
+  124  docker pull hello-world:nanoserver-ltsc2025
+  125  sudo docker run hello-world
+  126  docker inspect --size hello-world
+  127  sudo usermod -aG docker vboxuser
+  128  docker inspect --size hello-world
+  129  newgrp docker
+  130  ls
+  131  pwd
+  132  sudo apt install openssh-client git
+  134  ls[A
+  135  ssh-keygen -C devops_ITE_nopass -t ed25519
+  136  ssh-keygen -C devops_password -t ed25519
+  137  ls ~/.ssh
+  138  ls ~/.ssh/authorized_keys
+  139  cd ~/.ssh/
+  140  ls
+  141  ls authorized_keys
+  142  cat authorized_keys
+  143  cd ~
+  144  ls
+  145  ssh-add ~/devops_password
+  146  eval "$(ssh-agent -s)"
+  147  ssh-agent -s
+  148  systemctl status ssh
+  149  systemctl status
+  150  top
+  151  top
+  152  ssh-add ~/devops_password
+  153  ls
+  154  mv ./MDO2026_ITE ./MDO2026_ITE_passkey
+  155  git clone git@github.com:InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+  156  cat ~/devops_password.pub
+  157  git clone git@github.com:InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+  158  clear
+  159  sudo apt install vsftpd
+  160  vim /etc/vsftpd.conf
+  161  sudo vim /etc/vsftpd.conf
+  162  sudo systemctl enable --now vsftpd
+  163  systemctl status vsftpd
+  164  sudo vim /etc/vsftpd.conf
+  165  sudo systemctl restart vsftpd.service
+  166  cd ~/MDO2026_ITE
+  167  ls
+  168  branch main
+  169  git branch main
+  170  git checkout main
+  171  git checkout grupa2
+  172  git branch
+  173  git checkout main
+  174  git branch -d grupa2
+  175  git checkout grupa2 --no-guess
+  176  git checkout grupa3 --no-guess
+  177  git checkout origin grupa2 --no-guess
+  178  git fetch
+  179  git branch -v -a
+  180  git branch -v -a | grep grupa
+  181  git switch grupa2
+  182  git switch main
+  183  git switch grupa2
+  184  git switch -c MG419945
+  185  git fetch
+  186  git pull origin/grupa2
+  187  git pull origin grupa2
+  188  ls
+  189  cat ./.git/hooks/commit-msg.sample
+  190  cat ./.git/hooks/prepare-commit-msg.sample
+  191  ls
+  192  vim commit-msg
+  193  ls
+  194  git status
+  195  git add ./commit-msg
+  196  git branch
+  197  git commit -am "commit message test"
+  198  git config --global user.name "glamac"
+  199  git commit -am "commit message test"
+  200  git status
+  201  ls
+  202  cp ./commit-msg ./.git/hooks/
+  203  ls
+  204  git status
+  205  git commit -am "Test"
+  206  git config
+  207  vim ~/.gitconfig
+  208  git commit -am "Test"
+  209  chmod +x ./.git/hooks/commit-msg
+  210  git commit --amend -m "Test"
+  211  git branch
+  212  git commit --amend -m "MG419945: Git commit hook"
+  213  git status
+  214  ls
+  215  mv commit-msg ITE/2/MG419945/Sprawozdanie1/
+  216  git commit -am "MG419945: Start sprawka"
+  217  git status
+  218  git commit -am "MG419945: Przed pushem na remote'a"
+  219  got add ITE
+  220  git add ITE
+  221  git commit -am "MG419945: Przed pushem na remote'a"
+  222  git status
+  223  git remote -v
+  224  git push
+  225  git push --set-upstream origin MG419945
+  226  vim ~/.gitconfig
+  227  git change-commits
+  228  ls
+  229  vim quickfix.sh
+  230  ls
+  231  cd ~
+  232  ls
+  233  git log
+  234  ls
+  235  cd ~/MDO2026_ITE
+  236  git log
+  237  git push --set-upstream origin MG419945
+  238  git remote -v
+  239  # ???
+  240  git status
+  241  git remote add git@github.com:InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+  242  git remote add origin git@github.com:InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+  243  git fetch
+  244  git status
+  245  git log
+  246  ls
+  247  git push --set-upstream origin MG419945
+  248  git status
+  249  git add ITE/2/
+  250  git status
+  251  ls ITE
+  252  ls ITE/2
+  253  ls ITE/2/MG419945/
+  254  ls ITE/2/MG419945/Sprawozdanie1/
+  255  ls ITE/2/MG419945/Sprawozdanie1/screeny/
+  256  rm ITE/2/
+  257  rm -rf ITE/2/
+  258  git status
+  259  git commit -am "MG419945: Push mojego brancha
+  260  "
+  261  git status
+  262  git log
+  263  ls
+  264  git status
+  265  git add ITE/GCL2/MG419945/Sprawozdanie1/screeny/git_push_my_branch.png
+  266  git status -am "MG419945: Po pushu na repo"
+  267  git commit -am "MG419945: Po pushu na repo"
+  268  git status
+  269  git add ITE/GCL2/MG419945/Sprawozdanie1/screeny/push_worked.png
+  270  git commit -AM "MG419945: ostatni screen"
+  271  git commit -am "MG419945: ostatni screen"
+  272  git push origin
+  273  git commit -am "MG419945: Formatowanie"
+  274  git push origin
+  275  history
+  276  history > shell_history.txt
+  277  cat shell_history.txt
+  278  mv shell_history.txt ITE/GCL2/MG419945/Sprawozdanie1/
+  279  ls
+  280  rm -rf grupa4/
+  281  ls
+  282  git commit -am "MG419945: Pełne sprawozdanie"
+  283  git status
+  284  git add ITE/GCL2/MG419945/Sprawozdanie1/shell_history.txt
+  285  git commit -am "MG419945: shell_history.txt"
+  286  git push origin
+  287  git commit --amend -am "MG419945: shell_history.txt bez PAT"
+  288  git push origin
+  289  git push -d MG419945
+  290  git push origin --delete MG419945
+  291  cd ..
+  292  ls
+  293  history | grep clone
+  294  git clone git@github.com:InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+  295  ls
+  296  cd MDO2026_ITE
+  297  ls
+  298  git checkout -b MG419945
+  299  git status
+  300  git add ITE/
+  301  ls
+  302  git status
+  303  rm -rf grupa4/
+  304  ls
+  305  git status
+  306  cp ./ITE/GCL2/MG419945/Sprawozdanie1/commit-msg ./.git/hooks/
+  307  chmod +x ./.git/hooks/commit-msg
+  308  git commit -am "MG419945: Z uwagi na jakis problem musialem od nowa stworzyc branch."
+  309  git status
+  310  git push --set-upstream origin MG419945
+  311  git status
+  312  sudo docker ls
+  313  docker ls
+  314  docker ls -a
+  315  docker container ls
+  316  docker stop ubuntu
+  317  docker kill ubuntu
+  318  docker kill test-image
+  319  docker kill nervous_poitras
+  320  #Instalacja redis lokalnie tutaj, nie w kontenerze
+  321  apt-get update
+  322  sudo apt-get update
+  323  apt-get install -y sudo
+  324  sudo apt-get install -y sudo
+  325  sudo apt-get install -y --no-install-recommends ca-certificate
+  326  wget dpkg-dev gcc g++ libc6-dev libssl-dev make git cmake python3 python3-pip python3-venv python3-dev unzip rsync clang automake autoconf libtool
+  327  sudo apt-get install -y --no-install-recommends ca-certificates wget dpkg-dev gcc g++ libc6-dev libssl-dev make git cmake python3 python3-pip python3-venv python3-dev unzip rsync clang automake autoconf libtool
+  328  ls /usr/src
+  329  ls /usr
+  330  mkdir redis
+  331  cd redis
+  332  wget -O redis-<version>.tar.gz https://github.com/redis/redis/archive/refs/tags/<version>.tar.gz
+  333  wget -O redis-8.0.0.tar.gz https://github.com/redis/redis/archive/refs/tags/<version>.tar.gz
+  334  wget -O redis-8.0.0.tar.gz https://github.com/redis/redis/archive/refs/tags/8.0.0.tar.gz
+  335  ls
+  336  tar xvf redis-8.0.0.tar.gz
+  337  rm redis-8.0.0.tar.gz
+  338  ls
+  339  pwd
+  340  cd redis-8.0.0/
+  341  ls
+  342  export BUILD_TLS=yes BUILD_WITH_MODULES=yes INSTALL_RUST_TOOLCHAIN=yes DISABLE_WERRORS=ye && smake -j "$(nproc)" all
+  343  export BUILD_TLS=yes BUILD_WITH_MODULES=yes INSTALL_RUST_TOOLCHAIN=yes DISABLE_WERRORS=yes&make -j "$(nproc)" all
+  344  make test
+  345  cd ~
+  346  ls
+  347  docker run --name "ubuntu" -d -i -t ubuntu /bin/sh
+  348  docher exec -it ubuntu sh
+  349  docker exec -it ubuntu sh
+  350  ls
+  351  cd ~/MDO2026_ITE/ITE/GCL2/MG419945/
+  352  ls
+  353  cd Sprawozdanie3/
+  354  sudo docker build -f RedisBuild.Dockerfile -t build-image .
+  355  sudo docker build -f RedisTest.Dockerfile -t test-image .
+  356  ls
+  357  sudo docker run test-image
+  358  history ^ "historia-polecen.txt"
+  359  history | echo ^ "Historia_Poleceń.txt"
+  360  ls
+  361  history | grep history
+  362  history > historia_polecen.txt
+  363  git commit -am "MG419945: Spr3|
+  364  git commit -am "MG419945: Spr3"
+  365  git push
+  366  ssh-add ~/devops_password
+  367  ssh-agent
+  368  ssh-add ~/devops_password
+  369  history | grep ssh-agent
+  370  eval "$(ssh-agent -s)"
+  371  ssh-add ~/devops_password
+  372  git commit -am "MG419945: Spr3"
+  373  git push
+  374  history
+  375  cd ~/MDO2026_ITE/ITE/GCL2/MG419945/
+  376  cd Sprawozdanie4
+  377  ls
+  378  cd jenkins
+  379  https://www.jenkins.io/doc/book/installing/docker/
+  380  docker run --name jenkins-docker --rm --detach   --privileged --network jenkins --network-alias docker   --env DOCKER_TLS_CERTDIR=/certs   --volume jenkins-docker-certs:/certs/client   --volume jenkins-data:/var/jenkins_home   --publish 2376:2376   docker:dind --storage-driver overlay2
+  381  docker ps
+  382  docker rm jenkins-docker
+  383  docker run --name jenkins-docker --rm --detach   --privileged --network jenkins --network-alias docker   --env DOCKER_TLS_CERTDIR=/certs   --volume jenkins-docker-certs:/certs/client   --volume jenkins-data:/var/jenkins_home   --publish 2376:2376   docker:dind --storage-driver overlay2
+  384  docker ps
+  385  docker run --name jenkins-docker --restart=on-failure --detach --network jenkins --env DOCKER_HOST=tcp://docker:2376 --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY = 1 --publish 8080:8080 --publish 50000:50000 --volume jenkins-data:/var/jenkins_home --volume jenkins-docker-certs:/certs/client:ro jenkins-docker
+  386  docker run --name jenkins-blueocean --restart=on-failure --detach   --network jenkins --env DOCKER_HOST=tcp://docker:2376   --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1   --publish 8080:8080 --publish 50000:50000   --volume jenkins-data:/var/jenkins_home   --volume jenkins-docker-certs:/certs/client:ro   jenkins-docker
+  387  ls
+  388  docker build -t jenkins-docker .
+  389  docker run --name jenkins-blueocean --restart=on-failure --detach   --network jenkins --env DOCKER_HOST=tcp://docker:2376   --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1   --publish 8080:8080 --publish 50000:50000   --volume jenkins-data:/var/jenkins_home   --volume jenkins-docker-certs:/certs/client:ro   jenkins-docker
+  390  docker ps
+  391  ip a
+  392  cat /var/jenkins_home/secrets/initialAdminPassword
+  393  ls
+  394  docker ps
+  395  docker logs jenkins-blueocean
+  396  history
+  397  ls
+  398  cd ..
+  399  ls
+  400  history > history.txt

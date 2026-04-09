@@ -1,0 +1,172 @@
+    1  sudo apt install openssh-client git
+    2  cd ~
+    3  chmod +x ./quickfix.sh 
+    4  cd ~/MDO2026_ITE
+    5  cat ~/.gitconfig 
+    6  history
+    7  git log
+    8  ~/quickfix.sh 
+    9  git log
+   10  sudo apt install git-filter-repo
+   11  ls
+   12  git filter-repo --mailmap ~/mailmap_
+   13  git filter-repo --mailmap ~/mailmap_ --force
+   14  git log
+   15  ls
+   16  docker inspect --size hello-world 
+   17  echo $?
+   18  sudo docker run hello-world; echo $?
+   19  sudo docker run busybox; echo $?
+   20  docket container ls
+   21  docker container ls
+   22  docker container ls -a
+   23  docker inspect -s busybox
+   24  sudo docker run ubuntu; echo $?
+   25  docker container ls -a
+   26  sudo docker inspect -s ubuntu
+   27  sudo docker run --name "pkt4" -d -i -t busybox /bin/sh
+   28  docker container ls
+   29  docker exec -it pkt4 sh
+   30  docker container ls
+   31  docker container stop pkt4
+   32  docker container ls
+   33  docker run --name "ubuntu5" -d -i -t ubuntu /bin/sh
+   34  docker container ls
+   35  docker exec -it ubuntu5 sh
+   36  ls
+   37  cd MDO2026_ITE
+   38  ls
+   39  cd ITE/GCL2/MG419945/
+   40  ls
+   41  mkdir Sprawozdanie2
+   42  cd ~
+   43  vim Dockerfile
+   44  docker build 
+   45  docker build -t Dockerfile
+   46  docker build -t pkt6 .
+   47  ls
+   48  vim Dockerfile
+   49  docker build -t pkt6 .
+   50  git clone https://glamac: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@github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+   51  ls
+   52  cd test
+   53  mkdir test
+   54  cd test
+   55  git clone https://glamac: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@github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+   56  ls
+   57  cd ~
+   58  vim Dockerfile 
+   59  ls
+   60  mv Dockerfile MDO2026_ITE/ITE/GCL2/MG419945/Sprawozdanie2/
+   61  cd MDO2026_ITE/ITE/GCL2/MG419945/Sprawozdanie
+   62  cd MDO2026_ITE/ITE/GCL2/MG419945/Sprawozdanie2
+   63  ls
+   64  docker build -t pkt6 .
+   65  vim Dockerfile 
+   66  docker build -t pkt6 .
+   67  vim Dockerfile 
+   68  docker build -t pkt6 .
+   69  history | grep docker run
+   70  history | grep "docker run"
+   71  sudo docker run --name "pkt6" -d -i -t pkt6 /bin/sh
+   72  history | grep "docker exec"
+   73  docker exec -it pkt6 sh
+   74  docker container ls -a
+   75  docker stop ubuntu
+   76  docker stop pkt6
+   77  docker stop ubuntu5
+   78  docker ls
+   79  docker container ls
+   80  docker prune -a
+   81  docker system prune
+   82  docker container ls -a
+   83  history > historia_polecen.txt
+   84  cat historia_polecen.txt 
+   85  ls
+   86  git commit -am "MG419945: Sprawozdanie 2 - poczatek"
+   87  ls
+   88  git add ./
+   89  ls
+   90  git status
+   91  git add -am "MG419945: spr2 docker poczatek"
+   92  git commit -am "MG419945: spr2 docker poczatek"
+   93  history | grep docker run
+   94  history | grep "docker run"
+   95  docker run --name "ubuntu5" -d -i -t ubuntu /bin/sh
+   96  history | grep "docker exec"
+   97  docker exec -it ubuntu5 sh
+   98  git status
+   99  git commit -am "MG419945: sprawko full"
+  100  git push origin
+  101  ssh-add ~/devops_password
+  102  eval "$(ssh-agent -s)"
+  103  ssh-add ~/devops_password
+  104  git push origin
+  105  git commit --amend -am "MG419945: spr 2"
+  106  git push origin
+  107  sudo apt install docker
+  108  sudo apt update
+  109  sudo apt install ca-certificates curl
+  110  sudo install -m 0755 -d /etc/apt/keyrings
+  111  sudo curl -fsSl https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+  112  sudo chmod a+r /etc/apt/keyrings/docker.asc 
+  113  sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+  114  Types: deb
+  115  URIs: https://download.docker.com/linux/ubuntu
+  116  Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+  117  Components: stable
+  118  Signed-By: /etc/apt/keyrings/docker.asc
+  119  EOF
+  120  sudo apt update
+  121  sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  122  sudo systemctl status docker 
+  123  # punkt trzeci
+  124  docker pull hello-world:nanoserver-ltsc2025
+  125  sudo docker run hello-world
+  126  docker inspect --size hello-world
+  127  sudo usermod -aG docker vboxuser
+  128  docker inspect --size hello-world
+  129  newgrp docker
+  130  #Instalacja redis lokalnie tutaj, nie w kontenerze
+  131  apt-get update
+  132  sudo apt-get update
+  133  apt-get install -y sudo
+  134  sudo apt-get install -y sudo
+  135  sudo apt-get install -y --no-install-recommends ca-certificate 
+  136  wget dpkg-dev gcc g++ libc6-dev libssl-dev make git cmake python3 python3-pip python3-venv python3-dev unzip rsync clang automake autoconf libtool
+  137  sudo apt-get install -y --no-install-recommends ca-certificates wget dpkg-dev gcc g++ libc6-dev libssl-dev make git cmake python3 python3-pip python3-venv python3-dev unzip rsync clang automake autoconf libtool
+  138  ls /usr/src
+  139  ls /usr
+  140  mkdir redis
+  141  cd redis
+  142  wget -O redis-<version>.tar.gz https://github.com/redis/redis/archive/refs/tags/<version>.tar.gz
+  143  wget -O redis-8.0.0.tar.gz https://github.com/redis/redis/archive/refs/tags/<version>.tar.gz
+  144  wget -O redis-8.0.0.tar.gz https://github.com/redis/redis/archive/refs/tags/8.0.0.tar.gz
+  145  ls
+  146  tar xvf redis-8.0.0.tar.gz 
+  147  rm redis-8.0.0.tar.gz 
+  148  ls
+  149  pwd
+  150  cd redis-8.0.0/
+  151  ls
+  152  export BUILD_TLS=yes BUILD_WITH_MODULES=yes INSTALL_RUST_TOOLCHAIN=yes DISABLE_WERRORS=ye && smake -j "$(nproc)" all
+  153  export BUILD_TLS=yes BUILD_WITH_MODULES=yes INSTALL_RUST_TOOLCHAIN=yes DISABLE_WERRORS=yes&make -j "$(nproc)" all
+  154  make test
+  155  cd ~
+  156  ls
+  157  docker run --name "ubuntu" -d -i -t ubuntu /bin/sh
+  158  docher exec -it ubuntu sh
+  159  docker exec -it ubuntu sh
+  160  ls
+  161  cd ~/MDO2026_ITE/ITE/GCL2/MG419945/
+  162  ls
+  163  cd Sprawozdanie3/
+  164  sudo docker build -f RedisBuild.Dockerfile -t build-image .
+  165  sudo docker build -f RedisTest.Dockerfile -t test-image .
+  166  ls
+  167  sudo docker run test-image
+  168  history ^ "historia-polecen.txt"
+  169  history | echo ^ "Historia_Poleceń.txt"
+  170  ls
+  171  history | grep history
+  172  history > historia_polecen.txt
