@@ -1,0 +1,1 @@
+plik ktory zostanie odebrany z maszyny wirtualnej na windowsie
