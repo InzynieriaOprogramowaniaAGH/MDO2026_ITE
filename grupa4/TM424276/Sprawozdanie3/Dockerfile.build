@@ -1,0 +1,13 @@
+FROM ubuntu:latest
+ENV DEBIAN_FRONTEND=noninteractive
+# Instalujemy wymagania wstępne (kompilator, git, make)
+RUN apt-get update && apt-get install -y build-essential git
+
+# Ustawiamy katalog roboczy
+WORKDIR /app
+
+# Klonujemy repozytorium
+RUN git clone https://github.com/DaveGamble/cJSON.git .
+
+# Uruchamiamy sam proces budowania (bez testów!)
+RUN make
