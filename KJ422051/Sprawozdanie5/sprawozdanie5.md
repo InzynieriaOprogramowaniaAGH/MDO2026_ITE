@@ -16,15 +16,15 @@ Zadanie2:
 
 <img width="822" height="734" alt="image" src="https://github.com/user-attachments/assets/effdf376-8371-4e56-ac7c-0d5199b5f67d" />
 
-<img width="839" height="784" alt="image" src="https://github.com/user-attachments/assets/1d9a11ee-05f4-4bb9-9ec7-
-48f38977bc98" />
+<img width="839" height="784" alt="image" src="https://github.com/user-attachments/assets/5a1c70e6-dd23-40d4-aff2-efd73e855e17" />
+
 
 Zadanie3:
 
 <img width="945" height="434" alt="image" src="https://github.com/user-attachments/assets/abb270eb-3855-4889-bd31-1a7283159a3b" />
 
-<img width="763" height="619" alt="image" src="https://github.com/user-attachments/assets/5fec7ad6-4c53-40d6-8e7d-
-63cd41ec8798" />
+<img width="763" height="619" alt="image" src="https://github.com/user-attachments/assets/141166b9-737e-4666-9c89-b41870363e77" />
+
 
 Zadania kończyły się niepowodzeniem
 
@@ -40,8 +40,8 @@ Zadanie wstępne: obiekt typu pipeline:
 
 <img width="945" height="292" alt="image" src="https://github.com/user-attachments/assets/d1c26f75-b642-4131-9d8c-f8f001f47b57" />
 
-<img width="945" height="192" alt="image" src="https://github.com/user-attachments/assets/7232af00-ed88-4d61-803e-
-1f8ac305356a" />
+<img width="945" height="192" alt="image" src="https://github.com/user-attachments/assets/dac7919e-0292-4f67-94cf-6f5c1fabb41e" />
+
 
 <img width="945" height="388" alt="image" src="https://github.com/user-attachments/assets/39f4a07b-57fc-41f4-bcf1-f9a15f6c02c9" />
 
