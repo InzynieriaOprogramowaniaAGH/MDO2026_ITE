@@ -1,4 +1,4 @@
-# Sprawozdanie zbiorcze - zajęcia 01-03
+# Sprawozdanie zbiorcze - zajęcia 01-04
 
 **Autor:** MN420239 · **Grupa:** 4
 
@@ -42,3 +42,15 @@ Jako projekt testowy wybrano publiczne repozytorium **vscode-setup** (GitHub): a
 Przygotowano osobne pliki: **`Dockerfile.build`** (instalacja zależności, przygotowanie środowiska) oraz **`Dockerfile.test`** (bazuje na obrazie z etapu build). Kolejność pracy: budowa obrazu build (`docker build -t vscode-build -f Dockerfile.build .`), budowa obrazu testowego (`docker build -t vscode-test -f Dockerfile.test .`), uruchomienie `docker run vscode-test` - testy uruchamiane automatycznie przy starcie kontenera.
 
 **Docker Compose** zdefiniowano tak, aby cały przepływ (budowa i testy) dało się odpalić jednym poleceniem, co upraszcza powtarzalność i zbliża konfigurację do typowego **CI/CD** (osobny etap przygotowania artefaktu i osobny etap weryfikacji). W rozwiązaniu widać też rozróżnienie: **obraz** to niezmienny szablon z aplikacją i zależnościami; **kontener** to uruchomiona instancja tego obrazu - obraz **vscode-build** dostarcza środowisko, obraz **vscode-test** służy do wykonania `npm test`.
+
+---
+
+## Zajęcia 04 - woluminy, sieci Docker, SSH i Jenkins
+
+W części dotyczącej trwałości danych utworzono woluminy **`input`** i **`output`**, a następnie wykonano build aplikacji **Next.js** w kontenerze Node.js. Kod projektu montowano jako **bind mount** (`-v $(pwd):/input`), zaś wynik kompilacji zapisywano do woluminu wyjściowego. W kolejnym kontenerze potwierdzono, że dane w woluminie pozostają dostępne po zakończeniu pracy poprzedniej instancji. Porównano też dwa podejścia: kod zarządzany na hoście (bind mount) oraz klonowanie repozytorium bezpośrednio w kontenerze (większa izolacja, ale większa samodzielność kontenera).
+
+W części sieciowej utworzono dedykowaną sieć Docker i sprawdzono komunikację między kontenerami przy użyciu **iperf3** (po nazwie usługi oraz po adresie IP). Dodatkowo zweryfikowano połączenie host-kontener przez mapowanie portów, co potwierdziło możliwość wystawiania usług kontenerowych na hosta. Omówiono praktyczne wnioski: komunikacja wewnętrzna w sieci bridge jest wydajna, a wbudowany DNS Dockera upraszcza adresowanie po nazwach.
+
+Przeprowadzono również uruchomienie serwera **SSH** w kontenerze (instalacja `openssh-server`, konfiguracja hasła i start `sshd`) oraz test logowania z hosta przez wskazany port. Pokazano, że takie podejście ułatwia diagnostykę, ale zwykle nie jest rekomendowane produkcyjnie ze względów bezpieczeństwa i zgodności z ideą jednego procesu w kontenerze.
+
+Na końcu uruchomiono instancję **Jenkins** w Dockerze (z woluminem `jenkins_home` i mapowaniem portów), wykonano inicjalną konfigurację panelu oraz instalację domyślnych wtyczek. Całość zestawiono z kontenerem Docker-in-Docker, aby podkreślić zastosowanie Jenkinsa do automatyzacji zadań **CI/CD**: budowania obrazów, uruchamiania kontenerów i standaryzacji pipeline'u.
