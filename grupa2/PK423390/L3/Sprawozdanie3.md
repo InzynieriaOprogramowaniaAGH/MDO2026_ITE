@@ -1,3 +1,5 @@
+Link do zamknietego Pull Requesta: https://github.com/InzynieriaOprogramowaniaAGH/MDO2026s_ITE/pull/32
+
 ## 1. Wybór oprogramowania i analiza wymagań
 
 Do realizacji zadania wybrano projekt **Express.js**, będący jednym najpopularniejszych frameworkow webowym dla środowiska Node.js.
