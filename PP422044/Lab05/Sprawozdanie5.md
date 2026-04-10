@@ -83,7 +83,7 @@ pipeline {
 }
 ```
 
-![zdj5](/img/zadanie-wstepne-log.png)
+![zdj5](img/zadanie-wstepne-log.png)
 
 ## Zadanie wstepne: obiekt typu pipeline
 
