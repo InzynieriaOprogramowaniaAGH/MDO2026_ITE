@@ -22,9 +22,9 @@ ssh-keygen -t ed25519 -C "pawel.palcar@wp.pl" -f ~/.ssh/id_ed25519_nopass
 ssh-keygen -t ecdsa -b 521 -C "pawel.palcar@wp.pl" -f ~/.ssh/id_ecdsa_pass
 ```
 
-![zdjecie1](/img/kluczhaslo.png)
+![zdjecie1](img/kluczhaslo.png)
 
-![zdj2](/img/sshkeys.png)
+![zdj2](img/sshkeys.png)
 
 Dodatkowo skonfigurowano uwierzytelnianie dwuskładnikowe 2FA — to dodatkowa warstwa ochrony, gdzie oprócz hasła trzeba podać kod z aplikacji.
 
@@ -39,7 +39,7 @@ git switch grupa4
 git switch -c PP422044
 ```
 
-![zdj3](/img/stworzeniegalezi.png)
+![zdj3](img/stworzeniegalezi.png)
 
 ### Git Hook
 
@@ -60,7 +60,7 @@ exit 0
 
 Pull Request to prośba o włączenie zmian z naszej gałęzi do gałęzi grupowej. Zanim zmiany zostaną scalone, ktoś inny może je przejrzeć i zatwierdzić. Dzięki temu główna gałąź pozostaje czysta.
 
-![zdj4](/img/wciagnieciegalezi.png)
+![zdj4](img/wciagnieciegalezi.png)
 
 ---
 
@@ -80,7 +80,7 @@ newgrp docker
 docker --version
 ```
 
-![zdj5](/img/dockerversion.png)
+![zdj5](img/dockerversion.png)
 
 ### Obrazy i Docker Hub
 
@@ -91,7 +91,7 @@ Obraz to gotowy szablon środowiska, z którego tworzymy kontenery. Docker Hub t
 - `ubuntu` — pełne systemy linuksowe
 - `mariadb` — baza danych
 
-![zdj6](/img/images.png)
+![zdj6](img/images.png)
 
 ### Własny obraz — Dockerfile
 
@@ -117,7 +117,7 @@ docker build -t moje-repo-env .
 docker run -it moje-repo-env
 ls -la
 ```
-![zdj7](/img/budowanieobrazu.png)
+![zdj7](img/budowanieobrazu.png)
 
 ### Zarządzanie zasobami
 
@@ -219,7 +219,7 @@ docker run -d --name iperf-server networkstatic/iperf3 -s
 docker inspect -f '{{range.Network.Settings.Networks}}{{.IPAddress}}{{end}}' iperf-server
 docker run -it --rm network static/iperf3 -c 172.17.0.2
 ```
-![zdj8](/img/uruchomienieklienta.png)
+![zdj8](img/uruchomienieklienta.png)
 
 ### SSHD w kontenerze
 
@@ -234,7 +234,7 @@ sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/'
 
 ssh root@localhost -p 2222
 ```
-![zdj9](/img/polaczenieprzezssh.png)
+![zdj9](img/polaczenieprzezssh.png)
 
 ### Jenkins + Docker-in-Docker
 
@@ -251,6 +251,6 @@ docker ps
 
 Panel Jenkinsa dostępny pod adresem `http://localhost:8080`.
 
-![dockerps](/img/dockerps.png)
+![dockerps](img/dockerps.png)
 
-![jenkins](/img/paneljenkins.png)
+![jenkins](img/paneljenkins.png)
