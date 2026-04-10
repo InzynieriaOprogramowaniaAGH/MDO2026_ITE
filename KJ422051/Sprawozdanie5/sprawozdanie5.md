@@ -40,6 +40,9 @@ Zadanie wstępne: obiekt typu pipeline:
 
 <img width="945" height="292" alt="image" src="https://github.com/user-attachments/assets/d1c26f75-b642-4131-9d8c-f8f001f47b57" />
 
+<img width="945" height="192" alt="image" src="https://github.com/user-attachments/assets/90f3cc8c-bf20-47b9-b7ab-09da6cfb0d7b" />
+
+
 <img width="945" height="192" alt="image" src="https://github.com/user-attachments/assets/dac7919e-0292-4f67-94cf-6f5c1fabb41e" />
 
 
