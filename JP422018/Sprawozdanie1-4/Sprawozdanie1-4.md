@@ -73,7 +73,7 @@ ssh-add ~/.ssh/id_ed25519   # przekaż my klucz prywatny
 ## Filozofie Dockera
 1. Jeden kontener=jeden proces - każdy kontener robi jedną rzecz
 2. Efmeryczność - Kontener powinien dać się zniszyć i odtworzyć w dowolnej chwili bez utraty danych
-3. Obrazy powinny być jak najmniejsze - lżejsze, szybsze, bezpieczniejsze
+3. Obrazy powinny być jak najmniejsze = lżejsze, szybsze, bezpieczniejsze
 
 ## Kontener to tak naprawdę specyficzny PROCES
 * Iluza izolacji. Jądro systemu ograniczyło uprawnienia, odcięło widok na resztę systemu (Kontener "widzi" siebie jako PID 1, podczas gdy na hoście jest np. PID 7831.) 
@@ -92,6 +92,7 @@ Przy uruchomieniu kontenera korzysta się z dwóch warstw:
 Kontener widzi warstwę lowerdir, ale gdy próbuje coś do niej zapisać jądro kopiuje to coś do upperdir i tam zapisuje zmianę. Oryginał zostaje nienaruszony.
 
 ### Konsekwencje
+* **Efmeryczność** - Kontener można zniszyć i odtworzyć w dowolnej chwili bez utraty danych
 * Tworzenie i usuwanie kontenerów jest błyskawiczne i nie marnuje miejsca.
 * Gdy aplikacja coś zepsuje, to niszczy tylko uppedir, lowerdir zostaje nienaruszony
 
