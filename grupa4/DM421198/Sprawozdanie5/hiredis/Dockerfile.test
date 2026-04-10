@@ -1,0 +1,5 @@
+
+FROM moj-program-build
+
+
+CMD ["./hiredis-test"]
