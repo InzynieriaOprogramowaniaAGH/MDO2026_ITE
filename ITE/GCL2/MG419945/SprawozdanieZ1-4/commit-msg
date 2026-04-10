@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if [[ ! $(cat $1) =~ ^"MG419945" ]]; then
+	echo "Commit message nie zaczyna sie od wymaganej formulki."
+	exit 1
+fi
