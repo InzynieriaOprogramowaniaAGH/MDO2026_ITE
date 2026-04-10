@@ -13,7 +13,7 @@ Podczas przygotowania przeanalizowano różnice między obrazami:
 
 Zgodnie z instrukcją prowadzącego, wdrożono obraz bazowy i ręcznie doinstalowano wtyczkę Blue Ocean, co zapewnia lepszą kontrolę nad zainstalowanymi komponentami i kompatybilność z architekturą procesora.
 
-![Ekran główny Jenkins](/image/ekran_główny.png)
+![Ekran główny Jenkins](image/ekran_głowny.png)
 
 ---
 
@@ -23,15 +23,15 @@ W celu weryfikacji poprawności działania środowiska i dostępu do demona Dock
 
 ### 2.1. Wyświetlanie informacji o systemie (uname)
 Zadanie polegało na wykonaniu komendy powłoki `uname -a`. Wynik potwierdził poprawną pracę kontenera na systemie Linux.
-![Wynik test_uname](/image/test_uname.png)
+![Wynik test_uname](image/test_uname.png)
 
 ### 2.2. Test skryptu warunkowego (Godzina)
 Stworzono skrypt sprawdzający aktualną godzinę. Zadanie zostało skonfigurowane tak, aby zwracać błąd (`exit 1`), gdy godzina jest nieparzysta. Test wykazał, że Jenkins poprawnie interpretuje kody wyjścia i przerywa proces budowania w razie błędu.
-![Wynik test_godzina](/image/test_godzina.png)
+![Wynik test_godzina](image/test_godzina.png)
 
 ### 2.3. Dostęp do Dockera (docker pull)
 Wykonano polecenie `docker pull ubuntu`. Po początkowym błędzie wynikającym z braku klienta Dockera wewnątrz obrazu Jenkinsa, doinstalowano niezbędne pakiety, co umożliwiło Jenkinsowi komunikację z demonem Dockera na hoście.
-![Wynik test_docker](/image/test_docker.png)
+![Wynik test_docker](image/test_docker.png)
 
 ---
 
@@ -39,7 +39,7 @@ Wykonano polecenie `docker pull ubuntu`. Po początkowym błędzie wynikającym 
 
 ### 3.1. Pipeline wpisany bezpośrednio
 Utworzono obiekt typu Pipeline, w którym definicja kroków została wpisana bezpośrednio w konfiguracji Jenkinsa. Potok realizował pobranie kodu oraz budowanie obrazu przy użyciu `docker build`.
-![Wynik pipeline_r](/image/pipeline_r.png)
+![Wynik pipeline_r](image/pipeline_r.png)
 
 ### 3.2. Kompletny Pipeline z SCM (Jenkinsfile)
 Ostatecznym celem było wdrożenie potoku pobieranego bezpośrednio z repozytorium GitHub (SCM). Wykorzystano plik `Jenkinsfile` umieszczony na gałęzi `TM424276`.
@@ -103,10 +103,10 @@ pipeline {
 ```
 ### Wyniki końcowe
 Potok pobrany z SCM pomyślnie przeszedł przez wszystkie etapy izolacji:
-![Wynik pipeline_scm](/image/pipeline_scm.png)
+![Wynik pipeline_scm](image/pipeline_scm.png)
 
 W kroku **Publish** wygenerowano i zabezpieczono artefakt budowania, który jest dostępny do pobrania bezpośrednio z interfejsu Jenkins:
-![Wynik publicacja_artefakru](/image/publicacja_artefakru.png)
+![Wynik publicacja_artefakru](image/publicacja_artefakru.png)
 
 ---
 
