@@ -60,3 +60,13 @@ Działa poprawnie
 Sprawdzenie czy zadanie poprawnie klonuje repozytorium:
 
 ![alt text](image-11.png)
+
+8. Poprawne skolonowanie z mojej gałęzi:
+
+![alt text](image-13.png)
+
+9. porówannie czasu
+
+![alt text](image-12.png)
+
+drugie zadanie znacznie szybciej się wykonuje
