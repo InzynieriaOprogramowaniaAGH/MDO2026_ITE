@@ -73,10 +73,19 @@ Wykazanie działania Jenkinsa:
 ![alt text](image-18.png)
 * spróbowałam zbudować Dockerfile uruchamiając pipeline. Na początku jednak skrypt nie zadziałał:
 ![alt text](image-19.png)
-Aby Jenkins zobaczył folder 'Sprawozdanie5' musiałam go najpierw wypchać na githuba.
-
+Musiałam zmienić ścieżkę w pipeline na taką, która zawiera wszystkie pliki potrzebne do Dockerfile i którą widzi github:
+![alt text](image-20.png)
+Tym razem pipeline zakończył się sukcesem:
+![alt text](image-21.png)
+![alt text](image-22.png)
 
 * Uruchomiłam stworzony pipeline drugi raz
+![alt text](image-23.png)
+Za drugim razem czas wykonywania jest krótszy z powodu cachowania - zapamiętywania przez Dockera czynności, które wykonał w przeszłości.
+
+Widok z blueocean:
+![alt text](image-24.png)
+![alt text](image-25.png)
 
 Treść dockerfile:
 ```dockerfile
@@ -129,7 +138,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo 'Buduję obraz na podstawie Dockerfile'
-                sh 'docker build -t moj-build -f AD420339/Sprawozdanie5/Dockerfile.build AD420339/Sprawozdanie5/'
+                sh 'docker build -t moj-build -f grupa2/AD_420339/Sprawozdanie3/Dockerfile.build grupa2/AD_420339/Sprawozdanie3/docker-repo/'
             }
         }
     }
@@ -144,5 +153,41 @@ pipeline {
 
 Historia poleceń z terminala (polecenie history):
 ```bash
-
+371  cd Sprawozdanie5
+  372  docker volume ls
+  373  sudo docker volume ls
+  374  docker ps
+  375  sudo docker ps
+  376  sudo docker ps -a
+  377  sudo docker start jenkins-docker
+  378  sudo docker start jenkins-wlasciwy
+  379  sudo docker ps
+  380  sudo docker logs jenkins-wlasciwy
+  381  sudo docker exec jenkins-wlasciwy docker ps
+  382  sudo docker images
+  383  sudo docker ps -a
+  384  sudo docker run --rm dockerfile1 ls dist
+  385  sudo docker run --rm dockerfile2
+  386  sudo docker network ls
+  387  sudo docker ps -a
+  388  sudo docker build -t myjenkins-blueocean .
+  389  sudo docker run --name jenkins-wlasciwy2 --detach   --network jenkins --env DOCKER_HOST=tcp://docker:2376   --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1   --publish 8080:8080 --publish 50000:50000   --volume jenkins-data:/var/jenkins_home   --volume jenkins-docker-certs:/certs/client:ro   myjenkins-blueocean
+  390  sudo docker ps
+  391  sudo docker stop jenkins-wlasciwy
+  392  sudo docker run --name jenkins-wlasciwy2 --detach   --network jenkins --env DOCKER_HOST=tcp://docker:2376   --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1   --publish 8080:8080 --publish 50000:50000   --volume jenkins-data:/var/jenkins_home   --volume jenkins-docker-certs:/certs/client:ro   myjenkins-blueocean
+  393  sudo docker rm -f jenkins-wlasciwy2
+  394  sudo docker run --name jenkins-wlasciwy2 --detach   --network jenkins --env DOCKER_HOST=tcp://docker:2376   --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1   --publish 8080:8080 --publish 50000:50000   --volume jenkins-data:/var/jenkins_home   --volume jenkins-docker-certs:/certs/client:ro   myjenkins-blueocean
+  395  sudo docker ps
+  396  sudo network ls
+  397  sudo docker ps
+  398  sudo docker rm -f jenkins-wlasciwy2
+  399  sudo docker run --name jenkins-wlasciwy2 --detach   --network jenkins --env DOCKER_HOST=tcp://docker:2376   --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1   --publish 8080:8080 --publish 50000:50000   --volume jenkins-data:/var/jenkins_home   --volume jenkins-docker-certs:/certs:ro   myjenkins-blueocean
+  400  sudo docker exec jenkins-wlasciwy2 docker ps
+  401  git status
+  402  git add .
+  403  git status
+  404  git commit -m "Dodanie folderu Sprawozdanie5 dla jenkinsa"
+  405  git commit -m "AD420339 dodanie folderu Sprawozdanie5 dla jenkinsa"
+  406  git push origin AD_420339-NEW 
+  407  history
 ```
