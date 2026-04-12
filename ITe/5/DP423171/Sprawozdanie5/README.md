@@ -143,4 +143,4 @@ Pipeline wywołano również jeszcze raz i zdumpowano do [#2.txt](logs/pipeline/
 
 <!-- Linki: --->
 <!-- [ex5]: ../../../../READMEs/05-Class.md "..." -->
-[`Dockerfile`]: Dockerfile
+[`Dockerfile`]: docker/blueocean/Dockerfile
