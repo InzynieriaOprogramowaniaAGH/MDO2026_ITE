@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:2.557-jdk25
+FROM jenkins/jenkins:2.558-jdk25
 USER root
 RUN apt-get update && apt-get install -y lsb-release ca-certificates curl && \
     install -m 0755 -d /etc/apt/keyrings && \
