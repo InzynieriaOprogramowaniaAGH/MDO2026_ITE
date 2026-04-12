@@ -1,13 +1,13 @@
 FROM archlinux:base-devel
 
 # Zależności
-RUN pacman -Syu --needed --noconfirm git gpgme libarchive curl python fakechroot fakeroot meson
+RUN pacman -Syu --asdeps --noconfirm git gpgme libarchive curl python fakechroot fakeroot meson
 # Klon repo
 RUN git clone -b v7.1.0 https://gitlab.archlinux.org/pacman/pacman.git /repo
 WORKDIR /repo
 
 # Konfiguracja dla budowy
-RUN meson setup build
+RUN meson setup build --prefix=/usr/local
 
 # Budowa
 WORKDIR /repo/build
