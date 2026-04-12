@@ -12,6 +12,6 @@ FROM build-env-main:latest
 RUN fakechroot meson test || true
 
 # Usuwanie zależności testów
-RUN pacman -Rcsu --noconfirm $(pacman -Qqdt)
+RUN pacman -Rcsu --noconfirm base-devel $(pacman -Qqdt)
 
 CMD [ "./pacman", "--version" ]
