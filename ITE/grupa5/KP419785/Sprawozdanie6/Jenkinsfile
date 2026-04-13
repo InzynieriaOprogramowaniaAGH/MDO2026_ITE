@@ -63,7 +63,7 @@ pipeline {
     }
     post {
         always {
-            echo "Pipeline zakończony ze statusem: ${currentBuild.currentResult}"
+            echo "Pipeline zakonczony ze statusem: ${currentBuild.currentResult}"
         }
     }
 }
