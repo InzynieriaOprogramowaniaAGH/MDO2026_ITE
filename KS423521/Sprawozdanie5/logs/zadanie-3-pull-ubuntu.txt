@@ -1,0 +1,14 @@
+Started by user admin
+Running as SYSTEM
+Building in workspace /var/jenkins_home/workspace/zadanie-3-pull-ubuntu
+[zadanie-3-pull-ubuntu] $ /bin/sh -xe /tmp/jenkins7743778786316975734.sh
++ docker pull ubuntu:latest
+latest: Pulling from library/ubuntu
+817807f3c64e: Pulling fs layer
+817807f3c64e: Verifying Checksum
+817807f3c64e: Download complete
+817807f3c64e: Pull complete
+Digest: sha256:186072bba1b2f436cbb91ef2567abca677337cfc786c86e107d25b7072feef0c
+Status: Downloaded newer image for ubuntu:latest
+docker.io/library/ubuntu:latest
+Finished: SUCCESS
