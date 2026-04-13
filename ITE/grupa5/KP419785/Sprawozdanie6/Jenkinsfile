@@ -9,7 +9,6 @@ pipeline {
         
         stage('Clone') {
             steps {
-                // Pobranie repozytorium z Twojej gałęzi
                 git branch: 'KP419785', url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git'
             }
         }
@@ -25,7 +24,6 @@ pipeline {
         stage('Test') {
             steps {
                 dir('ITE/grupa5/KP419785/Sprawozdanie6') {
-                    // Budowa obrazu testowego i zapisanie logów
                     sh 'docker build --no-cache --progress=plain -t portfinder-test -f Dockerfile.test . 2>&1 | tee test-output.log'
                     sh "mv test-output.log test-logs-${BUILD_NUMBER}.log"
                 }
@@ -33,7 +31,6 @@ pipeline {
             post {
                 always {
                     dir('ITE/grupa5/KP419785/Sprawozdanie6') {
-                        // Odkładanie logów jako artefakt
                         archiveArtifacts artifacts: "test-logs-${BUILD_NUMBER}.log", fingerprint: true
                     }
                 }
@@ -43,9 +40,7 @@ pipeline {
         stage('Deploy (Smoke Test)') {
             steps {
                 dir('ITE/grupa5/KP419785/Sprawozdanie6') {
-                    // Multi-stage build docelowego kontenera
                     sh 'docker build --no-cache -t portfinder-deploy -f Dockerfile.deploy .'
-                    // Weryfikacja: Smoke test (sprawdzenie czy binarka działa)
                     sh 'docker run --rm portfinder-deploy --help'
                 }
             }
@@ -54,14 +49,12 @@ pipeline {
         stage('Publish') {
             steps {
                 dir('ITE/grupa5/KP419785/Sprawozdanie6') {
-                    // Pakowanie kontenera do paczki tar.gz
                     sh 'docker save portfinder-deploy | gzip > portfinder-image-${BUILD_NUMBER}.tar.gz'
                 }
             }
             post {
                 always {
                     dir('ITE/grupa5/KP419785/Sprawozdanie6') {
-                        // Udostępnienie paczki jako główny artefakt w Jenkinsie
                         archiveArtifacts artifacts: '*.tar.gz', fingerprint: true
                     }
                 }
