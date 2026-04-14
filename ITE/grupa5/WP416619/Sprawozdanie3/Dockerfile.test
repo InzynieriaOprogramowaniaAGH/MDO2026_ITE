@@ -1,0 +1,4 @@
+FROM moje-build-image:latest
+
+CMD ["./test-library.out"]
+
