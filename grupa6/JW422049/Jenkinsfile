@@ -1,0 +1,78 @@
+pipeline {
+    agent any
+
+    environment {
+        REPO_NAME = 'MDO2026_ITE'
+        BRANCH_NAME = 'JW422049'
+        IMAGE_NAME = 'lab05-builder'
+        CONTAINER_NAME = 'lab05-deploy'
+        ARTIFACT_NAME = "lab05-artifact-${BUILD_NUMBER}.tar.gz"
+    }
+
+    stages {
+        stage('Clone repo') {
+            steps {
+                sh '''
+                rm -rf ${REPO_NAME}
+                git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+                '''
+            }
+        }
+
+        stage('Checkout builder Dockerfile') {
+            steps {
+                sh '''
+                cd ${REPO_NAME}
+                git checkout ${BRANCH_NAME}
+                ls -la
+                '''
+            }
+        }
+
+        stage('Build Dockerfile') {
+            steps {
+                sh '''
+                cd ${REPO_NAME}/grupa6/${BRANCH_NAME}
+                docker build -t ${IMAGE_NAME} -f Dockerfile .
+                '''
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh '''
+                docker run --rm ${IMAGE_NAME} git --version
+                '''
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh '''
+                docker rm -f ${CONTAINER_NAME} 2>/dev/null || true
+                docker run -d --name ${CONTAINER_NAME} ${IMAGE_NAME} tail -f /dev/null
+                docker ps | grep ${CONTAINER_NAME}
+                docker exec ${CONTAINER_NAME} git --version
+                '''
+            }
+        }
+
+        stage('Publish') {
+            steps {
+                sh '''
+                cd ${REPO_NAME}/grupa6/${BRANCH_NAME}
+                tar -czf ${WORKSPACE}/${ARTIFACT_NAME} Dockerfile
+                '''
+                archiveArtifacts artifacts: "${ARTIFACT_NAME}", fingerprint: true
+            }
+        }
+    }
+
+    post {
+        always {
+            sh '''
+            docker rm -f ${CONTAINER_NAME} 2>/dev/null || true
+            '''
+        }
+    }
+}
