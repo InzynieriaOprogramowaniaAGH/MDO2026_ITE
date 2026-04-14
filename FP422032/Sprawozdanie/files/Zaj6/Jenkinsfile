@@ -15,40 +15,40 @@ pipeline {
         
         stage('Build') {
             steps {
-                dir('files/Zaj6') {
-                    sh 'docker build --target builder -t ${IMAGE_NAME}-build:${GIT_COMMIT[0..6]} .'
+                dir('FP422032/Sprawozdanie/files/Zaj6') {
+                    sh "docker build --target builder -t ${IMAGE_NAME}-build:${BUILD_NUMBER} ."
                 }
             }
         }
 
         stage('Test') {
             steps {
-                dir('files/Zaj6') {
-                    sh 'docker build --target tester -t ${IMAGE_NAME}-tester:${GIT_COMMIT[0..6]} .'
+                dir('FP422032/Sprawozdanie/files/Zaj6') {
+                    sh "docker build --target tester -t ${IMAGE_NAME}-tester:${BUILD_NUMBER} ."
                 }
             }
         }
         
         stage('Deploy') {
             steps {
-                dir('files/Zaj6') {
-                    sh 'docker build --target deploy -t ${IMAGE_NAME}:${APP_VERSION}-${GIT_COMMIT[0..6]} .'
+                dir('FP422032/Sprawozdanie/files/Zaj6') {
+                    sh "docker build --target deploy -t ${IMAGE_NAME}:${APP_VERSION}-${GIT_COMMIT} ."
                 }
             }
         }
 
         stage('Smoke Test') {
             steps {
-                sh 'docker run -d --name smoke-test-app -p 3000:3000 ${IMAGE_NAME}:${APP_VERSION}-${GIT_COMMIT[0..6]}'
+                sh "docker run -d --name smoke-test-app -p 3000:3000 ${IMAGE_NAME}:${APP_VERSION}-${GIT_COMMIT}"
                 sleep 5
-                sh 'curl -f http://localhost:3000 || (docker rm -f smoke-test-app && exit 1)'
-                sh 'docker rm -f smoke-test-app'
+                sh "curl -f http://localhost:3000 || (docker rm -f smoke-test-app && exit 1)"
+                sh "docker rm -f smoke-test-app"
             }
         }
         
         stage('Publish') {
             steps {
-                dir('files/Zaj6') {
+                dir('FP422032/Sprawozdanie/files/Zaj6') {
                     archiveArtifacts artifacts: 'Dockerfile, Jenkinsfile, package.json', allowEmptyArchive: false
                 }
             }
