@@ -1,0 +1,10 @@
+FROM node:18
+
+RUN apt update && apt install -y git && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+RUN git clone https://github.com/mesqueeb/merge-anything.git .
+
+RUN npm install
+RUN npm run build
