@@ -15,7 +15,7 @@ pipeline {
         
         stage('Build') {
             steps {
-                dir('Zaj6/files') {
+                dir('files/Zaj6') {
                     sh 'docker build --target builder -t ${IMAGE_NAME}-build:${GIT_COMMIT[0..6]} .'
                 }
             }
@@ -23,7 +23,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                dir('Zaj6/files') {
+                dir('files/Zaj6') {
                     sh 'docker build --target tester -t ${IMAGE_NAME}-tester:${GIT_COMMIT[0..6]} .'
                 }
             }
@@ -31,7 +31,7 @@ pipeline {
         
         stage('Deploy') {
             steps {
-                dir('Zaj6/files') {
+                dir('files/Zaj6') {
                     sh 'docker build --target deploy -t ${IMAGE_NAME}:${APP_VERSION}-${GIT_COMMIT[0..6]} .'
                 }
             }
@@ -48,7 +48,7 @@ pipeline {
         
         stage('Publish') {
             steps {
-                dir('Zaj6/files') {
+                dir('files/Zaj6') {
                     archiveArtifacts artifacts: 'Dockerfile, Jenkinsfile, package.json', allowEmptyArchive: false
                 }
             }
