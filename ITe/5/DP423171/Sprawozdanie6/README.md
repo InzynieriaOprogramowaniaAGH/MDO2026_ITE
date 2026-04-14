@@ -167,6 +167,14 @@ na chwilę checklisty, co można zauważyć [na oficjalnym repozytorium](https:/
 w pewien więc sposób udało mi się wyprzedzić *upstream*, a także daje to możliwość
 rozważenia przyszłej kontrybucji w CI/CD dostawcy, aby tą funkcję również dostarczyć.
 
+Można też przyrównać testy względem statystyk (ogólnego trendu), co widoczne jest
+w różnych miejscach UI:
+
+![](img/test/upgrade.png)
+
+![](img/test/trend.png)
+
+
 #### Uzupełnienie CI/CD o realizację operacji `deploy` i `publish`
 
 Zgodnie z rozważanym planem, operacja `deploy` ma *wdrażać* oprogramowanie w kontener.
