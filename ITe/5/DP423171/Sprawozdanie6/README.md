@@ -79,7 +79,7 @@ Przebieg ćwiczenia
 
 Wychodząc z konfiguracji `pipeline` z zadania 5:
 
-```Jenkinsfile
+```Groovy
 pipeline {
     agent any
 
