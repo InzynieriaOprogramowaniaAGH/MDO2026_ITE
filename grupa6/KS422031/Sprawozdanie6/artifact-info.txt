@@ -1,0 +1,7 @@
+Artifact: foo-test
+Source repository: https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE
+Branch: KS422031
+Source path: grupa6/KS422031/Sprawozdanie3
+Runtime path: grupa6/KS422031/Sprawozdanie6
+Versioning: Jenkins BUILD_NUMBER
+Packaging: tar.gz

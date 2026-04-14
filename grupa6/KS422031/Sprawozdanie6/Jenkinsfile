@@ -1,0 +1,93 @@
+pipeline {
+    agent any
+
+    environment {
+        BUILD_IMAGE = "lab6-build:latest"
+        LEGACY_BUILD_IMAGE = "lab3-makefile-c-build:latest"
+        TEST_IMAGE = "lab6-test:${BUILD_NUMBER}"
+        RUNTIME_IMAGE = "lab6-runtime:${BUILD_NUMBER}"
+        RUNTIME_CONTAINER = "lab6-runtime-${BUILD_NUMBER}"
+        BUILD_DIR = 'grupa6/KS422031/Sprawozdanie3'
+        WORK_DIR = 'grupa6/KS422031/Sprawozdanie6'
+        ARTIFACT_NAME = "foo-test-${BUILD_NUMBER}.tar.gz"
+        LOG_NAME = "smoke-test-${BUILD_NUMBER}.log"
+    }
+
+    stages {
+        stage('Clone') {
+            steps {
+                git branch: 'KS422031', url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE'
+            }
+        }
+
+        stage('Build image') {
+            steps {
+                sh 'docker build -t ${BUILD_IMAGE} -f ${BUILD_DIR}/Dockerfile.build ${BUILD_DIR}'
+                sh 'docker tag ${BUILD_IMAGE} ${LEGACY_BUILD_IMAGE}'
+            }
+        }
+
+        stage('Test image') {
+            steps {
+                sh 'docker build -t ${TEST_IMAGE} -f ${BUILD_DIR}/Dockerfile.test ${BUILD_DIR}'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'docker run --rm ${TEST_IMAGE}'
+            }
+        }
+
+        stage('Package') {
+            steps {
+                sh '''
+                    mkdir -p ${WORK_DIR}
+                    CID=$(docker create ${BUILD_IMAGE})
+                    docker cp ${CID}:/opt/makefile-for-c/src/foo-test ${WORK_DIR}/foo-test
+                    docker rm ${CID}
+                    chmod +x ${WORK_DIR}/foo-test
+                    tar -czf ${WORK_DIR}/${ARTIFACT_NAME} -C ${WORK_DIR} foo-test
+                '''
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh '''
+cat > Dockerfile.runtime <<'EOF'
+FROM ubuntu:24.04
+WORKDIR /app
+COPY grupa6/KS422031/Sprawozdanie6/foo-test /app/foo-test
+RUN chmod +x /app/foo-test
+CMD ["/app/foo-test"]
+EOF
+'''
+                sh 'cat Dockerfile.runtime'
+                sh 'docker build -t ${RUNTIME_IMAGE} -f Dockerfile.runtime .'
+                sh 'docker rm -f ${RUNTIME_CONTAINER} || true'
+                sh 'docker run -d --name ${RUNTIME_CONTAINER} ${RUNTIME_IMAGE}'
+            }
+        }
+
+        stage('Smoke test') {
+            steps {
+                sh 'docker ps -a --filter "name=${RUNTIME_CONTAINER}"'
+                sh 'docker logs ${RUNTIME_CONTAINER} > ${WORK_DIR}/${LOG_NAME}'
+                sh 'cat ${WORK_DIR}/${LOG_NAME}'
+            }
+        }
+
+        stage('Publish') {
+            steps {
+                archiveArtifacts artifacts: 'grupa6/KS422031/Sprawozdanie6/*.tar.gz,grupa6/KS422031/Sprawozdanie6/*.log', fingerprint: true
+            }
+        }
+    }
+
+    post {
+        always {
+            sh 'docker logs ${RUNTIME_CONTAINER} || true'
+        }
+    }
+}
