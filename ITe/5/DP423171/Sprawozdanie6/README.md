@@ -266,11 +266,9 @@ Aby zarządzać wersją oprogramowania na upstream wykorzystano `ARG` dla
 `Dockerfile`. Zmodyfikowano `Dockerfile` z ćwiczenia 3:
 
 ```diff
-@@ -0,0 +1,2 @@
-+ARG PACMAN_TAG
-+
-@@ -6 +8 @@ RUN pacman -Syu --asdeps --noconfirm git gpgme libarchive curl python fakechroot
+@@ -6 +6,2 @@ RUN pacman -Syu --asdeps --noconfirm git gpgme libarchive curl python fakechroot
 -RUN git clone -b v7.1.0 https://gitlab.archlinux.org/pacman/pacman.git /repo
++ARG PACMAN_TAG
 +RUN git clone -b v$PACMAN_TAG https://gitlab.archlinux.org/pacman/pacman.git /repo
 ```
 
