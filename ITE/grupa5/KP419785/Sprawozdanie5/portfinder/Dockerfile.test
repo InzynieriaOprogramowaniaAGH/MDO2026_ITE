@@ -1,0 +1,3 @@
+FROM app-build:latest
+WORKDIR /src
+CMD ["go", "test", "./..."]
