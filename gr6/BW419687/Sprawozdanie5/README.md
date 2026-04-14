@@ -57,6 +57,11 @@ Dla tego build będzie się składał z 4 etapów:
 3. Test - testowanie kontenerem testowym flac:tester
 4. Publish - zebranie przetestowanych już plików bibliotecznych
 
+Aby Jenkins miał odpowiednie kontenery należy je zbudować w kontenerze DIND:
+
+![](./8.png)
+![](./9.png)
+
 Cały proces CI zostanie wykonany poniższym jenkinsfilem:
 
 ```yaml
@@ -129,3 +134,6 @@ pipeline {
     }
 }
 ```
+
+I wynikiem procesu są gotowe pliki biblioteczne:
+![](./10.png)
