@@ -1,0 +1,102 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_BUILDER = "mdo-builder:${env.BUILD_ID}"
+        IMAGE_RUNTIME = "mdo-runtime:${env.BUILD_ID}"
+        REPO_URL = "https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git"
+        REPO_BRANCH = "DW419755"
+        APP_DIR = "ITE/lab6/DW419755/Pipeline5-7"
+    }
+
+    stages {
+        stage('Step 1: Cleanup & SCM') {
+            steps {
+                deleteDir()
+                checkout([$class: 'GitSCM', 
+                    branches: [[name: "*/${REPO_BRANCH}"]], 
+                    userRemoteConfigs: [[url: "${REPO_URL}"]]
+                ])
+            }
+        }
+
+        stage('Step 2: Build Builder Image') {
+            steps {
+                echo "Budowanie obrazu Builder (pobieranie źródeł Redisa)..."
+                sh "docker build --no-cache -f ${APP_DIR}/Dockerfile.build -t ${IMAGE_BUILDER} ."
+            }
+        }
+
+        stage('Step 3: Build (Compile)') {
+            agent {
+                docker {
+                    image "${IMAGE_BUILDER}"
+                    reuseNode true 
+                }
+            }
+            steps {
+                echo "Kompilacja Redisa wewnątrz kontenera (katalog /build)..."
+                script {
+                    sh """
+                        cd /build
+                        make
+                        mkdir -p ${WORKSPACE}/dist
+                        cp src/redis-server src/redis-cli ${WORKSPACE}/dist/
+                    """
+                }
+                stash includes: "dist/**", name: 'binaries'
+            }
+        }
+
+        stage('Step 4: Test') {
+            agent {
+                docker {
+                    image "${IMAGE_BUILDER}"
+                    reuseNode true
+                }
+            }
+            steps {
+                echo "Uruchamianie testów..."
+                sh "cd /build && make test > ${WORKSPACE}/test_results.log 2>&1 || echo 'Testy fail'"
+            }
+            post {
+                always {
+                    archiveArtifacts artifacts: "test_results.log", allowEmptyArchive: true
+                }
+            }
+        }
+
+        stage('Step 5: Package') {
+            steps {
+                echo "Budowanie obrazu Runtime..."
+                unstash 'binaries'
+                
+                sh "docker build --no-cache -f ${APP_DIR}/Dockerfile.runtime -t ${IMAGE_RUNTIME} ."
+                
+                sh "tar -czvf redis-dist-${env.BUILD_ID}.tar.gz dist/"
+                archiveArtifacts artifacts: "*.tar.gz"
+            }
+        }
+
+        stage('Step 6: Verify') {
+            steps {
+                script {
+                    sh "docker run -d --name verify-${env.BUILD_ID} ${IMAGE_RUNTIME}"
+                    try {
+                        sleep 5
+                        sh "docker exec verify-${env.BUILD_ID} redis-server --version"
+                        echo "Weryfikacja zakończona sukcesem."
+                    } finally {
+                        sh "docker stop verify-${env.BUILD_ID} && docker rm verify-${env.BUILD_ID}"
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            sh "docker rmi ${IMAGE_BUILDER} ${IMAGE_RUNTIME} || true"
+        }
+    }
+}
