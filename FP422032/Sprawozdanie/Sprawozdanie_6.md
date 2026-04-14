@@ -20,7 +20,7 @@ Aby zaplanować pracę, stworzyłem diagram UML przedstawiający docelowy przebi
 Aby uruchomić budowanie i testy w osobnych kontenerach, w jednym pliku `Dockerfile` zastosowałem 3 etapy: `builder`, `tester` oraz `deploy`.
 
 **Uzasadnienie wyboru obrazów:** Do etapu budowania i testów użyłem pełnego obrazu `node:20`. Natomiast jako finalny kontener produkcyjny (`deploy`) zdefiniowałem `node:20-slim`. 
-*Dlaczego tak zrobiłem?* Pełen obraz jest potrzebny tylko na chwilę, by zainstalować pakiety testowe. Obraz docelowy (`slim`) pozbawiony jest narzędzi programistycznych, co sprawia, że jest znacznie lżejszy i bezpieczniejszy (minimalizacja powierzchni ewentualnego ataku hakerskiego).
+*Dlaczego tak zrobiłem?* Pełen obraz jest potrzebny tylko na chwilę, by zainstalować pakiety testowe. Obraz docelowy (`slim`) pozbawiony jest narzędzi programistycznych, co sprawia, że jest znacznie lżejszy i bezpieczniejszy.
 
 ## 3. Konfiguracja w Jenkinsie
 Podłączyłem nowo stworzone zadanie w Jenkinsie, wskazując ścieżkę do mojego skryptu.
@@ -30,7 +30,7 @@ Jenkins pomyślnie przeszedł przez etapy budowania, a w logach z odizolowanego 
 ![Przejście Testów](images/PrzejscieTestow.png)
 
 **Weryfikacja (Smoke Test):** Potok zakończył się uruchomieniem kontenera docelowego i weryfikacją komendą `curl`. 
-*Dlaczego to ważne?* Udowadnia to, że aplikacja nie tylko się zbudowała, ale faktycznie działa i odpowiada na zapytania sieciowe.
+*Dlaczego tak zrobiłem?* Udowadnia to, że aplikacja nie tylko się zbudowała, ale faktycznie działa i odpowiada na zapytania sieciowe.
 ![Smoke Test](images/SmokeTest.png)
 
 ## 4. Publikacja Artefaktów i Wersjonowanie
