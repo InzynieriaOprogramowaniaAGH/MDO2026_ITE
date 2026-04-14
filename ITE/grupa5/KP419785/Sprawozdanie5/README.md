@@ -1,5 +1,7 @@
 Najnowsza wersja sprawozdania znajduje się w folderze SPR_Poprawione_Zdjecia 
 
+Najmnocniej przepraszam za niedogodności.
+
 # SPRAWOZDANIE 5 
 
 ## Środowisko uruchomieniowe
