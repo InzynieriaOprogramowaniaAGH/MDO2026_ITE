@@ -3,7 +3,8 @@ FROM archlinux:base-devel
 # Zależności
 RUN pacman -Syu --asdeps --noconfirm git gpgme libarchive curl python fakechroot fakeroot meson
 # Klon repo
-RUN git clone -b v7.1.0 https://gitlab.archlinux.org/pacman/pacman.git /repo
+ARG PACMAN_TAG
+RUN git clone -b v$PACMAN_TAG https://gitlab.archlinux.org/pacman/pacman.git /repo
 WORKDIR /repo
 
 # Konfiguracja dla budowy
