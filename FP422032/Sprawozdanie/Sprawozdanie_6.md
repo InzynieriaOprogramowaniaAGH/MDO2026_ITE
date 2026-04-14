@@ -1,6 +1,6 @@
 # Sprawozdanie 6 – Automatyzacja Pipeline CI/CD
 
-**Autor:** [Twoje Imię i Nazwisko]  
+**Autor:** Filip Pyrek  
 **Indeks:** 422032  
 
 ## 1. Wybór aplikacji i przygotowanie kodu
