@@ -42,7 +42,7 @@ pipeline {
                 sh "docker run -d --name smoke-test-app -p 3000:3000 ${IMAGE_NAME}:${APP_VERSION}-${GIT_COMMIT}"
                 sleep 5
                 
-                sh 'APP_IP=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" smoke-test-app) && curl -f http://$APP_IP:3000 || (docker rm -f smoke-test-app && exit 1)'
+                sh 'docker run --rm --network container:smoke-test-app curlimages/curl -f http://localhost:3000 || (docker rm -f smoke-test-app && exit 1)'
                 
                 sh "docker rm -f smoke-test-app"
             }
