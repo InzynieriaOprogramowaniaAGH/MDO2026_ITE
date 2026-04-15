@@ -7,7 +7,7 @@ Kontenery z poprzedniego ćwiczenia działąły prawidłowo.
 ![uruchomienie_kontenerow](uruchomienie_kontenerow.png)
 
 W trakcie tworzenia pipelina odkryłem brak wymaganych wtyczek, które by były niezbędne.
-By narpawic ten bła najpierw podmieniłę mwersje jenkisna na najnowszą , potem pobrałem i  zaktualizowałem wtyczki a następnie zresetowałem  kontener.
+By narpawic ten bład najpierw podmieniłę mwersje jenkisna na najnowszą , potem pobrałem i  zaktualizowałem wtyczki a następnie zresetowałem  kontener.
 ![blad_wtyczek](blad_wtyczek.png)
 ![Jenkins](Jenkins.png)
 
@@ -87,5 +87,13 @@ pipeline {
     }
 }
 ```
+Rezultat 1 uruchomienia
 ![pipeline1](pipeline1.png)
+
+Rezultat 2 uruchomienia
 ![pipeline2](pipeline2.png)
+
+Pipeline podczas drugiego uruchomienia wykonał się znacznie szybciej. Wynika to z faktu, że repozytorium zostało jedynie zaktualizowane (nie klonowane od zera), a przede wszystkim dzięki zastosowaniu mechanizmu Docker Cache – warstwy obrazu nie musiały być budowane ponownie, co widać w logach jako status CACHED.
+
+![cached](cached.png)
+
