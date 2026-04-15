@@ -1,2 +1,3 @@
-FROM app-build-stage
+FROM list-build:latest
+
 CMD ["make", "test"]
