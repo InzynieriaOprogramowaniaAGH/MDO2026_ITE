@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
     wget \
     tcl \
     libc6-dev \
+    procps \
     && rm -rf /var/lib/apt/lists/*
 
 ENV REDIS_VER="8.6.2"
