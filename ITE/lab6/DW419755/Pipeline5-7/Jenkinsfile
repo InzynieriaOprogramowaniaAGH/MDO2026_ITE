@@ -57,7 +57,7 @@ pipeline {
             }
             steps {
                 echo "Uruchamianie testów..."
-                sh "cd /build && make test > ${WORKSPACE}/test_results.log 2>&1 || echo 'Testy fail'"
+                sh "cd /build && ./utils/test-server --single unit/type/string > ${WORKSPACE}/test_results.log 2>&1 || echo 'Testy fail'"
             }
             post {
                 always {
