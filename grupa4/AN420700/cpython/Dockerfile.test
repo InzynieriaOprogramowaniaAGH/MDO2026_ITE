@@ -1,5 +1,0 @@
-FROM cpython-builder:latest
-
-WORKDIR /cpython
-
-CMD [make, test]
