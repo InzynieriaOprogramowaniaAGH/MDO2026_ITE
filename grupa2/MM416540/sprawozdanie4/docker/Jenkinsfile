@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_NAME = "express-build:latest"
+    }
+
+    stages {
+        stage('Collect') {
+            steps {
+                // Jenkins automatycznie pobierze kod z SCM, 
+                // ale możemy tu dodać dodatkowe logi
+                echo "Pobieranie kodu źródłowego..."
+            }
+        }
+
+        stage('Build Image') {
+            steps {
+                // Budujemy obraz na podstawie Twojego Dockerfile
+                sh "docker build -t ${IMAGE_NAME} ."
+            }
+        }
+
+        stage('Test & Pack') {
+            steps {
+                // Uruchamiamy npm pack wewnątrz zbudowanego obrazu
+                sh "docker run --rm -v \$(pwd):/app -w /app ${IMAGE_NAME} npm pack"
+            }
+        }
+
+        stage('Publish') {
+            steps {
+                // Archiwizujemy paczkę .tgz w Jenkinsie
+                archiveArtifacts artifacts: '*.tgz', fingerprint: true
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline z repozytorium zakończony sukcesem!'
+        }
+        failure {
+            echo 'Błąd w Pipeline – sprawdź Jenkinsfile w repozytorium.'
+        }
+    }
+}
