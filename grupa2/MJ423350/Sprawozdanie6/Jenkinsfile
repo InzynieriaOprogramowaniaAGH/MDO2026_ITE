@@ -9,6 +9,20 @@ pipeline {
     }
 
     stages {
+        stage('Checkout DevOps (Dockerfile + Jenkinsfile)') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Checkout App (C/C++ code)') {
+            steps {
+                dir('app') {
+                    git url: "${APP_REPO}"
+                }
+            }
+        }
+
         stage('Clone') {
             steps {
                 echo 'Cloning repository...'
@@ -19,28 +33,23 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building (build stage)...'
-                dir('grupa2/MJ423350/Sprawozdanie6') {
-                    sh 'docker build --target build -t build-image .'
-                }
+                sh 'docker build --target build -t build-image .'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Running tests (test stage)...'
-                dir('grupa2/MJ423350/Sprawozdanie6') {
-                    sh 'docker build --target test -t test-image .'
-                    sh 'docker run --rm test-image > test.log'
-                }
+                sh 'docker build --target test -t test-image .'
+                sh 'docker run --rm test-image > test.log'
             }
         }
 
         stage('Deploy') {
             steps {
                 echo 'Building deploy image...'
-                dir('grupa2/MJ423350/Sprawozdanie6') {
-                    sh "docker build --target deploy -t ${IMAGE_NAME}:${VERSION} ."
-                }
+                sh "docker build --target deploy -t ${IMAGE_NAME}:${VERSION} ."
+                
                 echo 'Deploying container...'
                 sh "docker rm -f ${CONTAINER_NAME} || true"
                 sh "docker run -d --name ${CONTAINER_NAME} ${IMAGE_NAME}:${VERSION}"

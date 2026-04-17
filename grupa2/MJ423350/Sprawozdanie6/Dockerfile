@@ -4,7 +4,7 @@ RUN apt-get update \
     && apt-get install -y gcc make cmake lcov libncurses-dev git \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
-COPY . /app
+COPY app /app
 RUN make
 
 #Test
