@@ -57,7 +57,7 @@ RUN apt-get update \
 
 WORKDIR /app
 
-COPY . /app
+COPY app /app
 
 RUN make
 ```
@@ -99,6 +99,7 @@ Zdecydowano się na publikację kontenera Docker jako artefaktu, gdyż działa n
 Do wykonania zadania użyto poniższego pliku Jenkinsfile:
 ```jenkinsfile
 pipeline {
+    pipeline {
     agent any
 
     environment {
@@ -109,46 +110,45 @@ pipeline {
     }
 
     stages {
-        stage('Checkout DevOps (Dockerfile + Jenkinsfile)') {
+        stage('Checkout DevOps') {
             steps {
                 checkout scm
             }
         }
 
-        stage('Checkout App (C/C++ code)') {
+        stage('Checkout App') {
             steps {
-                dir('app') {
+                dir('grupa2/MJ423350/Sprawozdanie6/app') {
                     git url: "${APP_REPO}"
                 }
-            }
-        }
-
-        stage('Clone') {
-            steps {
-                echo 'Cloning repository...'
-                git url: "${APP_REPO}"
             }
         }
 
         stage('Build') {
             steps {
                 echo 'Building (build stage)...'
-                sh 'docker build --target build -t build-image .'
+                dir('grupa2/MJ423350/Sprawozdanie6') {
+                    sh 'docker build --target build -t build-image .'
+                }
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Running tests (test stage)...'
-                sh 'docker build --target test -t test-image .'
-                sh 'docker run --rm test-image > test.log'
+                dir('grupa2/MJ423350/Sprawozdanie6') {
+                    sh 'docker build --target test -t test-image .'
+                    sh 'docker run --rm test-image > test.log'
+                }
             }
         }
 
         stage('Deploy') {
             steps {
                 echo 'Building deploy image...'
-                sh "docker build --target deploy -t ${IMAGE_NAME}:${VERSION} ."
+                dir('grupa2/MJ423350/Sprawozdanie6') {
+                    sh "docker build --target deploy -t ${IMAGE_NAME}:${VERSION} ."
+                }
                 
                 echo 'Deploying container...'
                 sh "docker rm -f ${CONTAINER_NAME} || true"
