@@ -32,7 +32,7 @@ stage('Smoke Test (Weryfikacja)') {
                     sleep 3
                     
                     // Magiczna linijka: Jeśli test się nie uda, wydrukuj nam dokładne logi błędu z aplikacji!
-                    sh 'docker exec smoke-test-app wget -qO- http://localhost:5000/ || (docker logs smoke-test-app && exit 1)'
+                    sh 'docker exec smoke-test-app wget -qO- http://localhost:3000/ || (docker logs smoke-test-app && exit 1)'
                 }
             }
             post {
