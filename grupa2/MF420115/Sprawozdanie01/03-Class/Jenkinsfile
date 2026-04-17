@@ -1,0 +1,60 @@
+pipeline {
+    agent any
+    
+    environment {
+        // Zmienne używane do wersjonowania
+        APP_NAME = "mdo-app"
+        APP_VERSION = "v1.0.${BUILD_NUMBER}"
+        ARTIFACT_NAME = "${APP_NAME}-${APP_VERSION}-${GIT_COMMIT[0..6]}.tar.gz"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'MF420115-NEW', url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git'
+            }
+        }
+
+        stage('Build & Test') {
+            steps {
+                script {
+                    dir('grupa2/MF420115/Sprawozdanie01/03-Class') {
+                        echo "Budowanie obrazu Multi-stage..."
+                        sh 'docker build -t ${APP_NAME}:${APP_VERSION} .'
+                    }
+                }
+            }
+        }
+
+        stage('Smoke Test (Deploy)') {
+            steps {
+                script {
+                    dir('grupa2/MF420115/Sprawozdanie01/03-Class') {
+                        echo "Uruchamianie kontenera docelowego w celu weryfikacji..."
+                        sh 'docker run --rm ${APP_NAME}:${APP_VERSION}'
+                    }
+                }
+            }
+        }
+
+        stage('Publish Artifact') {
+            steps {
+                script {
+                    dir('grupa2/MF420115/Sprawozdanie01/03-Class') {
+                        echo "Pakowanie obrazu jako artefakt..."
+                        sh 'docker save ${APP_NAME}:${APP_VERSION} | gzip > ${ARTIFACT_NAME}'
+                        // Publikacja pliku w Jenkinsie
+                        archiveArtifacts artifacts: "${ARTIFACT_NAME}", fingerprint: true
+                    }
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            // Sprzątanie po sobie na agencie
+            sh 'docker rmi ${APP_NAME}:${APP_VERSION} || true'
+        }
+    }
+}
