@@ -1,0 +1,5 @@
+FROM express-build:5.2.1
+
+LABEL description="Tester dla Express.js – bazuje na obrazie build"
+
+CMD ["npm", "test"]
