@@ -1,0 +1,80 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_NAME = "cpp-ci-app"
+        VERSION = "1.0.${BUILD_NUMBER}"
+        CONTAINER_NAME = "cpp-app-container"
+    }
+
+    stages {
+        stage('Clone') {
+            steps {
+                echo 'Cloning repository...'
+                git url: 'https://github.com/deftio/C-and-Cpp-Tests-with-CI-CD-Example.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Building (build stage)...'
+                sh 'docker build --target build -t build-image .'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Running tests (test stage)...'
+                sh 'docker build --target test -t test-image .'
+                sh 'docker run --rm test-image > test.log'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Building deploy image...'
+                sh "docker build --target deploy -t ${IMAGE_NAME}:${VERSION} ."
+
+                echo 'Deploying container...'
+                sh "docker rm -f ${CONTAINER_NAME} || true"
+                sh "docker run -d --name ${CONTAINER_NAME} ${IMAGE_NAME}:${VERSION}"
+            }
+        }
+
+        stage('Smoke Test') {
+            steps {
+                echo 'Running smoke test...'
+
+                sh """
+                sleep 2
+                STATUS=\$(docker inspect ${CONTAINER_NAME} --format='{{.State.ExitCode}}')
+                echo "Exit code: \$STATUS"
+
+                if [ "\$STATUS" -ne 0 ]; then
+                    echo "Smoke test FAILED"
+                    exit 1
+                else
+                    echo "Smoke test PASSED"
+                fi
+                """
+            }
+        }
+
+        stage('Publish') {
+            steps {
+                echo 'Tagging image as latest...'
+                sh "docker tag ${IMAGE_NAME}:${VERSION} ${IMAGE_NAME}:latest"
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Collecting logs and artifacts...'
+
+            sh "docker logs ${CONTAINER_NAME} > app.log || true"
+
+            archiveArtifacts artifacts: '*.log', fingerprint: true
+        }
+    }
+}
