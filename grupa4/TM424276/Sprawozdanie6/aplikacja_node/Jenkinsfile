@@ -29,13 +29,16 @@ pipeline {
             steps {
                 dir("${WORK_DIR}") {
                     sh 'docker run -d -p 5000:5000 --name smoke-test-app ${IMAGE_NAME}:${APP_VERSION}'
-                    sleep 3
-                    sh 'curl -f http://localhost:5000/ || exit 1'
+                    
+                    // Dajemy mu 5 sekund na start
+                    sleep 5
+                    
+                    // Pobieramy prawdziwy adres IP kontenera i wysyłamy tam zapytanie
+                    sh 'APP_IP=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" smoke-test-app) && curl -f http://$APP_IP:5000/'
                 }
             }
             post {
                 always {
-                    // Sprzątamy - to może zostać uruchomione gdziekolwiek
                     sh 'docker rm -f smoke-test-app'
                 }
             }
