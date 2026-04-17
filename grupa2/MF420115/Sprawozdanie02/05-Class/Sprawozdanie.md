@@ -1,32 +1,37 @@
-# Sprawozdanie: Pipeline, Jenkins, izolacja etapów
+# Sprawozdanie: Pipeline: lista kontrolna
 Autor: Maciej Fraś 
 
-Data: 10 kwietnia 2026 r.
+Data: 17 kwietnia 2026 r.
 
 Środowisko: Ubuntu 24.04.4 LTS (Virtual Machine / Hyper-V), Visual Studio Code (VSC)
 
 1. Cel zajęć
-Celem zajęć będzie opracowanie kroków "build-test-deploy-publish".
-2. Zadania typu Freestyle
+Celem zajęć było scharakteryzowanie planu na pipeline i przedstawieni postępu prac.
+2. Modyfikacja Dockerfile 
+Etap: Builder Budowa i testowanie 
 
-Zadanie 1: uname
-Utworzono projekt wykonujący komendę `uname -a`. Build zakończył się sukcesem, wyświetlając informacje o kernelu Linuxa, na którym działa kontener.
+Etap: Deploy Tworzenie gotowego produktu 
+![Modyfikacja Dockerfile](<Zrzut ekranu 2026-04-17 110156.png>)
 
-![Zadanie_01_Uname](SS/project_uname.png)
+3. Charakterystyka Pipeline
+Zrealizowano pełną ścieżkę krytyczną automatyzacji dla aplikacji libcalc:
 
-Zadanie 2: Błąd warunkowy z godziną
-Przygotowano skrypt bashowy sprawdzający godzinę systemową. Skrypt zwraca błąd , gdy godzina jest nieparzysta.
+Clone: Pobieranie kodu z repozytorium GitHub (branch MF420115-NEW).
 
-![Zadanie_02_HourError](SS/project_02_hour.png)
+Build & Test: Wykorzystanie Multi-stage build w celu optymalizacji rozmiaru obrazu i bezpieczeństwa.
 
+Deploy: Uruchomienie docelowego kontenera i weryfikacja poprawności działania aplikacji.
 
-Zadanie 3: Docker Pull
-Zweryfikowano możliwość komunikacji Jenkinsa z Dockerem poprzez wykonanie `docker pull ubuntu:24.04`.
-Wymagane było nadanie uprawnień do gniazda Dockera na hoście (`chmod 666 /var/run/docker.sock`).
+Publish: Generowanie wersjonowanego artefaktu w formacie .tar.gz orazz archiwziacja w Jenkinsie.
 
-![Zadanie_02_DockerPull](SS/project3.png)
+Aplikacja: Wybrano program kalkulatora w C++ (libcalc).
 
-3. Pipeline CI/CD
-Utworzono zaawansowany obiekt typu Pipeline, który automatyzuje proces pobierania kodu i budowania obrazu.
+Konteneryzacja: Zastosowano obraz bazowy alpine:latest ze względu na minimalny rozmiar.
 
-![Pipeline](SS/project_Pipeline.png)
+Izolacja: Etap budowania (kompilator g++) jest oddzielony od etapu uruchomieniowego dzięki technice Multi-stage.
+
+Artefakt: Wybrano archiwum obrazu Docker, ponieważ pozwala na natychmiastowe uruchomienie aplikacji w dowolnym środowisku z zainstalowanym Dockerem.
+
+![BlueOcean ](blueOcean.png)
+
+![Build](succesBuild.png)
