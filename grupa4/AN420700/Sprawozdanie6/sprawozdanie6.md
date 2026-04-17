@@ -64,7 +64,7 @@ Obraz aplikacji otrzymał unikalny Tag na podstawie zmiennej środowiskowej Jenk
 
 - [x] Następuje weryfikacja, że aplikacja pracuje poprawnie (*smoke test*) poprzez uruchomienie kontenera 'deploy'
 
-![6s5](img/6s4.png)
+![6s5](img/6s5.png)
 
 Jenkins uruchamia docelowy kontener poleceniem docker run i przekazuje mu do wykonania prosty skrypt: python3 -c "print('Smoke test przeszedl pomyslnie!')"
 
