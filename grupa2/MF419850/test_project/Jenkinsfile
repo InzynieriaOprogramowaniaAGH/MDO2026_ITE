@@ -12,21 +12,21 @@ pipeline {
         }
 
         stage('Build and Test') {
-            agent {
-                dockerfile {
-                    filename 'grupa2/MF419850/test_project/Dockerfile'  // Pełna ścieżka do Dockerfile
-                    args '-u root -v /var/run/docker.sock:/var/run/docker.sock'
-                }
-            }
+            agent none
             steps {
-                // Musimy wejść do katalogu projektu przed wykonaniem make
+                // Zmień katalog na projektowy
                 dir('grupa2/MF419850/test_project') {
-                    echo 'Kompilacja programu...'
-                    sh 'make clean'
-                    sh 'make'
-                    
-                    echo 'Uruchamianie testów...'
-                    sh 'make test'
+                    script {
+                        // Zbuduj obraz używając Dockerfile w bieżącym katalogu
+                        def buildImage = docker.build('hello-build', '.')
+                        
+                        // Uruchom build i testy wewnątrz kontenera
+                        buildImage.inside {
+                            sh 'make clean'
+                            sh 'make'
+                            sh 'make test'
+                        }
+                    }
                 }
             }
             post {
