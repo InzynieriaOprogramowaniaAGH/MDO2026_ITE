@@ -8,7 +8,7 @@ MAIN_SOURCES = main.c
 all: hello test_runner
 
 hello: $(SOURCES) $(HEADERS) $(MAIN_SOURCES)
-	$(CC) $(CFLAGS) -o hello $(SOURCES) $(MAIN_SOURCES)
+	$(CC) $(CFLAGS) -static -o hello $(SOURCES) $(MAIN_SOURCES)
 
 test_runner: $(SOURCES) $(HEADERS) $(TEST_SOURCES)
 	$(CC) $(CFLAGS) -o test_runner $(SOURCES) $(TEST_SOURCES)

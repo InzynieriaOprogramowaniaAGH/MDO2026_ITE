@@ -1,0 +1,45 @@
+pipeline {
+    agent none
+    
+    stages {
+        stage('Checkout') {
+            agent any
+            steps {
+                echo 'Klonowanie repozytorium...'
+                checkout scm
+                echo "Budowanie commita: ${env.GIT_COMMIT}"
+            }
+        }
+
+        stage('Build and Test') {
+            agent {
+                dockerfile {
+                    filename 'Dockerfile'
+                    args '-u root -v /var/run/docker.sock:/var/run/docker.sock'
+                }
+            }
+            steps {
+                echo 'Kompilacja programu...'
+                sh 'make clean'
+                sh 'make'
+                
+                echo 'Uruchamianie testów...'
+                sh 'make test'
+            }
+            post {
+                success {
+                    echo 'Build i testy zakończone sukcesem!'
+                }
+                failure {
+                    echo 'Build lub testy zakończone niepowodzeniem.'
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            echo 'Pipeline zakończony.'
+        }
+    }
+}
