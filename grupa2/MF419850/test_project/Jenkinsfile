@@ -12,7 +12,7 @@ pipeline {
         }
 
         stage('Build and Test') {
-            agent none
+            agent any  // Dodajemy agenta
             steps {
                 // Zmień katalog na projektowy
                 dir('grupa2/MF419850/test_project') {
