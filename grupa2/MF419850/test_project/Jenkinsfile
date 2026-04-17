@@ -14,17 +14,20 @@ pipeline {
         stage('Build and Test') {
             agent {
                 dockerfile {
-                    filename 'Dockerfile'
+                    filename 'grupa2/MF419850/test_project/Dockerfile'  // Pełna ścieżka do Dockerfile
                     args '-u root -v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
             steps {
-                echo 'Kompilacja programu...'
-                sh 'make clean'
-                sh 'make'
-                
-                echo 'Uruchamianie testów...'
-                sh 'make test'
+                // Musimy wejść do katalogu projektu przed wykonaniem make
+                dir('grupa2/MF419850/test_project') {
+                    echo 'Kompilacja programu...'
+                    sh 'make clean'
+                    sh 'make'
+                    
+                    echo 'Uruchamianie testów...'
+                    sh 'make test'
+                }
             }
             post {
                 success {
