@@ -57,20 +57,14 @@ RUN apt-get update \
 
 WORKDIR /app
 
-RUN git clone https://github.com/deftio/C-and-Cpp-Tests-with-CI-CD-Example.git
-
-WORKDIR /app/C-and-Cpp-Tests-with-CI-CD-Example
+COPY . /app
 
 RUN make
-
-CMD ["bash"]
 ```
 
 Następnie stworzono kontener testowy, który oparty jest o kontener build:
 ```dockerfile
 FROM build AS test
-
-WORKDIR /app/C-and-Cpp-Tests-with-CI-CD-Example
 
 CMD ["./run_coverage_test.sh"]
 ```
@@ -86,9 +80,7 @@ RUN apt-get update \
 
 WORKDIR /app
 
-COPY --from=build-image /app/C-and-Cpp-Tests-with-CI-CD-Example /app
-
-WORKDIR /app
+COPY --from=build /app /app
 
 CMD ["./test-library.out"]
 ```
@@ -113,13 +105,14 @@ pipeline {
         IMAGE_NAME = "cpp-ci-app"
         VERSION = "1.0.${BUILD_NUMBER}"
         CONTAINER_NAME = "cpp-app-container"
+        APP_REPO = "https://github.com/deftio/C-and-Cpp-Tests-with-CI-CD-Example.git"
     }
 
     stages {
         stage('Clone') {
             steps {
                 echo 'Cloning repository...'
-                git url: 'https://github.com/deftio/C-and-Cpp-Tests-with-CI-CD-Example.git'
+                git url: "${APP_REPO}"
             }
         }
 

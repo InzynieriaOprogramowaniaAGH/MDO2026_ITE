@@ -5,13 +5,14 @@ pipeline {
         IMAGE_NAME = "cpp-ci-app"
         VERSION = "1.0.${BUILD_NUMBER}"
         CONTAINER_NAME = "cpp-app-container"
+        APP_REPO = "https://github.com/deftio/C-and-Cpp-Tests-with-CI-CD-Example.git"
     }
 
     stages {
         stage('Clone') {
             steps {
                 echo 'Cloning repository...'
-                git url: 'https://github.com/deftio/C-and-Cpp-Tests-with-CI-CD-Example.git'
+                git url: "${APP_REPO}"
             }
         }
 
