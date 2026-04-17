@@ -24,27 +24,23 @@ pipeline {
             }
         }
 
-        stage('Smoke Test (Weryfikacja)') {
+stage('Smoke Test (Weryfikacja)') {
             steps {
                 dir("${WORK_DIR}") {
-                    // Odpalamy kontener w tle bez żadnych skomplikowanych opcji sieciowych
                     sh 'docker run -d --name smoke-test-app ${IMAGE_NAME}:${APP_VERSION}'
                     
-                    // Dajemy mu 5 sekund na załadowanie aplikacji
-                    sleep 5
+                    sleep 3
                     
-                    // Magiczny trik: wchodzimy komendą 'exec' prosto do kontenera i tam robimy test!
-                    sh 'docker exec smoke-test-app wget -qO- http://localhost:5000/ || exit 1'
+                    // Magiczna linijka: Jeśli test się nie uda, wydrukuj nam dokładne logi błędu z aplikacji!
+                    sh 'docker exec smoke-test-app wget -qO- http://localhost:5000/ || (docker logs smoke-test-app && exit 1)'
                 }
             }
             post {
                 always {
-                    // Sprzątamy kontener
                     sh 'docker rm -f smoke-test-app'
                 }
             }
         }
-
         stage('Publikacja Artefaktu') {
             steps {
                 dir("${WORK_DIR}") {
