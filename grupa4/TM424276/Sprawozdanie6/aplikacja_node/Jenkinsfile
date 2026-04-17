@@ -1,0 +1,55 @@
+pipeline {
+    agent any
+    
+    environment {
+        // Wersjonowanie semantyczne oparte o numer buildu z Jenkinsa
+        APP_VERSION = "1.0.${env.BUILD_ID}"
+        IMAGE_NAME = "express-api"
+    }
+
+    stages {
+        stage('Budowanie i Testowanie') {
+            steps {
+                // Buduje do etapu testowego w Dockerfile. 
+                // Jeśli testy nie przejdą, Jenkins automatycznie zatrzyma cały proces (FAIL)
+                sh 'docker build --target test -t ${IMAGE_NAME}-test .'
+            }
+        }
+        
+        stage('Budowanie Finalnego Obrazu (Deploy)') {
+            steps {
+                // Skoro testy przeszły, budujemy super lekki obraz ostateczny (bez paczek testowych)
+                sh 'docker build --target deploy -t ${IMAGE_NAME}:${APP_VERSION} .'
+            }
+        }
+
+        stage('Smoke Test (Weryfikacja)') {
+            steps {
+                // Uruchamiamy zbudowany obraz w tle na porcie 5000
+                sh 'docker run -d -p 5000:5000 --name smoke-test-app ${IMAGE_NAME}:${APP_VERSION}'
+                
+                // Dajemy mu 3 sekundy na pełne podniesienie
+                sleep 3
+                
+                // Wysyłamy zapytanie. Jeśli aplikacja nie odpowie statusem HTTP 200, pipeline zwróci błąd
+                sh 'curl -f http://localhost:5000/ || exit 1'
+            }
+            post {
+                always {
+                    // Sprzątamy - usuwamy kontener testowy niezależnie od wyniku
+                    sh 'docker rm -f smoke-test-app'
+                }
+            }
+        }
+
+        stage('Publikacja Artefaktu') {
+            steps {
+                // Pakujemy gotowy obraz Dockera do archiwum .tar.gz
+                sh 'docker save ${IMAGE_NAME}:${APP_VERSION} | gzip > ${IMAGE_NAME}-v${APP_VERSION}.tar.gz'
+                
+                // Odkładamy archiwum jako artefakt w interfejsie Jenkinsa
+                archiveArtifacts artifacts: '*.tar.gz', fingerprint: true
+            }
+        }
+    }
+}
