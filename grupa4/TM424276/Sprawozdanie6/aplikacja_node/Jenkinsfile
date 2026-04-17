@@ -2,9 +2,10 @@ pipeline {
     agent any
     
     environment {
+        // Wersjonowanie semantyczne oparte o numer buildu z Jenkinsa
         APP_VERSION = "1.0.${env.BUILD_ID}"
         IMAGE_NAME = "express-api"
-        // Wskazujemy Jenkinsowi, gdzie ma pracować
+        // Wskazujemy Jenkinsowi, gdzie dokładnie leżą nasze pliki
         WORK_DIR = "grupa4/TM424276/Sprawozdanie6/aplikacja_node"
     }
 
@@ -12,6 +13,7 @@ pipeline {
         stage('Budowanie i Testowanie') {
             steps {
                 dir("${WORK_DIR}") {
+                    // Buduje do etapu testowego. Zatrzymie się, jeśli testy zawiodą.
                     sh 'docker build --target test -t ${IMAGE_NAME}-test .'
                 }
             }
@@ -20,6 +22,7 @@ pipeline {
         stage('Budowanie Finalnego Obrazu (Deploy)') {
             steps {
                 dir("${WORK_DIR}") {
+                    // Testy przeszły, budujemy super lekki obraz ostateczny (bez paczek testowych)
                     sh 'docker build --target deploy -t ${IMAGE_NAME}:${APP_VERSION} .'
                 }
             }
@@ -28,17 +31,19 @@ pipeline {
         stage('Smoke Test (Weryfikacja)') {
             steps {
                 dir("${WORK_DIR}") {
-                    sh 'docker run -d -p 5000:5000 --name smoke-test-app ${IMAGE_NAME}:${APP_VERSION}'
+                    // Flaga --network host pozwala kontenerowi i Jenkinsowi dzielić to samo połączenie sieciowe (localhost)
+                    sh 'docker run -d --network host --name smoke-test-app ${IMAGE_NAME}:${APP_VERSION}'
                     
-                    // Dajemy mu 5 sekund na start
+                    // Dajemy kontenerowi 5 sekund na pełne uruchomienie aplikacji
                     sleep 5
                     
-                    // Pobieramy prawdziwy adres IP kontenera i wysyłamy tam zapytanie
-                    sh 'APP_IP=$(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" smoke-test-app) && curl -f http://$APP_IP:5000/'
+                    // Wysyłamy zapytanie. Jeśli aplikacja nie odpowie (status 200), pipeline się wywróci
+                    sh 'curl -f http://localhost:5000/ || exit 1'
                 }
             }
             post {
                 always {
+                    // Sprzątamy - usuwamy testowy kontener niezależnie od tego, czy test przeszedł czy nie
                     sh 'docker rm -f smoke-test-app'
                 }
             }
@@ -47,7 +52,10 @@ pipeline {
         stage('Publikacja Artefaktu') {
             steps {
                 dir("${WORK_DIR}") {
+                    // Pakujemy gotowy, sprawdzony obraz Dockera do bezpiecznego archiwum .tar.gz
                     sh 'docker save ${IMAGE_NAME}:${APP_VERSION} | gzip > ${IMAGE_NAME}-v${APP_VERSION}.tar.gz'
+                    
+                    // Wypychamy archiwum jako gotowy artefakt do pobrania w Jenkinsie
                     archiveArtifacts artifacts: '*.tar.gz', fingerprint: true
                 }
             }
