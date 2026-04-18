@@ -37,8 +37,8 @@ pipeline {
                 dir('KS423304/Spr6') {
                     echo 'Pakowanie i publikacja artefaktu...'
                     sh 'docker run --rm -v ${WORKSPACE}/KS423304/Spr6:/output -w /app aplikacja-build:latest sh -c "npm pack && cp *.tgz /output/"'
-                    archiveArtifacts artifacts: '*.tgz', fingerprint: true
                 }
+                archiveArtifacts artifacts: 'KS423304/Spr6/*.tgz', fingerprint: true
             }
         }
     }
