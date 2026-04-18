@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+    environment {
+        DOCKER_HOST = 'tcp://docker:2376'
+        DOCKER_CERT_PATH = '/certs/client'
+        DOCKER_TLS_VERIFY = '1'
+    }
+    stages {
+        stage('Collect') {
+            steps {
+                echo 'Pobieranie kodu z repozytorium...'
+                checkout scm
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Budowanie obrazu bazowego (z zależnościami)...'
+                sh 'docker build -t aplikacja-build:latest -f Dockerfile.build .'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Budowanie obrazu testowego i uruchamianie testów...'
+                sh 'docker build -t aplikacja-test:latest -f Dockerfile.test .'
+                sh 'docker run --rm aplikacja-test:latest'
+            }
+        }
+    }
+}
