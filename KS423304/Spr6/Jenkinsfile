@@ -9,15 +9,36 @@ pipeline {
         }
         stage('Build') {
             steps {
-                echo 'Budowanie obrazu bazowego (z zależnościami)...'
-                sh 'docker build -t aplikacja-build:latest -f Dockerfile.build .'
+                dir('KS423304/Spr6') {
+                    echo 'Budowanie obrazu bazowego (z zależnościami)...'
+                    sh 'docker build -t aplikacja-build:latest -f Dockerfile.build .'
+                }
             }
         }
         stage('Test') {
             steps {
-                echo 'Budowanie obrazu testowego i uruchamianie testów...'
-                sh 'docker build -t aplikacja-test:latest -f Dockerfile.test .'
-                sh 'docker run --rm aplikacja-test:latest'
+                dir('KS423304/Spr6') {
+                    echo 'Budowanie obrazu testowego i uruchamianie testów...'
+                    sh 'docker build -t aplikacja-test:latest -f Dockerfile.test .'
+                    sh 'docker run --rm aplikacja-test:latest'
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                dir('KS423304/Spr6') {
+                    echo 'Wdrażanie na chudym kontenerze...'
+                    sh 'docker run --rm node:18-slim node -e "console.log(\'Deploy udany\')"'
+                }
+            }
+        }
+        stage('Publish') {
+            steps {
+                dir('KS423304/Spr6') {
+                    echo 'Pakowanie i publikacja artefaktu...'
+                    sh 'docker run --rm -v ${WORKSPACE}/KS423304/Spr6:/output -w /app aplikacja-build:latest sh -c "npm pack && cp *.tgz /output/"'
+                    archiveArtifacts artifacts: '*.tgz', fingerprint: true
+                }
             }
         }
     }
