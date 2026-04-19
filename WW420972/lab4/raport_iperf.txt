@@ -1,0 +1,118 @@
+Get:1 http://archive.ubuntu.com/ubuntu noble InRelease [256 kB]
+Get:2 http://security.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+Get:3 http://archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+Get:4 http://archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+Get:5 http://security.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1263 kB]
+Get:6 http://archive.ubuntu.com/ubuntu noble/main amd64 Packages [1808 kB]
+Get:7 http://security.ubuntu.com/ubuntu noble-security/multiverse amd64 Packages [34.8 kB]
+Get:8 http://security.ubuntu.com/ubuntu noble-security/main amd64 Packages [1949 kB]
+Get:9 http://security.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [3414 kB]
+Get:10 http://archive.ubuntu.com/ubuntu noble/multiverse amd64 Packages [331 kB]
+Get:11 http://archive.ubuntu.com/ubuntu noble/restricted amd64 Packages [117 kB]
+Get:12 http://archive.ubuntu.com/ubuntu noble/universe amd64 Packages [19.3 MB]
+Get:13 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [2334 kB]
+Get:14 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [2033 kB]
+Get:15 http://archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Packages [38.1 kB]
+Get:16 http://archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [3601 kB]
+Get:17 http://archive.ubuntu.com/ubuntu noble-backports/main amd64 Packages [49.5 kB]
+Get:18 http://archive.ubuntu.com/ubuntu noble-backports/multiverse amd64 Packages [695 B]
+Get:19 http://archive.ubuntu.com/ubuntu noble-backports/universe amd64 Packages [36.1 kB]
+Fetched 37.0 MB in 5s (7966 kB/s)
+Reading package lists...
+Building dependency tree...
+Reading state information...
+14 packages can be upgraded. Run 'apt list --upgradable' to see them.
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following additional packages will be installed:
+  adduser libiperf0 libsctp1
+Suggested packages:
+  liblocale-gettext-perl perl cron quota ecryptfs-utils lksctp-tools
+The following NEW packages will be installed:
+  adduser iperf3 libiperf0 libsctp1
+0 upgraded, 4 newly installed, 0 to remove and 14 not upgraded.
+Need to get 216 kB of archives.
+After this operation, 853 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu noble/main amd64 adduser all 3.137ubuntu1 [101 kB]
+Get:2 http://archive.ubuntu.com/ubuntu noble/main amd64 libsctp1 amd64 1.0.19+dfsg-2build1 [9146 B]
+Get:3 http://archive.ubuntu.com/ubuntu noble/universe amd64 libiperf0 amd64 3.16-1build2 [87.1 kB]
+Get:4 http://archive.ubuntu.com/ubuntu noble/universe amd64 iperf3 amd64 3.16-1build2 [19.0 kB]
+Fetched 216 kB in 0s (1103 kB/s)
+Selecting previously unselected package adduser.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 4381 files and directories currently installed.)
+Preparing to unpack .../adduser_3.137ubuntu1_all.deb ...
+Unpacking adduser (3.137ubuntu1) ...
+Setting up adduser (3.137ubuntu1) ...
+Selecting previously unselected package libsctp1:amd64.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 4429 files and directories currently installed.)
+Preparing to unpack .../libsctp1_1.0.19+dfsg-2build1_amd64.deb ...
+Unpacking libsctp1:amd64 (1.0.19+dfsg-2build1) ...
+Selecting previously unselected package libiperf0:amd64.
+Preparing to unpack .../libiperf0_3.16-1build2_amd64.deb ...
+Unpacking libiperf0:amd64 (3.16-1build2) ...
+Selecting previously unselected package iperf3.
+Preparing to unpack .../iperf3_3.16-1build2_amd64.deb ...
+Unpacking iperf3 (3.16-1build2) ...
+Setting up libsctp1:amd64 (1.0.19+dfsg-2build1) ...
+Setting up libiperf0:amd64 (3.16-1build2) ...
+Setting up iperf3 (3.16-1build2) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (TERM is not set, so the dialog frontend is not usable.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC entries checked: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.38.2 /usr/local/share/perl/5.38.2 /usr/lib/x86_64-linux-gnu/perl5/5.38 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl-base /usr/lib/x86_64-linux-gnu/perl/5.38 /usr/share/perl/5.38 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 8.)
+debconf: falling back to frontend: Teletype
+Configuring iperf3
+------------------
+
+Choose this option if Iperf3 should start automatically as a daemon, now and at
+boot time.
+
+Start Iperf3 as a daemon automatically? [yes/no] 
+Use of uninitialized value $_[1] in join or string at /usr/share/perl5/Debconf/DbDriver/Stack.pm line 112.
+invoke-rc.d: could not determine current runlevel
+invoke-rc.d: policy-rc.d denied execution of stop.
+Use of uninitialized value $val in substitution (s///) at /usr/share/perl5/Debconf/Format/822.pm line 84, <GEN6> line 1.
+Use of uninitialized value $val in concatenation (.) or string at /usr/share/perl5/Debconf/Format/822.pm line 85, <GEN6> line 1.
+Processing triggers for libc-bin (2.39-0ubuntu8.7) ...
+-----------------------------------------------------------
+Server listening on 5201 (test #1)
+-----------------------------------------------------------
+Accepted connection from 172.17.0.1, port 40294
+[  5] local 172.17.0.2 port 5201 connected to 172.17.0.1 port 40296
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-1.00   sec  1.51 GBytes  13.0 Gbits/sec                  
+[  5]   1.00-2.50   sec  1.87 GBytes  10.7 Gbits/sec                  
+[  5]   2.50-3.00   sec   450 MBytes  7.51 Gbits/sec                  
+[  5]   3.00-4.00   sec  1.28 GBytes  10.9 Gbits/sec                  
+[  5]   4.00-5.00   sec  1.55 GBytes  13.3 Gbits/sec                  
+[  5]   5.00-6.00   sec  1.10 GBytes  9.48 Gbits/sec                  
+[  5]   6.00-7.50   sec  1.91 GBytes  10.9 Gbits/sec                  
+[  5]   7.50-8.49   sec  1.26 GBytes  10.9 Gbits/sec                  
+[  5]   8.49-9.00   sec   562 MBytes  9.24 Gbits/sec                  
+[  5]   9.00-10.00  sec  1.60 GBytes  13.8 Gbits/sec                  
+[  5]  10.00-10.00  sec   256 KBytes  8.70 Gbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-10.00  sec  13.1 GBytes  11.2 Gbits/sec                  receiver
+-----------------------------------------------------------
+Server listening on 5201 (test #2)
+-----------------------------------------------------------
+Accepted connection from 10.0.2.2, port 60632
+[  5] local 172.17.0.2 port 5201 connected to 10.0.2.2 port 60633
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-1.00   sec  23.2 MBytes   195 Mbits/sec                  
+[  5]   1.00-2.00   sec  24.4 MBytes   205 Mbits/sec                  
+[  5]   2.00-3.00   sec  24.1 MBytes   202 Mbits/sec                  
+[  5]   3.00-4.00   sec  22.2 MBytes   187 Mbits/sec                  
+[  5]   4.00-5.00   sec  29.6 MBytes   248 Mbits/sec                  
+[  5]   5.00-6.00   sec  28.1 MBytes   236 Mbits/sec                  
+[  5]   6.00-7.00   sec  28.5 MBytes   239 Mbits/sec                  
+[  5]   7.00-8.00   sec  25.9 MBytes   217 Mbits/sec                  
+[  5]   8.00-9.00   sec  27.1 MBytes   228 Mbits/sec                  
+[  5]   9.00-10.00  sec  31.4 MBytes   263 Mbits/sec                  
+[  5]  10.00-10.01  sec   128 KBytes   192 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-10.01  sec   265 MBytes   222 Mbits/sec                  receiver

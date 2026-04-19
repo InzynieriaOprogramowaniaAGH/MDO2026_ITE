@@ -1,0 +1,75 @@
+Started by user Kacper Węgrecki
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/pr4
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Clone repo)
+[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/pr4/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git # timeout=10
+Fetching upstream changes from https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/KW423138^{commit} # timeout=10
+Checking out Revision a721d83c778ebf20364bc686abdc9ee5ae52fc33 (refs/remotes/origin/KW423138)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f a721d83c778ebf20364bc686abdc9ee5ae52fc33 # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D KW423138 # timeout=10
+ > git checkout -b KW423138 a721d83c778ebf20364bc686abdc9ee5ae52fc33 # timeout=10
+Commit message: "KW423138 historia4"
+ > git rev-list --no-walk a721d83c778ebf20364bc686abdc9ee5ae52fc33 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Docker)
+[Pipeline] sh
++ docker build -t my-app ./grupa6/KW423138/Sprawozdanie1
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 212B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/ubuntu:22.04
+#2 DONE 1.2s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/4] FROM docker.io/library/ubuntu:22.04@sha256:eb29ed27b0821dca09c2e28b39135e185fc1302036427d5f4d70a41ce8fd7659
+#4 DONE 0.0s
+
+#5 [2/4] RUN apt update &&     apt install -y git
+#5 CACHED
+
+#6 [3/4] WORKDIR /app
+#6 CACHED
+
+#7 [4/4] RUN git clone https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:655177fafb7cb57c6a3494b142681a53884b69e111fe4ac79ff618e3be31c4f3
+#8 writing image sha256:655177fafb7cb57c6a3494b142681a53884b69e111fe4ac79ff618e3be31c4f3 done
+#8 naming to docker.io/library/my-app 0.0s done
+#8 DONE 0.0s
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage (hide)
+[Pipeline] { (Run container)
+[Pipeline] sh
++ docker run my-app
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

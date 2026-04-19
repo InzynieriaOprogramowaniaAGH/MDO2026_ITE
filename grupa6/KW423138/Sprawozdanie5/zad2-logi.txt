@@ -1,0 +1,23 @@
+Started by user Kacper Węgrecki
+Running as SYSTEM
+Building in workspace /var/jenkins_home/workspace/pr2
+[pr2] $ /bin/sh -xe /tmp/jenkins4377970999299910504.sh
++ date +%-H
++ HOUR=9
++ [ 1 -ne 0 ]
++ echo Nieparzysta godzina – FAIL
+Nieparzysta godzina – FAIL
++ exit 1
+Build step 'Execute shell' marked build as failure
+Finished: FAILURE
+
+Started by user Kacper Węgrecki
+Running as SYSTEM
+Building in workspace /var/jenkins_home/workspace/pr2
+[pr2] $ /bin/sh -xe /tmp/jenkins727023949789256369.sh
++ date +%-H
++ HOUR=10
++ [ 0 -ne 0 ]
++ echo Parzysta godzina – OK
+Parzysta godzina – OK
+Finished: SUCCESS

@@ -1,0 +1,5 @@
+FROM jest-build
+
+WORKDIR /app
+
+CMD ["npm", "test"]

@@ -1,0 +1,15 @@
+services:
+  redis-builder:
+    build:
+      context: .
+      dockerfile: Dockerfile.build
+    image: redis-build:latest
+
+  redis-tester:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    image: redis-test:latest
+    depends_on:
+      - redis-builder
+    command: ["make", "test"]

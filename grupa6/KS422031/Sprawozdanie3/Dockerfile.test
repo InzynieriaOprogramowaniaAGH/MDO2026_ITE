@@ -1,0 +1,7 @@
+FROM lab3-makefile-c-build
+
+WORKDIR /opt/makefile-for-c
+
+RUN make test
+
+CMD ["/bin/bash"]

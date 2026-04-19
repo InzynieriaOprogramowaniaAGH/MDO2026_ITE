@@ -1,0 +1,10 @@
+services:
+  build-stage:
+    image: 03-nest-build:1.0
+    container_name: 03-build-stage
+    command: bash
+
+  test-stage:
+    image: 03-nest-test:1.0
+    container_name: 03-test-stage
+    command: npm test

@@ -1,0 +1,3 @@
+FROM 03-nest-build:1.0
+WORKDIR /workspace/typescript-starter
+CMD ["npm", "test"]

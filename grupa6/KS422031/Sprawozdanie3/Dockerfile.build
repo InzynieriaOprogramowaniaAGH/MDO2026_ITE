@@ -1,0 +1,11 @@
+FROM ubuntu:24.04
+
+RUN apt update && apt install -y build-essential make git && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /opt
+RUN git clone https://github.com/rikusalminen/makefile-for-c.git
+WORKDIR /opt/makefile-for-c
+
+RUN make
+
+CMD ["/bin/bash"]

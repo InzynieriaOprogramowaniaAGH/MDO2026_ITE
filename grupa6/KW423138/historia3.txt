@@ -1,0 +1,67 @@
+  164  git clone https://github.com/expressjs/express.git
+  165  cd express
+  166  sudo apt install nodejs npm -y
+  167  node -v
+  168  npm -v
+  169  npm install
+  170  npm test
+  171  docker run -it node:18 bash
+  172  sudo docker run -it node:18 bash
+  173  nano Dockerfile.build
+  174  docker build -f Dockerfile.build -t express-build .
+  175  sudo docker build -f Dockerfile.build -t express-build .
+  176  nano Dockerfile.test
+  177  docker build -f Dockerfile.test -t express-test .
+  178  sudo docker build -f Dockerfile.test -t express-test .
+  179  docker run express-test
+  180  sudo docker run express-test
+  181  history > historia_lab3
+  182  ls
+  183  nano History.md
+  184  nano historia_lab3
+  185  exit
+  186  ls
+  187  cd MDO2026_ITE
+  188  ls
+  189  cd grupa6
+  190  ls
+  191  cd KW423138
+  192  ls
+  193  mkdir obrazyLab3
+  194  cd obrazyLab3
+  195  ls
+  196  nano Sprawozdanie3.md
+  197  .
+  198  cd .
+  199  cd ...
+  200  cd ..
+  201  cd ~
+  202  cd expres
+  203  cd express
+  204  sudo docker ps
+  205  cd ~ ~/MDO2026_ITE/grupa6/KW423138/obrazyLab3
+  206  cd ~/MDO2026_ITE/grupa6/KW423138/obrazyLab3
+  207  ls
+  208  nano Sprawozdanie3.md
+  209  cd ..
+  210  ls
+  211  mkdir lab1
+  212  mv *.png /lab1/
+  213  mv *.png /MDO2026_ITE/grupa6/KW423138/lab1/
+  214  mv *.png ~/MDO2026_ITE/grupa6/KW423138/lab1/
+  215  ls
+  216  cd lab1
+  217  ls
+  218  cd ..
+  219  mv Sprawozdanie1.md ~/lab1/
+  220  mv Sprawozdanie1.md ~/MDO2026_ITE/grupa6/KW423138/lab1/
+  221  ls
+  222  cd lab1
+  223  ls
+  224  cd ..
+  225  cd Sprawozdanie1
+  226  ls
+  227  cd ..
+  228  ls
+  229  nano historia.txt
+  230  history > historia3.txt

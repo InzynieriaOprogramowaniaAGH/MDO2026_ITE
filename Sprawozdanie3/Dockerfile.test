@@ -1,0 +1,17 @@
+FROM kalkulator-build:latest
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    xvfb \
+    libxtst6 \
+    libxi6 \
+    libxrender1 \
+    libxrandr2 \
+    libxcursor1 \
+    dbus-x11 \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV DISPLAY=:99
+ENV JAVA_TOOL_OPTIONS="-Djava.awt.headless=false"
+
+CMD ["sh", "-c", "Xvfb :99 -screen 0 1024x768x16 & sleep 2; mvn test"]

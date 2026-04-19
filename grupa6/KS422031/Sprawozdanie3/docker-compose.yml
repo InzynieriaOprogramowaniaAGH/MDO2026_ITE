@@ -1,0 +1,14 @@
+services:
+  builder:
+    build:
+      context: .
+      dockerfile: Dockerfile.build
+    image: lab3-makefile-c-build
+
+  tester:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    image: lab3-makefile-c-test
+    depends_on:
+      - builder
