@@ -1,0 +1,211 @@
+Started by user AdminUser
+
+[Pipeline] Start of Pipeline
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Clone)
+[Pipeline] node
+Running on Jenkins
+ in /var/jenkins_home/workspace/Lab6
+[Pipeline] {
+[Pipeline] echo
+Cloning repository...
+[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/Lab6/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/deftio/C-and-Cpp-Tests-with-CI-CD-Example.git # timeout=10
+Fetching upstream changes from https://github.com/deftio/C-and-Cpp-Tests-with-CI-CD-Example.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/deftio/C-and-Cpp-Tests-with-CI-CD-Example.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+Checking out Revision 1221d863ab9aa7831227a8db676261891303aa45 (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 1221d863ab9aa7831227a8db676261891303aa45 # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D master # timeout=10
+ > git checkout -b master 1221d863ab9aa7831227a8db676261891303aa45 # timeout=10
+Commit message: "updated coverage badge"
+ > git rev-list --no-walk 1221d863ab9aa7831227a8db676261891303aa45 # timeout=10
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] node
+Running on Jenkins
+ in /var/jenkins_home/workspace/Lab6
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker inspect -f . gcc:latest
+.
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] withDockerContainer
+Jenkins seems to be running inside container 055f224fbbf158d840b538bdc153cea2a7f4d5a4a7ec16542c81762610a49ef4
+but /var/jenkins_home/workspace/Lab6 could not be found among []
+but /var/jenkins_home/workspace/Lab6@tmp could not be found among []
+$ docker run -t -d -u 1000:1000 -w /var/jenkins_home/workspace/Lab6 -v /var/jenkins_home/workspace/Lab6:/var/jenkins_home/workspace/Lab6:rw,z -v /var/jenkins_home/workspace/Lab6@tmp:/var/jenkins_home/workspace/Lab6@tmp:rw,z -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** gcc:latest cat
+$ docker top 1ba2e30d84644602abbd400ba4e17e663e7d6b8edca2e517169a12114efae101 -eo pid,comm
+[Pipeline] {
+[Pipeline] echo
+Building application...
+[Pipeline] sh
++ make
+make: Nothing to be done for 'all'.
+[Pipeline] }
+$ docker stop --time=1 1ba2e30d84644602abbd400ba4e17e663e7d6b8edca2e517169a12114efae101
+$ docker rm -f --volumes 1ba2e30d84644602abbd400ba4e17e663e7d6b8edca2e517169a12114efae101
+[Pipeline] // withDockerContainer
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] node
+Running on Jenkins
+ in /var/jenkins_home/workspace/Lab6
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker inspect -f . gcc:latest
+.
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] withDockerContainer
+Jenkins seems to be running inside container 055f224fbbf158d840b538bdc153cea2a7f4d5a4a7ec16542c81762610a49ef4
+but /var/jenkins_home/workspace/Lab6 could not be found among []
+but /var/jenkins_home/workspace/Lab6@tmp could not be found among []
+$ docker run -t -d -u 1000:1000 -w /var/jenkins_home/workspace/Lab6 -v /var/jenkins_home/workspace/Lab6:/var/jenkins_home/workspace/Lab6:rw,z -v /var/jenkins_home/workspace/Lab6@tmp:/var/jenkins_home/workspace/Lab6@tmp:rw,z -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** gcc:latest cat
+$ docker top 11dbd2ea440c3171d969018c3de109456074f72ddb198cbd83499873cd02080a -eo pid,comm
+[Pipeline] {
+[Pipeline] echo
+Running tests...
+[Pipeline] sh
++ make test
+Post stage
+[Pipeline] archiveArtifacts
+Archiving artifacts
+Recording fingerprints
+[Pipeline] }
+$ docker stop --time=1 11dbd2ea440c3171d969018c3de109456074f72ddb198cbd83499873cd02080a
+$ docker rm -f --volumes 11dbd2ea440c3171d969018c3de109456074f72ddb198cbd83499873cd02080a
+[Pipeline] // withDockerContainer
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Package)
+[Pipeline] node
+Running on Jenkins
+ in /var/jenkins_home/workspace/Lab6
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker inspect -f . gcc:latest
+.
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] withDockerContainer
+Jenkins seems to be running inside container 055f224fbbf158d840b538bdc153cea2a7f4d5a4a7ec16542c81762610a49ef4
+but /var/jenkins_home/workspace/Lab6 could not be found among []
+but /var/jenkins_home/workspace/Lab6@tmp could not be found among []
+$ docker run -t -d -u 1000:1000 -w /var/jenkins_home/workspace/Lab6 -v /var/jenkins_home/workspace/Lab6:/var/jenkins_home/workspace/Lab6:rw,z -v /var/jenkins_home/workspace/Lab6@tmp:/var/jenkins_home/workspace/Lab6@tmp:rw,z -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** gcc:latest cat
+$ docker top 07d38cff07d91b7e860654b8698b85b1e5b66c613747a3fbe2c0b823e6d6f46c -eo pid,comm
+[Pipeline] {
+[Pipeline] sh
++ mkdir -p build
++ make
+make: Nothing to be done for 'all'.
++ tar -czf app.tar.gz CMakeLists.txt LICENSE.txt README.md app.tar.gz build lib.c lib.gcda lib.gcno lib.h lib.o makefile run_coverage_test.sh test-library.c test-library.gcda test-library.gcno test-library.o test-library.out test-results.txt
+[Pipeline] }
+$ docker stop --time=1 07d38cff07d91b7e860654b8698b85b1e5b66c613747a3fbe2c0b823e6d6f46c
+$ docker rm -f --volumes 07d38cff07d91b7e860654b8698b85b1e5b66c613747a3fbe2c0b823e6d6f46c
+[Pipeline] // withDockerContainer
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy)
+[Pipeline] node
+Running on Jenkins
+ in /var/jenkins_home/workspace/Lab6
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker inspect -f . gcc:latest
+.
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] withDockerContainer
+Jenkins seems to be running inside container 055f224fbbf158d840b538bdc153cea2a7f4d5a4a7ec16542c81762610a49ef4
+but /var/jenkins_home/workspace/Lab6 could not be found among []
+but /var/jenkins_home/workspace/Lab6@tmp could not be found among []
+$ docker run -t -d -u 1000:1000 -w /var/jenkins_home/workspace/Lab6 -v /var/jenkins_home/workspace/Lab6:/var/jenkins_home/workspace/Lab6:rw,z -v /var/jenkins_home/workspace/Lab6@tmp:/var/jenkins_home/workspace/Lab6@tmp:rw,z -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** gcc:latest cat
+$ docker top 00df6340d370a643d82c90c63baf9587bd16a9e915aeb0c283c06adaf7260888 -eo pid,comm
+[Pipeline] {
+[Pipeline] echo
+Simulating deployment in fresh container...
+[Pipeline] sh
++ make clean
+rm -f lib.o test-library.o test-library.out *.gcda *.gcno *.gcov *.info
+rm -f *.asm *.lst *.sym *.rel *.s
++ make
+gcc -c -o lib.o lib.c -I. -Wall -Wextra -ftest-coverage -fprofile-arcs -O0  
+gcc -c -o test-library.o test-library.c -I. -Wall -Wextra -ftest-coverage -fprofile-arcs -O0  
+gcc -o test-library.out lib.o test-library.o -I. -Wall -Wextra -ftest-coverage -fprofile-arcs -lm -lncurses -O0  
++ ./test-library.out
+Running Example tests .. 
+tests passed.
+[Pipeline] }
+$ docker stop --time=1 00df6340d370a643d82c90c63baf9587bd16a9e915aeb0c283c06adaf7260888
+$ docker rm -f --volumes 00df6340d370a643d82c90c63baf9587bd16a9e915aeb0c283c06adaf7260888
+[Pipeline] // withDockerContainer
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Publish)
+[Pipeline] node
+Running on Jenkins
+ in /var/jenkins_home/workspace/Lab6
+[Pipeline] {
+[Pipeline] archiveArtifacts
+Archiving artifacts
+Recording fingerprints
+Post stage
+[Pipeline] cleanWs
+[WS-CLEANUP] Deleting project workspace...
+[WS-CLEANUP] Deferred wipeout is used...
+[WS-CLEANUP] done
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] echo
+Pipeline completed successfully!
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] End of Pipeline
+Finished: SUCCESS

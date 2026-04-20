@@ -1,0 +1,111 @@
+pipeline {
+    agent none
+
+    environment {
+        REPO_URL = 'https://github.com/deftio/C-and-Cpp-Tests-with-CI-CD-Example.git'
+        BRANCH = 'master'
+        BUILD_DIR = 'build'
+        ARTIFACT = 'app.tar.gz'
+    }
+
+    stages {
+
+        stage('Clone') {
+            agent any
+            
+            steps {
+                echo 'Cloning repository...'
+                git branch: "${BRANCH}", url: "${REPO_URL}"
+            }
+        }
+
+        stage('Build') {
+            agent {
+                docker {
+                    image 'gcc:latest'
+                }
+            }
+            
+            steps {
+                echo 'Building application...'
+                
+                sh 'make'
+            }
+        }
+
+        stage('Test') {
+            agent {
+                docker {
+                    image 'gcc:latest'
+                }
+            }
+            
+            steps {
+                echo 'Running tests...'
+                
+                sh 'make test > test-results.txt 2>&1'
+            }
+            post {
+                always {
+                    archiveArtifacts artifacts: 'test-results.txt', fingerprint: true
+                }
+            }
+        }
+
+        stage('Package') {
+            agent {
+                docker {
+                    image 'gcc:latest'
+                }
+            }
+            
+            steps {
+                sh '''
+                mkdir -p ${BUILD_DIR}
+                make
+                tar -czf ${ARTIFACT} *
+                '''
+            }
+        }
+
+        stage('Deploy') {
+            agent {
+                docker {
+                    image 'gcc:latest'
+                }
+            }
+            
+            steps {
+                echo 'Simulating deployment in fresh container...'
+                
+                sh '''
+                make clean
+                make
+                ./test-library.out
+                '''
+            }
+        }
+
+        stage('Publish') {
+            agent any
+            
+            steps {
+                archiveArtifacts artifacts: "${ARTIFACT}", fingerprint: true
+            }
+            post {
+                always {
+                    cleanWs()
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
+}
