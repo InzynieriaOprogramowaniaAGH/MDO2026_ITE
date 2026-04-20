@@ -1,0 +1,16 @@
+FROM debian:12-slim
+
+RUN groupadd -r redis && useradd -r -g redis redis
+
+WORKDIR /data
+RUN chown redis:redis /data
+
+COPY dist/redis-server /usr/local/bin/
+COPY dist/redis-cli /usr/local/bin/
+
+EXPOSE 6379
+
+USER redis
+
+ENTRYPOINT ["redis-server"]
+CMD ["--protected-mode", "no"]
