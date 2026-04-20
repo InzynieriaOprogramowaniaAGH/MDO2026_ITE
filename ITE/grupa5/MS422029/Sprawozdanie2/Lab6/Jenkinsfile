@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+    stages {
+        stage('Czyszczenie') {
+            steps {
+                sh 'docker rm -f cjson-produkcja || true'
+                sh 'rm -rf cJSON || true'
+            }
+        }
+        stage('Clone') {
+            steps {
+                sh 'git clone [https://github.com/DaveGamble/cJSON.git](https://github.com/DaveGamble/cJSON.git)'
+            }
+        }
+        stage('Budowanie (Build)') {
+            steps {
+                dir('cJSON') {
+                    sh '''
+                    echo "FROM ubuntu:24.04" > Dockerfile.build
+                    echo "RUN apt-get update && apt-get install -y build-essential cmake" >> Dockerfile.build
+                    echo "COPY . /app" >> Dockerfile.build
+                    echo "WORKDIR /app" >> Dockerfile.build
+                    echo "RUN make" >> Dockerfile.build
+                    '''
+                    sh 'docker build -t cjson-build -f Dockerfile.build .'
+                }
+            }
+        }
+        stage('Testowanie (Test)') {
+            steps {
+                dir('cJSON') {
+                    sh 'docker run --rm cjson-build make test'
+                }
+            }
+        }
+        stage('Publikacja (Publish)') {
+            steps {
+                dir('cJSON') {
+                    sh 'tar -czvf cjson-artefakt.tar.gz cJSON.h cJSON.c Makefile'
+                    archiveArtifacts artifacts: 'cjson-artefakt.tar.gz', onlyIfSuccessful: true
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'docker run -d --name cjson-produkcja alpine sleep 3600'
+            }
+        }
+    }
+}
