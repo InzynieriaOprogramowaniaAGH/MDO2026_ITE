@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+    environment {
+        IMAGE_NAME = "nestjs-app-ds419547"
+        CONTAINER_NAME = "nestjs-instance"
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Build & Test Image') {
+            steps {
+                echo 'Building and testing image...'
+                sh "docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} ."
+            }
+        }
+        stage('Deploy (Integration)') {
+            steps {
+                echo 'Deploying container for integration testing...'
+                sh "docker stop ${CONTAINER_NAME} || true"
+                sh "docker rm ${CONTAINER_NAME} || true"
+                
+                sh "docker run -d --name ${CONTAINER_NAME} --network host ${IMAGE_NAME}:${BUILD_NUMBER}"
+            }
+        }
+        stage('Smoke Test') {
+            steps {
+                echo 'Performing smoke test via Docker...'
+                sleep 10
+                
+                sh "docker run --rm --network host alpine sh -c 'apk add --no-cache curl && curl -f http://localhost:3000'"
+            }
+        }
+    }
+    post {
+        always {
+            echo 'Collecting logs as artifacts...'
+            sh "docker logs ${CONTAINER_NAME} > full-build-log-${BUILD_NUMBER}.txt"
+            archiveArtifacts artifacts: "*.txt", fingerprint: true
+        }
+    }
+}
