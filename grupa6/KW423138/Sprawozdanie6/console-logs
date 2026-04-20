@@ -1,0 +1,242 @@
+Started by user Kacper Węgrecki
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/pipeline_lab6
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage (hide)
+[Pipeline] { (Clone)
+[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/pipeline_lab6/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/nestjs/typescript-starter.git # timeout=10
+Fetching upstream changes from https://github.com/nestjs/typescript-starter.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/nestjs/typescript-starter.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+Checking out Revision c4d9330f5513eda0fb5df594f6b34a11fde1a934 (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f c4d9330f5513eda0fb5df594f6b34a11fde1a934 # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D master # timeout=10
+ > git checkout -b master c4d9330f5513eda0fb5df594f6b34a11fde1a934 # timeout=10
+Commit message: "Merge pull request #347 from nestjs/dependabot/npm_and_yarn/multi-ca322d3f8f"
+ > git rev-list --no-walk c4d9330f5513eda0fb5df594f6b34a11fde1a934 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build & Test)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker inspect -f . node:20
+.
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] withDockerContainer
+Jenkins seems to be running inside container d01cf996026cc47e4c743a4d5619725819b413a0cf3166121d74407773e19731
+$ docker run -t -d -u 0:0 -w /var/jenkins_home/workspace/pipeline_lab6 --volumes-from d01cf996026cc47e4c743a4d5619725819b413a0cf3166121d74407773e19731 -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** node:20 cat
+$ docker top 894e2c7c796d4884dafc4070901134942dcf648f0dbd0362c98aeae92b869955 -eo pid,comm
+[Pipeline] {
+[Pipeline] sh
++ npm install
+
+up to date, audited 810 packages in 2m
+
+155 packages are looking for funding
+  run `npm fund` for details
+
+35 vulnerabilities (5 low, 18 moderate, 12 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+[Pipeline] sh
++ npm run test
+
+> nest-typescript-starter@1.0.0 test
+> jest
+
+PASS src/app.controller.spec.ts (87.412 s)
+  AppController
+    getHello
+      ✓ should return "Hello World!" (22 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        88.122 s
+Ran all test suites.
+[Pipeline] sh
++ npm run build
+
+> nest-typescript-starter@1.0.0 build
+> nest build
+
+[Pipeline] }
+$ docker stop --time=1 894e2c7c796d4884dafc4070901134942dcf648f0dbd0362c98aeae92b869955
+$ docker rm -f --volumes 894e2c7c796d4884dafc4070901134942dcf648f0dbd0362c98aeae92b869955
+[Pipeline] // withDockerContainer
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Prepare Dockerfile)
+[Pipeline] writeFile
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Docker Build)
+[Pipeline] sh
++ docker build -t megakacper22/nest-app:latest .
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile:
+#1 transferring dockerfile: 148B 0.4s done
+#1 DONE 0.5s
+
+#2 [internal] load metadata for docker.io/library/node:20
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context:
+#3 transferring context: 2B 0.0s done
+#3 DONE 0.2s
+
+#4 [1/5] FROM docker.io/library/node:20
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 1.23MB 4.8s
+#5 transferring context: 1.82MB 9.9s
+#5 transferring context: 2.64MB 12.8s done
+#5 DONE 13.1s
+
+#6 [2/5] WORKDIR /app
+#6 CACHED
+
+#7 [3/5] COPY . .
+#7 DONE 46.9s
+
+#8 [4/5] RUN npm install
+#8 96.27 
+#8 96.27 up to date, audited 810 packages in 2m
+#8 96.31 
+#8 96.31 155 packages are looking for funding
+#8 96.31   run `npm fund` for details
+#8 97.77 
+#8 97.77 35 vulnerabilities (5 low, 18 moderate, 12 high)
+#8 97.77 
+#8 97.77 To address issues that do not require attention, run:
+#8 97.77   npm audit fix
+#8 97.77 
+#8 97.77 To address all issues (including breaking changes), run:
+#8 97.77   npm audit fix --force
+#8 97.77 
+#8 97.77 Run `npm audit` for details.
+#8 97.79 npm notice
+#8 97.79 npm notice New major version of npm available! 10.8.2 -> 11.12.1
+#8 97.79 npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.12.1
+#8 97.79 npm notice To update run: npm install -g npm@11.12.1
+#8 97.79 npm notice
+#8 DONE 99.6s
+
+#9 [5/5] RUN npm run build
+#9 5.047 
+#9 5.047 > nest-typescript-starter@1.0.0 build
+#9 5.047 > nest build
+#9 5.047 
+#9 DONE 51.3s
+
+#10 exporting to image
+#10 exporting layers
+#10 exporting layers 24.2s done
+#10 writing image sha256:1c4f390f55ee062c18e49c3a4ee7e0eb2ed894568141a22b17d8834caafe8a63 0.0s done
+#10 naming to docker.io/megakacper22/nest-app:latest 0.1s done
+#10 DONE 24.5s
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Publish)
+[Pipeline] withCredentials
+Masking supported pattern matches of $PASS
+[Pipeline] {
+[Pipeline] sh
+Warning: A secret was passed to "sh" using Groovy String interpolation, which is insecure.
+		 Affected argument(s) used the following variable(s): [PASS]
+		 See https://jenkins.io/redirect/groovy-string-interpolation for details.
++ echo ****
++ docker login -u megakacper22 --password-stdin
+WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
++ docker push megakacper22/nest-app:latest
+The push refers to repository [docker.io/megakacper22/nest-app]
+79f64a954bad: Preparing
+5e0039a20a11: Preparing
+85c0b429e580: Preparing
+4035df5bb84b: Preparing
+25811cb22cc5: Preparing
+92f187b2382f: Preparing
+7f967f1c9409: Preparing
+b1faa89c7634: Preparing
+74d5fa8a944e: Preparing
+343e053d61dd: Preparing
+986cbc3b49c0: Preparing
+eaa7304345ff: Preparing
+92f187b2382f: Waiting
+7f967f1c9409: Waiting
+b1faa89c7634: Waiting
+74d5fa8a944e: Waiting
+343e053d61dd: Waiting
+986cbc3b49c0: Waiting
+eaa7304345ff: Waiting
+4035df5bb84b: Layer already exists
+25811cb22cc5: Layer already exists
+7f967f1c9409: Layer already exists
+92f187b2382f: Layer already exists
+74d5fa8a944e: Layer already exists
+b1faa89c7634: Layer already exists
+343e053d61dd: Layer already exists
+986cbc3b49c0: Layer already exists
+eaa7304345ff: Layer already exists
+79f64a954bad: Pushed
+5e0039a20a11: Pushed
+85c0b429e580: Pushed
+latest: digest: sha256:f46545ba85ff98d2ade4c5affd7bc34dbee87a0188482d55d61c8cf729da67b9 size: 2843
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy)
+[Pipeline] sh
++ docker stop nest-app
+nest-app
++ docker rm nest-app
+nest-app
++ docker run -d -p 3000:3000 --name nest-app megakacper22/nest-app:latest
+2b48fba9a3d0782f025e8cf8c0080d2b13961fc32b8ef9e47607a935f5a53402
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
