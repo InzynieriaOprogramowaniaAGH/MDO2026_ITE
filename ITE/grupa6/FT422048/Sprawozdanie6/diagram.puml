@@ -1,0 +1,43 @@
+@startuml
+skinparam handwritten false
+skinparam monochrome true
+
+start
+
+:Commit / Manual Trigger w Jenkins;
+
+partition "Clone" {
+    fork
+        :Pobranie konfiguracji \n(branch FT422048);
+    fork again
+        :Pobranie kodu aplikacji Redis \n(branch unstable);
+    end fork
+}
+
+partition "Build (CI)" {
+    :Kompilacja aplikacji wewnątrz \nwyizolowanego kontenera (Ubuntu);
+}
+
+partition "Test" {
+    :Uruchomienie testów w kolejnym kontenerze \nopartym o obraz buildowy;
+}
+
+partition "Deploy Image Creation" {
+    :Stworzenie bezpiecznego katalogu roboczego;
+    :Wyciągnięcie pliku binarnego redis-server;
+    :Zbudowanie lekkiego obrazu produkcyjnego \nopartego na Ubuntu;
+}
+
+partition "Smoke Test" {
+    :Uruchomienie kontenera deploy;
+    :Weryfikacja działania (redis-server --version);
+    :Usunięcie kontenera testowego;
+}
+
+partition "Publish" {
+    :Spakowanie pliku binarnego do archiwum tar.gz;
+    :Publikacja artefaktu w interfejsie Jenkinsa;
+}
+
+stop
+@enduml
