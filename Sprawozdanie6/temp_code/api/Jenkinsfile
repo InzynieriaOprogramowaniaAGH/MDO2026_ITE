@@ -3,9 +3,8 @@ pipeline {
     stages {
         stage('Docker Build') {
             steps {
-                // Wchodzimy do folderu projektu wewnątrz pobranego repo
                 dir('Sprawozdanie6/temp_code/api') {
-                    sh 'ls -la' // Tu w końcu zobaczysz pliki!
+                    sh 'ls -la'
                     sh 'docker build -t spring-api-prod -f docker/Dockerfile.prod .'
                 }
             }
