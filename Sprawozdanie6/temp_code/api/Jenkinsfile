@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+    stages {
+        stage('Docker Build') {
+            steps {
+                // Budujemy obraz z Twojego pliku produkcyjnego
+                sh 'docker build -t spring-api-prod:${env.BUILD_ID} -f docker/Dockerfile.prod .'
+            }
+        }
+        stage('Publish Artifact') {
+            steps {
+                // Wyciągamy plik .jar z kontenera, żeby Jenkins go zapisał (Punkt 17, 18)
+                script {
+                    sh "docker create --name temp-c-${env.BUILD_ID} spring-api-prod:${env.BUILD_ID}"
+                    sh "docker cp temp-c-${env.BUILD_ID}:/usr/src/app/api.jar ./api-v${env.BUILD_ID}.jar"
+                    sh "docker rm temp-c-${env.BUILD_ID}"
+                }
+                // To sprawi, że plik będzie do pobrania w Jenkinsie
+                archiveArtifacts artifacts: '*.jar', fingerprint: true
+            }
+        }
+        stage('Smoke Test & Logs') {
+            steps {
+                // Uruchamiamy testowo, żeby Jenkins pokazał logi błędu bazy w konsoli
+                sh "docker run -d --name test-api-${env.BUILD_ID} spring-api-prod:${env.BUILD_ID}"
+                sh "sleep 10"
+                sh "docker logs test-api-${env.BUILD_ID} || true"
+                sh "docker stop test-api-${env.BUILD_ID} && docker rm test-api-${env.BUILD_ID}"
+            }
+        }
+    }
+}
