@@ -17,7 +17,6 @@
 * **[x] Pełna ścieżka krytyczna (Stage View):**
     ![Jenkins Stage View](screenshots/lab6_3.png)
 * **[x] Pliki źródłowe (Dockerfile i Jenkinsfile):** Dostępne w repozytorium.
-    ![Repozytorium](screenshots/lab6_6.jpg)
 
 ## 2. Kody źródłowe (Czyste)
 
