@@ -1,3 +1,3 @@
 FROM pipeline-build:latest
 WORKDIR /app
-RUN dotnet test app.tests/app.tests.csproj --logger "console;verbosity=normal"
+RUN dotnet test app.test/app.test.csproj --logger "console;verbosity=normal"
