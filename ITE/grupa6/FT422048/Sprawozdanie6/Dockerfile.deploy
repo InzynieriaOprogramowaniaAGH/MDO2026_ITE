@@ -1,0 +1,6 @@
+FROM ubuntu:latest
+WORKDIR /app
+COPY redis-server /app/redis-server
+RUN chmod +x /app/redis-server
+EXPOSE 6379
+ENTRYPOINT ["./redis-server"]
