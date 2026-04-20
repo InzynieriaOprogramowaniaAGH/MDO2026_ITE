@@ -1,0 +1,68 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_NAME = "megakacper22/nest-app"
+        TAG = "latest"
+    }
+
+    stages {
+
+        stage('Clone') {
+            steps {
+                git url: 'https://github.com/nestjs/typescript-starter.git', branch: 'master'
+            }
+        }
+
+        stage('Build & Test') {
+            steps {
+                script {
+                    docker.image('node:20').inside {
+                        sh 'npm install'
+			sh 'npm run test'	
+                        sh 'npm run build'
+                    }
+                }
+            }
+        }
+        stage('Prepare Dockerfile') {
+ 	   steps {
+        	writeFile file: 'Dockerfile', text: '''
+			FROM node:20
+			WORKDIR /app
+			COPY . .
+			RUN npm install
+			RUN npm run build
+			EXPOSE 3000
+			CMD ["node", "dist/main.js"]
+		'''
+    }
+}
+        stage('Docker Build') {
+            steps {
+                sh "docker build -t ${IMAGE_NAME}:${TAG} ."
+            }
+        }
+
+        stage('Publish') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                    sh """
+                        echo $PASS | docker login -u $USER --password-stdin
+                        docker push ${IMAGE_NAME}:${TAG}
+                    """
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh """
+                    docker stop nest-app || true
+                    docker rm nest-app || true
+                    docker run -d -p 3000:3000 --name nest-app ${IMAGE_NAME}:${TAG}
+                """
+            }
+        }
+    }
+}
