@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('checkout') {
+            steps {
+                git branch: 'DP423171',
+                    url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git'
+            }
+        }
+        stage('build') {
+            stages {
+                stage('build:main') {
+                    steps {
+                        script {
+                            docker.build("build-env-main:latest", "ITe/5/DP423171/Sprawozdanie3/docker/main")
+                        }
+                    }
+                }
+                stage('build:test') {
+                    steps {
+                        script {
+                            docker.build("build-env-test:latest", "ITe/5/DP423171/Sprawozdanie3/docker/test")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,17 +1,21 @@
-# Sprawozdanie 5
+Sprawozdanie 5
+==============
 
-Sprawozdanie dla ćwiczenia piątego.
+Sprawozdanie dla [ćwiczenia piątego][ex5].
 
-## Cel ćwiczenia
+Cel ćwiczenia
+-------------
 
 Wstępna konfiguracja Jenkins i rozpoczęcie pracy z środowiskiem
 CI/CD. Początkowa definicja *pipeline* dla projektu.
 
-## Sprzęt
+Sprzęt
+------
 
 Wykorzystano jednostkę fizyczną z zainstalowanym systemem Linux.
 
-## Przebieg ćwiczenia
+Przebieg ćwiczenia
+------------------
 
 ### Przygotowanie do pracy:
 
@@ -89,7 +93,7 @@ Wynik dla nieparzystych (`09:XX`):
 
 ![](img/evenhours/03.png)
 
-### Projekt *pipeline* (wtęp):
+### Projekt *pipeline*: wstęp
 
 Tym razem wybieram typ projektu jako Pipeline:
 
@@ -142,5 +146,5 @@ Logi z pipeline zdumpowano do [#1.txt](logs/pipeline/#1.txt).
 Pipeline wywołano również jeszcze raz i zdumpowano do [#2.txt](logs/pipeline/#2.txt)
 
 <!-- Linki: --->
-<!-- [ex5]: ../../../../READMEs/05-Class.md "..." -->
+[ex5]: ../../../../READMEs/05-Class.md
 [`Dockerfile`]: docker/blueocean/Dockerfile
