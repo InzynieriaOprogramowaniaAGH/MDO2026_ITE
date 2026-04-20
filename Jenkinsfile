@@ -22,16 +22,15 @@ pipeline {
         }
 
         stage('Test') {
-            steps {
-                sh "docker build -t ${TEST_IMG} -f SS419695/Dockerfile.test SS419695/"
-                sh "docker run --rm ${TEST_IMG}"
-            }
-            post {
-                always {
-                    sh "docker rmi ${TEST_IMG} || true"
-                }
-            }
+    steps {
+        sh "docker run --rm ${BUILD_IMG} dotnet test app.test/app.test.csproj --logger 'console;verbosity=normal'"
+    }
+    post {
+        always {
+            sh "docker rmi ${TEST_IMG} || true"
         }
+    }
+}
 
         stage('Deploy') {
             steps {
