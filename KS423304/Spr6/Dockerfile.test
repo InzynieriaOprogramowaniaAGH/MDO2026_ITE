@@ -1,0 +1,2 @@
+FROM my-build:latest
+CMD ["npm", "test"] 
