@@ -1,0 +1,86 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone') {
+            steps {
+                git branch: 'MW423393', url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git'
+            }
+        }
+
+        stage('Build Builder Image') {
+            steps {
+                dir('grupa6/MW423393/Sprawozdanie06/docker') {
+                    sh 'docker build -t merge-anything-build -f Dockerfile.build .'
+                }
+            }
+        }
+
+        stage('Build Tester Image') {
+            steps {
+                dir('grupa6/MW423393/Sprawozdanie06/docker') {
+                    sh 'docker build -t merge-anything-test -f Dockerfile.test .'
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'mkdir -p grupa6/MW423393/Sprawozdanie06'
+                sh 'docker run --rm merge-anything-test | tee grupa6/MW423393/Sprawozdanie06/test-output-${BUILD_NUMBER}.log'
+            }
+        }
+        
+        stage('Package') {
+            steps {
+                sh '''
+                    set -e
+                    mkdir -p grupa6/MW423393/Sprawozdanie06/artifact
+                    rm -rf grupa6/MW423393/Sprawozdanie06/artifact/*
+                    rm -f grupa6/MW423393/Sprawozdanie06/*.tar.gz
+                    rm -f grupa6/MW423393/Sprawozdanie06/*.log
+        
+                    CID=$(docker create merge-anything-build)
+                    docker cp ${CID}:/app/dist grupa6/MW423393/Sprawozdanie06/artifact/dist
+                    docker cp ${CID}:/app/package.json grupa6/MW423393/Sprawozdanie06/artifact/package.json
+                    docker cp ${CID}:/app/README.md grupa6/MW423393/Sprawozdanie06/artifact/README.md
+                    docker cp ${CID}:/app/LICENSE grupa6/MW423393/Sprawozdanie06/artifact/LICENSE
+                    docker rm ${CID}
+        
+                    tar -czf grupa6/MW423393/Sprawozdanie06/merge-anything-dist-${BUILD_NUMBER}.tar.gz -C grupa6/MW423393/Sprawozdanie06/artifact .
+                '''
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh '''
+                    docker rm -f merge-anything-deploy-${BUILD_NUMBER} || true
+                    docker run -d --name merge-anything-deploy-${BUILD_NUMBER} merge-anything-build tail -f /dev/null
+                '''
+            }
+        }
+
+        stage('Smoke test') {
+            steps {
+                sh '''
+                    docker exec merge-anything-deploy-${BUILD_NUMBER} ls -la /app/dist | tee grupa6/MW423393/Sprawozdanie06/smoke-test-${BUILD_NUMBER}.log
+                    docker exec merge-anything-deploy-${BUILD_NUMBER} test -f /app/dist/index.js
+                    cat grupa6/MW423393/Sprawozdanie06/smoke-test-${BUILD_NUMBER}.log
+                '''
+            }
+        }
+
+        stage('Publish') {
+            steps {
+                archiveArtifacts artifacts: "grupa6/MW423393/Sprawozdanie06/*-${BUILD_NUMBER}.tar.gz,grupa6/MW423393/Sprawozdanie06/*-${BUILD_NUMBER}.log", fingerprint: true
+            }
+        }
+    }
+
+    post {
+        always {
+            sh 'docker rm -f merge-anything-deploy-${BUILD_NUMBER} || true'
+        }
+    }
+}
