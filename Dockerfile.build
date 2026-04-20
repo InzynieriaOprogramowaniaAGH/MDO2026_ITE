@@ -1,0 +1,5 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0
+WORKDIR /app
+COPY app/ ./app/
+COPY app.tests/ ./app.tests/
+RUN dotnet build app/app.csproj --configuration Release
