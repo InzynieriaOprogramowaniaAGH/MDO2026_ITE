@@ -53,6 +53,7 @@ pipeline {
 
                 script {
                     def status = sh(
+                        sh "docker build --no-cache -t my-app-test -f ${DOCKERFILE_TEST_PATH} ."
                         script: "docker run --rm my-app-test > test-results.txt 2>&1",
                         returnStatus: true
                     )
