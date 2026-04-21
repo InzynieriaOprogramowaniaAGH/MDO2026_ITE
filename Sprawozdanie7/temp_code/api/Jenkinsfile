@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+    stages {
+        stage('Cleanup & Setup') {
+            steps {
+                deleteDir()
+                sh 'mkdir -p src/main/java/com/example'
+                writeFile file: 'pom.xml', text: '<project xmlns="http://maven.apache.org/POM/4.0.0"><modelVersion>4.0.0</modelVersion><groupId>com.example</groupId><artifactId>api</artifactId><version>1.0.0</version><dependencies><dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-web</artifactId><version>3.2.0</version></dependency></dependencies><properties><maven.compiler.source>17</maven.compiler.source><maven.compiler.target>17</maven.compiler.target></properties></project>'
+                writeFile file: 'src/main/java/com/example/DemoApplication.java', text: 'package com.example; import org.springframework.boot.SpringApplication; import org.springframework.boot.autoconfigure.SpringBootApplication; @SpringBootApplication public class DemoApplication { public static void main(String[] args) { SpringApplication.run(DemoApplication.class, args); } }'
+                sh 'mkdir -p docker && cp ../../../docker/Dockerfile.prod docker/'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'docker build -t spring-api-prod:latest -f docker/Dockerfile.prod .'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'docker run --rm spring-api-prod:latest java -version'
+            }
+        }
+        stage('Deploy (Sandbox)') {
+            steps {
+                script {
+                    sh "docker run -d --name sandbox-${env.BUILD_ID} spring-api-prod:latest"
+                    sh "sleep 10"
+                    sh "docker logs sandbox-${env.BUILD_ID} || true"
+                    sh "docker stop sandbox-${env.BUILD_ID} && docker rm sandbox-${env.BUILD_ID}"
+                }
+            }
+        }
+        stage('Publish') {
+            steps {
+                script {
+                    sh "docker create --name temp-${env.BUILD_ID} spring-api-prod:latest"
+                    sh "docker cp temp-${env.BUILD_ID}:/usr/src/app/api.jar ./api-v${env.BUILD_ID}.jar"
+                    sh "docker rm temp-${env.BUILD_ID}"
+                    archiveArtifacts artifacts: "*.jar", fingerprint: true
+                }
+            }
+        }
+    }
+}
