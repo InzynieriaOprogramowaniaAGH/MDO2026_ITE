@@ -65,8 +65,7 @@ pipeline {
                 echo '---=== STAGE: PUBLISH ===---'
 
                 sh "docker tag ${IMAGE_NAME}:${BUILD_NUMBER} ${IMAGE_NAME}:latest"
-                sh "docker save ${IMAGE_NAME}:latest -o ${IMAGE_NAME}:latest.tar"
-                sh "tar -czf ${ARTIFACT_PREF}${IMAGE_NAME}:latest.tar.gz ${IMAGE_NAME}:latest.tar"
+                sh "docker save ${IMAGE_NAME}:latest | gzip > ${ARTIFACT_PREF}${IMAGE_NAME}_latest.tar.gz"
                 archiveArtifacts artifacts: "${ARTIFACT_PREF}*", fingerprint: true
             }
         }
