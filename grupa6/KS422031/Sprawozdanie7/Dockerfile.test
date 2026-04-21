@@ -1,0 +1,4 @@
+FROM lab7-build:latest
+
+WORKDIR /opt/makefile-for-c
+RUN make test
