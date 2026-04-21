@@ -1,0 +1,65 @@
+pipeline {
+    agent any
+    
+    environment {
+        APP_VERSION = "1.0.${BUILD_NUMBER}"
+        IMAGE_NAME = "moj-kalkulator"
+        APP_REPO_URL = "https://github.com/actionsdemos/calculator.git"
+    }
+
+    options {
+        skipDefaultCheckout(true)
+    }
+
+    stages {
+        stage('Clean & Setup') {
+            steps {
+                deleteDir()
+                checkout scm
+                sh "git clone ${APP_REPO_URL} app-source"
+            }
+        }
+        
+        stage('Build (BLDR)') {
+            steps {
+                dir('FP422032/Sprawozdanie/files/Zaj7') {
+                    sh "docker build --no-cache --target builder -t ${IMAGE_NAME}-bldr:${BUILD_NUMBER} -f Dockerfile ../../../app-source/."
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                dir('FP422032/Sprawozdanie/files/Zaj7') {
+                    sh "docker build --target tester -t ${IMAGE_NAME}-tester:${BUILD_NUMBER} -f Dockerfile ../../../app-source/."
+                }
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                sh "docker rm -f smoke-test-app || true"
+                
+                dir('FP422032/Sprawozdanie/files/Zaj7') {
+                    sh "docker build --target deploy -t ${IMAGE_NAME}:${APP_VERSION} -f Dockerfile ../../../app-source/."
+                }
+                
+                sh "docker run -d --name smoke-test-app -p 3000:3000 ${IMAGE_NAME}:${APP_VERSION}"
+                sleep 5
+                sh 'docker run --rm --network container:smoke-test-app curlimages/curl -f http://localhost:3000'
+            }
+        }
+        
+        stage('Publish') {
+            steps {
+                archiveArtifacts artifacts: 'FP422032/Sprawozdanie/files/Zaj7/Dockerfile, FP422032/Sprawozdanie/files/Zaj7/Jenkinsfile', allowEmptyArchive: false
+            }
+        }
+    }
+    
+    post {
+        always {
+            sh "docker rm -f smoke-test-app || true"
+        }
+    }
+}
