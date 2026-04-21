@@ -71,7 +71,7 @@ ENTRYPOINT ["java", "-jar", "api.jar"]
 
         stage('Build') {
             steps {
-                sh 'docker build -t spring-api-prod:latest -f docker/Dockerfile.prod .'
+                sh 'docker build -t spring-api-prod:latest -f Dockerfile.prod .'
             }
         }
 
