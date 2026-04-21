@@ -7,8 +7,8 @@ pipeline {
         BUILD_DIR = 'build'
         ARTIFACT_BUILD = 'app-build.tar.gz'
         ARTIFACT_IMAGE = 'app-image.tar.gz'
-        DOCKERFILE_BUILD_PATH = 'MP420244/Sprawozdanie3/Dockerfile.build'
-        DOCKERFILE_TEST_PATH = 'MP420244/Sprawozdanie3/Dockerfile.test'
+        DOCKERFILE_BUILD_PATH = 'MP420244/Sprawozdanie7/Dockerfile.build'
+        DOCKERFILE_TEST_PATH = 'MP420244/Sprawozdanie7/Dockerfile.test'
     }
 
     stages {
@@ -40,9 +40,8 @@ pipeline {
                 echo 'Building application...'
 
                 script {
-                    sh 'ls -l' // debug
                     sh "docker build --no-cache -t my-app-build -f ${DOCKERFILE_BUILD_PATH} ."
-                    sh "docker run --rm my-app-build tar czf - /app/build > ${ARTIFACT_BUILD}"
+                    sh "docker run --rm my-app-build tar czf - /app/C-and-Cpp-Tests-with-CI-CD-Example > ${ARTIFACT_BUILD}"
                 }
             }
         }

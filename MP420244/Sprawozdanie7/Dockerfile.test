@@ -1,0 +1,5 @@
+FROM my-app-build
+
+WORKDIR /app/C-and-Cpp-Tests-with-CI-CD-Example
+
+CMD ["make", "test"]
