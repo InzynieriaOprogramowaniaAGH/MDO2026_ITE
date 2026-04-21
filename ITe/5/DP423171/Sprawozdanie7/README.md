@@ -195,6 +195,8 @@ kolejnych sprawdzeń pipeline.
 Lista kontrolna dla obecnego etapu ćwiczenia:
 ---------------------------------------------
 
+Większość z elementów listy osiągnięto w ćwiczeniu poprzednim, pozostałe
+opisano w sprawozdaniu powyżej w sekcji *Przebieg ćwiczenia*.
 
 - [X] Przepis dostarczany z SCM, a nie wklejony w Jenkinsa lub sprawozdanie (co załatwia nam `clone` )
 - [X] Posprzątaliśmy i wiemy, że odbyło się to skutecznie - mamy pewność, że pracujemy na najnowszym (a nie *cache'owanym* kodzie)
@@ -206,6 +208,20 @@ Lista kontrolna dla obecnego etapu ćwiczenia:
 - [X] Etap `Deploy` przeprowadza wdrożenie (start kontenera docelowego lub uruchomienie aplikacji na przeznaczonym do tego celu kontenerze sandboxowym)
 - [X] Etap `Publish` ~~wysyła obraz docelowy do Rejestru i/lub~~ dodaje artefakt do historii builda
 - [X] Ponowne uruchomienie naszego *pipeline'u* powinno zapewniać, że pracujemy na najnowszym (a nie *cache'owanym*) kodzie. Innymi słowy, *pipeline* musi zadziałać więcej niż jeden raz 😎
+
+### Dodatkowo…
+
+> Czy opublikowany obraz może być pobrany z Rejestru i uruchomiony w Dockerze bez modyfikacji (acz potencjalnie z szeregiem wymaganych parametrów, jak obraz DIND)? Nie chcemy posyłać w świat czegoś, co działa tylko u nas!
+
+Obecnie obraz nie jest publikowany w rejestrze, możliwe jest jednak
+pobranie zapakowanego obrazu udostępnianego jako artefakt budowy
+i uruchomienie na Dockerze bez jakichkolwiek modyfikacji.
+
+> Czy dołączony do jenkinsowego przejścia artefakt, gdy pobrany, ma szansę zadziałać od razu na maszynie o oczekiwanej konfiguracji docelowej?
+
+Działanie zostało sprawdzone dla różnych środowisk (Jenkins, na etapie
+wdrażania oraz lokalnej maszynie), tak więc wręcz oczekiwanym, że aplikacja
+będzie działać na dowolnym środowisku z skonfigurowanym Dockerem.
 
 <!-- Linki: --->
 [ex7]: ../../../../READMEs/07-Class.md
