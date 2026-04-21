@@ -1,0 +1,75 @@
+pipeline {
+    agent any
+    
+    environment {
+        DOCKER_USER = "piti83" 
+        IMAGE_NAME = "libsodium-runtime"
+        VERSION = "1.0.${BUILD_NUMBER}"
+    }
+    
+    stages {
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
+
+        stage('Checkout SCM') {
+            steps {
+                checkout scm
+            }
+        }
+        
+        stage('Build & Test') {
+            steps {
+                dir('PW419456/lab7') {
+                    script {
+                        echo "Budowanie obrazu z testami..."
+                        sh 'docker build --no-cache --target tester -t libsodium-tester -f ../lab6/Dockerfile.ci .'
+                        echo "Uruchamianie make check..."
+                        sh 'docker run --name libsodium-test-run libsodium-tester > make-check.log'
+                    }
+                }
+            }
+            post {
+                always {
+                    dir('PW419456/lab7') {
+                        sh 'docker rm -f libsodium-test-run || true'
+                        archiveArtifacts artifacts: 'make-check.log', allowEmptyArchive: true
+                    }
+                }
+            }
+        }
+        
+        stage('Build Deploy Image') {
+            steps {
+                dir('PW419456/lab7') {
+                    script {
+                        echo "Budowanie ostatecznego obrazu..."
+                        sh "docker build --target deploy -t ${IMAGE_NAME}:${VERSION} -f ../lab6/Dockerfile.ci ."
+                    }
+                }
+            }
+        }
+        
+        stage('Publish Image (Docker Hub)') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER_CRED')]) {
+                        sh "echo \$DOCKER_PASS | docker login -u \$DOCKER_USER_CRED --password-stdin"
+                        
+                        sh "docker tag ${IMAGE_NAME}:${VERSION} ${DOCKER_USER}/${IMAGE_NAME}:${VERSION}"
+                        sh "docker tag ${IMAGE_NAME}:${VERSION} ${DOCKER_USER}/${IMAGE_NAME}:latest"
+                        sh "docker push ${DOCKER_USER}/${IMAGE_NAME}:${VERSION}"
+                        sh "docker push ${DOCKER_USER}/${IMAGE_NAME}:latest"
+                    }
+                }
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
