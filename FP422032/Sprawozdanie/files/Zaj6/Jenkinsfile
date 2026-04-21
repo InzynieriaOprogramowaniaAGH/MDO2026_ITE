@@ -1,0 +1,59 @@
+pipeline {
+    agent any
+    
+    environment {
+        APP_VERSION = "1.0.${BUILD_NUMBER}"
+        IMAGE_NAME = "moj-kalkulator"
+    }
+
+    stages {
+        stage('Clone') {
+            steps {
+                git branch: 'FP422032', url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git'
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                dir('FP422032/Sprawozdanie/files/Zaj6') {
+                    sh "docker build --target builder -t ${IMAGE_NAME}-build:${BUILD_NUMBER} ."
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                dir('FP422032/Sprawozdanie/files/Zaj6') {
+                    sh "docker build --target tester -t ${IMAGE_NAME}-tester:${BUILD_NUMBER} ."
+                }
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                dir('FP422032/Sprawozdanie/files/Zaj6') {
+                    sh "docker build --target deploy -t ${IMAGE_NAME}:${APP_VERSION}-${GIT_COMMIT} ."
+                }
+            }
+        }
+
+        stage('Smoke Test') {
+            steps {
+                sh "docker run -d --name smoke-test-app -p 3000:3000 ${IMAGE_NAME}:${APP_VERSION}-${GIT_COMMIT}"
+                sleep 5
+                
+                sh 'docker run --rm --network container:smoke-test-app curlimages/curl -f http://localhost:3000 || (docker rm -f smoke-test-app && exit 1)'
+                
+                sh "docker rm -f smoke-test-app"
+            }
+        }
+        
+        stage('Publish') {
+            steps {
+                dir('FP422032/Sprawozdanie/files/Zaj6') {
+                    archiveArtifacts artifacts: 'Dockerfile, Jenkinsfile, package.json', allowEmptyArchive: false
+                }
+            }
+        }
+    }
+}
