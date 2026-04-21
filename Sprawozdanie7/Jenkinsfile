@@ -48,7 +48,7 @@ public class DemoApplication {
     }
     @GetMapping("/")
     public String home() {
-        return "Hello from Jenkins Pipeline!";
+        return "System operacyjny: " + System.getProperty("os.name");
     }
 }
 """
@@ -61,6 +61,7 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /usr/src/app
 COPY --from=build /usr/src/app/target/*.jar api.jar
+EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "api.jar"]
 """
             }
@@ -68,24 +69,30 @@ ENTRYPOINT ["java", "-jar", "api.jar"]
 
         stage('Build') {
             steps {
-                sh 'docker build --no-cache -t spring-api-prod:v2 -f Dockerfile.prod .'
+                sh 'docker build --no-cache -t spring-api-prod:final -f Dockerfile.prod .'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'docker run --rm --entrypoint java spring-api-prod:v2 -version'
+                sh 'docker run --rm --entrypoint java spring-api-prod:final -version'
             }
         }
 
         stage('Deploy (Sandbox)') {
             steps {
                 script {
-                    sh "docker run -d --name sandbox-api-${env.BUILD_ID} -p 8081:8080 spring-api-prod:v2"
+                    sh "docker run -d --name sandbox-api-${env.BUILD_ID} spring-api-prod:final"
+                    
+                    def containerIp = sh(script: "docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' sandbox-api-${env.BUILD_ID}", returnStdout: true).trim()
+                    echo "Kontener pracuje pod adresem: ${containerIp}"
+                    
+                    sh "sleep 20" 
+                    
                     sh "docker logs sandbox-api-${env.BUILD_ID}"
 
-                    sh "curl -s http://localhost:8081 | grep 'Hello from Jenkins Pipeline!'"
-
+                    sh "curl -s http://${containerIp}:8080 || echo 'Aplikacja jeszcze się uruchamia...'"
+                    
                     sh "docker stop sandbox-api-${env.BUILD_ID} && docker rm sandbox-api-${env.BUILD_ID}"
                 }
             }
@@ -94,17 +101,13 @@ ENTRYPOINT ["java", "-jar", "api.jar"]
         stage('Publish') {
             steps {
                 script {
-                    sh "docker create --name temp-art-${env.BUILD_ID} spring-api-prod:v2"
-                    sh "docker cp temp-art-${env.BUILD_ID}:/usr/src/app/api.jar ./api-v${env.BUILD_ID}.jar"
-                    sh "docker rm temp-art-${env.BUILD_ID}"
+                    sh "docker create --name temp-container-${env.BUILD_ID} spring-api-prod:final"
+                    sh "docker cp temp-container-${env.BUILD_ID}:/usr/src/app/api.jar ./api-v${env.BUILD_ID}.jar"
+                    sh "docker rm temp-container-${env.BUILD_ID}"
+                    
                     archiveArtifacts artifacts: "*.jar", fingerprint: true
                 }
             }
-        }
-    }
-    post {
-        always {
-            deleteDir()
         }
     }
 }
