@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+    stages {
+        stage('Clone') {
+            steps {
+                git url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git',
+                    branch: 'PS422034'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'docker rmi lab3-build lab3-test || true'
+                sh 'docker build -t lab3-build -f PS422034/Sprawozdanie3/lab3/Dockerfile.build .'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'docker build -t lab3-test -f PS422034/Sprawozdanie3/lab3/Dockerfile.test .'
+                sh 'docker run --rm lab3-test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'docker rm -f express-deploy || true'
+                sh 'docker run -d --name express-deploy -p 3000:3000 lab3-build node /app/index.js'
+                sh 'sleep 5'
+                sh 'docker exec express-deploy curl -s http://localhost:3000 || true'
+            }
+        }
+        stage('Publish') {
+            steps {
+                sh 'mkdir -p artifact'
+                sh 'docker run --rm -v $(pwd)/artifact:/artifact lab3-build tar -czf /artifact/express-1.0.0.tar.gz -C /app .'
+                archiveArtifacts artifacts: 'artifact/express-1.0.0.tar.gz', onlyIfSuccessful: true
+            }
+        }
+    }
+    post {
+        always {
+            sh 'docker rm -f express-deploy || true'
+        }
+    }
+}
