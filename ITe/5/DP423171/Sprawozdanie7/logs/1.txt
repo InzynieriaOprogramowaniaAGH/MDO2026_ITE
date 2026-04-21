@@ -1,0 +1,1668 @@
+Started by user SpacingBat3
+Obtained ITe/5/DP423171/Sprawozdanie7/ci/Jenkinsfile from git https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/MDO2026_ITE
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+The recommended git tool is: git
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/MDO2026_ITE/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git # timeout=10
+Fetching upstream changes from https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git +refs/heads/DP423171:refs/remotes/origin/DP423171 # timeout=10
+ > git rev-parse origin/DP423171^{commit} # timeout=10
+Checking out Revision 4475c1a04c3748191f3023796455ee44107b98f9 (origin/DP423171)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 4475c1a04c3748191f3023796455ee44107b98f9 # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D DP423171 # timeout=10
+ > git checkout -b DP423171 4475c1a04c3748191f3023796455ee44107b98f9 # timeout=10
+Commit message: "Pierwsza wersja Jenkinsfile"
+ > git rev-list --no-walk 4475c1a04c3748191f3023796455ee44107b98f9 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (prepare)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ docker system prune -a -f
+Deleted Images:
+untagged: build-env-test:latest
+deleted: sha256:288ceaddb574e3d1fb597bfee41b1346cf3b922074dbb167a866ea5cbf326381
+untagged: my-pacman:7.1.0-b32
+deleted: sha256:0a5f4e3e4ceb0cf2e35a376f64b49b4d3a40845ca262e9a40511738ae26cee0d
+untagged: build-env-main:latest
+deleted: sha256:5d45b0e1cc3ffd151b12b356d4044d93b460870289b4fbffa9345781aaf4d215
+
+Deleted build cache objects:
+szhkr6uin16amy3pgrah7xch0
+kp6s0hlrurrxlaqontq5jn35u
+483mi8xdkthhhesvaa72i8j5p
+g7njrg1303tblsulgx3lq95g4
+qoq9u0vif1eswrqmubo34orid
+1c2cf5w0uhtgo3h2wp50a8iz5
+zi3optov5fu5h2j5zour2l0s3
+m3m3vi6ttnobicci89j64ovcd
+qgieydlu7pij1gxsjw3u0icsy
+vrmfelrq7b7mi9u4um9e0yibz
+jmtf81k9ib9ull1pi4zgi80hk
+v4cpax269cxkprlqdcqdt6xa5
+xfojjhez7bw9xqranc4p5jjad
+bpiackv34vpjoqdf1i8l0xe9q
+y3b799nq5rqw1sbcradcu6g5x
+dt4v7j65j7ikdh1e91xas22lq
+vddoljc768qubdgd0z9106gs2
+8rvgov7hntbs7p46aumd31d5x
+klvsr59rrvlptvz4oyl36ydrw
+
+Total reclaimed space: 222.3MB
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (build)
+[Pipeline] stage
+[Pipeline] { (build:main)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker build -t build-env-main:latest --build-arg PACMAN_TAG=7.1.0 --no-cache ITe/5/DP423171/Sprawozdanie3/docker/main
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 DONE 0.0s
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile:
+#1 transferring dockerfile: 548B 0.1s done
+#1 DONE 1.8s
+
+#2 [internal] load metadata for docker.io/library/archlinux:base-devel
+#2 DONE 2.6s
+
+#3 [internal] load .dockerignore
+#3 transferring context:
+#3 transferring context: 2B done
+#3 DONE 0.4s
+
+#4 [1/7] FROM docker.io/library/archlinux:base-devel@sha256:f15064b187aea96308a0252d1eacf514a2ee89aad6d44811f52b733fa9a5e42b
+#4 resolve docker.io/library/archlinux:base-devel@sha256:f15064b187aea96308a0252d1eacf514a2ee89aad6d44811f52b733fa9a5e42b
+#4 resolve docker.io/library/archlinux:base-devel@sha256:f15064b187aea96308a0252d1eacf514a2ee89aad6d44811f52b733fa9a5e42b 0.3s done
+#4 sha256:387ed57ebe179807b0f90dd1dafa11a3727c36be26c5355b2f6284fd4d027e18 4.23kB / 4.23kB done
+#4 sha256:f15064b187aea96308a0252d1eacf514a2ee89aad6d44811f52b733fa9a5e42b 1.24kB / 1.24kB done
+#4 sha256:3b828fb58696aab68e5c77350473a332a1746aa44f81a2bc8ad437dce0abb58a 1.23kB / 1.23kB done
+#4 sha256:c3378b69ab420a6d8805fc88b36f1e41c1f0e83ddf2b2a9e2ff29467b9fa207a 0B / 247.36MB 0.2s
+#4 sha256:fad874ddd508cea21e6b14d5038ef0bd201a630e83994d91016b7e5eea408178 0B / 9.19kB 0.4s
+#4 sha256:c3378b69ab420a6d8805fc88b36f1e41c1f0e83ddf2b2a9e2ff29467b9fa207a 15.73MB / 247.36MB 0.7s
+#4 sha256:c3378b69ab420a6d8805fc88b36f1e41c1f0e83ddf2b2a9e2ff29467b9fa207a 33.55MB / 247.36MB 0.9s
+#4 sha256:fad874ddd508cea21e6b14d5038ef0bd201a630e83994d91016b7e5eea408178 9.19kB / 9.19kB 0.7s done
+#4 sha256:c3378b69ab420a6d8805fc88b36f1e41c1f0e83ddf2b2a9e2ff29467b9fa207a 51.38MB / 247.36MB 1.1s
+#4 sha256:c3378b69ab420a6d8805fc88b36f1e41c1f0e83ddf2b2a9e2ff29467b9fa207a 75.50MB / 247.36MB 1.3s
+#4 sha256:c3378b69ab420a6d8805fc88b36f1e41c1f0e83ddf2b2a9e2ff29467b9fa207a 100.66MB / 247.36MB 1.6s
+#4 sha256:c3378b69ab420a6d8805fc88b36f1e41c1f0e83ddf2b2a9e2ff29467b9fa207a 123.73MB / 247.36MB 1.8s
+#4 sha256:c3378b69ab420a6d8805fc88b36f1e41c1f0e83ddf2b2a9e2ff29467b9fa207a 148.90MB / 247.36MB 2.0s
+#4 sha256:c3378b69ab420a6d8805fc88b36f1e41c1f0e83ddf2b2a9e2ff29467b9fa207a 168.82MB / 247.36MB 2.2s
+#4 sha256:c3378b69ab420a6d8805fc88b36f1e41c1f0e83ddf2b2a9e2ff29467b9fa207a 186.65MB / 247.36MB 2.4s
+#4 sha256:c3378b69ab420a6d8805fc88b36f1e41c1f0e83ddf2b2a9e2ff29467b9fa207a 203.42MB / 247.36MB 2.6s
+#4 sha256:c3378b69ab420a6d8805fc88b36f1e41c1f0e83ddf2b2a9e2ff29467b9fa207a 220.20MB / 247.36MB 2.8s
+#4 sha256:c3378b69ab420a6d8805fc88b36f1e41c1f0e83ddf2b2a9e2ff29467b9fa207a 235.93MB / 247.36MB 3.0s
+#4 sha256:c3378b69ab420a6d8805fc88b36f1e41c1f0e83ddf2b2a9e2ff29467b9fa207a 247.36MB / 247.36MB 5.0s done
+#4 extracting sha256:c3378b69ab420a6d8805fc88b36f1e41c1f0e83ddf2b2a9e2ff29467b9fa207a 0.1s
+#4 extracting sha256:c3378b69ab420a6d8805fc88b36f1e41c1f0e83ddf2b2a9e2ff29467b9fa207a 5.1s
+#4 extracting sha256:c3378b69ab420a6d8805fc88b36f1e41c1f0e83ddf2b2a9e2ff29467b9fa207a 7.2s done
+#4 extracting sha256:fad874ddd508cea21e6b14d5038ef0bd201a630e83994d91016b7e5eea408178
+#4 extracting sha256:fad874ddd508cea21e6b14d5038ef0bd201a630e83994d91016b7e5eea408178 done
+#4 DONE 15.9s
+
+#5 [2/7] RUN pacman -Syu --asdeps --noconfirm git gpgme libarchive curl python fakechroot fakeroot meson
+#5 1.172 :: Synchronizing package databases...
+#5 1.523  core downloading...
+#5 1.523  extra downloading...
+#5 1.721 :: Starting full system upgrade...
+#5 1.721 warning: gpgme-2.0.1-3 is up to date -- reinstalling
+#5 1.721 warning: libarchive-3.8.7-1 is up to date -- reinstalling
+#5 1.721 warning: curl-8.19.0-1 is up to date -- reinstalling
+#5 1.721 warning: fakeroot-1.37.2-1 is up to date -- reinstalling
+#5 1.723 resolving dependencies...
+#5 1.726 looking for conflicting packages...
+#5 1.728 
+#5 1.728 Package (19)                  Old Version  New Version  Net Change  Download Size
+#5 1.728 
+#5 1.728 core/archlinux-keyring        20260409-1   20260420-1     0.01 MiB       1.21 MiB
+#5 1.728 core/ca-certificates-mozilla  3.122-1      3.123-1       -0.08 MiB       0.36 MiB
+#5 1.728 core/libnghttp2               1.68.1-1     1.69.0-1       0.00 MiB       0.09 MiB
+#5 1.728 core/libxml2                  2.15.2-1     2.15.3-1       0.00 MiB       0.75 MiB
+#5 1.728 core/mpdecimal                             4.0.1-3        0.32 MiB       0.10 MiB
+#5 1.728 extra/ninja                                1.13.2-3       0.41 MiB       0.17 MiB
+#5 1.728 extra/perl-error                           0.17030-3      0.04 MiB       0.02 MiB
+#5 1.728 extra/perl-mailtools                       2.22-3         0.10 MiB       0.06 MiB
+#5 1.728 extra/perl-timedate                        2.35-1         0.15 MiB       0.06 MiB
+#5 1.728 extra/python-tqdm                          4.67.3-1       0.62 MiB       0.13 MiB
+#5 1.728 extra/zlib-ng                              2.3.3-1        0.28 MiB       0.11 MiB
+#5 1.728 core/curl                     8.19.0-1     8.19.0-1       0.00 MiB       1.23 MiB
+#5 1.728 extra/fakechroot                           2.20.1-4       0.17 MiB       0.06 MiB
+#5 1.728 core/fakeroot                 1.37.2-1     1.37.2-1       0.00 MiB       0.08 MiB
+#5 1.728 extra/git                                  2.53.0-1      29.72 MiB       6.83 MiB
+#5 1.728 core/gpgme                    2.0.1-3      2.0.1-3        0.00 MiB       0.31 MiB
+#5 1.728 core/libarchive               3.8.7-1      3.8.7-1        0.00 MiB       0.55 MiB
+#5 1.728 extra/meson                                1.11.0-1      16.41 MiB       2.45 MiB
+#5 1.728 core/python                                3.14.4-1      72.32 MiB      13.05 MiB
+#5 1.728 
+#5 1.728 Total Download Size:    27.61 MiB
+#5 1.728 Total Installed Size:  130.88 MiB
+#5 1.728 Net Upgrade Size:      120.47 MiB
+#5 1.728 
+#5 1.728 :: Proceed with installation? [Y/n] 
+#5 1.728 :: Retrieving packages...
+#5 2.255  python-3.14.4-1-x86_64 downloading...
+#5 2.255  git-2.53.0-1-x86_64 downloading...
+#5 2.255  meson-1.11.0-1-any downloading...
+#5 2.255  curl-8.19.0-1-x86_64 downloading...
+#5 2.255  archlinux-keyring-20260420-1-any downloading...
+#5 2.255  libxml2-2.15.3-1-x86_64 downloading...
+#5 2.255  libarchive-3.8.7-1-x86_64 downloading...
+#5 2.255  ca-certificates-mozilla-3.123-1-x86_64 downloading...
+#5 2.255  gpgme-2.0.1-3-x86_64 downloading...
+#5 2.255  ninja-1.13.2-3-x86_64 downloading...
+#5 2.255  python-tqdm-4.67.3-1-any downloading...
+#5 2.255  zlib-ng-2.3.3-1-x86_64 downloading...
+#5 2.255  mpdecimal-4.0.1-3-x86_64 downloading...
+#5 2.255  libnghttp2-1.69.0-1-x86_64 downloading...
+#5 2.255  fakeroot-1.37.2-1-x86_64 downloading...
+#5 2.255  perl-timedate-2.35-1-any downloading...
+#5 2.255  perl-mailtools-2.22-3-any downloading...
+#5 2.255  fakechroot-2.20.1-4-x86_64 downloading...
+#5 2.255  perl-error-0.17030-3-any downloading...
+#5 2.255 checking keyring...
+#5 2.667 checking package integrity...
+#5 3.119 loading package files...
+#5 3.146 checking for file conflicts...
+#5 3.185 :: Running pre-transaction hooks...
+#5 3.185 (1/1) Removing old entries from the info directory file...
+#5 3.545 :: Processing package changes...
+#5 3.545 upgrading libnghttp2...
+#5 3.674 upgrading ca-certificates-mozilla...
+#5 3.887 reinstalling curl...
+#5 3.948 installing perl-error...
+#5 3.949 installing perl-timedate...
+#5 3.954 installing perl-mailtools...
+#5 3.956 installing zlib-ng...
+#5 4.145 installing git...
+#5 5.260 Optional dependencies for git
+#5 5.260     git-zsh-completion: upstream zsh completion
+#5 5.260     tk: gitk and git gui
+#5 5.260     openssh: ssh transport and crypto
+#5 5.260     man: show help with `git command --help`
+#5 5.260     perl-libwww: git svn
+#5 5.260     perl-term-readkey: git svn and interactive.singlekey setting
+#5 5.260     perl-io-socket-ssl: git send-email TLS support
+#5 5.260     perl-authen-sasl: git send-email TLS support
+#5 5.260     perl-cgi: gitweb (web interface) support
+#5 5.260     python: git svn & git p4 [pending]
+#5 5.260     subversion: git svn
+#5 5.260     org.freedesktop.secrets: keyring credential helper
+#5 5.260     libsecret: libsecret credential helper [installed]
+#5 5.260     less: the default pager for git
+#5 5.260 reinstalling gpgme...
+#5 5.268 upgrading libxml2...
+#5 5.294 reinstalling libarchive...
+#5 5.303 installing mpdecimal...
+#5 5.339 installing python...
+#5 6.062 Optional dependencies for python
+#5 6.062     python-setuptools: for building Python packages using tooling that is usually bundled with Python
+#5 6.062     python-pip: for installing Python packages using tooling that is usually bundled with Python
+#5 6.062     python-pipx: for installing Python software not packaged on Arch Linux
+#5 6.062     sqlite: for a default database integration [installed]
+#5 6.062     xz: for lzma [installed]
+#5 6.062     tk: for tkinter
+#5 6.062 installing fakechroot...
+#5 6.067 reinstalling fakeroot...
+#5 6.819 installing ninja...
+#5 6.821 installing python-tqdm...
+#5 6.833 Optional dependencies for python-tqdm
+#5 6.833     python-requests: telegram
+#5 6.833 installing meson...
+#5 6.963 upgrading archlinux-keyring...
+#5 7.866 ==> ERROR: There is no secret key available to sign with.
+#5 7.869 ==> Use 'pacman-key --init' to generate a default secret key.
+#5 7.870 error: command failed to execute correctly
+#5 8.800 :: Running post-transaction hooks...
+#5 8.800 (1/5) Creating system user accounts...
+#5 8.988 Creating group 'git' with GID 969.
+#5 8.989 Creating user 'git' (git daemon user) with UID 969 and GID 969.
+#5 12.91 (2/5) Reloading system manager configuration...
+#5 13.27   Skipped: Current root is not booted.
+#5 13.27 (3/5) Enqueuing marked services...
+#5 13.34   Skipped: Current root is not booted.
+#5 13.34 (4/5) Arming ConditionNeedsUpdate...
+#5 13.65 (5/5) Rebuilding certificate stores...
+#5 DONE 24.5s
+
+#6 [3/7] RUN git clone -b v7.1.0 https://gitlab.archlinux.org/pacman/pacman.git /repo
+#6 1.016 Cloning into '/repo'...
+#6 2.941 warning: refs/tags/v7.1.0 208ff2b57e49f2851ce7bca5ac9090c6cb8aa746 is not a commit!
+#6 2.941 Note: switching to '5683f8477a0afcc6b331766175a83445b2dcfe89'.
+#6 2.941 
+#6 2.941 You are in 'detached HEAD' state. You can look around, make experimental
+#6 2.941 changes and commit them, and you can discard any commits you make in this
+#6 2.941 state without impacting any branches by switching back to a branch.
+#6 2.941 
+#6 2.941 If you want to create a new branch to retain commits you create, you may
+#6 2.941 do so (now or later) by using -c with the switch command. Example:
+#6 2.941 
+#6 2.941   git switch -c <new-branch-name>
+#6 2.941 
+#6 2.941 Or undo this operation with:
+#6 2.941 
+#6 2.941   git switch -
+#6 2.941 
+#6 2.941 Turn off this advice by setting config variable advice.detachedHead to false
+#6 2.941 
+#6 DONE 4.3s
+
+#7 [4/7] WORKDIR /repo
+#7 DONE 1.1s
+
+#8 [5/7] RUN meson setup build --prefix=/usr/local
+#8 3.109 The Meson build system
+#8 3.109 Version: 1.11.0
+#8 3.109 Source dir: /repo
+#8 3.109 Build dir: /repo/build
+#8 3.109 Build type: native build
+#8 3.109 Project name: pacman
+#8 3.109 Project version: 7.1.0
+#8 3.109 C compiler for the host machine: cc (gcc 15.2.1 "cc (GCC) 15.2.1 20260209")
+#8 3.109 C linker for the host machine: cc ld.bfd 2.46
+#8 3.109 Host machine cpu family: x86_64
+#8 3.109 Host machine cpu: x86_64
+#8 3.109 Program python3 found: YES (/usr/sbin/python3)
+#8 3.109 Program bash found: YES (/usr/sbin/bash)
+#8 3.109 Found pkg-config: YES (/usr/sbin/pkg-config) 2.5.1
+#8 3.109 Did not find CMake 'cmake'
+#8 3.109 Found CMake: NO
+#8 3.109 Run-time dependency bash-completion found: NO  (tried pkg-config and cmake)
+#8 3.109 Run-time dependency intl found: YES
+#8 3.109 Run-time dependency libarchive found: YES 3.8.7
+#8 3.109 Run-time dependency libcurl found: YES 8.19.0
+#8 3.109 Run-time dependency gpgme found: YES 2.0.1
+#8 3.109 Run-time dependency libcrypto found: YES 3.6.2
+#8 3.109 Run-time dependency libseccomp found: YES 2.6.0
+#8 3.109 Has header "linux/landlock.h" : YES 
+#8 3.109 Has header "mntent.h" : YES 
+#8 3.109 Has header "sys/mnttab.h" : NO 
+#8 3.109 Has header "sys/mount.h" : YES 
+#8 3.109 Has header "sys/param.h" : YES 
+#8 3.109 Has header "sys/prctl.h" : YES 
+#8 3.109 Has header "sys/statvfs.h" : YES 
+#8 3.109 Has header "sys/types.h" : YES 
+#8 3.109 Has header "sys/ucred.h" : NO 
+#8 3.109 Has header "termios.h" : YES 
+#8 3.109 Checking for function "getmntent" : YES 
+#8 3.109 Checking for function "getmntinfo" : NO 
+#8 3.109 Checking for function "strndup" : YES 
+#8 3.109 Checking for function "strnlen" : YES 
+#8 3.109 Checking for function "strsep" : YES 
+#8 3.109 Checking for function "swprintf" : YES 
+#8 3.109 Checking for function "tcflush" : YES 
+#8 3.109 Checking whether type "struct stat" has member "st_blksize" : YES 
+#8 3.109 Checking whether type "struct statvfs" has member "f_flag" : YES 
+#8 3.109 Checking whether type "struct statfs" has member "f_flags" : NO 
+#8 3.109 Checking for type "mode_t" : YES 
+#8 3.109 Checking for type "uid_t" : YES 
+#8 3.109 Checking for type "off_t" : YES 
+#8 3.109 Checking for type "pid_t" : YES 
+#8 3.109 Checking for type "size_t" : YES 
+#8 3.109 Checking for type "ssize_t" : YES 
+#8 3.109 Checking for type "int64_t" : YES 
+#8 3.109 Compiler for C supports arguments -pedantic: YES 
+#8 3.109 Compiler for C supports arguments -Wcast-align: YES 
+#8 3.109 Compiler for C supports arguments -Wclobbered: YES 
+#8 3.109 Compiler for C supports arguments -Wempty-body: YES 
+#8 3.109 Compiler for C supports arguments -Wfloat-equal: YES 
+#8 3.109 Compiler for C supports arguments -Wformat-nonliteral: YES 
+#8 3.109 Compiler for C supports arguments -Wformat-security: YES 
+#8 3.109 Compiler for C supports arguments -Wignored-qualifiers: YES 
+#8 3.109 Compiler for C supports arguments -Wimplicit-fallthrough: YES 
+#8 3.109 Compiler for C supports arguments -Winit-self: YES 
+#8 3.109 Compiler for C supports arguments -Wlogical-op: YES 
+#8 3.109 Compiler for C supports arguments -Wmissing-declarations: YES 
+#8 3.109 Compiler for C supports arguments -Wmissing-field-initializers: YES 
+#8 3.109 Compiler for C supports arguments -Wmissing-parameter-type: YES 
+#8 3.109 Compiler for C supports arguments -Wmissing-prototypes: YES 
+#8 3.109 Compiler for C supports arguments -Wold-style-declaration: YES 
+#8 3.109 Compiler for C supports arguments -Woverride-init: YES 
+#8 3.109 Compiler for C supports arguments -Wpointer-arith: YES 
+#8 3.109 Compiler for C supports arguments -Wredundant-decls: YES 
+#8 3.109 Compiler for C supports arguments -Wshadow: YES 
+#8 3.109 Compiler for C supports arguments -Wsign-compare: YES 
+#8 3.109 Compiler for C supports arguments -Wstrict-aliasing: YES 
+#8 3.109 Compiler for C supports arguments -Wstrict-overflow=5: YES 
+#8 3.109 Compiler for C supports arguments -Wstrict-prototypes: YES 
+#8 3.109 Compiler for C supports arguments -Wtype-limits: YES 
+#8 3.109 Compiler for C supports arguments -Wuninitialized: YES 
+#8 3.109 Compiler for C supports arguments -Wunused-but-set-parameter: YES 
+#8 3.109 Compiler for C supports arguments -Wunused-parameter: YES 
+#8 3.109 Compiler for C supports arguments -Wunused-result: YES 
+#8 3.109 Compiler for C supports arguments -Wwrite-strings: YES 
+#8 3.109 Configuring config.h using configuration
+#8 3.109 Configuring edit-script.sh using configuration
+#8 3.109 Program edit-script.sh found: YES (/usr/sbin/bash /repo/build/scripts/edit-script.sh)
+#8 3.109 Configuring libmakepkg.pc using configuration
+#8 3.109 Program msgfmt found: YES (/usr/sbin/msgfmt)
+#8 3.109 Program msginit found: YES (/usr/sbin/msginit)
+#8 3.109 Program msgmerge found: YES (/usr/sbin/msgmerge)
+#8 3.109 Program xgettext found: YES (/usr/sbin/xgettext)
+#8 3.109 Program asciidoc found: NO
+#8 3.109 Program a2x found: NO
+#8 3.109 Found pkg-config: YES (/usr/sbin/pkg-config) 2.5.1
+#8 3.109 Configuring makepkg using configuration
+#8 3.109 Configuring pacman-db-upgrade using configuration
+#8 3.109 Configuring pacman-key using configuration
+#8 3.109 Configuring repo-add using configuration
+#8 3.109 Configuring repo-remove using configuration
+#8 3.109 Configuring repo-elephant using configuration
+#8 3.109 Configuring makepkg.conf using configuration
+#8 3.109 Configuring fortran.conf using configuration
+#8 3.109 Configuring rust.conf using configuration
+#8 3.109 Configuring pacman.conf using configuration
+#8 3.109 Checking for size of "ssize_t" : 8 
+#8 3.109 Message: pacman 7.1.0
+#8 3.109     Build information:
+#8 3.109        prefix                  : /usr/local
+#8 3.109        sysconfdir              : /etc
+#8 3.109            conf file           : /etc/pacman.conf
+#8 3.109        localstatedir           : /var
+#8 3.109            database dir        : /var/lib/pacman/
+#8 3.109            cache dir           : /var/cache/pacman/pkg/
+#8 3.109        keyringdir              : /usr/local/share/pacman/keyrings
+#8 3.109        compiler                : gcc 15.2.1
+#8 3.109     
+#8 3.109        Architecture            : x86_64
+#8 3.109        Host Type               : x86_64-pc-linux-gnu
+#8 3.109        File inode command      : stat -c '%i %n'
+#8 3.109        File seccomp command    : file -S
+#8 3.109        libalpm version         : 16.0.0
+#8 3.109        pacman version          : 7.1.0
+#8 3.109     
+#8 3.109     Directory and file information:
+#8 3.109        root working directory  : /
+#8 3.109        package extension       : .pkg.tar.gz
+#8 3.109        source pkg extension    : .src.tar.gz
+#8 3.109        build script name       : PKGBUILD
+#8 3.109        template directory      : /usr/share/makepkg-template
+#8 3.109     
+#8 3.109     Compilation options:
+#8 3.109       i18n support             : true
+#8 3.109       Build docs               : false
+#8 3.109       debug build              : true
+#8 3.109       Use libcurl              : true
+#8 3.109       Use GPGME                : true
+#8 3.109       Use OpenSSL              : true
+#8 3.109       Use nettle               : false
+#8 3.109     
+#8 3.109 Build targets in project: 249
+#8 3.109 NOTICE: Future-deprecated features used:
+#8 3.109  * 1.11.0: {'should_fail arg in test'}
+#8 3.109 
+#8 3.109 pacman 7.1.0
+#8 3.109 
+#8 3.109   User defined options
+#8 3.109     prefix: /usr/local
+#8 3.109 
+#8 3.109 Found ninja-1.13.2 at /usr/sbin/ninja
+#8 3.109 Generating targets:   0%|          | 0/249 eta ?                                                Writing build.ninja:   0%|          | 0/337 eta ?                                                 
+#8 DONE 4.3s
+
+#9 [6/7] WORKDIR /repo/build
+#9 DONE 2.4s
+
+#10 [7/7] RUN meson compile
+#10 1.388 [1/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_base64.c.o
+#10 1.435 [2/295] Compiling C object libcommon.a.p/src_common_ini.c.o
+#10 1.444 [3/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_alpm_list.c.o
+#10 1.490 [4/295] Compiling C object libcommon.a.p/src_common_util-common.c.o
+#10 1.548 [5/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_backup.c.o
+#10 1.550 [6/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_conflict.c.o
+#10 1.558 [7/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_add.c.o
+#10 1.562 [8/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_diskspace.c.o
+#10 1.579 [9/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_be_package.c.o
+#10 1.684 [10/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_graph.c.o
+#10 1.685 [11/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_be_local.c.o
+#10 1.685 [12/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_be_sync.c.o
+#10 1.685 ../lib/libalpm/be_sync.c: In function ‘load_pkg_for_entry’:
+#10 1.685 ../lib/libalpm/be_sync.c:329:31: warning: initialization discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+#10 1.685   329 |                 char *fname = strrchr(entryname, '/');
+#10 1.685       |                               ^~~~~~~
+#10 1.685 [13/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_error.c.o
+#10 1.686 [14/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_alpm.c.o
+#10 1.686 [15/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_db.c.o
+#10 1.867 [16/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_rawstr.c.o
+#10 1.943 [17/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_dload.c.o
+#10 1.943 ../lib/libalpm/dload.c: In function ‘get_filename’:
+#10 1.943 ../lib/libalpm/dload.c:59:26: warning: initialization discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+#10 1.943    59 |         char *filename = strrchr(url, '/');
+#10 1.943       |                          ^~~~~~~
+#10 1.943 ../lib/libalpm/dload.c: In function ‘curl_gethost’:
+#10 1.943 ../lib/libalpm/dload.c:316:19: warning: assignment discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+#10 1.943   316 |                 p = strstr(url, "//");
+#10 1.943       |                   ^
+#10 1.943 ../lib/libalpm/dload.c: In function ‘curl_check_finished_download’:
+#10 1.943 ../lib/libalpm/dload.c:626:23: warning: assignment discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+#10 1.943   626 |                 query = strrchr(effective_filename, '?');
+#10 1.943       |                       ^
+#10 2.068 [18/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_group.c.o
+#10 2.068 [19/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_filelist.c.o
+#10 2.069 [20/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_handle.c.o
+#10 2.069 [21/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_deps.c.o
+#10 2.070 [22/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_log.c.o
+#10 2.070 [23/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_package.c.o
+#10 2.071 [24/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_pkghash.c.o
+#10 2.218 [25/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_hook.c.o
+#10 2.313 [26/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_remove.c.o
+#10 2.320 [27/295] Linking static target libcommon.a
+#10 2.555 [28/295] Generating scripts/repo-add.sh.in with a custom command
+#10 2.666 [29/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_sandbox.c.o
+#10 2.666 [30/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_sandbox_fs.c.o
+#10 2.667 [31/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_sandbox_syscalls.c.o
+#10 3.166 [32/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_signing.c.o
+#10 3.166 ../lib/libalpm/signing.c: In function ‘email_from_uid’:
+#10 3.166 ../lib/libalpm/signing.c:450:14: warning: assignment discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+#10 3.166   450 |        start = strrchr(uid, '<');
+#10 3.166       |              ^
+#10 3.167 [33/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_trans.c.o
+#10 3.172 [34/295] Compiling C object pacman.p/src_pacman_deptest.c.o
+#10 3.380 [35/295] Compiling C object pacman.p/src_pacman_database.c.o
+#10 3.380 [36/295] Compiling C object pacman.p/src_pacman_files.c.o
+#10 3.380 [37/295] Compiling C object pacman.p/src_pacman_remove.c.o
+#10 3.382 [38/295] Compiling C object pacman.p/src_pacman_check.c.o
+#10 3.383 [39/295] Compiling C object pacman.p/src_pacman_query.c.o
+#10 3.383 [40/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_version.c.o
+#10 3.394 [41/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_util.c.o
+#10 3.395 [42/295] Compiling C object libalpm_objlib.a.p/lib_libalpm_sync.c.o
+#10 3.641 [43/295] Compiling C object pacman.p/src_pacman_upgrade.c.o
+#10 3.642 [44/295] Compiling C object pacman.p/src_pacman_sighandler.c.o
+#10 3.661 [45/295] Linking static target libalpm_objlib.a
+#10 3.687 [46/295] Compiling C object pacman.p/src_pacman_package.c.o
+#10 3.751 [47/295] Generating scripts/makepkg-template.pl.in with a custom command
+#10 3.762 [48/295] Generating scripts/makepkg.sh.in with a custom command
+#10 3.800 [49/295] Generating scripts/pacman-db-upgrade.sh.in with a custom command
+#10 3.805 [50/295] Generating scripts/pacman-key.sh.in with a custom command
+#10 3.906 [51/295] Compiling C object pacman.p/src_pacman_callback.c.o
+#10 3.906 [52/295] Compiling C object vercmp.p/src_util_vercmp.c.o
+#10 3.907 [53/295] Compiling C object pacman-conf.p/src_pacman_pacman-conf.c.o
+#10 3.907 [54/295] Compiling C object pacman-conf.p/src_pacman_conf.c.o
+#10 3.907 ../src/pacman/conf.c: In function ‘get_filename’:
+#10 3.907 ../src/pacman/conf.c:184:26: warning: initialization discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+#10 3.907   184 |         char *filename = strrchr(url, '/');
+#10 3.907       |                          ^~~~~~~
+#10 3.908 [55/295] Compiling C object testpkg.p/src_util_testpkg.c.o
+#10 3.908 [56/295] Generating scripts/repo-remove with a custom command
+#10 3.908 [57/295] Generating scripts/repo-elephant with a custom command
+#10 3.922 [58/295] Linking target libalpm.so.16.0.0
+#10 4.058 [59/295] Generating scripts/libmakepkg/buildenv/buildenv_buildflags_sh_in with a custom command
+#10 4.059 [60/295] Generating scripts/libmakepkg/libmakepkg_autodep with a custom command
+#10 4.059 [61/295] Generating scripts/libmakepkg/autodep/autodep_library_depends_sh_in with a custom command
+#10 4.059 [62/295] Generating scripts/libmakepkg/autodep/autodep_library_provides_sh_in with a custom command
+#10 4.059 [63/295] Generating scripts/libmakepkg/libmakepkg_buildenv with a custom command
+#10 4.060 [64/295] Generating scripts/libmakepkg/buildenv/buildenv_compiler_sh_in with a custom command
+#10 4.060 [65/295] Generating scripts/libmakepkg/buildenv/buildenv_debugflags_sh_in with a custom command
+#10 4.069 [66/295] Generating scripts/libmakepkg/buildenv/buildenv_lto_sh_in with a custom command
+#10 4.116 [67/295] Generating scripts/libmakepkg/buildenv/buildenv_fortran_sh_in with a custom command
+#10 4.116 [68/295] Generating scripts/libmakepkg/buildenv/buildenv_rust_sh_in with a custom command
+#10 4.116 [69/295] Generating scripts/libmakepkg/libmakepkg_executable with a custom command
+#10 4.117 [70/295] Compiling C object pacman.p/src_pacman_sync.c.o
+#10 4.117 [71/295] Generating scripts/libmakepkg/buildenv/buildenv_makeflags_sh_in with a custom command
+#10 4.118 [72/295] Generating scripts/libmakepkg/executable/executable_ccache_sh_in with a custom command
+#10 4.118 [73/295] Generating scripts/libmakepkg/executable/executable_checksum_sh_in with a custom command
+#10 4.176 [74/295] Compiling C object pacman.p/src_pacman_conf.c.o
+#10 4.176 ../src/pacman/conf.c: In function ‘get_filename’:
+#10 4.176 ../src/pacman/conf.c:184:26: warning: initialization discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+#10 4.176   184 |         char *filename = strrchr(url, '/');
+#10 4.176       |                          ^~~~~~~
+#10 4.233 [75/295] Generating scripts/libmakepkg/executable/executable_distcc_sh_in with a custom command
+#10 4.234 [76/295] Generating scripts/libmakepkg/executable/executable_fakeroot_sh_in with a custom command
+#10 4.234 [77/295] Generating scripts/libmakepkg/executable/executable_debugedit_sh_in with a custom command
+#10 4.234 [78/295] Generating scripts/libmakepkg/executable/executable_gpg_sh_in with a custom command
+#10 4.234 [79/295] Generating scripts/libmakepkg/executable/executable_gzip_sh_in with a custom command
+#10 4.243 [80/295] Generating scripts/libmakepkg/executable/executable_sudo_sh_in with a custom command
+#10 4.243 [81/295] Generating scripts/libmakepkg/executable/executable_pacman_sh_in with a custom command
+#10 4.243 [82/295] Generating scripts/libmakepkg/executable/executable_vcs_sh_in with a custom command
+#10 4.244 [83/295] Generating scripts/libmakepkg/executable/executable_strip_sh_in with a custom command
+#10 4.358 [84/295] Generating scripts/libmakepkg/libmakepkg_integrity with a custom command
+#10 4.358 [85/295] Generating scripts/libmakepkg/integrity/integrity_generate_checksum_sh_in with a custom command
+#10 4.358 [86/295] Generating scripts/libmakepkg/integrity/integrity_generate_signature_sh_in with a custom command
+#10 4.411 [87/295] Generating scripts/libmakepkg/lint_config/lint_config_ext_sh_in with a custom command
+#10 4.411 [88/295] Generating scripts/libmakepkg/lint_config/lint_config_buildenv_sh_in with a custom command
+#10 4.411 [89/295] Generating scripts/libmakepkg/lint_config/lint_config_nproc_sh_in with a custom command
+#10 4.412 [90/295] Generating scripts/libmakepkg/lint_config/lint_config_packager_sh_in with a custom command
+#10 4.412 [91/295] Generating scripts/libmakepkg/integrity/integrity_verify_checksum_sh_in with a custom command
+#10 4.412 [92/295] Generating scripts/libmakepkg/integrity/integrity_verify_signature_sh_in with a custom command
+#10 4.412 [93/295] Generating scripts/libmakepkg/libmakepkg_lint_config with a custom command
+#10 4.430 [94/295] Generating scripts/libmakepkg/lint_config/lint_config_variable_sh_in with a custom command
+#10 4.430 [95/295] Generating scripts/libmakepkg/lint_config/lint_config_paths_sh_in with a custom command
+#10 4.431 [96/295] Generating scripts/libmakepkg/lint_config/lint_config_source_date_epoch_sh_in with a custom command
+#10 4.431 [97/295] Generating scripts/libmakepkg/libmakepkg_lint_package with a custom command
+#10 4.431 [98/295] Generating scripts/libmakepkg/lint_package/lint_package_build_references_sh_in with a custom command
+#10 4.431 [99/295] Generating scripts/libmakepkg/lint_package/lint_package_dotfiles_sh_in with a custom command
+#10 4.432 [100/295] Generating scripts/libmakepkg/lint_package/lint_package_file_names_sh_in with a custom command
+#10 4.432 [101/295] Generating scripts/libmakepkg/lint_package/lint_package_missing_backup_sh_in with a custom command
+#10 4.432 [102/295] Generating scripts/libmakepkg/libmakepkg_lint_pkgbuild with a custom command
+#10 4.561 [103/295] Compiling C object pacman.p/src_pacman_util.c.o
+#10 4.561 [104/295] Compiling C object pacman-conf.p/src_pacman_util.c.o
+#10 4.638 [105/295] Compiling C object pacman-conf.p/src_pacman_callback.c.o
+#10 4.639 [106/295] Compiling C object pacman.p/src_pacman_pacman.c.o
+#10 4.639 [107/295] Generating scripts/libmakepkg/lint_pkgbuild/lint_pkgbuild_changelog_sh_in with a custom command
+#10 4.639 [108/295] Generating scripts/libmakepkg/lint_pkgbuild/lint_pkgbuild_checkdepends_sh_in with a custom command
+#10 4.639 [109/295] Generating scripts/libmakepkg/lint_pkgbuild/lint_pkgbuild_conflicts_sh_in with a custom command
+#10 4.640 [110/295] Generating scripts/libmakepkg/lint_pkgbuild/lint_pkgbuild_depends_sh_in with a custom command
+#10 4.640 [111/295] Generating scripts/libmakepkg/lint_pkgbuild/lint_pkgbuild_epoch_sh_in with a custom command
+#10 4.640 [112/295] Generating scripts/libmakepkg/lint_pkgbuild/lint_pkgbuild_arch_sh_in with a custom command
+#10 4.640 [113/295] Generating scripts/libmakepkg/lint_pkgbuild/lint_pkgbuild_arch_specific_sh_in with a custom command
+#10 4.641 [114/295] Generating scripts/libmakepkg/lint_pkgbuild/lint_pkgbuild_backup_sh_in with a custom command
+#10 4.642 [115/295] Generating scripts/libmakepkg/lint_pkgbuild/lint_pkgbuild_fullpkgver_sh_in with a custom command
+#10 4.646 [116/295] Generating scripts/libmakepkg/lint_pkgbuild/lint_pkgbuild_install_sh_in with a custom command
+#10 4.648 [117/295] Generating scripts/libmakepkg/lint_pkgbuild/lint_pkgbuild_makedepends_sh_in with a custom command
+#10 4.663 [118/295] Generating scripts/libmakepkg/lint_pkgbuild/lint_pkgbuild_optdepends_sh_in with a custom command
+#10 4.663 [119/295] Generating scripts/libmakepkg/lint_pkgbuild/lint_pkgbuild_options_sh_in with a custom command
+#10 4.664 [120/295] Generating scripts/libmakepkg/lint_pkgbuild/lint_pkgbuild_package_function_variable_sh_in with a custom command
+#10 4.664 [121/295] Generating scripts/libmakepkg/lint_pkgbuild/lint_pkgbuild_source_sh_in with a custom command
+#10 4.664 [122/295] Generating scripts/libmakepkg/lint_pkgbuild/lint_pkgbuild_package_function_sh_in with a custom command
+#10 4.665 [123/295] Generating scripts/libmakepkg/lint_pkgbuild/lint_pkgbuild_pkgbase_sh_in with a custom command
+#10 4.665 [124/295] Generating scripts/libmakepkg/lint_pkgbuild/lint_pkgbuild_pkgname_sh_in with a custom command
+#10 4.665 [125/295] Generating scripts/libmakepkg/lint_pkgbuild/lint_pkgbuild_provides_sh_in with a custom command
+#10 4.665 [126/295] Generating scripts/libmakepkg/lint_pkgbuild/lint_pkgbuild_util_sh_in with a custom command
+#10 4.666 [127/295] Generating scripts/libmakepkg/lint_pkgbuild/lint_pkgbuild_xdata_sh_in with a custom command
+#10 4.667 [128/295] Generating scripts/libmakepkg/lint_pkgbuild/lint_pkgbuild_pkgrel_sh_in with a custom command
+#10 4.668 [129/295] Generating scripts/libmakepkg/lint_pkgbuild/lint_pkgbuild_pkgver_sh_in with a custom command
+#10 4.668 [130/295] Generating scripts/libmakepkg/lint_pkgbuild/lint_pkgbuild_variable_sh_in with a custom command
+#10 4.754 [131/295] Generating scripts/libmakepkg/libmakepkg_reproducible with a custom command
+#10 4.754 [132/295] Generating scripts/libmakepkg/libmakepkg_source with a custom command
+#10 4.754 [133/295] Generating scripts/libmakepkg/reproducible/reproducible_source_date_epoch_sh_in with a custom command
+#10 4.755 [134/295] Generating scripts/libmakepkg/source/source_file_sh_in with a custom command
+#10 4.755 [135/295] Generating scripts/libmakepkg/source/source_fossil_sh_in with a custom command
+#10 4.755 [136/295] Generating scripts/libmakepkg/libmakepkg_srcinfo with a custom command
+#10 4.755 [137/295] Generating scripts/libmakepkg/source/source_bzr_sh_in with a custom command
+#10 4.755 [138/295] Generating scripts/libmakepkg/source/source_git_sh_in with a custom command
+#10 4.756 [139/295] Generating scripts/libmakepkg/source/source_hg_sh_in with a custom command
+#10 4.756 [140/295] Generating scripts/libmakepkg/source/source_local_sh_in with a custom command
+#10 4.757 [141/295] Generating scripts/libmakepkg/source/source_svn_sh_in with a custom command
+#10 4.758 [142/295] Generating scripts/libmakepkg/libmakepkg_tidy with a custom command
+#10 4.759 [143/295] Generating scripts/libmakepkg/tidy/tidy_10_docs_sh_in with a custom command
+#10 4.804 [144/295] Generating scripts/libmakepkg/tidy/tidy_10_libtool_sh_in with a custom command
+#10 4.804 [145/295] Generating scripts/libmakepkg/tidy/tidy_50_strip_sh_in with a custom command
+#10 4.804 [146/295] Generating scripts/libmakepkg/util/util_compress_sh_in with a custom command
+#10 4.805 [147/295] Generating scripts/libmakepkg/tidy/tidy_50_zipman_sh_in with a custom command
+#10 4.805 [148/295] Generating scripts/libmakepkg/tidy/tidy_90_emptydirs_sh_in with a custom command
+#10 4.805 [149/295] Generating scripts/libmakepkg/libmakepkg_util with a custom command
+#10 4.806 [150/295] Generating scripts/libmakepkg/util/util_config_sh_in with a custom command
+#10 4.806 [151/295] Generating scripts/libmakepkg/util/util_dirsize_sh_in with a custom command
+#10 4.807 [152/295] Generating scripts/libmakepkg/util/util_error_sh_in with a custom command
+#10 4.807 [153/295] Generating scripts/libmakepkg/util/util_message_sh_in with a custom command
+#10 4.809 [154/295] Generating scripts/libmakepkg/util/util_option_sh_in with a custom command
+#10 4.810 [155/295] Generating scripts/libmakepkg/tidy/tidy_10_staticlibs_sh_in with a custom command
+#10 4.810 [156/295] Generating scripts/libmakepkg/tidy/tidy_50_purge_sh_in with a custom command
+#10 4.980 [157/295] Generating scripts/bash_completion with a custom command
+#10 4.980 [158/295] Generating scripts/libmakepkg/util/util_parseopts_sh_in with a custom command
+#10 4.981 [159/295] Generating scripts/libmakepkg/util/util_pkgbuild_sh_in with a custom command
+#10 4.981 [160/295] Generating scripts/libmakepkg/util/util_schema_sh_in with a custom command
+#10 4.981 [161/295] Generating scripts/libmakepkg/util/util_util_sh_in with a custom command
+#10 4.982 [162/295] Generating scripts/libmakepkg/util/util_source_sh_in with a custom command
+#10 5.116 [163/295] Generating scripts/zsh_completion with a custom command
+#10 5.701 [164/295] Building translation lib/libalpm/po/es/LC_MESSAGES/libalpm-es.mo
+#10 5.702 [165/295] Building translation lib/libalpm/po/ar/LC_MESSAGES/libalpm-ar.mo
+#10 5.703 [166/295] Building translation lib/libalpm/po/ca/LC_MESSAGES/libalpm-ca.mo
+#10 5.703 [167/295] Building translation lib/libalpm/po/da/LC_MESSAGES/libalpm-da.mo
+#10 5.704 [168/295] Building translation lib/libalpm/po/ast/LC_MESSAGES/libalpm-ast.mo
+#10 5.704 [169/295] Building translation lib/libalpm/po/az_AZ/LC_MESSAGES/libalpm-az_AZ.mo
+#10 5.704 [170/295] Building translation lib/libalpm/po/bg/LC_MESSAGES/libalpm-bg.mo
+#10 5.705 [171/295] Building translation lib/libalpm/po/cs/LC_MESSAGES/libalpm-cs.mo
+#10 5.705 [172/295] Building translation lib/libalpm/po/el/LC_MESSAGES/libalpm-el.mo
+#10 5.706 [173/295] Building translation lib/libalpm/po/eo/LC_MESSAGES/libalpm-eo.mo
+#10 5.772 [174/295] Building translation lib/libalpm/po/br/LC_MESSAGES/libalpm-br.mo
+#10 5.773 [175/295] Building translation lib/libalpm/po/hi/LC_MESSAGES/libalpm-hi.mo
+#10 5.774 [176/295] Building translation lib/libalpm/po/eu/LC_MESSAGES/libalpm-eu.mo
+#10 5.774 [177/295] Building translation lib/libalpm/po/eu_ES/LC_MESSAGES/libalpm-eu_ES.mo
+#10 5.775 [178/295] Building translation lib/libalpm/po/fr/LC_MESSAGES/libalpm-fr.mo
+#10 5.775 [179/295] Building translation lib/libalpm/po/gl/LC_MESSAGES/libalpm-gl.mo
+#10 5.776 [180/295] Building translation lib/libalpm/po/hu/LC_MESSAGES/libalpm-hu.mo
+#10 5.777 [181/295] Building translation lib/libalpm/po/de/LC_MESSAGES/libalpm-de.mo
+#10 5.777 [182/295] Building translation lib/libalpm/po/es_419/LC_MESSAGES/libalpm-es_419.mo
+#10 5.778 [183/295] Building translation lib/libalpm/po/fi/LC_MESSAGES/libalpm-fi.mo
+#10 5.778 [184/295] Building translation lib/libalpm/po/hr/LC_MESSAGES/libalpm-hr.mo
+#10 5.780 [185/295] Building translation lib/libalpm/po/en_GB/LC_MESSAGES/libalpm-en_GB.mo
+#10 5.780 [186/295] Building translation lib/libalpm/po/id/LC_MESSAGES/libalpm-id.mo
+#10 5.791 [187/295] Building translation lib/libalpm/po/pl/LC_MESSAGES/libalpm-pl.mo
+#10 5.792 [188/295] Building translation lib/libalpm/po/lt/LC_MESSAGES/libalpm-lt.mo
+#10 5.792 [189/295] Building translation lib/libalpm/po/ja/LC_MESSAGES/libalpm-ja.mo
+#10 5.793 [190/295] Building translation lib/libalpm/po/kk/LC_MESSAGES/libalpm-kk.mo
+#10 5.794 [191/295] Building translation lib/libalpm/po/nb/LC_MESSAGES/libalpm-nb.mo
+#10 5.795 [192/295] Building translation lib/libalpm/po/nl/LC_MESSAGES/libalpm-nl.mo
+#10 5.795 [193/295] Building translation lib/libalpm/po/ru/LC_MESSAGES/libalpm-ru.mo
+#10 5.796 [194/295] Building translation lib/libalpm/po/it/LC_MESSAGES/libalpm-it.mo
+#10 5.796 [195/295] Building translation lib/libalpm/po/ko/LC_MESSAGES/libalpm-ko.mo
+#10 5.796 [196/295] Building translation lib/libalpm/po/pt/LC_MESSAGES/libalpm-pt.mo
+#10 5.797 [197/295] Building translation lib/libalpm/po/pt_BR/LC_MESSAGES/libalpm-pt_BR.mo
+#10 5.798 [198/295] Building translation lib/libalpm/po/ro/LC_MESSAGES/libalpm-ro.mo
+#10 5.799 [199/295] Building translation lib/libalpm/po/sk/LC_MESSAGES/libalpm-sk.mo
+#10 5.808 [200/295] Building translation lib/libalpm/po/uk/LC_MESSAGES/libalpm-uk.mo
+#10 5.808 [201/295] Building translation lib/libalpm/po/sl/LC_MESSAGES/libalpm-sl.mo
+#10 5.809 [202/295] Building translation lib/libalpm/po/sr@latin/LC_MESSAGES/libalpm-sr@latin.mo
+#10 5.809 [203/295] Building translation lib/libalpm/po/sv/LC_MESSAGES/libalpm-sv.mo
+#10 5.810 [204/295] Building translation lib/libalpm/po/zh_CN/LC_MESSAGES/libalpm-zh_CN.mo
+#10 5.810 [205/295] Building translation lib/libalpm/po/sr/LC_MESSAGES/libalpm-sr.mo
+#10 5.826 [206/295] Building translation lib/libalpm/po/zh_TW/LC_MESSAGES/libalpm-zh_TW.mo
+#10 5.827 [207/295] Building translation src/pacman/po/ar/LC_MESSAGES/pacman-ar.mo
+#10 5.833 [208/295] Building translation lib/libalpm/po/tr/LC_MESSAGES/libalpm-tr.mo
+#10 5.834 [209/295] Building translation src/pacman/po/az_AZ/LC_MESSAGES/pacman-az_AZ.mo
+#10 5.834 [210/295] Building translation src/pacman/po/br/LC_MESSAGES/pacman-br.mo
+#10 5.836 [211/295] Building translation src/pacman/po/da/LC_MESSAGES/pacman-da.mo
+#10 5.836 [212/295] Building translation src/pacman/po/ast/LC_MESSAGES/pacman-ast.mo
+#10 5.837 [213/295] Building translation src/pacman/po/ca/LC_MESSAGES/pacman-ca.mo
+#10 5.837 [214/295] Building translation src/pacman/po/cs/LC_MESSAGES/pacman-cs.mo
+#10 5.838 [215/295] Building translation src/pacman/po/de/LC_MESSAGES/pacman-de.mo
+#10 5.838 [216/295] Building translation src/pacman/po/en_GB/LC_MESSAGES/pacman-en_GB.mo
+#10 5.839 [217/295] Building translation src/pacman/po/bg/LC_MESSAGES/pacman-bg.mo
+#10 5.840 [218/295] Building translation src/pacman/po/el/LC_MESSAGES/pacman-el.mo
+#10 5.863 [219/295] Building translation src/pacman/po/eo/LC_MESSAGES/pacman-eo.mo
+#10 5.912 [220/295] Building translation src/pacman/po/es/LC_MESSAGES/pacman-es.mo
+#10 5.913 [221/295] Building translation src/pacman/po/eu/LC_MESSAGES/pacman-eu.mo
+#10 5.915 [222/295] Building translation src/pacman/po/eu_ES/LC_MESSAGES/pacman-eu_ES.mo
+#10 5.916 [223/295] Building translation src/pacman/po/fi/LC_MESSAGES/pacman-fi.mo
+#10 5.916 [224/295] Building translation src/pacman/po/fr/LC_MESSAGES/pacman-fr.mo
+#10 5.916 [225/295] Building translation src/pacman/po/gl/LC_MESSAGES/pacman-gl.mo
+#10 5.917 [226/295] Building translation src/pacman/po/hi/LC_MESSAGES/pacman-hi.mo
+#10 5.917 [227/295] Building translation src/pacman/po/hr/LC_MESSAGES/pacman-hr.mo
+#10 5.918 [228/295] Building translation src/pacman/po/id/LC_MESSAGES/pacman-id.mo
+#10 5.990 [229/295] Building translation src/pacman/po/ja/LC_MESSAGES/pacman-ja.mo
+#10 5.990 [230/295] Building translation src/pacman/po/pl/LC_MESSAGES/pacman-pl.mo
+#10 5.990 [231/295] Building translation src/pacman/po/ro/LC_MESSAGES/pacman-ro.mo
+#10 5.991 [232/295] Building translation src/pacman/po/it/LC_MESSAGES/pacman-it.mo
+#10 5.992 [233/295] Building translation src/pacman/po/hu/LC_MESSAGES/pacman-hu.mo
+#10 5.992 [234/295] Building translation src/pacman/po/nl/LC_MESSAGES/pacman-nl.mo
+#10 5.993 [235/295] Building translation src/pacman/po/nb/LC_MESSAGES/pacman-nb.mo
+#10 5.993 [236/295] Building translation src/pacman/po/es_419/LC_MESSAGES/pacman-es_419.mo
+#10 5.994 [237/295] Building translation src/pacman/po/pt/LC_MESSAGES/pacman-pt.mo
+#10 6.005 [238/295] Building translation src/pacman/po/ru/LC_MESSAGES/pacman-ru.mo
+#10 6.005 [239/295] Building translation src/pacman/po/lt/LC_MESSAGES/pacman-lt.mo
+#10 6.008 [240/295] Building translation src/pacman/po/sr@latin/LC_MESSAGES/pacman-sr@latin.mo
+#10 6.107 [241/295] Building translation src/pacman/po/sr/LC_MESSAGES/pacman-sr.mo
+#10 6.109 [242/295] Building translation src/pacman/po/sv/LC_MESSAGES/pacman-sv.mo
+#10 6.109 [243/295] Building translation src/pacman/po/ko/LC_MESSAGES/pacman-ko.mo
+#10 6.109 [244/295] Building translation src/pacman/po/pt_BR/LC_MESSAGES/pacman-pt_BR.mo
+#10 6.110 [245/295] Building translation src/pacman/po/sk/LC_MESSAGES/pacman-sk.mo
+#10 6.110 [246/295] Building translation src/pacman/po/tr/LC_MESSAGES/pacman-tr.mo
+#10 6.111 [247/295] Building translation src/pacman/po/uk/LC_MESSAGES/pacman-uk.mo
+#10 6.111 [248/295] Building translation src/pacman/po/zh_CN/LC_MESSAGES/pacman-zh_CN.mo
+#10 6.112 [249/295] Building translation src/pacman/po/zh_TW/LC_MESSAGES/pacman-zh_TW.mo
+#10 6.183 [250/295] Building translation src/pacman/po/sl/LC_MESSAGES/pacman-sl.mo
+#10 6.184 [251/295] Building translation scripts/po/az_AZ/LC_MESSAGES/pacman-scripts-az_AZ.mo
+#10 6.184 [252/295] Building translation scripts/po/bg/LC_MESSAGES/pacman-scripts-bg.mo
+#10 6.184 [253/295] Building translation scripts/po/br/LC_MESSAGES/pacman-scripts-br.mo
+#10 6.208 [254/295] Building translation scripts/po/de/LC_MESSAGES/pacman-scripts-de.mo
+#10 6.209 [255/295] Building translation scripts/po/da/LC_MESSAGES/pacman-scripts-da.mo
+#10 6.209 [256/295] Building translation scripts/po/es/LC_MESSAGES/pacman-scripts-es.mo
+#10 6.249 [257/295] Building translation scripts/po/eu_ES/LC_MESSAGES/pacman-scripts-eu_ES.mo
+#10 6.292 [258/295] Building translation scripts/po/eu/LC_MESSAGES/pacman-scripts-eu.mo
+#10 6.294 [259/295] Building translation scripts/po/cs/LC_MESSAGES/pacman-scripts-cs.mo
+#10 6.295 [260/295] Building translation scripts/po/fi/LC_MESSAGES/pacman-scripts-fi.mo
+#10 6.306 [261/295] Building translation scripts/po/hu/LC_MESSAGES/pacman-scripts-hu.mo
+#10 6.307 [262/295] Building translation scripts/po/ca/LC_MESSAGES/pacman-scripts-ca.mo
+#10 6.307 [263/295] Building translation scripts/po/el/LC_MESSAGES/pacman-scripts-el.mo
+#10 6.307 [264/295] Building translation scripts/po/en_GB/LC_MESSAGES/pacman-scripts-en_GB.mo
+#10 6.308 [265/295] Building translation scripts/po/eo/LC_MESSAGES/pacman-scripts-eo.mo
+#10 6.308 [266/295] Building translation scripts/po/es_419/LC_MESSAGES/pacman-scripts-es_419.mo
+#10 6.309 [267/295] Building translation scripts/po/id/LC_MESSAGES/pacman-scripts-id.mo
+#10 6.309 [268/295] Building translation scripts/po/it/LC_MESSAGES/pacman-scripts-it.mo
+#10 6.311 [269/295] Building translation scripts/po/fr/LC_MESSAGES/pacman-scripts-fr.mo
+#10 6.311 [270/295] Building translation scripts/po/gl/LC_MESSAGES/pacman-scripts-gl.mo
+#10 6.313 [271/295] Building translation scripts/po/hi/LC_MESSAGES/pacman-scripts-hi.mo
+#10 6.318 [272/295] Building translation scripts/po/ko/LC_MESSAGES/pacman-scripts-ko.mo
+#10 6.323 [273/295] Building translation scripts/po/ja/LC_MESSAGES/pacman-scripts-ja.mo
+#10 6.323 [274/295] Building translation scripts/po/nl/LC_MESSAGES/pacman-scripts-nl.mo
+#10 6.329 [275/295] Building translation scripts/po/lt/LC_MESSAGES/pacman-scripts-lt.mo
+#10 6.330 [276/295] Building translation scripts/po/pl/LC_MESSAGES/pacman-scripts-pl.mo
+#10 6.330 [277/295] Building translation scripts/po/pt_BR/LC_MESSAGES/pacman-scripts-pt_BR.mo
+#10 6.332 [278/295] Building translation scripts/po/nb/LC_MESSAGES/pacman-scripts-nb.mo
+#10 6.333 [279/295] Building translation scripts/po/ro/LC_MESSAGES/pacman-scripts-ro.mo
+#10 6.333 [280/295] Building translation scripts/po/sk/LC_MESSAGES/pacman-scripts-sk.mo
+#10 6.335 [281/295] Building translation scripts/po/sl/LC_MESSAGES/pacman-scripts-sl.mo
+#10 6.337 [282/295] Building translation scripts/po/ru/LC_MESSAGES/pacman-scripts-ru.mo
+#10 6.337 [283/295] Building translation scripts/po/sr@latin/LC_MESSAGES/pacman-scripts-sr@latin.mo
+#10 6.338 [284/295] Building translation scripts/po/sr/LC_MESSAGES/pacman-scripts-sr.mo
+#10 6.343 [285/295] Building translation scripts/po/pt/LC_MESSAGES/pacman-scripts-pt.mo
+#10 6.344 [286/295] Building translation scripts/po/sv/LC_MESSAGES/pacman-scripts-sv.mo
+#10 6.345 [287/295] Building translation scripts/po/tr/LC_MESSAGES/pacman-scripts-tr.mo
+#10 6.351 [288/295] Building translation scripts/po/zh_TW/LC_MESSAGES/pacman-scripts-zh_TW.mo
+#10 6.352 [289/295] Building translation scripts/po/zh_CN/LC_MESSAGES/pacman-scripts-zh_CN.mo
+#10 6.353 [290/295] Building translation scripts/po/uk/LC_MESSAGES/pacman-scripts-uk.mo
+#10 6.373 [291/295] Linking target vercmp
+#10 7.419 [292/295] Generating symbol file libalpm.so.16.0.0.p/libalpm.so.16.0.0.symbols
+#10 7.721 [293/295] Linking target testpkg
+#10 7.723 [294/295] Linking target pacman-conf
+#10 7.723 [295/295] Linking target pacman
+#10 7.725 INFO: autodetecting backend as ninja
+#10 7.725 INFO: calculating backend command to run: /usr/sbin/ninja
+#10 DONE 9.5s
+
+#11 exporting to image
+#11 exporting layers
+#11 exporting layers 9.1s done
+#11 writing image sha256:588f8448e674542bdaf1008ee044b552a3e4c9ecef7566b83ea7105ab6f8e7dd 0.0s done
+#11 naming to docker.io/library/build-env-main:latest 0.1s done
+#11 DONE 9.4s
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (build:test)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker build -t build-env-test:latest --no-cache ITe/5/DP423171/Sprawozdanie3/docker/test
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile:
+#1 transferring dockerfile: 568B done
+#1 DONE 0.7s
+
+#2 [internal] load metadata for docker.io/library/build-env-main:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context:
+#3 transferring context: 2B done
+#3 DONE 0.7s
+
+#4 [1/3] FROM docker.io/library/build-env-main:latest
+#4 DONE 3.4s
+
+#5 [2/3] RUN fakechroot meson test || true
+#5 1.416 ninja: Entering directory `/repo/build'
+#5 1.421 ninja: no work to do.
+#5 1.578   1/343 pacman:clean003.py                                       OK               0.12s   1 subtests passed
+#5 1.594   2/343 pacman:backup001.py                                      OK               0.16s   1 subtests passed
+#5 1.607   3/343 pacman:clean004.py                                       OK               0.15s   1 subtests passed
+#5 1.618   4/343 pacman:config002.py                                      OK               0.14s   1 subtests passed
+#5 1.619   5/343 pacman:clean001.py                                       OK               0.17s   1 subtests passed
+#5 1.632   6/343 pacman:clean005.py                                       OK               0.17s   1 subtests passed
+#5 1.639   7/343 pacman:database002.py                                    OK               0.15s   1 subtests passed
+#5 1.639   8/343 pacman:config001.py                                      OK               0.17s   1 subtests passed
+#5 1.640   9/343 pacman:clean002.py                                       OK               0.19s   1 subtests passed
+#5 1.640  10/343 pacman:database010.py                                    OK               0.15s   1 subtests passed
+#5 1.665  11/343 pacman:database001.py                                    OK               0.18s   1 subtests passed
+#5 1.719  12/343 pacman:database011.py                                    OK               0.14s   1 subtests passed
+#5 1.731  13/343 pacman:database012.py                                    OK               0.14s   1 subtests passed
+#5 1.742  14/343 pacman:dbonly-extracted-files.py                         OK               0.13s   1 subtests passed
+#5 1.758  15/343 pacman:depconflict100.py                                 OK               0.14s   1 subtests passed
+#5 1.768  16/343 pacman:depconflict110.py                                 OK               0.14s   1 subtests passed
+#5 1.775  17/343 pacman:depconflict120.py                                 OK               0.13s   1 subtests passed
+#5 1.794  18/343 pacman:depconflict111.py                                 OK               0.16s   1 subtests passed
+#5 1.803  19/343 pacman:deprange001.py                                    EXPECTEDFAIL     0.15s   0/1 subtests passed
+#5 1.803  20/343 pacman:deptest001.py                                     OK               0.15s   1 subtests passed
+#5 1.804  21/343 pacman:dependency-cycle-fixed-by-upgrade.py              OK               0.16s   1 subtests passed
+#5 1.824  22/343 pacman:dummy001.py                                       OK               0.16s   1 subtests passed
+#5 1.865  23/343 pacman:epoch002.py                                       OK               0.13s   1 subtests passed
+#5 1.892  24/343 pacman:epoch004.py                                       OK               0.13s   1 subtests passed
+#5 1.902  25/343 pacman:epoch003.py                                       OK               0.16s   1 subtests passed
+#5 1.912  26/343 pacman:epoch001.py                                       OK               0.19s   1 subtests passed
+#5 1.922  27/343 pacman:epoch005.py                                       OK               0.15s   1 subtests passed
+#5 1.923  28/343 pacman:epoch010.py                                       OK               0.15s   1 subtests passed
+#5 1.940  29/343 pacman:epoch011.py                                       OK               0.15s   1 subtests passed
+#5 1.948  30/343 pacman:file-conflict-with-installed-pkg.py               OK               0.14s   1 subtests passed
+#5 1.956  31/343 pacman:epoch012.py                                       OK               0.15s   1 subtests passed
+#5 1.964  32/343 pacman:fileconflict001.py                                OK               0.15s   1 subtests passed
+#5 1.990  33/343 pacman:fileconflict002.py                                OK               0.17s   1 subtests passed
+#5 2.013  34/343 pacman:fileconflict003.py                                OK               0.15s   1 subtests passed
+#5 2.052  35/343 pacman:fileconflict006.py                                OK               0.14s   1 subtests passed
+#5 2.063  36/343 pacman:fileconflict004.py                                OK               0.17s   1 subtests passed
+#5 2.071  37/343 pacman:fileconflict008.py                                OK               0.14s   1 subtests passed
+#5 2.078  38/343 pacman:fileconflict007.py                                OK               0.15s   1 subtests passed
+#5 2.085  39/343 pacman:fileconflict005.py                                OK               0.18s   1 subtests passed
+#5 2.092  40/343 pacman:fileconflict009.py                                OK               0.15s   1 subtests passed
+#5 2.099  41/343 pacman:fileconflict011.py                                OK               0.14s   1 subtests passed
+#5 2.108  42/343 pacman:fileconflict012.py                                OK               0.14s   1 subtests passed
+#5 2.116  43/343 pacman:fileconflict010.py                                OK               0.17s   1 subtests passed
+#5 2.138  44/343 pacman:fileconflict013.py                                OK               0.14s   1 subtests passed
+#5 2.157  45/343 pacman:cache-server-basic.py                             OK               0.71s   1 subtests passed
+#5 2.170  46/343 pacman:fileconflict015.py                                OK               0.15s   1 subtests passed
+#5 2.187  47/343 pacman:fileconflict016.py                                OK               0.13s   1 subtests passed
+#5 2.206  48/343 pacman:fileconflict017.py                                OK               0.14s   1 subtests passed
+#5 2.222  49/343 pacman:fileconflict020.py                                OK               0.15s   1 subtests passed
+#5 2.223  50/343 pacman:fileconflict021.py                                OK               0.14s   1 subtests passed
+#5 2.223  51/343 pacman:fileconflict022.py                                OK               0.14s   1 subtests passed
+#5 2.252  52/343 pacman:fileconflict025.py                                OK               0.14s   1 subtests passed
+#5 2.265  53/343 pacman:fileconflict023.py                                OK               0.17s   1 subtests passed
+#5 2.274  54/343 pacman:fileconflict030.py                                OK               0.16s   1 subtests passed
+#5 2.286  55/343 pacman:fileconflict024.py                                OK               0.18s   1 subtests passed
+#5 2.302  56/343 pacman:fileconflict031.py                                OK               0.16s   1 subtests passed
+#5 2.320  57/343 pacman:fileconflict032.py                                OK               0.16s   1 subtests passed
+#5 2.346  58/343 pacman:hook-abortonfail.py                               OK               0.17s   1 subtests passed
+#5 2.356  59/343 pacman:hook-exec-reused.py                               OK               0.15s   1 subtests passed
+#5 2.370  60/343 pacman:hook-description-reused.py                        OK               0.18s   1 subtests passed
+#5 2.380  61/343 pacman:hook-exec-with-arguments.py                       OK               0.16s   1 subtests passed
+#5 2.390  62/343 pacman:hook-file-change-packages.py                      OK               0.16s   1 subtests passed
+#5 2.401  63/343 pacman:hook-invalid-trigger.py                           OK               0.13s   1 subtests passed
+#5 2.401  64/343 pacman:hook-file-remove-trigger-match.py                 OK               0.17s   1 subtests passed
+#5 2.422  65/343 pacman:hook-pkg-install-trigger-match.py                 OK               0.15s   1 subtests passed
+#5 2.433  66/343 pacman:hook-file-upgrade-nomatch.py                      OK               0.18s   1 subtests passed
+#5 2.449  67/343 pacman:hook-pkg-remove-trigger-match.py                  OK               0.15s   1 subtests passed
+#5 2.468  68/343 pacman:hook-pkg-postinstall-trigger-match.py             OK               0.18s   1 subtests passed
+#5 2.478  69/343 pacman:hook-pkg-upgrade-trigger-match.py                 OK               0.15s   1 subtests passed
+#5 2.505  70/343 pacman:hook-target-list.py                               OK               0.16s   1 subtests passed
+#5 2.516  71/343 pacman:hook-type-reused.py                               OK               0.16s   1 subtests passed
+#5 2.539  72/343 pacman:hook-upgrade-trigger-no-match.py                  OK               0.17s   1 subtests passed
+#5 2.552  73/343 pacman:hook-when-reused.py                               OK               0.17s   1 subtests passed
+#5 2.553  74/343 pacman:ignore002.py                                      OK               0.15s   1 subtests passed
+#5 2.572  75/343 pacman:ignore001.py                                      OK               0.18s   1 subtests passed
+#5 2.583  76/343 pacman:ignore004.py                                      OK               0.16s   1 subtests passed
+#5 2.584  77/343 pacman:ignore003.py                                      OK               0.18s   1 subtests passed
+#5 2.602  78/343 pacman:ignore005.py                                      OK               0.17s   1 subtests passed
+#5 2.607  79/343 pacman:ignore006.py                                      OK               0.16s   1 subtests passed
+#5 2.625  80/343 pacman:ignore007.py                                      OK               0.16s   1 subtests passed
+#5 2.657  81/343 pacman:ignore008.py                                      OK               0.18s   1 subtests passed
+#5 2.676  82/343 pacman:ldconfig001.py                                    OK               0.17s   1 subtests passed
+#5 2.686  83/343 pacman:ldconfig003.py                                    OK               0.15s   1 subtests passed
+#5 2.697  84/343 pacman:ldconfig002.py                                    OK               0.18s   1 subtests passed
+#5 2.699  85/343 pacman:mode001.py                                        OK               0.15s   1 subtests passed
+#5 2.719  86/343 pacman:mode002.py                                        OK               0.15s   1 subtests passed
+#5 2.735  87/343 pacman:mode003.py                                        OK               0.16s   1 subtests passed
+#5 2.751  88/343 pacman:multiple-architectures01.py                       OK               0.17s   1 subtests passed
+#5 2.760  89/343 pacman:multiple-architectures02.py                       OK               0.17s   1 subtests passed
+#5 2.769  90/343 pacman:noupgrade-inverted.py                             OK               0.16s   1 subtests passed
+#5 2.778  91/343 pacman:overwrite-files-match-negated.py                  OK               0.16s   1 subtests passed
+#5 2.790  92/343 pacman:overwrite-files-match.py                          OK               0.16s   1 subtests passed
+#5 2.801  93/343 pacman:overwrite-files-nonmatch.py                       OK               0.14s   1 subtests passed
+#5 2.814  94/343 pacman:pacman001.py                                      OK               0.14s   1 subtests passed
+#5 2.820  95/343 pacman:pacman002.py                                      OK               0.13s   1 subtests passed
+#5 2.841  96/343 pacman:pacman004.py                                      OK               0.13s   1 subtests passed
+#5 2.856  97/343 pacman:pacman005.py                                      OK               0.14s   1 subtests passed
+#5 2.872  98/343 pacman:pacman003.py                                      OK               0.17s   1 subtests passed
+#5 2.892  99/343 pacman:pkg-meta-invalid-name-local.py                    OK               0.14s   1 subtests passed
+#5 2.902 100/343 pacman:pkg-meta-invalid-name-file.py                     OK               0.16s   1 subtests passed
+#5 2.910 101/343 pacman:pkg-meta-invalid-name-sync.py                     OK               0.15s   1 subtests passed
+#5 2.925 102/343 pacman:provision001.py                                   OK               0.15s   1 subtests passed
+#5 2.941 103/343 pacman:provision003.py                                   OK               0.15s   1 subtests passed
+#5 2.954 104/343 pacman:provision004.py                                   OK               0.15s   1 subtests passed
+#5 2.966 105/343 pacman:provision010.py                                   OK               0.15s   1 subtests passed
+#5 2.974 106/343 pacman:provision002.py                                   OK               0.19s   1 subtests passed
+#5 2.975 107/343 pacman:provision011.py                                   OK               0.15s   1 subtests passed
+#5 2.993 108/343 pacman:provision012.py                                   OK               0.15s   1 subtests passed
+#5 3.003 109/343 pacman:provision020.py                                   OK               0.14s   1 subtests passed
+#5 3.029 110/343 pacman:provision022.py                                   OK               0.14s   1 subtests passed
+#5 3.044 111/343 pacman:query001.py                                       OK               0.14s   1 subtests passed
+#5 3.059 112/343 pacman:query003.py                                       OK               0.13s   1 subtests passed
+#5 3.071 113/343 pacman:provision021.py                                   OK               0.20s   1 subtests passed
+#5 3.083 114/343 pacman:query002.py                                       OK               0.17s   1 subtests passed
+#5 3.095 115/343 pacman:query005.py                                       OK               0.14s   1 subtests passed
+#5 3.111 116/343 pacman:query007.py                                       OK               0.13s   1 subtests passed
+#5 3.123 117/343 pacman:query006.py                                       OK               0.16s   1 subtests passed
+#5 3.134 118/343 pacman:query004.py                                       OK               0.19s   1 subtests passed
+#5 3.146 119/343 pacman:query010.py                                       OK               0.16s   1 subtests passed
+#5 3.157 120/343 pacman:query012.py                                       OK               0.15s   1 subtests passed
+#5 3.167 121/343 pacman:querycheck001.py                                  OK               0.14s   1 subtests passed
+#5 3.178 122/343 pacman:query011.py                                       OK               0.18s   1 subtests passed
+#5 3.200 123/343 pacman:querycheck002.py                                  OK               0.16s   1 subtests passed
+#5 3.212 124/343 pacman:querycheck_fast_file_type.py                      OK               0.15s   1 subtests passed
+#5 3.212 125/343 pacman:reason001.py                                      OK               0.14s   1 subtests passed
+#5 3.234 126/343 pacman:remove-assumeinstalled.py                         OK               0.15s   1 subtests passed
+#5 3.251 127/343 pacman:remove-directory-replaced-with-symlink.py         OK               0.15s   1 subtests passed
+#5 3.273 128/343 pacman:remove-print-empty-replacements.py                OK               0.15s   1 subtests passed
+#5 3.289 129/343 pacman:remove-optdepend-of-installed-package.py          OK               0.18s   1 subtests passed
+#5 3.297 130/343 pacman:remove-recursive-cycle.py                         OK               0.16s   1 subtests passed
+#5 3.304 131/343 pacman:remove001.py                                      OK               0.16s   1 subtests passed
+#5 3.323 132/343 pacman:remove010.py                                      OK               0.15s   1 subtests passed
+#5 3.356 133/343 pacman:remove012.py                                      OK               0.15s   1 subtests passed
+#5 3.365 134/343 pacman:remove011.py                                      OK               0.19s   1 subtests passed
+#5 3.382 135/343 pacman:remove030.py                                      OK               0.15s   1 subtests passed
+#5 3.391 136/343 pacman:remove021.py                                      OK               0.17s   1 subtests passed
+#5 3.401 137/343 pacman:remove020.py                                      OK               0.19s   1 subtests passed
+#5 3.417 138/343 pacman:remove031.py                                      OK               0.17s   1 subtests passed
+#5 3.431 139/343 pacman:remove040.py                                      OK               0.16s   1 subtests passed
+#5 3.440 140/343 pacman:remove041.py                                      OK               0.15s   1 subtests passed
+#5 3.449 141/343 pacman:remove043.py                                      OK               0.14s   1 subtests passed
+#5 3.461 142/343 pacman:remove044.py                                      OK               0.14s   1 subtests passed
+#5 3.462 143/343 pacman:remove042.py                                      OK               0.16s   1 subtests passed
+#5 3.492 144/343 pacman:remove045.py                                      OK               0.14s   1 subtests passed
+#5 3.506 145/343 pacman:remove002.py                                      OK               0.35s   1 subtests passed
+#5 3.529 146/343 pacman:remove047.py                                      OK               0.16s   1 subtests passed
+#5 3.531 147/343 pacman:remove049.py                                      OK               0.15s   1 subtests passed
+#5 3.555 148/343 pacman:remove050.py                                      OK               0.16s   1 subtests passed
+#5 3.574 149/343 pacman:remove060.py                                      OK               0.14s   1 subtests passed
+#5 3.583 150/343 pacman:remove070.py                                      OK               0.14s   1 subtests passed
+#5 3.584 151/343 pacman:remove052.py                                      OK               0.17s   1 subtests passed
+#5 3.600 152/343 pacman:remove051.py                                      OK               0.20s   1 subtests passed
+#5 3.624 153/343 pacman:remove071.py                                      OK               0.17s   1 subtests passed
+#5 3.636 154/343 pacman:replace100.py                                     OK               0.17s   1 subtests passed
+#5 3.640 155/343 pacman:replace-and-upgrade-package.py                    OK               0.18s   1 subtests passed
+#5 3.655 156/343 pacman:replace101.py                                     OK               0.16s   1 subtests passed
+#5 3.670 157/343 pacman:replace103.py                                     OK               0.14s   1 subtests passed
+#5 3.681 158/343 pacman:replace102.py                                     OK               0.17s   1 subtests passed
+#5 3.721 159/343 pacman:scriptlet002.py                                   OK               0.14s   1 subtests passed
+#5 3.732 160/343 pacman:replace110.py                                     EXPECTEDFAIL     0.17s   0/1 subtests passed
+#5 3.741 161/343 pacman:replace104.py                                     OK               0.20s   1 subtests passed
+#5 3.750 162/343 pacman:scriptlet001.py                                   OK               0.17s   1 subtests passed
+#5 3.759 163/343 pacman:scriptlet-signal-handling.py                      OK               0.17s   1 subtests passed
+#5 3.761 164/343 pacman:scriptlet-signal-reset.py                         OK               0.16s   1 subtests passed
+#5 3.786 165/343 pacman:sign001.py                                        OK               0.16s   1 subtests passed
+#5 3.796 166/343 pacman:sign002.py                                        OK               0.16s   1 subtests passed
+#5 3.812 167/343 pacman:skip-remove-with-glob-chars.py                    OK               0.16s   1 subtests passed
+#5 3.840 168/343 pacman:smoke002.py                                       OK               0.17s   1 subtests passed
+#5 3.882 169/343 pacman:symlink-replace-with-dir.py                       OK               0.15s   1 subtests passed
+#5 3.893 170/343 pacman:symlink001.py                                     OK               0.15s   1 subtests passed
+#5 3.908 171/343 pacman:symlink002.py                                     OK               0.16s   1 subtests passed
+#5 3.919 172/343 pacman:symlink010.py                                     OK               0.16s   1 subtests passed
+#5 3.938 173/343 pacman:symlink011.py                                     OK               0.17s   1 subtests passed
+#5 3.962 174/343 pacman:symlink012.py                                     OK               0.17s   1 subtests passed
+#5 3.972 175/343 pacman:symlink020.py                                     OK               0.17s   1 subtests passed
+#5 3.987 176/343 pacman:symlink021.py                                     OK               0.17s   1 subtests passed
+#5 4.067 177/343 pacman:sync-install-assumeinstalled.py                   OK               0.18s   1 subtests passed
+#5 4.096 178/343 pacman:sync-nodepversion02.py                            OK               0.19s   1 subtests passed
+#5 4.112 179/343 pacman:sync-nodepversion04.py                            OK               0.17s   1 subtests passed
+#5 4.123 180/343 pacman:sync-sysupgrade-print-replaced-packages.py        OK               0.13s   1 subtests passed
+#5 4.132 181/343 pacman:sync-nodepversion06.py                            OK               0.16s   1 subtests passed
+#5 4.132 182/343 pacman:sync-nodepversion03.py                            OK               0.21s   1 subtests passed
+#5 4.147 183/343 pacman:sync-nodepversion05.py                            OK               0.18s   1 subtests passed
+#5 4.148 184/343 pacman:sync-nodepversion01.py                            OK               0.25s   1 subtests passed
+#5 4.226 185/343 pacman:sync-update-assumeinstalled.py                    OK               0.16s   1 subtests passed
+#5 4.245 186/343 pacman:sync-update-package-removing-required-provides.py EXPECTEDFAIL     0.15s   0/1 subtests passed
+#5 4.256 187/343 pacman:sync001.py                                        OK               0.14s   1 subtests passed
+#5 4.268 188/343 pacman:sync003.py                                        OK               0.13s   1 subtests passed
+#5 4.276 189/343 pacman:sync002.py                                        OK               0.15s   1 subtests passed
+#5 4.301 190/343 pacman:sync010.py                                        OK               0.15s   1 subtests passed
+#5 4.311 191/343 pacman:sync009.py                                        OK               0.17s   1 subtests passed
+#5 4.321 192/343 pacman:sync011.py                                        OK               0.16s   1 subtests passed
+#5 4.383 193/343 pacman:sync012.py                                        OK               0.16s   1 subtests passed
+#5 4.403 194/343 pacman:sync020.py                                        OK               0.16s   1 subtests passed
+#5 4.413 195/343 pacman:sync021.py                                        OK               0.16s   1 subtests passed
+#5 4.431 196/343 pacman:sync022.py                                        OK               0.16s   1 subtests passed
+#5 4.442 197/343 pacman:sync023.py                                        OK               0.17s   1 subtests passed
+#5 4.454 198/343 pacman:sync030.py                                        OK               0.14s   1 subtests passed
+#5 4.465 199/343 pacman:sync024.py                                        OK               0.16s   1 subtests passed
+#5 4.516 200/343 pacman:sync031.py                                        OK               0.19s   1 subtests passed
+#5 4.550 201/343 pacman:sync-failover-404-with-body.py                    OK               0.71s   1 subtests passed
+#5 4.565 202/343 pacman:sync040.py                                        OK               0.18s   1 subtests passed
+#5 4.582 203/343 pacman:sync041.py                                        OK               0.18s   1 subtests passed
+#5 4.584 204/343 pacman:sync042.py                                        OK               0.17s   1 subtests passed
+#5 4.615 205/343 pacman:sync045.py                                        OK               0.16s   1 subtests passed
+#5 4.629 206/343 pacman:sync043.py                                        OK               0.20s   1 subtests passed
+#5 4.655 207/343 pacman:sync044.py                                        OK               0.21s   1 subtests passed
+#5 4.688 208/343 pacman:sync046.py                                        OK               0.22s   1 subtests passed
+#5 4.756 209/343 pacman:sync051.py                                        OK               0.20s   1 subtests passed
+#5 4.769 210/343 pacman:sync050.py                                        OK               0.25s   1 subtests passed
+#5 4.781 211/343 pacman:sync052.py                                        OK               0.21s   1 subtests passed
+#5 4.790 212/343 pacman:sync1000.py                                       OK               0.19s   1 subtests passed
+#5 4.799 213/343 pacman:sync1003.py                                       OK               0.18s   1 subtests passed
+#5 4.800 214/343 pacman:sync100.py                                        OK               0.21s   1 subtests passed
+#5 4.815 215/343 pacman:sync1004.py                                       OK               0.18s   1 subtests passed
+#5 4.833 216/343 pacman:sync101.py                                        OK               0.14s   1 subtests passed
+#5 4.842 217/343 pacman:sync1008.py                                       OK               0.18s   1 subtests passed
+#5 4.896 218/343 pacman:sync102.py                                        OK               0.14s   1 subtests passed
+#5 4.909 219/343 pacman:sync103.py                                        OK               0.14s   1 subtests passed
+#5 4.948 220/343 pacman:sync104.py                                        OK               0.17s   1 subtests passed
+#5 4.956 221/343 pacman:sync110.py                                        OK               0.16s   1 subtests passed
+#5 4.970 222/343 pacman:sync1100.py                                       OK               0.17s   1 subtests passed
+#5 5.001 223/343 pacman:sync1101.py                                       OK               0.19s   1 subtests passed
+#5 5.022 224/343 pacman:sync1102.py                                       OK               0.20s   1 subtests passed
+#5 5.024 225/343 pacman:sync1103.py                                       OK               0.19s   1 subtests passed
+#5 5.042 226/343 pacman:sync1104.py                                       OK               0.20s   1 subtests passed
+#5 5.063 227/343 pacman:sync1105.py                                       OK               0.17s   1 subtests passed
+#5 5.087 228/343 pacman:sync120.py                                        OK               0.18s   1 subtests passed
+#5 5.105 229/343 pacman:sync130.py                                        OK               0.16s   1 subtests passed
+#5 5.123 230/343 pacman:sync131.py                                        OK               0.16s   1 subtests passed
+#5 5.157 231/343 pacman:sync132.py                                        OK               0.18s   1 subtests passed
+#5 5.163 232/343 pacman:sync133.py                                        OK               0.16s   1 subtests passed
+#5 5.190 233/343 pacman:sync136.py                                        OK               0.15s   1 subtests passed
+#5 5.200 234/343 pacman:sync134.py                                        OK               0.17s   1 subtests passed
+#5 5.213 235/343 pacman:sync137.py                                        OK               0.15s   1 subtests passed
+#5 5.224 236/343 pacman:sync135.py                                        OK               0.19s   1 subtests passed
+#5 5.270 237/343 pacman:sync138.py                                        OK               0.18s   1 subtests passed
+#5 5.280 238/343 pacman:sync139.py                                        OK               0.17s   1 subtests passed
+#5 5.297 239/343 pacman:sync141.py                                        OK               0.14s   1 subtests passed
+#5 5.319 240/343 pacman:sync140.py                                        OK               0.19s   1 subtests passed
+#5 5.338 241/343 pacman:sync300.py                                        OK               0.14s   1 subtests passed
+#5 5.353 242/343 pacman:sync150.py                                        OK               0.19s   1 subtests passed
+#5 5.364 243/343 pacman:smoke004.py                                       OK               1.64s   1 subtests passed
+#5 5.385 244/343 pacman:sync306.py                                        OK               0.17s   1 subtests passed
+#5 5.397 245/343 pacman:sync400.py                                        OK               0.17s   1 subtests passed
+#5 5.413 246/343 pacman:sync200.py                                        OK               0.22s   1 subtests passed
+#5 5.429 247/343 pacman:smoke003.py                                       OK               1.75s   1 subtests passed
+#5 5.450 248/343 pacman:sync401.py                                        OK               0.18s   1 subtests passed
+#5 5.451 249/343 pacman:sync402.py                                        OK               0.17s   1 subtests passed
+#5 5.483 250/343 pacman:sync403.py                                        EXPECTEDFAIL     0.18s   0/1 subtests passed
+#5 5.494 251/343 pacman:sync406.py                                        EXPECTEDFAIL     0.14s   0/1 subtests passed
+#5 5.500 252/343 pacman:sync404.py                                        OK               0.18s   1 subtests passed
+#5 5.510 253/343 pacman:sync405.py                                        OK               0.17s   1 subtests passed
+#5 5.525 254/343 pacman:sync407.py                                        OK               0.15s   1 subtests passed
+#5 5.533 255/343 pacman:sync500.py                                        OK               0.15s   1 subtests passed
+#5 5.552 256/343 pacman:sync501.py                                        OK               0.15s   1 subtests passed
+#5 5.569 257/343 pacman:sync502.py                                        OK               0.16s   1 subtests passed
+#5 5.606 258/343 pacman:sync503.py                                        OK               0.17s   1 subtests passed
+#5 5.628 259/343 pacman:sync600.py                                        OK               0.18s   1 subtests passed
+#5 5.639 260/343 pacman:sync701.py                                        OK               0.15s   1 subtests passed
+#5 5.651 261/343 pacman:sync700.py                                        OK               0.19s   1 subtests passed
+#5 5.668 262/343 pacman:sync702.py                                        OK               0.17s   1 subtests passed
+#5 5.678 263/343 pacman:sync892.py                                        OK               0.15s   1 subtests passed
+#5 5.688 264/343 pacman:sync890.py                                        OK               0.19s   1 subtests passed
+#5 5.697 265/343 pacman:sync891.py                                        OK               0.19s   1 subtests passed
+#5 5.707 266/343 pacman:sync895.py                                        OK               0.15s   1 subtests passed
+#5 5.708 267/343 pacman:sync893.py                                        OK               0.17s   1 subtests passed
+#5 5.729 268/343 pacman:sync896.py                                        OK               0.16s   1 subtests passed
+#5 5.753 269/343 pacman:sync897.py                                        OK               0.15s   1 subtests passed
+#5 5.805 270/343 pacman:sync899.py                                        OK               0.16s   1 subtests passed
+#5 5.814 271/343 pacman:sync898.py                                        OK               0.18s   1 subtests passed
+#5 5.824 272/343 pacman:sync900.py                                        OK               0.17s   1 subtests passed
+#5 5.825 273/343 pacman:sync901.py                                        OK               0.16s   1 subtests passed
+#5 5.843 274/343 pacman:sync990.py                                        OK               0.16s   1 subtests passed
+#5 5.851 275/343 pacman:sync993.py                                        OK               0.15s   1 subtests passed
+#5 5.853 276/343 pacman:sync992.py                                        OK               0.16s   1 subtests passed
+#5 5.879 277/343 pacman:sync999.py                                        OK               0.17s   1 subtests passed
+#5 5.889 278/343 pacman:trans001.py                                       OK               0.17s   1 subtests passed
+#5 5.897 279/343 pacman:type001.py                                        OK               0.16s   1 subtests passed
+#5 5.915 280/343 pacman:unresolvable001.py                                OK               0.16s   1 subtests passed
+#5 5.965 281/343 pacman:upgrade002.py                                     OK               0.15s   1 subtests passed
+#5 5.994 282/343 pacman:upgrade001.py                                     OK               0.19s   1 subtests passed
+#5 6.007 283/343 pacman:upgrade004.py                                     OK               0.17s   1 subtests passed
+#5 6.007 284/343 pacman:upgrade003.py                                     OK               0.18s   1 subtests passed
+#5 6.025 285/343 pacman:upgrade005.py                                     OK               0.18s   1 subtests passed
+#5 6.025 286/343 pacman:upgrade010.py                                     OK               0.16s   1 subtests passed
+#5 6.045 287/343 pacman:upgrade011.py                                     OK               0.17s   1 subtests passed
+#5 6.055 288/343 pacman:upgrade013.py                                     OK               0.16s   1 subtests passed
+#5 6.070 289/343 pacman:upgrade020.py                                     OK               0.17s   1 subtests passed
+#5 6.078 290/343 pacman:upgrade021.py                                     OK               0.16s   1 subtests passed
+#5 6.114 291/343 pacman:upgrade022.py                                     OK               0.15s   1 subtests passed
+#5 6.148 292/343 pacman:upgrade023.py                                     OK               0.15s   1 subtests passed
+#5 6.164 293/343 pacman:upgrade025.py                                     OK               0.15s   1 subtests passed
+#5 6.173 294/343 pacman:upgrade026.py                                     OK               0.15s   1 subtests passed
+#5 6.187 295/343 pacman:upgrade024.py                                     OK               0.18s   1 subtests passed
+#5 6.199 296/343 pacman:upgrade027.py                                     OK               0.16s   1 subtests passed
+#5 6.216 297/343 pacman:upgrade030.py                                     OK               0.15s   1 subtests passed
+#5 6.217 298/343 pacman:upgrade029.py                                     OK               0.16s   1 subtests passed
+#5 6.234 299/343 pacman:upgrade028.py                                     OK               0.19s   1 subtests passed
+#5 6.234 300/343 pacman:upgrade006.py                                     OK               0.38s   1 subtests passed
+#5 6.260 301/343 pacman:upgrade031.py                                     OK               0.18s   1 subtests passed
+#5 6.301 302/343 pacman:upgrade032.py                                     OK               0.18s   1 subtests passed
+#5 6.319 303/343 pacman:upgrade041.py                                     OK               0.16s   1 subtests passed
+#5 6.330 304/343 pacman:upgrade040.py                                     OK               0.18s   1 subtests passed
+#5 6.340 305/343 pacman:upgrade045.py                                     OK               0.14s   1 subtests passed
+#5 6.350 306/343 pacman:upgrade050.py                                     OK               0.13s   1 subtests passed
+#5 6.375 307/343 pacman:upgrade052.py                                     OK               0.14s   1 subtests passed
+#5 6.383 308/343 pacman:upgrade051.py                                     OK               0.16s   1 subtests passed
+#5 6.392 309/343 pacman:upgrade053.py                                     OK               0.15s   1 subtests passed
+#5 6.413 310/343 pacman:upgrade054.py                                     OK               0.15s   1 subtests passed
+#5 6.442 311/343 pacman:upgrade055.py                                     OK               0.14s   1 subtests passed
+#5 6.458 312/343 pacman:upgrade056.py                                     OK               0.14s   1 subtests passed
+#5 6.468 313/343 pacman:smoke001.py                                       OK               2.81s   1 subtests passed
+#5 6.485 314/343 pacman:upgrade042.py                                     OK               0.31s   1 subtests passed
+#5 6.485 315/343 pacman:upgrade057.py                                     OK               0.15s   1 subtests passed
+#5 6.500 316/343 pacman:upgrade059.py                                     OK               0.15s   1 subtests passed
+#5 6.501 317/343 pacman:upgrade058.py                                     OK               0.16s   1 subtests passed
+#5 6.519 318/343 pacman:upgrade043.py                                     OK               0.33s   1 subtests passed
+#5 6.521 319/343 pacman:upgrade070.py                                     OK               0.13s   1 subtests passed
+#5 6.541 320/343 pacman:upgrade060.py                                     OK               0.16s   1 subtests passed
+#5 6.542 321/343 pacman:upgrade061.py                                     OK               0.16s   1 subtests passed
+#5 6.568 322/343 pacman:upgrade071.py                                     OK               0.15s   1 subtests passed
+#5 6.595 323/343 pacman:upgrade072.py                                     OK               0.15s   1 subtests passed
+#5 6.611 324/343 pacman:upgrade073.py                                     OK               0.15s   1 subtests passed
+#5 6.624 325/343 pacman:upgrade075.py                                     OK               0.14s   1 subtests passed
+#5 6.644 326/343 pacman:upgrade074.py                                     OK               0.17s   1 subtests passed
+#5 6.645 327/343 pacman:upgrade076.py                                     OK               0.15s   1 subtests passed
+#5 6.664 328/343 pacman:upgrade077.py                                     OK               0.16s   1 subtests passed
+#5 6.665 329/343 pacman:upgrade078.py                                     EXPECTEDFAIL     0.16s   0/1 subtests passed
+#5 6.665 330/343 pacman:upgrade081.py                                     OK               0.14s   1 subtests passed
+#5 6.689 331/343 pacman:upgrade080.py                                     OK               0.17s   1 subtests passed
+#5 6.696 332/343 pacman:upgrade082.py                                     OK               0.15s   1 subtests passed
+#5 6.714 333/343 pacman:upgrade083.py                                     OK               0.16s   1 subtests passed
+#5 6.716 334/343 pacman:upgrade084.py                                     OK               0.15s   1 subtests passed
+#5 6.752 335/343 pacman:upgrade090.py                                     OK               0.16s   1 subtests passed
+#5 6.759 336/343 pacman:parseopts_test.sh                                 OK               0.09s   56 subtests passed
+#5 6.766 337/343 pacman:upgrade100.py                                     OK               0.15s   1 subtests passed
+#5 6.833 338/343 pacman:vercmptest                                        OK               0.14s   92 subtests passed
+#5 6.851 339/343 pacman:xfercommand001.py                                 OK               0.22s   1 subtests passed
+#5 7.263 340/343 pacman:upgrade-download-404.py                           OK               0.62s   1 subtests passed
+#5 7.277 341/343 pacman:upgrade-download-pkg-and-sig-with-filename.py     OK               0.62s   1 subtests passed
+#5 7.302 342/343 pacman:upgrade-download-with-xfercommand.py              OK               0.64s   1 subtests passed
+#5 7.543 343/343 pacman:makepkg-template_test.sh                          OK               0.86s   36 subtests passed
+#5 7.555 
+#5 7.555 Ok:                337 
+#5 7.555 Expected Fail:     6   
+#5 7.555 Fail:              0   
+#5 7.555 
+#5 7.555 Full log written to /repo/build/meson-logs/testlog.txt
+#5 DONE 9.1s
+
+#6 [3/3] RUN pacman -Rcsu --noconfirm base-devel $(pacman -Qqdt)
+#6 1.227 checking dependencies...
+#6 1.233 :: git optionally requires python: git svn & git p4
+#6 1.233 :: gzip optionally requires diffutils: zdiff/zcmp support
+#6 1.233 :: iproute2 optionally requires python: for routel
+#6 1.233 :: libevent optionally requires python: event_rpcgen.py
+#6 1.233 :: libxml2 optionally requires python: Python bindings
+#6 1.233 :: nftables optionally requires python: Python bindings
+#6 1.233 :: pacman optionally requires base-devel: required to use makepkg
+#6 1.233 :: pciutils optionally requires which: for update-pciids
+#6 1.233 :: util-linux-libs optionally requires python: python bindings to libmount
+#6 1.234 
+#6 1.234 Package (29)  Old Version                  Net Change 
+#6 1.234 
+#6 1.234 autoconf      2.73-1                         -2.25 MiB
+#6 1.234 automake      1.18.1-1                       -1.64 MiB
+#6 1.234 bison         3.8.2-8                        -2.52 MiB
+#6 1.234 debugedit     5.2-1                          -0.11 MiB
+#6 1.234 diffutils     3.12-2                         -1.50 MiB
+#6 1.234 fakeroot      1.37.2-1                       -0.14 MiB
+#6 1.234 flex          2.6.4-6                        -0.84 MiB
+#6 1.234 gc            8.2.12-1                       -0.76 MiB
+#6 1.234 gcc           15.2.1+r604+g0b99615a8aef-1  -208.94 MiB
+#6 1.234 groff         1.24.1-1                       -9.01 MiB
+#6 1.234 guile         3.0.11-1                      -54.49 MiB
+#6 1.234 libisl        0.27-1                         -5.75 MiB
+#6 1.234 libmpc        1.4.1-1                        -0.19 MiB
+#6 1.234 libtool       2.6.0-4                        -2.33 MiB
+#6 1.234 m4            1.4.21-2                       -0.71 MiB
+#6 1.234 make          4.4.1-3                        -1.66 MiB
+#6 1.234 mpdecimal     4.0.1-3                        -0.32 MiB
+#6 1.234 ninja         1.13.2-3                       -0.41 MiB
+#6 1.234 patch         2.8-1                          -0.17 MiB
+#6 1.234 pkgconf       2.5.1-1                        -0.20 MiB
+#6 1.234 python        3.14.4-1                      -72.32 MiB
+#6 1.234 python-tqdm   4.67.3-1                       -0.62 MiB
+#6 1.234 sudo          1.9.17.p2-2                    -7.83 MiB
+#6 1.234 texinfo       7.3-1                         -12.67 MiB
+#6 1.234 which         2.23-1                         -0.03 MiB
+#6 1.234 xxhash        0.8.3-1                        -0.39 MiB
+#6 1.234 base-devel    1-2                             0.00 MiB
+#6 1.234 fakechroot    2.20.1-4                       -0.17 MiB
+#6 1.234 meson         1.11.0-1                      -16.41 MiB
+#6 1.234 
+#6 1.234 Total Removed Size:  404.38 MiB
+#6 1.234 
+#6 1.234 :: Do you want to remove these packages? [Y/n] 
+#6 1.236 :: Running pre-transaction hooks...
+#6 1.236 (1/1) Removing old entries from the info directory file...
+#6 1.467 :: Processing package changes...
+#6 1.467 removing meson...
+#6 1.520 removing python-tqdm...
+#6 1.529 removing python...
+#6 1.688 removing mpdecimal...
+#6 1.691 removing ninja...
+#6 1.695 removing fakechroot...
+#6 1.699 removing base-devel...
+#6 1.699 removing which...
+#6 1.701 removing texinfo...
+#6 1.734 removing sudo...
+#6 1.768 removing pkgconf...
+#6 1.773 removing patch...
+#6 1.775 removing make...
+#6 1.777 removing guile...
+#6 1.835 removing gc...
+#6 1.838 removing libtool...
+#6 1.845 removing groff...
+#6 1.875 removing gcc...
+#6 1.972 removing libmpc...
+#6 1.974 removing libisl...
+#6 1.980 removing flex...
+#6 1.985 removing fakeroot...
+#6 2.123 removing debugedit...
+#6 2.125 removing xxhash...
+#6 2.129 removing bison...
+#6 2.135 removing automake...
+#6 2.143 removing autoconf...
+#6 2.149 removing diffutils...
+#6 2.152 removing m4...
+#6 2.297 :: Running post-transaction hooks...
+#6 2.297 (1/2) Reloading system manager configuration...
+#6 2.324   Skipped: Current root is not booted.
+#6 2.325 (2/2) Arming ConditionNeedsUpdate...
+#6 DONE 3.5s
+
+#7 exporting to image
+#7 exporting layers
+#7 exporting layers 0.8s done
+#7 writing image sha256:4373455f92a5b22e16a886932420ec89b0046e05acf873953058a18f5f260d84 0.1s done
+#7 naming to docker.io/library/build-env-test:latest 0.1s done
+#7 DONE 1.3s
+[Pipeline] }
+[Pipeline] // withEnv
+Did you forget the `def` keyword? WorkflowScript seems to be setting a field named image (to a value of type Image) which could lead to memory leaks or other issues.
+[Pipeline] isUnix
+[Pipeline] sh
++ docker run -d build-env-test:latest
+[Pipeline] sh
++ mkdir -p meson-logs
++ docker cp 2e6c1631c2017e98affd425a9393bb9f4044e97e4d51c390257c35e08ddfef31:/repo/build/meson-logs/testlog.junit.xml meson-logs/testlog.junit.xml
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker stop 2e6c1631c2017e98affd425a9393bb9f4044e97e4d51c390257c35e08ddfef31
+2e6c1631c2017e98affd425a9393bb9f4044e97e4d51c390257c35e08ddfef31
++ docker rm -f --volumes 2e6c1631c2017e98affd425a9393bb9f4044e97e4d51c390257c35e08ddfef31
+2e6c1631c2017e98affd425a9393bb9f4044e97e4d51c390257c35e08ddfef31
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // script
+Post stage
+[Pipeline] script
+[Pipeline] {
+[Pipeline] junit
+Recording test results
+[Checks API] No suitable checks publisher found.
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+Post stage
+[Pipeline] sh
++ docker builder prune -f
+ID						RECLAIMABLE	SIZE		LAST ACCESSED
+pr64lnwmupk1loebn84suurzl*              	true 		509B      	36 seconds ago
+nn04ptt6mvvnyrrgpywam4l2b*              	true 	529B      	10 seconds ago
+s6hdn9n38jqq3k9l4eonuoxak*              	true 	0B        	10 seconds ago
+z66go79aei4r9xf6jwjr9boj5*              	true 	0B        	36 seconds ago
+Total:	1.038kB
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (deploy)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker build -t my-pacman:7.1.0-b33 --no-cache ITe/5/DP423171/Sprawozdanie6/docker/deploy
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile:
+#1 transferring dockerfile: 653B done
+#1 DONE 0.5s
+
+#2 [internal] load metadata for docker.io/library/build-env-main:latest
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/archlinux:base
+#3 DONE 2.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 2B done
+#4 DONE 1.2s
+
+#5 [devenv 1/3] FROM docker.io/library/build-env-main:latest
+#5 CACHED
+
+#6 [stage-1 1/2] FROM docker.io/library/archlinux:base@sha256:5ba8bb318666baef4d33afefc0e65db80f38b23503cb8e7b150d315cc2d4d5da
+#6 resolve docker.io/library/archlinux:base@sha256:5ba8bb318666baef4d33afefc0e65db80f38b23503cb8e7b150d315cc2d4d5da
+#6 resolve docker.io/library/archlinux:base@sha256:5ba8bb318666baef4d33afefc0e65db80f38b23503cb8e7b150d315cc2d4d5da 0.6s done
+#6 sha256:52c1b90e0bdffda8bac47c8cf87c5a1883b184fe3513b395f7983559766f9625 1.22kB / 1.22kB done
+#6 sha256:5ba8bb318666baef4d33afefc0e65db80f38b23503cb8e7b150d315cc2d4d5da 1.23kB / 1.23kB done
+#6 sha256:c26b5ec8ec89a92d0189a76aa40a864b8c70f9a6feb1353c45b3d85981c3629f 4.21kB / 4.21kB done
+#6 sha256:1dd624a5d250d23d3790c8017dc38ec1c1abcba105a256f751dd76fefead5bd0 0B / 129.46MB 0.3s
+#6 sha256:ab6ef42a20b3561e23c409877f7f8f4b01e22f927b8755bfc78b5e24a5e9cce5 0B / 8.66kB 0.7s
+#6 sha256:1dd624a5d250d23d3790c8017dc38ec1c1abcba105a256f751dd76fefead5bd0 12.58MB / 129.46MB 0.8s
+#6 sha256:1dd624a5d250d23d3790c8017dc38ec1c1abcba105a256f751dd76fefead5bd0 29.36MB / 129.46MB 1.0s
+#6 sha256:ab6ef42a20b3561e23c409877f7f8f4b01e22f927b8755bfc78b5e24a5e9cce5 8.66kB / 8.66kB 0.9s done
+#6 sha256:1dd624a5d250d23d3790c8017dc38ec1c1abcba105a256f751dd76fefead5bd0 49.28MB / 129.46MB 1.3s
+#6 sha256:1dd624a5d250d23d3790c8017dc38ec1c1abcba105a256f751dd76fefead5bd0 77.59MB / 129.46MB 1.5s
+#6 sha256:1dd624a5d250d23d3790c8017dc38ec1c1abcba105a256f751dd76fefead5bd0 92.27MB / 129.46MB 1.7s
+#6 sha256:1dd624a5d250d23d3790c8017dc38ec1c1abcba105a256f751dd76fefead5bd0 100.66MB / 129.46MB 1.8s
+#6 sha256:1dd624a5d250d23d3790c8017dc38ec1c1abcba105a256f751dd76fefead5bd0 128.97MB / 129.46MB 2.2s
+#6 ...
+
+#7 [devenv 2/3] RUN DESTDIR=/tarball meson install
+#7 1.688 ninja: Entering directory `/repo/build'
+#7 1.698 ninja: no work to do.
+#7 1.779 '/tarball/usr/local/bin/repo-remove' -> 'repo-add'
+#7 1.793 '/tarball/usr/local/bin/repo-elephant' -> 'repo-add'
+#7 1.805 '/tarball/usr/local/share/bash-completion/completions/pacman-key' -> 'pacman'
+#7 1.817 '/tarball/usr/local/share/bash-completion/completions/makepkg' -> 'pacman'
+#7 1.839 Installing scripts/makepkg-template to /tarball/usr/local/bin
+#7 1.839 Installing scripts/makepkg to /tarball/usr/local/bin
+#7 1.839 Installing scripts/pacman-db-upgrade to /tarball/usr/local/bin
+#7 1.839 Installing scripts/pacman-key to /tarball/usr/local/bin
+#7 1.839 Installing scripts/repo-add to /tarball/usr/local/bin
+#7 1.839 Installing scripts/libmakepkg/autodep.sh to /tarball/usr/local/share/makepkg
+#7 1.839 Installing scripts/libmakepkg/autodep/library_depends.sh to /tarball/usr/local/share/makepkg/autodep
+#7 1.839 Installing scripts/libmakepkg/autodep/library_provides.sh to /tarball/usr/local/share/makepkg/autodep
+#7 1.839 Installing scripts/libmakepkg/buildenv.sh to /tarball/usr/local/share/makepkg
+#7 1.839 Installing scripts/libmakepkg/buildenv/buildflags.sh to /tarball/usr/local/share/makepkg/buildenv
+#7 1.839 Installing scripts/libmakepkg/buildenv/compiler.sh to /tarball/usr/local/share/makepkg/buildenv
+#7 1.839 Installing scripts/libmakepkg/buildenv/debugflags.sh to /tarball/usr/local/share/makepkg/buildenv
+#7 1.839 Installing scripts/libmakepkg/buildenv/fortran.sh to /tarball/usr/local/share/makepkg/buildenv
+#7 1.839 Installing scripts/libmakepkg/buildenv/lto.sh to /tarball/usr/local/share/makepkg/buildenv
+#7 1.839 Installing scripts/libmakepkg/buildenv/makeflags.sh to /tarball/usr/local/share/makepkg/buildenv
+#7 1.839 Installing scripts/libmakepkg/buildenv/rust.sh to /tarball/usr/local/share/makepkg/buildenv
+#7 1.839 Installing scripts/libmakepkg/executable.sh to /tarball/usr/local/share/makepkg
+#7 1.839 Installing scripts/libmakepkg/executable/ccache.sh to /tarball/usr/local/share/makepkg/executable
+#7 1.839 Installing scripts/libmakepkg/executable/checksum.sh to /tarball/usr/local/share/makepkg/executable
+#7 1.839 Installing scripts/libmakepkg/executable/distcc.sh to /tarball/usr/local/share/makepkg/executable
+#7 1.839 Installing scripts/libmakepkg/executable/fakeroot.sh to /tarball/usr/local/share/makepkg/executable
+#7 1.839 Installing scripts/libmakepkg/executable/debugedit.sh to /tarball/usr/local/share/makepkg/executable
+#7 1.839 Installing scripts/libmakepkg/executable/gpg.sh to /tarball/usr/local/share/makepkg/executable
+#7 1.839 Installing scripts/libmakepkg/executable/gzip.sh to /tarball/usr/local/share/makepkg/executable
+#7 1.839 Installing scripts/libmakepkg/executable/pacman.sh to /tarball/usr/local/share/makepkg/executable
+#7 1.839 Installing scripts/libmakepkg/executable/strip.sh to /tarball/usr/local/share/makepkg/executable
+#7 1.839 Installing scripts/libmakepkg/executable/sudo.sh to /tarball/usr/local/share/makepkg/executable
+#7 1.839 Installing scripts/libmakepkg/executable/vcs.sh to /tarball/usr/local/share/makepkg/executable
+#7 1.839 Installing scripts/libmakepkg/integrity.sh to /tarball/usr/local/share/makepkg
+#7 1.839 Installing scripts/libmakepkg/integrity/generate_checksum.sh to /tarball/usr/local/share/makepkg/integrity
+#7 1.839 Installing scripts/libmakepkg/integrity/generate_signature.sh to /tarball/usr/local/share/makepkg/integrity
+#7 1.839 Installing scripts/libmakepkg/integrity/verify_checksum.sh to /tarball/usr/local/share/makepkg/integrity
+#7 1.839 Installing scripts/libmakepkg/integrity/verify_signature.sh to /tarball/usr/local/share/makepkg/integrity
+#7 1.839 Installing scripts/libmakepkg/lint_config.sh to /tarball/usr/local/share/makepkg
+#7 1.839 Installing scripts/libmakepkg/lint_config/buildenv.sh to /tarball/usr/local/share/makepkg/lint_config
+#7 1.839 Installing scripts/libmakepkg/lint_config/ext.sh to /tarball/usr/local/share/makepkg/lint_config
+#7 1.839 Installing scripts/libmakepkg/lint_config/nproc.sh to /tarball/usr/local/share/makepkg/lint_config
+#7 1.839 Installing scripts/libmakepkg/lint_config/packager.sh to /tarball/usr/local/share/makepkg/lint_config
+#7 1.839 Installing scripts/libmakepkg/lint_config/paths.sh to /tarball/usr/local/share/makepkg/lint_config
+#7 1.839 Installing scripts/libmakepkg/lint_config/source_date_epoch.sh to /tarball/usr/local/share/makepkg/lint_config
+#7 1.839 Installing scripts/libmakepkg/lint_config/variable.sh to /tarball/usr/local/share/makepkg/lint_config
+#7 1.839 Installing scripts/libmakepkg/lint_package.sh to /tarball/usr/local/share/makepkg
+#7 1.839 Installing scripts/libmakepkg/lint_package/build_references.sh to /tarball/usr/local/share/makepkg/lint_package
+#7 1.839 Installing scripts/libmakepkg/lint_package/dotfiles.sh to /tarball/usr/local/share/makepkg/lint_package
+#7 1.839 Installing scripts/libmakepkg/lint_package/file_names.sh to /tarball/usr/local/share/makepkg/lint_package
+#7 1.839 Installing scripts/libmakepkg/lint_package/missing_backup.sh to /tarball/usr/local/share/makepkg/lint_package
+#7 1.839 Installing scripts/libmakepkg/lint_pkgbuild.sh to /tarball/usr/local/share/makepkg
+#7 1.839 Installing scripts/libmakepkg/lint_pkgbuild/arch.sh to /tarball/usr/local/share/makepkg/lint_pkgbuild
+#7 1.839 Installing scripts/libmakepkg/lint_pkgbuild/arch_specific.sh to /tarball/usr/local/share/makepkg/lint_pkgbuild
+#7 1.839 Installing scripts/libmakepkg/lint_pkgbuild/backup.sh to /tarball/usr/local/share/makepkg/lint_pkgbuild
+#7 1.839 Installing scripts/libmakepkg/lint_pkgbuild/changelog.sh to /tarball/usr/local/share/makepkg/lint_pkgbuild
+#7 1.839 Installing scripts/libmakepkg/lint_pkgbuild/checkdepends.sh to /tarball/usr/local/share/makepkg/lint_pkgbuild
+#7 1.839 Installing scripts/libmakepkg/lint_pkgbuild/conflicts.sh to /tarball/usr/local/share/makepkg/lint_pkgbuild
+#7 1.839 Installing scripts/libmakepkg/lint_pkgbuild/depends.sh to /tarball/usr/local/share/makepkg/lint_pkgbuild
+#7 1.839 Installing scripts/libmakepkg/lint_pkgbuild/epoch.sh to /tarball/usr/local/share/makepkg/lint_pkgbuild
+#7 1.839 Installing scripts/libmakepkg/lint_pkgbuild/fullpkgver.sh to /tarball/usr/local/share/makepkg/lint_pkgbuild
+#7 1.839 Installing scripts/libmakepkg/lint_pkgbuild/install.sh to /tarball/usr/local/share/makepkg/lint_pkgbuild
+#7 1.839 Installing scripts/libmakepkg/lint_pkgbuild/makedepends.sh to /tarball/usr/local/share/makepkg/lint_pkgbuild
+#7 1.839 Installing scripts/libmakepkg/lint_pkgbuild/optdepends.sh to /tarball/usr/local/share/makepkg/lint_pkgbuild
+#7 1.839 Installing scripts/libmakepkg/lint_pkgbuild/options.sh to /tarball/usr/local/share/makepkg/lint_pkgbuild
+#7 1.839 Installing scripts/libmakepkg/lint_pkgbuild/package_function.sh to /tarball/usr/local/share/makepkg/lint_pkgbuild
+#7 1.839 Installing scripts/libmakepkg/lint_pkgbuild/package_function_variable.sh to /tarball/usr/local/share/makepkg/lint_pkgbuild
+#7 1.839 Installing scripts/libmakepkg/lint_pkgbuild/pkgbase.sh to /tarball/usr/local/share/makepkg/lint_pkgbuild
+#7 1.839 Installing scripts/libmakepkg/lint_pkgbuild/pkgname.sh to /tarball/usr/local/share/makepkg/lint_pkgbuild
+#7 1.839 Installing scripts/libmakepkg/lint_pkgbuild/pkgrel.sh to /tarball/usr/local/share/makepkg/lint_pkgbuild
+#7 1.839 Installing scripts/libmakepkg/lint_pkgbuild/pkgver.sh to /tarball/usr/local/share/makepkg/lint_pkgbuild
+#7 1.839 Installing scripts/libmakepkg/lint_pkgbuild/provides.sh to /tarball/usr/local/share/makepkg/lint_pkgbuild
+#7 1.839 Installing scripts/libmakepkg/lint_pkgbuild/source.sh to /tarball/usr/local/share/makepkg/lint_pkgbuild
+#7 1.839 Installing scripts/libmakepkg/lint_pkgbuild/util.sh to /tarball/usr/local/share/makepkg/lint_pkgbuild
+#7 1.839 Installing scripts/libmakepkg/lint_pkgbuild/variable.sh to /tarball/usr/local/share/makepkg/lint_pkgbuild
+#7 1.839 Installing scripts/libmakepkg/lint_pkgbuild/xdata.sh to /tarball/usr/local/share/makepkg/lint_pkgbuild
+#7 1.839 Installing scripts/libmakepkg/reproducible.sh to /tarball/usr/local/share/makepkg
+#7 1.839 Installing scripts/libmakepkg/reproducible/source_date_epoch.sh to /tarball/usr/local/share/makepkg/reproducible
+#7 1.839 Installing scripts/libmakepkg/source.sh to /tarball/usr/local/share/makepkg
+#7 1.839 Installing scripts/libmakepkg/source/bzr.sh to /tarball/usr/local/share/makepkg/source
+#7 1.839 Installing scripts/libmakepkg/source/file.sh to /tarball/usr/local/share/makepkg/source
+#7 1.839 Installing scripts/libmakepkg/source/fossil.sh to /tarball/usr/local/share/makepkg/source
+#7 1.839 Installing scripts/libmakepkg/source/git.sh to /tarball/usr/local/share/makepkg/source
+#7 1.839 Installing scripts/libmakepkg/source/hg.sh to /tarball/usr/local/share/makepkg/source
+#7 1.839 Installing scripts/libmakepkg/source/local.sh to /tarball/usr/local/share/makepkg/source
+#7 1.839 Installing scripts/libmakepkg/source/svn.sh to /tarball/usr/local/share/makepkg/source
+#7 1.839 Installing scripts/libmakepkg/srcinfo.sh to /tarball/usr/local/share/makepkg
+#7 1.839 Installing scripts/libmakepkg/tidy.sh to /tarball/usr/local/share/makepkg
+#7 1.839 Installing scripts/libmakepkg/tidy/10-docs.sh to /tarball/usr/local/share/makepkg/tidy
+#7 1.839 Installing scripts/libmakepkg/tidy/10-libtool.sh to /tarball/usr/local/share/makepkg/tidy
+#7 1.839 Installing scripts/libmakepkg/tidy/10-staticlibs.sh to /tarball/usr/local/share/makepkg/tidy
+#7 1.839 Installing scripts/libmakepkg/tidy/50-purge.sh to /tarball/usr/local/share/makepkg/tidy
+#7 1.839 Installing scripts/libmakepkg/tidy/50-strip.sh to /tarball/usr/local/share/makepkg/tidy
+#7 1.839 Installing scripts/libmakepkg/tidy/50-zipman.sh to /tarball/usr/local/share/makepkg/tidy
+#7 1.839 Installing scripts/libmakepkg/tidy/90-emptydirs.sh to /tarball/usr/local/share/makepkg/tidy
+#7 1.839 Installing scripts/libmakepkg/util.sh to /tarball/usr/local/share/makepkg
+#7 1.839 Installing scripts/libmakepkg/util/compress.sh to /tarball/usr/local/share/makepkg/util
+#7 1.839 Installing scripts/libmakepkg/util/config.sh to /tarball/usr/local/share/makepkg/util
+#7 1.839 Installing scripts/libmakepkg/util/dirsize.sh to /tarball/usr/local/share/makepkg/util
+#7 1.839 Installing scripts/libmakepkg/util/error.sh to /tarball/usr/local/share/makepkg/util
+#7 1.839 Installing scripts/libmakepkg/util/message.sh to /tarball/usr/local/share/makepkg/util
+#7 1.839 Installing scripts/libmakepkg/util/option.sh to /tarball/usr/local/share/makepkg/util
+#7 1.839 Installing scripts/libmakepkg/util/parseopts.sh to /tarball/usr/local/share/makepkg/util
+#7 1.839 Installing scripts/libmakepkg/util/pkgbuild.sh to /tarball/usr/local/share/makepkg/util
+#7 1.839 Installing scripts/libmakepkg/util/schema.sh to /tarball/usr/local/share/makepkg/util
+#7 1.839 Installing scripts/libmakepkg/util/source.sh to /tarball/usr/local/share/makepkg/util
+#7 1.839 Installing scripts/libmakepkg/util/util.sh to /tarball/usr/local/share/makepkg/util
+#7 1.839 Installing scripts/pacman to /tarball/usr/local/share/bash-completion/completions
+#7 1.839 Installing scripts/_pacman to /tarball/usr/local/share/zsh/site-functions
+#7 1.839 Installing lib/libalpm/po/ar/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/ar/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/ast/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/ast/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/az_AZ/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/az_AZ/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/bg/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/bg/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/br/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/br/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/ca/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/ca/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/cs/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/cs/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/da/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/da/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/de/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/de/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/el/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/el/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/en_GB/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/en_GB/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/eo/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/eo/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/es/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/es/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/es_419/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/es_419/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/eu/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/eu/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/eu_ES/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/eu_ES/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/fi/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/fi/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/fr/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/fr/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/gl/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/gl/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/hi/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/hi/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/hr/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/hr/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/hu/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/hu/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/id/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/id/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/it/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/it/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/ja/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/ja/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/kk/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/kk/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/ko/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/ko/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/lt/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/lt/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/nb/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/nb/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/nl/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/nl/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/pl/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/pl/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/pt/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/pt/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/pt_BR/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/pt_BR/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/ro/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/ro/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/ru/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/ru/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/sk/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/sk/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/sl/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/sl/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/sr/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/sr/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/sr@latin/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/sr@latin/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/sv/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/sv/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/tr/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/tr/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/uk/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/uk/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/zh_CN/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/zh_CN/LC_MESSAGES
+#7 1.839 Installing lib/libalpm/po/zh_TW/LC_MESSAGES/libalpm.mo to /tarball/usr/local/share/locale/zh_TW/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/ar/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/ar/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/ast/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/ast/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/az_AZ/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/az_AZ/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/bg/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/bg/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/br/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/br/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/ca/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/ca/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/cs/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/cs/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/da/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/da/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/de/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/de/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/el/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/el/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/en_GB/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/en_GB/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/eo/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/eo/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/es/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/es/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/es_419/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/es_419/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/eu/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/eu/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/eu_ES/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/eu_ES/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/fi/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/fi/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/fr/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/fr/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/gl/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/gl/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/hi/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/hi/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/hr/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/hr/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/hu/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/hu/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/id/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/id/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/it/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/it/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/ja/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/ja/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/ko/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/ko/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/lt/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/lt/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/nb/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/nb/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/nl/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/nl/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/pl/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/pl/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/pt/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/pt/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/pt_BR/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/pt_BR/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/ro/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/ro/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/ru/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/ru/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/sk/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/sk/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/sl/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/sl/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/sr/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/sr/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/sr@latin/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/sr@latin/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/sv/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/sv/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/tr/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/tr/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/uk/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/uk/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/zh_CN/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/zh_CN/LC_MESSAGES
+#7 1.839 Installing src/pacman/po/zh_TW/LC_MESSAGES/pacman.mo to /tarball/usr/local/share/locale/zh_TW/LC_MESSAGES
+#7 1.839 Installing scripts/po/az_AZ/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/az_AZ/LC_MESSAGES
+#7 1.839 Installing scripts/po/bg/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/bg/LC_MESSAGES
+#7 1.839 Installing scripts/po/br/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/br/LC_MESSAGES
+#7 1.839 Installing scripts/po/ca/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/ca/LC_MESSAGES
+#7 1.839 Installing scripts/po/cs/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/cs/LC_MESSAGES
+#7 1.839 Installing scripts/po/da/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/da/LC_MESSAGES
+#7 1.839 Installing scripts/po/de/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/de/LC_MESSAGES
+#7 1.839 Installing scripts/po/el/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/el/LC_MESSAGES
+#7 1.839 Installing scripts/po/en_GB/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/en_GB/LC_MESSAGES
+#7 1.839 Installing scripts/po/eo/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/eo/LC_MESSAGES
+#7 1.839 Installing scripts/po/es/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/es/LC_MESSAGES
+#7 1.839 Installing scripts/po/es_419/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/es_419/LC_MESSAGES
+#7 1.839 Installing scripts/po/eu/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/eu/LC_MESSAGES
+#7 1.839 Installing scripts/po/eu_ES/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/eu_ES/LC_MESSAGES
+#7 1.839 Installing scripts/po/fi/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/fi/LC_MESSAGES
+#7 1.839 Installing scripts/po/fr/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/fr/LC_MESSAGES
+#7 1.839 Installing scripts/po/gl/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/gl/LC_MESSAGES
+#7 1.839 Installing scripts/po/hi/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/hi/LC_MESSAGES
+#7 1.839 Installing scripts/po/hu/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/hu/LC_MESSAGES
+#7 1.839 Installing scripts/po/id/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/id/LC_MESSAGES
+#7 1.839 Installing scripts/po/it/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/it/LC_MESSAGES
+#7 1.839 Installing scripts/po/ja/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/ja/LC_MESSAGES
+#7 1.839 Installing scripts/po/ko/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/ko/LC_MESSAGES
+#7 1.839 Installing scripts/po/lt/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/lt/LC_MESSAGES
+#7 1.839 Installing scripts/po/nb/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/nb/LC_MESSAGES
+#7 1.839 Installing scripts/po/nl/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/nl/LC_MESSAGES
+#7 1.839 Installing scripts/po/pl/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/pl/LC_MESSAGES
+#7 1.839 Installing scripts/po/pt/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/pt/LC_MESSAGES
+#7 1.839 Installing scripts/po/pt_BR/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/pt_BR/LC_MESSAGES
+#7 1.839 Installing scripts/po/ro/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/ro/LC_MESSAGES
+#7 1.839 Installing scripts/po/ru/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/ru/LC_MESSAGES
+#7 1.839 Installing scripts/po/sk/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/sk/LC_MESSAGES
+#7 1.839 Installing scripts/po/sl/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/sl/LC_MESSAGES
+#7 1.839 Installing scripts/po/sr/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/sr/LC_MESSAGES
+#7 1.839 Installing scripts/po/sr@latin/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/sr@latin/LC_MESSAGES
+#7 1.839 Installing scripts/po/sv/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/sv/LC_MESSAGES
+#7 1.839 Installing scripts/po/tr/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/tr/LC_MESSAGES
+#7 1.839 Installing scripts/po/uk/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/uk/LC_MESSAGES
+#7 1.839 Installing scripts/po/zh_CN/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/zh_CN/LC_MESSAGES
+#7 1.839 Installing scripts/po/zh_TW/LC_MESSAGES/pacman-scripts.mo to /tarball/usr/local/share/locale/zh_TW/LC_MESSAGES
+#7 1.839 Installing libalpm.so.16.0.0 to /tarball/usr/local/lib
+#7 1.839 Installing pacman to /tarball/usr/local/bin
+#7 1.839 Installing pacman-conf to /tarball/usr/local/bin
+#7 1.839 Installing testpkg to /tarball/usr/local/bin
+#7 1.839 Installing vercmp to /tarball/usr/local/bin
+#7 1.839 Installing /repo/lib/libalpm/alpm.h to /tarball/usr/local/include
+#7 1.839 Installing /repo/lib/libalpm/alpm_list.h to /tarball/usr/local/include
+#7 1.839 Installing new directory /tarball/etc/makepkg.d
+#7 1.839 Installing /repo/build/scripts/libmakepkg.pc to /tarball/usr/local/share/pkgconfig
+#7 1.839 Installing /repo/build/meson-private/libalpm.pc to /tarball/usr/local/lib/pkgconfig
+#7 1.839 Installing /repo/build/makepkg.conf to /tarball/etc
+#7 1.839 Installing /repo/build/fortran.conf to /tarball/etc/makepkg.conf.d
+#7 1.839 Installing /repo/build/rust.conf to /tarball/etc/makepkg.conf.d
+#7 1.839 Installing /repo/build/pacman.conf to /tarball/etc
+#7 1.839 Installing /repo/proto/PKGBUILD-split.proto to /tarball/usr/local/share/pacman
+#7 1.839 Installing /repo/proto/PKGBUILD-vcs.proto to /tarball/usr/local/share/pacman
+#7 1.839 Installing /repo/proto/PKGBUILD.proto to /tarball/usr/local/share/pacman
+#7 1.839 Installing /repo/proto/proto.install to /tarball/usr/local/share/pacman
+#7 1.839 Installing symlink pointing to libalpm.so.16.0.0 to /tarball/usr/local/lib/libalpm.so.16
+#7 1.839 Installing symlink pointing to libalpm.so.16 to /tarball/usr/local/lib/libalpm.so
+#7 1.839 Running custom install script '/bin/sh /repo/build-aux/meson-make-symlink.sh repo-add /usr/local/bin/repo-remove'
+#7 1.839 Running custom install script '/bin/sh /repo/build-aux/meson-make-symlink.sh repo-add /usr/local/bin/repo-elephant'
+#7 1.839 Running custom install script '/bin/sh /repo/build-aux/meson-make-symlink.sh pacman /usr/local/share/bash-completion/completions/pacman-key'
+#7 1.839 Running custom install script '/bin/sh /repo/build-aux/meson-make-symlink.sh pacman /usr/local/share/bash-completion/completions/makepkg'
+#7 1.839 Running custom install script '/usr/sbin/sh -c mkdir -p "$DESTDIR//var/lib/pacman/"'
+#7 1.839 Running custom install script '/usr/sbin/sh -c mkdir -p "$DESTDIR//var/cache/pacman/pkg/"'
+#7 1.839 Running custom install script '/usr/sbin/sh -c mkdir -p "$DESTDIR//usr/local/share/makepkg-template/"'
+#7 1.839 Running custom install script '/usr/sbin/sh -c mkdir -p "$DESTDIR//usr/local/share/libalpm/hooks/"'
+#7 DONE 5.2s
+
+#6 [stage-1 1/2] FROM docker.io/library/archlinux:base@sha256:5ba8bb318666baef4d33afefc0e65db80f38b23503cb8e7b150d315cc2d4d5da
+#6 sha256:1dd624a5d250d23d3790c8017dc38ec1c1abcba105a256f751dd76fefead5bd0 129.46MB / 129.46MB 4.2s done
+#6 extracting sha256:1dd624a5d250d23d3790c8017dc38ec1c1abcba105a256f751dd76fefead5bd0
+#6 extracting sha256:1dd624a5d250d23d3790c8017dc38ec1c1abcba105a256f751dd76fefead5bd0 4.6s done
+#6 extracting sha256:ab6ef42a20b3561e23c409877f7f8f4b01e22f927b8755bfc78b5e24a5e9cce5
+#6 extracting sha256:ab6ef42a20b3561e23c409877f7f8f4b01e22f927b8755bfc78b5e24a5e9cce5 done
+#6 DONE 11.4s
+
+#8 [stage-1 2/2] COPY --from=devenv /tarball /
+#8 DONE 5.6s
+
+#9 exporting to image
+#9 exporting layers
+#9 exporting layers 0.5s done
+#9 writing image sha256:9acd9202fb59a951cc3b2161b765385a0a7e2265ed99cc2e1b7f1a7f45758b6b 0.0s done
+#9 naming to docker.io/library/my-pacman:7.1.0-b33 0.1s done
+#9 DONE 1.1s
+[Pipeline] }
+[Pipeline] // withEnv
+Did you forget the `def` keyword? WorkflowScript seems to be setting a field named image (to a value of type Image) which could lead to memory leaks or other issues.
+[Pipeline] sh
++ docker run -t --rm my-pacman:7.1.0-b33 --version
+[?25l
+ .--.                  Pacman v7.1.0 - libalpm v16.0.1
+/ _.-' .-.  .-.  .-.   Copyright (C) 2006-2025 Pacman Development Team
+\  '-. '-'  '-'  '-'   Copyright (C) 2002-2006 Judd Vinet
+ '--'
+                       This program may be freely redistributed under
+                       the terms of the GNU General Public License.
+
+[?25h
+[Pipeline] }
+[Pipeline] // script
+Post stage
+[Pipeline] sh
++ docker builder prune -f
+ID						RECLAIMABLE	SIZE		LAST ACCESSED
+tg4qre0ccfo577yudf38s2ckh*              	true 		614B      	6 seconds ago
+uw72bnsar5w90m51x5fwpu2my*              	true 	0B        	6 seconds ago
+5q7nfg89ge4tb0wopg8djvkb6*              	true 	6.368MB   	6 seconds ago
+Total:	6.369MB
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (publish)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ docker save my-pacman:7.1.0-b33
++ gzip
+[Pipeline] }
+[Pipeline] // script
+Post stage
+[Pipeline] archiveArtifacts
+Archiving artifacts
+Recording fingerprints
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: UNSTABLE
