@@ -1,6 +1,12 @@
 pipeline {
     agent any
     stages {
+        stage('Cleanup') {
+            steps {
+                sh 'docker rm -f express-deploy || true'
+                sh 'docker rmi -f lab3-build lab3-test || true'
+            }
+        }
         stage('Clone') {
             steps {
                 git url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git',
@@ -9,8 +15,9 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'docker rmi lab3-build lab3-test || true'
                 sh 'docker build -t lab3-build -f PS422034/Sprawozdanie3/lab3/Dockerfile.build .'
+                sh 'mkdir -p artifact'
+                sh 'docker run --rm -v $(pwd)/artifact:/artifact lab3-build tar -czf /artifact/express-1.0.0.tar.gz -C /app .'
             }
         }
         stage('Test') {
@@ -29,8 +36,6 @@ pipeline {
         }
         stage('Publish') {
             steps {
-                sh 'mkdir -p artifact'
-                sh 'docker run --rm -v $(pwd)/artifact:/artifact lab3-build tar -czf /artifact/express-1.0.0.tar.gz -C /app .'
                 archiveArtifacts artifacts: 'artifact/express-1.0.0.tar.gz', onlyIfSuccessful: true
             }
         }
