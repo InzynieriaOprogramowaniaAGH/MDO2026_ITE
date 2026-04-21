@@ -2,12 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Clone') {
-            steps {
-                git branch: 'MW423393', url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git'
-            }
-        }
-
         stage('Build Builder Image') {
             steps {
                 dir('grupa6/MW423393/Sprawozdanie06/docker') {
