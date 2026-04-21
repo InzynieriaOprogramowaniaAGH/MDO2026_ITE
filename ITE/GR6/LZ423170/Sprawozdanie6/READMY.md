@@ -2,7 +2,6 @@
 
 ## Pipeline
 
-Poniżej znajduje się kod Jenkins Pipeline dla budowy i wdrażania Redis.
 
 ```groovy
 pipeline {
@@ -14,7 +13,7 @@ pipeline {
     stages {
         stage('Checkout & Build') {
             steps {
-                git branch: '7.2', url: 'https://github.com/Lukzegl/redisK.git'
+                git branch: 
                 
                 sh "docker build -t ${IMAGE_NAME} ."
             }
