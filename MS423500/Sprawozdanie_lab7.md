@@ -25,7 +25,7 @@ W dodatku dodano opcję odpowiadającą za pominięcie automatycznego klonowania
 
 Poniższe logi potwierdzają skuteczną zmianę na SCM po dokonanych zmianach
 
-![alt text](logi_SCM.png)
+![alt text](Sprawozdanie7/logi_SCM.png)
 
 ![alt text](Sprawozdanie7/pipeline_przeszedl.png)
 
@@ -117,15 +117,29 @@ Wykonany pipeline pokazuje pełny proces CI/CD od pobrania kodu, przez budowanie
 Najważniejsze było rozdzielenie odpowiedzialności pomiędzy etapy Build, Test, Deploy oraz Publish. Dzięki temu obraz testowy, obraz runtime, uruchomienie kontenera i archiwizacja artefaktu są realizowane osobno, co daje lepszą kontrolę nad całym pipeline i ułatwia jego późniejszą analizę.
 
 ## Historia konsoli
-cd ts_fork
-  911  git pull origin master
-  912  cd 
-  913  docker ps
-  914  docker run --name jenkins-docker --rm --detach   --privileged --network jenkins --network-alias docker   --env DOCKER_TLS_CERTDIR=/certs   --volume jenkins-docker-certs:/certs/client   --volume jenkins-data:/var/jenkins_home   --publish 2376:2376   docker:dind --storage-driver overlay2
-  915  cd ts_fork
-  916  git add .
-  917  git commit -m "publish poprzez archiwizacje obrazu Docker .tar"
-  918  git push origin
-  919  docker exec jenkins-docker docker images | grep nest-api
-  920  clear
-  921  history
+
+        cd ts_fork
+
+        911  git pull origin master
+
+        912  cd 
+
+        913  docker ps
+
+        914  docker run --name jenkins-docker --rm --detach   --privileged --network jenkins --network-alias docker   --env DOCKER_TLS_CERTDIR=/
+        certs   --volume jenkins-docker-certs:/certs/client   --volume jenkins-data:/var/jenkins_home   --publish 2376:2376   docker:dind 
+        --storage-driver overlay2
+
+        915  cd ts_fork
+
+        916  git add .
+
+        917  git commit -m "publish poprzez archiwizacje obrazu Docker .tar"
+
+        918  git push origin
+
+        919  docker exec jenkins-docker docker images | grep nest-api
+
+        920  clear
+
+        921  history
