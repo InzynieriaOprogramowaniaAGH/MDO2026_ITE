@@ -4,13 +4,7 @@ pipeline {
         stage('Cleanup') {
             steps {
                 sh 'docker rm -f express-deploy || true'
-                sh 'docker rmi -f lab3-build lab3-test || true'
-            }
-        }
-        stage('Clone') {
-            steps {
-                git url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git',
-                    branch: 'PS422034'
+                sh 'docker rmi -f lab3-build lab3-test express-deploy-img || true'
             }
         }
         stage('Build') {
@@ -28,8 +22,14 @@ pipeline {
         }
         stage('Deploy') {
             steps {
+                sh '''cat > Dockerfile.deploy << DFEOF
+FROM lab3-build:latest
+EXPOSE 3000
+CMD ["node", "/app/index.js"]
+DFEOF'''
+                sh 'docker build -t express-deploy-img -f Dockerfile.deploy .'
                 sh 'docker rm -f express-deploy || true'
-                sh 'docker run -d --name express-deploy -p 3000:3000 lab3-build node /app/index.js'
+                sh 'docker run -d --name express-deploy -p 3000:3000 express-deploy-img'
                 sh 'sleep 5'
                 sh 'docker exec express-deploy curl -s http://localhost:3000 || true'
             }
