@@ -31,6 +31,7 @@ pipeline {
             steps {
                 sh 'cp my-config/ITE/grupa6/FT422048/Sprawozdanie3/Dockerfile.test redis-code/'
                 dir('redis-code') {
+                    sh "sed -i 's|^FROM.*|FROM redis-builder:${APP_VERSION}|' Dockerfile.test"
                     sh "docker build -t redis-tester:${APP_VERSION} -f Dockerfile.test ."
                     sh 'docker rm -f redis-test-run || true'
                     sh "docker run --name redis-test-run redis-tester:${APP_VERSION}"
