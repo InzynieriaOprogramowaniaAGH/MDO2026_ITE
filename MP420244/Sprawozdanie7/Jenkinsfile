@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                // Tutaj możesz dodać kroki budowania, np. kompilację kodu
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+                // Tutaj możesz dodać kroki testowania, np. uruchamianie testów jednostkowych
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
+                // Tutaj możesz dodać kroki wdrażania, np. przesyłanie aplikacji na serwer
+            }
+        }
+    }
+}
