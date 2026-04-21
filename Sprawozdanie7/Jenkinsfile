@@ -4,9 +4,8 @@ pipeline {
         stage('Cleanup & Setup') {
             steps {
                 deleteDir()
-
                 sh 'mkdir -p src/main/java/com/example'
-
+                
                 writeFile file: 'pom.xml', text: """
 <project xmlns="http://maven.apache.org/POM/4.0.0">
     <modelVersion>4.0.0</modelVersion>
@@ -49,12 +48,11 @@ public class DemoApplication {
     }
     @GetMapping("/")
     public String home() {
-        return "Hello from CI/CD Pipeline!";
+        return "Hello from Jenkins Pipeline!";
     }
 }
 """
-                sh 'mkdir -p docker'
-                writeFile file: 'docker/Dockerfile.prod', text: """
+                writeFile file: 'Dockerfile.prod', text: """
 FROM maven:3.9-eclipse-temurin-17-alpine AS build
 COPY . /usr/src/app
 WORKDIR /usr/src/app
@@ -71,7 +69,7 @@ ENTRYPOINT ["java", "-jar", "api.jar"]
 
         stage('Build') {
             steps {
-                sh 'docker build -t spring-api-prod:latest -f Dockerfile.prod .'
+                sh 'docker build --no-cache -t spring-api-prod:latest -f Dockerfile.prod .'
             }
         }
 
@@ -85,11 +83,9 @@ ENTRYPOINT ["java", "-jar", "api.jar"]
             steps {
                 script {
                     sh "docker run -d --name sandbox-api-${env.BUILD_ID} -p 8081:8080 spring-api-prod:latest"
-
                     sh "sleep 15"
-                    
                     sh "docker logs sandbox-api-${env.BUILD_ID}"
-                    sh "curl -s http://localhost:8081 || true"
+                    sh "curl -sI http://localhost:8081 | grep '200 OK'"
                     sh "docker stop sandbox-api-${env.BUILD_ID} && docker rm sandbox-api-${env.BUILD_ID}"
                 }
             }
@@ -101,16 +97,9 @@ ENTRYPOINT ["java", "-jar", "api.jar"]
                     sh "docker create --name temp-art-${env.BUILD_ID} spring-api-prod:latest"
                     sh "docker cp temp-art-${env.BUILD_ID}:/usr/src/app/api.jar ./api-v${env.BUILD_ID}.jar"
                     sh "docker rm temp-art-${env.BUILD_ID}"
-                    
                     archiveArtifacts artifacts: "*.jar", fingerprint: true
                 }
             }
-        }
-    }
-    
-    post {
-        always {
-            deleteDir()
         }
     }
 }
