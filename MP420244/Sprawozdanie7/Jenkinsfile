@@ -21,6 +21,8 @@ pipeline {
                     sh "docker system prune -af || true"
                     sh "rm -rf ${BUILD_DIR} ${ARTIFACT_BUILD} || true"
                     sh "ls -l"
+                    echo 'Current workspace:'
+                    sh "pwd"
                 }
             }
         }
