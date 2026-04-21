@@ -8,98 +8,67 @@ Poniżej znajduje się kod Jenkins Pipeline dla budowy i wdrażania Redis.
 pipeline {
     agent any
     environment {
-        BUILDER_IMAGE = 'gcc:11'
-        RUNTIME_IMAGE = 'ubuntu:22.04'
-        REDIS_REPO = 'https://github.com/redis/redis.git'
-        REDIS_BRANCH = '7.2'
-        IMAGE_NAME = "redis-custom"
-        CONTAINER_NAME = "redis-deploy"
+        IMAGE_NAME = "redis-custom:${env.BUILD_ID}"
+        CONTAINER = "redis-deploy"
     }
     stages {
-        stage('Clone') {
+        stage('Checkout & Build') {
             steps {
-                git branch: env.REDIS_BRANCH, url: env.REDIS_REPO
+                git branch: '7.2', url: 'https://github.com/Lukzegl/redisK.git'
+                
+                sh "docker build -t ${IMAGE_NAME} ."
             }
         }
-        stage('Build & Test') {
-            agent {
-                docker {
-                    image env.BUILDER_IMAGE
-                    reuseNode true
-                    args '--entrypoint="" -v /var/run/docker.sock:/var/run/docker.sock'
-                }
-            }
+
+        stage('Deploy & Smoke Test') {
             steps {
-                sh 'apt-get update && apt-get install -y tcl'
-                sh 'make -j$(nproc)'
-                sh 'make test'
-                stash includes: 'src/redis-server,src/redis-cli,src/redis-sentinel', name: 'redis-binaries'
-            }
-            post {
-                always {
-                    archiveArtifacts artifacts: 'test/logs/*.log', fingerprint: true
+                sh "docker rm -f ${CONTAINER} || true"
+                sh "docker run -d --name ${CONTAINER} -p 6379:6379 ${IMAGE_NAME}"
+                
+                script {
+                    sleep 5
+                    sh "docker exec ${CONTAINER} redis-cli ping"
                 }
             }
         }
-        stage('Build Runtime Image') {
+
+        stage('Archive') {
             steps {
-                unstash 'redis-binaries'
-                writeFile file: 'Dockerfile.runtime', text: """
-                    FROM ${env.RUNTIME_IMAGE}
-                    RUN apt-get update && apt-get install -y libssl3 && rm -rf /var/lib/apt/lists/*
-                    COPY src/redis-server /usr/local/bin/
-                    COPY src/redis-cli /usr/local/bin/
-                    COPY redis.conf /usr/local/etc/redis/redis.conf
-                    EXPOSE 6379
-                    CMD ["redis-server", "/usr/local/etc/redis/redis.conf"]
-                """
-                sh "docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} -f Dockerfile.runtime ."
-            }
-        }
-        stage('Deploy (Log Collection)') {
-            steps {
-                sh "docker stop ${CONTAINER_NAME} || true"
-                sh "docker rm ${CONTAINER_NAME} || true"
-                sh "docker run -d --name ${CONTAINER_NAME} --network host ${IMAGE_NAME}:${BUILD_NUMBER}"
-            }
-        }
-        stage('Smoke Test') {
-            steps {
-                sleep 5
-                sh "docker run --rm --network host alpine sh -c 'apk add --no-cache curl && curl -f http://localhost:6379' || true"
-                sh "docker exec ${CONTAINER_NAME} redis-cli ping"
-            }
-        }
-        stage('Publish') {
-            steps {
-                sh "mkdir -p redis-package/bin"
-                sh "cp src/redis-server src/redis-cli src/redis-sentinel redis-package/bin/"
-                sh "cp redis.conf redis-package/"
-                sh "tar -czf redis-${BUILD_NUMBER}.tar.gz -C redis-package ."
-                archiveArtifacts artifacts: "redis-${BUILD_NUMBER}.tar.gz", fingerprint: true
+                
+                sh "docker create --name extract ${IMAGE_NAME}"
+                sh "docker export extract | gzip > redis-dist.tar.gz"
+                sh "docker rm extract"
+                archiveArtifacts 'redis-dist.tar.gz'
             }
         }
     }
     post {
         always {
-            sh "docker logs ${CONTAINER_NAME} > redis-logs-${BUILD_NUMBER}.txt 2>&1"
-            archiveArtifacts artifacts: "*.txt", fingerprint: true
+            sh "docker logs ${CONTAINER} > redis.log 2>&1"
+            archiveArtifacts '*.log'
             cleanWs()
         }
     }
 }
 ```
 
-## Dockerfile Tworzony w Pipeline
+## Dockerfile 
 
 
 
 ```dockerfile
+FROM gcc:11 AS builder
+RUN apt-get update && apt-get install -y tcl
+WORKDIR /app
+COPY . .
+RUN make -j$(nproc) && make test
+
+
 FROM ubuntu:22.04
 RUN apt-get update && apt-get install -y libssl3 && rm -rf /var/lib/apt/lists/*
-COPY src/redis-server /usr/local/bin/
-COPY src/redis-cli /usr/local/bin/
-COPY redis.conf /usr/local/etc/redis/redis.conf
+COPY --from=builder /app/src/redis-server /usr/local/bin/
+COPY --from=builder /app/src/redis-cli /usr/local/bin/
+COPY --from=builder /app/redis.conf /usr/local/etc/redis/redis.conf
 EXPOSE 6379
 CMD ["redis-server", "/usr/local/etc/redis/redis.conf"]
 ```
