@@ -2,6 +2,8 @@ pipeline {
     agent any
 
     environment {
+        BREANCH_NAME = 'MP420244'
+        REPO_URL = 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git'
         BUILD_DIR = 'build'
         ARTIFACT_BUILD = 'app-build.tar.gz'
         ARTIFACT_IMAGE = 'app-image.tar.gz'
@@ -22,6 +24,14 @@ pipeline {
                     sh "rm -rf ${BUILD_DIR} ${ARTIFACT_BUILD} || true"
                     sh "ls -l"
                 }
+            }
+        }
+        stage('Clone') {
+            steps {
+                echo 'STAGE: CLONE'
+                echo 'Cloning repository...'
+
+                git branch: "${BREANCH_NAME}", url: "${REPO_URL}"
             }
         }
         stage('Build') {
