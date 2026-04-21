@@ -1,4 +1,5 @@
 FROM alpine:latest
+
 WORKDIR /artifact
 
 COPY --from=list-build:latest /build/build/libclibs_list.a /artifact/libclibs_list.a
