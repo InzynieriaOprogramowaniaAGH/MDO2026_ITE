@@ -1,0 +1,88 @@
+pipeline {
+    agent any
+
+    environment {
+        WORK_DIR = 'grupa6/KS422031/Sprawozdanie7'
+        BUILD_IMAGE = "lab7-build:latest"
+        TEST_IMAGE = "lab7-test:${BUILD_NUMBER}"
+        RUNTIME_IMAGE = "lab7-runtime:${BUILD_NUMBER}"
+        RUNTIME_CONTAINER = "lab7-runtime-${BUILD_NUMBER}"
+        ARTIFACT_NAME = "foo-test-${BUILD_NUMBER}.tar.gz"
+        LOG_NAME = "smoke-test-${BUILD_NUMBER}.log"
+    }
+
+    stages {
+        stage('Clone') {
+            steps {
+                deleteDir()
+                git branch: 'KS422031', url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'ls -la ${WORK_DIR}'
+                sh 'find ${WORK_DIR} -maxdepth 3 -type f | sort'
+                sh 'docker build --no-cache -t ${BUILD_IMAGE} -f ${WORK_DIR}/Dockerfile.build ${WORK_DIR}'
+            }
+        }
+
+        stage('Test image') {
+            steps {
+                sh 'docker build --no-cache -t ${TEST_IMAGE} -f ${WORK_DIR}/Dockerfile.test ${WORK_DIR}'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'docker run --rm ${TEST_IMAGE}'
+            }
+        }
+
+        stage('Package') {
+            steps {
+                sh '''
+                    CID=$(docker create ${BUILD_IMAGE})
+                    docker cp ${CID}:/opt/makefile-for-c/src/foo-test ${WORK_DIR}/foo-test
+                    docker rm ${CID}
+                    chmod +x ${WORK_DIR}/foo-test
+                    tar -czf ${WORK_DIR}/${ARTIFACT_NAME} -C ${WORK_DIR} foo-test
+                '''
+            }
+        }
+
+        stage('Deploy image') {
+            steps {
+                sh 'cat ${WORK_DIR}/Dockerfile.runtime'
+                sh 'docker build --no-cache -t ${RUNTIME_IMAGE} -f ${WORK_DIR}/Dockerfile.runtime ${WORK_DIR}'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh 'docker rm -f ${RUNTIME_CONTAINER} || true'
+                sh 'docker run -d --name ${RUNTIME_CONTAINER} ${RUNTIME_IMAGE}'
+            }
+        }
+
+        stage('Smoke test') {
+            steps {
+                sh 'docker ps -a --filter "name=${RUNTIME_CONTAINER}"'
+                sh 'docker logs ${RUNTIME_CONTAINER} > ${WORK_DIR}/${LOG_NAME} || true'
+                sh 'cat ${WORK_DIR}/${LOG_NAME} || true'
+            }
+        }
+
+        stage('Publish') {
+            steps {
+                archiveArtifacts artifacts: 'grupa6/KS422031/Sprawozdanie7/*.tar.gz,grupa6/KS422031/Sprawozdanie7/*.log,grupa6/KS422031/Sprawozdanie7/foo-test,grupa6/KS422031/Sprawozdanie7/Dockerfile.*', fingerprint: true
+            }
+        }
+    }
+
+    post {
+        always {
+            sh 'docker logs ${RUNTIME_CONTAINER} || true'
+        }
+    }
+}
