@@ -1,0 +1,15 @@
+FROM ubuntu:22.04 as base
+RUN apt-get update && apt-get install -y build-essential autoconf automake libtool git
+
+FROM base as builder
+WORKDIR /lab
+RUN git clone -b stable https://github.com/jedisct1/libsodium.git .
+RUN ./configure --prefix=/usr/local && make -j$(nproc)
+RUN make install DESTDIR=/opt/deploy
+
+FROM builder as tester
+CMD ["make", "check"]
+
+FROM ubuntu:22.04 as deploy
+COPY --from=builder /opt/deploy/usr/local /usr/local
+RUN ldconfig

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+PREFIX="JW422049"
+MSG_FILE="$1"
+FIRST_LINE=$(head -n 1 "$MSG_FILE")
+
+case "$FIRST_LINE" in
+  "$PREFIX"*)
+    exit 0
+    ;;
+  *)
+    echo "Blad: commit message musi zaczynac sie od $PREFIX"
+    exit 1
+    ;;
+esac

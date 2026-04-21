@@ -1,0 +1,10 @@
+FROM ubuntu:22.04
+
+RUN apt-get update && apt-get install -y \
+    git build-essential autoconf automake libtool
+
+WORKDIR /lab
+RUN git clone https://github.com/jedisct1/libsodium.git .
+RUN git checkout stable
+
+RUN ./configure && make

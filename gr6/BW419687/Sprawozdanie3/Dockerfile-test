@@ -1,0 +1,8 @@
+# Bazujemy na obrazie zbudowanym przed chwilą
+FROM flac:built
+
+USER builder
+WORKDIR /home/builder/flac
+
+# Uruchamiamy testy (bez ponownej kompilacji)
+RUN make check

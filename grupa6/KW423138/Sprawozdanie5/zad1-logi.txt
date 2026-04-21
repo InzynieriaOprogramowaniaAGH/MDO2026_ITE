@@ -1,0 +1,7 @@
+Started by user Kacper Węgrecki
+Running as SYSTEM
+Building in workspace /var/jenkins_home/workspace/pr1
+[pr1] $ /bin/sh -xe /tmp/jenkins8821919837848585973.sh
++ uname -a
+Linux de0db57a2fbc 6.8.0-106-generic #106-Ubuntu SMP PREEMPT_DYNAMIC Fri Mar  6 07:58:08 UTC 2026 x86_64 GNU/Linux
+Finished: SUCCESS

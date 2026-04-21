@@ -1,0 +1,74 @@
+pipeline {
+    agent any
+    
+    environment {
+        IMAGE_NAME = "libsodium-runtime"
+        VERSION = "1.0.${BUILD_NUMBER}"
+    }
+    
+    stages {
+        stage('Checkout SCM') {
+            steps {
+                checkout scm
+            }
+        }
+        
+        stage('Build & Test') {
+            steps {
+                dir('PW419456/lab6') {
+                    script {
+                        echo "Budowanie obrazu z testami..."
+                        sh 'docker build --target tester -t libsodium-tester -f Dockerfile.ci .'
+                        
+                        echo "Uruchamianie make check i logowanie..."
+                        sh 'docker run --name libsodium-test-run libsodium-tester > make-check.log'
+                    }
+                }
+            }
+            post {
+                always {
+                    dir('PW419456/lab6') {
+                        sh 'docker rm -f libsodium-test-run || true'
+                        archiveArtifacts artifacts: 'make-check.log', allowEmptyArchive: true
+                    }
+                }
+            }
+        }
+        
+        stage('Build Deploy Image') {
+            steps {
+                dir('PW419456/lab6') {
+                    script {
+                        echo "Budowanie ostatecznego, lekkiego obrazu uruchomieniowego..."
+                        sh "docker build --target deploy -t ${IMAGE_NAME}:${VERSION} -t ${IMAGE_NAME}:latest -f Dockerfile.ci ."
+                    }
+                }
+            }
+        }
+        
+        stage('Deploy & Smoke Test') {
+            steps {
+                script {
+                    echo "Smoke Test: Weryfikacja czy linker w nowym kontenerze widzi bibliotekę libsodium.so"
+                    sh "docker run --rm ${IMAGE_NAME}:latest /bin/sh -c 'ldconfig -p | grep libsodium'"
+                }
+            }
+        }
+        
+        stage('Publish Artifact') {
+            steps {
+                dir('PW419456/lab6') {
+                    script {
+                        echo "Ekstrakcja skompilowanych plików binarnych do archiwum .tar.gz"
+                        sh 'docker create --name artifact-helper libsodium-tester'
+                        sh 'docker cp artifact-helper:/opt/deploy/usr/local ./libsodium-binaries'
+                        sh "tar -czvf libsodium-release-${VERSION}.tar.gz -C libsodium-binaries ."
+                        sh 'docker rm -f artifact-helper'
+                        
+                        archiveArtifacts artifacts: '*.tar.gz', allowEmptyArchive: true
+                    }
+                }
+            }
+        }
+    }
+}

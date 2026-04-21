@@ -1,0 +1,419 @@
+    1  ip a
+    2  ssh kpw22@localhost -p 2222
+    3  ssh Kacper@localhost -p 2222
+    4  sudo systemctl status ssh
+    5  sudo systemctl start ssh
+    6  sudo systemctl status ssh
+    7  exit
+    8  git clone git@github.com:InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+    9  git clone git@github.com:https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE
+   10  rm -rf MDO2026_ITE
+   11  git clone git@github.com:https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+   12  git clone git@github.com:InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+   13  ls -a
+   14  ls
+   15  cd MDO2026_ITE
+   16  ls
+   17  git checkout main
+   18  git pull
+   19  git checkout grupa6
+   20  git checkout -b KW423138
+   21  ls
+   22  ls -a
+   23  cd grupa6
+   24  mkdir grupa6
+   25  cd grupa6
+   26  mkdir KW423138
+   27  cd KW423138
+   28  nano commit-msg
+   29  chmod +x commit-msg
+   30  cp commit-msg ../../.git/hooks/commit-msg
+   31  nano Sprawozdanie1
+   32  ls
+   33  nano Sprawozdanie.md
+   34  nano commit-msg
+   35  cp commit-msg ../../.git/hooks/commit-msg
+   36  nano commit-msg
+   37  nano Sprawozdanie.md
+   38  ls
+   39  nano Sprawozdanie1.md
+   40  ls
+   41  cd
+   42  cd MDO2026_ITE
+   43  git commit -m "KW423138 lab1"
+   44  ls
+   45  cd grupa6
+   46  ls
+   47  cd KW423138
+   48  ls
+   49  git add .
+   50  cd ..
+   51  git commit -m "KW423138 lab1"
+   52  git config --global user.name "kacper-wegrecki"
+   53  git config --global user.email "megakacper11@gmail.com"
+   54  git config --global --list
+   55  git commit -m "KW423138 lab1"
+   56  git commit -m " KW423138 lab1"
+   57  ls
+   58  cd grupa6
+   59  ls
+   60  cd KW423138
+   61  ls
+   62  nano commit-msg
+   63  cp commit-msg ../../.git/hooks/commit-msg
+   64  cd ..
+   65  git commit -m "KW423138 lab1"
+   66  git push -u origin KW423138
+   67  git status
+   68  exit
+   69  sudo apt update
+   70  sudo apt install docker.io -y
+   71  docker --version
+   72  sudo systemctl enable docker
+   73  sudo systemctl start docker
+   74  sudo systemctl status docker
+   75  docker pull hello-world
+   76  docker pull busybox
+   77  docker pull ubuntu
+   78  docker pull fedora
+   79  docker pull mariadb
+   80  docker pull mcr.microsoft.com/dotnet/runtime
+   81  docker pull mcr.microsoft.com/dotnet/aspnet
+   82  docker pull mcr.microsoft.com/dotnet/sdk
+   83  sudo docker pull hello-world
+   84  sudo docker pull busybox
+   85  sudo docker pull ubuntu
+   86  sudo docker pull fedora
+   87  sudo docker pull mariadb
+   88  sudo docker pull mcr.microsoft.com/dotnet/runtime
+   89  sudo docker pull mcr.microsoft.com/dotnet/aspnet
+   90  sudo docker pull mcr.microsoft.com/dotnet/sdk
+   91  docker images
+   92  sudo docker images
+   93  sudo docker run hello-world
+   94  sudo docker run busybox
+   95  echo $?
+   96  sudo docker run ubuntu
+   97  echo $?
+   98  sudo docker run fedora
+   99  echo $?
+  100  sudo docker run mariadb
+  101  echo $?
+  102  sudo docker run runtime
+  103  sudo docker run mcr.microsoft.com/dotnet/runtime
+  104  echo $?
+  105  sudo docker run mcr.microsoft.com/dotnet/aspnet
+  106  echo $?
+  107  sudo docker run mcr.microsoft.com/dotnet/sdk
+  108  echo $?
+  109  sudo docker run busybox
+  110  sudo docker ps -a
+  111  sudo docker run -it busybox
+  112  sudo docker run -it ubuntu
+  113  cd MDO2026_ITE
+  114  cd KW423138
+  115  ls
+  116  cd grupa6
+  117  ls
+  118  cd KW423138
+  119  nano Dockerfile
+  120  sudo docker build -t mojerepo .
+  121  sudo docker run -it mojerepo
+  122  sudo docker ps -a
+  123  sudo docker container prune
+  124  sudo docker images
+  125  sudo docker system prune -a
+  126  ls
+  127  mkdir Sprawozdanie1
+  128  mv Dockerfile Sprawozdanie1/
+  129  git add .
+  130  git commit -m "KW423138 dodanie Dockerfile"
+  131  git push
+  132  exit
+  133  ls
+  134  cd MDO2026_ITE
+  135  ls
+  136  cd grupa6
+  137  ls
+  138  cd KW423138
+  139  ls
+  140  rm *.png
+  141  ls
+  142  nano Sprawozdanie1
+  143  nano Sprawozdanie1.md
+  144  git add .
+  145  git commit -m "KW423138 poprawa obrazów"
+  146  git push
+  147  ls
+  148  mkdir obrazyLab2
+  149  ls
+  150  cd obrazyLab2
+  151  ls
+  152  cd ..
+  153  nano Sprawozdanie2.md
+  154  git add .
+  155  git commit -m "KW423138 Sprawozdanie 2"
+  156  git push
+  157  history
+  158  history > historia.txt
+  159  ls
+  160  git add .
+  161  git commit -m "KW423138 historia polecen"
+  162  git push
+  163  exit
+  164  git clone https://github.com/expressjs/express.git
+  165  cd express
+  166  sudo apt install nodejs npm -y
+  167  node -v
+  168  npm -v
+  169  npm install
+  170  npm test
+  171  docker run -it node:18 bash
+  172  sudo docker run -it node:18 bash
+  173  nano Dockerfile.build
+  174  docker build -f Dockerfile.build -t express-build .
+  175  sudo docker build -f Dockerfile.build -t express-build .
+  176  nano Dockerfile.test
+  177  docker build -f Dockerfile.test -t express-test .
+  178  sudo docker build -f Dockerfile.test -t express-test .
+  179  docker run express-test
+  180  sudo docker run express-test
+  181  history > historia_lab3
+  182  ls
+  183  nano History.md
+  184  nano historia_lab3
+  185  exit
+  186  ls
+  187  cd MDO2026_ITE
+  188  ls
+  189  cd grupa6
+  190  ls
+  191  cd KW423138
+  192  ls
+  193  mkdir obrazyLab3
+  194  cd obrazyLab3
+  195  ls
+  196  nano Sprawozdanie3.md
+  197  .
+  198  cd .
+  199  cd ...
+  200  cd ..
+  201  cd ~
+  202  cd expres
+  203  cd express
+  204  sudo docker ps
+  205  cd ~ ~/MDO2026_ITE/grupa6/KW423138/obrazyLab3
+  206  cd ~/MDO2026_ITE/grupa6/KW423138/obrazyLab3
+  207  ls
+  208  nano Sprawozdanie3.md
+  209  cd ..
+  210  ls
+  211  mkdir lab1
+  212  mv *.png /lab1/
+  213  mv *.png /MDO2026_ITE/grupa6/KW423138/lab1/
+  214  mv *.png ~/MDO2026_ITE/grupa6/KW423138/lab1/
+  215  ls
+  216  cd lab1
+  217  ls
+  218  cd ..
+  219  mv Sprawozdanie1.md ~/lab1/
+  220  mv Sprawozdanie1.md ~/MDO2026_ITE/grupa6/KW423138/lab1/
+  221  ls
+  222  cd lab1
+  223  ls
+  224  cd ..
+  225  cd Sprawozdanie1
+  226  ls
+  227  cd ..
+  228  ls
+  229  nano historia.txt
+  230  history > historia3.txt
+  231  nano historia3.txt
+  232  ls
+  233  cd obrazyLab3
+  234  ls
+  235  cd ..
+  236  nano Sprawozdanie2.md
+  237  git add .
+  238  git commit -m "KW423138 Sprawozdanie3 -> obrazyLab3"
+  239  git push
+  240  exit
+  241  cd express
+  242  ls
+  243  sudo docker exec -it builder bash
+  244  sudo docker start builder
+  245  sudo docker exec -it builder bash
+  246  git clone https://github.com/expressjs/express.git /var/lib/docker/volumes/input_vol/_data/express
+  247  sudo git clone https://github.com/expressjs/express.git /var/lib/docker/volumes/input_vol/_data/express
+  248  sudo docker exec -it builder bash
+  249  docker volume inspect output_vol
+  250  sudo docker volume inspect output_vol
+  251  sudo docker exec -it builder bash
+  252  ls
+  253  cd ..
+  254  docker run -it --name iperf-server ubuntu bash
+  255  iperf3 -s
+  256  sudo docker run -it --name iperf-server ubuntu bash
+  257  apt update && apt install -y iperf3
+  258  iperf3 -s
+  259  docker run -it --name iperf-server ubuntu bash
+  260  sudo docker run -it --name iperf-server ubuntu bash
+  261  sudo docker exec -it iperf-server bash
+  262  sudo docker start iper-server
+  263  sudo docker start iperf-server
+  264  sudo docker exec -it iperf-server bash
+  265  docker run -it --name iperf-client ubuntu bash
+  266  apt update && apt install -y iperf3
+  267  sudo docker run -it --name iperf-client ubuntu bash
+  268  sudo docker inspect iperf-clien | grep IPAddress
+  269  iperf3 -c <IP>
+  270  iperf3 -c 172.17.0.3
+  271  sudo docker start iperf-client
+  272  sudo docker exec -it iperf-client
+  273  sudo docker exec -it iperf-client bash
+  274  sudo docker start iperf-server
+  275  sudo docker exec -it iperf-client bash
+  276  sudo docker exec -it iperf-server bash
+  277  sudo docker exec -it iperf-client bash
+  278  sudo docker network create mynet
+  279  sudo docker run -it --name server --network mynet ubuntu
+  280  sudo docker run -it --name client --network mynet ubuntu
+  281  sudo docker network connect mynet iperf-server
+  282  sudo docker network connect mynet iperf-client
+  283  sudo docker exec -it iperf-server bash
+  284  sudo docker exec -it iperf-client bash
+  285  sudo docker run -p 5201:5201 ...
+  286  sudo docker run -p 5201:5201 iperf-server bash
+  287  iperf3 -v
+  288  sudo apt install iperf3
+  289  iperf3 -c localhost
+  290  docker run -p 5201:5201 ...
+  291  sudo docker run -p 5201:5201 ...
+  292  sudo docker run -p 5201:5201 iperf-server bash
+  293  docker run -it --name iperf-server -p 5201:5201 networkstatic/iperf3 -s
+  294  sudo docker run -it --name iperf-server -p 5201:5201 networkstatic/iperf3 -s
+  295  docker start iperf-server
+  296  docker exec -it iperf-server iperf3 -s
+  297  sudo docker start iperf-server
+  298  sudo docker exec -it iperf-server iperf3 -s
+  299  docker logs iperf-server
+  300  sudo docker logs iperf-server
+  301  sudo docker exec -it iperf-server bash
+  302  sudo docker rm -f iperf-server
+  303  sudo docker run -it --name iperf-server -p 5201:5201 networkstatic/iperf3 -s
+  304  docker run -p 5201:5201 ...
+  305  sudo docker run -p 5201:5201 ...
+  306  sudo docker ps
+  307  iperf3 -c localhost
+  308  hostname -I
+  309  sudo ufw allow 5201
+  310  docker run -it --name ssh-container -p 2222:22 ubuntu bash
+  311  sudo docker run -it --name ssh-container -p 2222:22 ubuntu bash
+  312  sudo docker inspect ssh-container | grep IPAddress
+  313  ssh root@localhost -p 2222
+  314  ssh root@localhost -p 2221
+  315  ssh root@localhost -p 2222
+  316  sudo docker run -d --name ssh-container2 -p 2222:22 ubuntu sleep infinity
+  317  sudo docker run -d --name ssh-container2 -p 2221:22 ubuntu sleep infinity
+  318  ssh root@localhost -p 2222
+  319  docker exec -it ssh-container bash
+  320  sudo docker exec -it ssh-container bash
+  321  ssh root@localhost -p 2222
+  322  service ssh restart
+  323  sudo docker stop ssh-container
+  324  sudo docker rm ssh-container
+  325  sudo docker run -d --name ssh-container -p 2222:22 ubuntu sleep infinity
+  326  sudo docker exec -it ssh-container bash
+  327  apt update
+  328  apt install -y openssh-server
+  329  service ssh start
+  330  ssh root@localhost -p 2222
+  331  ssh-keygen -f "/home/kpw22/.ssh/known_hosts" -R "[localhost]:2222"
+  332  ssh root@localhost -p 2222
+  333  docker exec -it ssh-container bash
+  334  sudo docker exec -it ssh-container bash
+  335  ssh root@localhost -p 2222
+  336  sudo docker exec -it ssh-container bash
+  337  exit
+  338  sudo docker ps
+  339  sudo docker logs jenkins
+  340  hostname -I
+  341  sudo ufw allow 8080
+  342  curl http://localhost:8080
+  343  exit
+  344  sudo docker ps
+  345  docker run -d   --name jenkins   -p 8080:8080   -p 50000:50000   jenkins/jenkins:lts
+  346  sudo docker run -d   --name jenkins   -p 8080:8080   -p 50000:50000   jenkins/jenkins:lts
+  347  sudo docker run /jenkins
+  348  sudo docker start /jenkins
+  349  sudo docker exec -it /jenkins bash
+  350  sudo docker ps
+  351  hostname -I
+  352  sudo docker logs jenkins
+  353  exit
+  354  sudo docker ps -a
+  355  history
+  356  sudo docker start /jenkins
+  357  sudo docker exec -it /jenkins bash
+  358  sudo docker pull jenkinsci/blueocean
+  359  sudo docker logs jenkins
+  360  uname -a
+  361  docker stop jenkins
+  362  docker rm jenkins
+  363  sudo docker stop jenkins
+  364  sudo docker rm jenkins
+  365  sudo docker ps -a
+  366  sudo docker run -d   --name jenkins   -p 8080:8080   -p 50000:50000   -v jenkins_home:/var/jenkins_home   -v /var/run/docker.sock:/var/run/docker.sock   jenkins/jenkins:lts
+  367  sudo docker ps -a
+  368  sudo docker start /jenkins
+  369  sudo docker exec -it /jenkins bash
+  370  sudo docker logs jenkins
+  371  sudo docker exec -it /jenkins bash
+  372  sudo docker stop jenkins
+  373  sudo docker rm jenkins
+  374  docker run   --name jenkins-blueocean   --restart=on-failure   --detach   --network jenkins   --env DOCKER_HOST=tcp://docker:2376   --env DOCKER_CERT_PATH=/certs/client   --env DOCKER_TLS_VERIFY=1   --publish 8080:8080   --publish 50000:50000   --volume jenkins-data:/var/jenkins_home   --volume jenkins-docker-certs:/certs/client:ro   myjenkins-blueocean:2.541.3-1
+  375  sudo docker run   --name jenkins-blueocean   --restart=on-failure   --detach   --network jenkins   --env DOCKER_HOST=tcp://docker:2376   --env DOCKER_CERT_PATH=/certs/client   --env DOCKER_TLS_VERIFY=1   --publish 8080:8080   --publish 50000:50000   --volume jenkins-data:/var/jenkins_home   --volume jenkins-docker-certs:/certs/client:ro   myjenkins-blueocean:2.541.3-1
+  376  sudo docker run   --name jenkins-docker   --rm   --detach   --privileged   --network jenkins   --network-alias docker   --env DOCKER_TLS_CERTDIR=/certs   --volume jenkins-docker-certs:/certs/client   --volume jenkins-data:/var/jenkins_home   --publish 2376:2376   docker:dind   --storage-driver overlay2
+  377  docker network create jenkins
+  378  sudo docker network create jenkins
+  379  sudo sudo docker run   --name jenkins-docker   --rm   --detach   --privileged   --network jenkins   --network-alias docker   --env DOCKER_TLS_CERTDIR=/certs   --volume jenkins-docker-certs:/certs/client   --volume jenkins-data:/var/jenkins_home   --publish 2376:2376   docker:dind   --storage-driver overlay2
+  380  sudo docker ps
+  381  sudo docker exec -it /jenkins-docker bash
+  382  sudo docker exec -it /jenkins bash
+  383  sudo docker start jenkins-docker
+  384  sudo docker exec -it jenkins-docker bash
+  385  sudo docker exec -it jenkins-docker sh
+  386  sudo docker pull jenkinsci/blueocean
+  387  sudo docker stop jenkins
+  388  sudo docker stop jenkins-docker
+  389  sudo docker rm jenkins-docker
+  390  sudo docker ps -a
+  391  sudo docker run -d   --name jenkins   -p 8080:8080   -p 50000:50000   -v jenkins_home:/var/jenkins_home   -v /var/run/docker.sock:/var/run/docker.sock   -u root   jenkins/jenkins:lts
+  392  sudo docker ps
+  393  sudo docker exec -u root -it jenkins bash
+  394  sudo docker restart jenkins
+  395  sudo docker exec -it jenkins bash
+  396  ls
+  397  cd MDO2026_ITE
+  398  ls
+  399  cd grupa6
+  400  ls
+  401  cd KW423138
+  402  ls
+  403  cd Sprawozdanie1
+  404  ls
+  405  nano Dockerfile
+  406  cd .
+  407  cd ..
+  408  cd ~
+  409  cd express
+  410  ls
+  411  nano Dockerfile.build
+  412  cd examples
+  413  ls
+  414  cd ~
+  415  sudo docker ps 
+  416  sudo docker stop jenkins
+  417  sudo docker ps 
+  418  cd ~/MDO2026_ITE/grupa6/KW423138
+  419  history > history5

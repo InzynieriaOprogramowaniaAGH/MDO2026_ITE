@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  build:
+    image: merge-anything-build
+    build:
+      context: .
+      dockerfile: Dockerfile.build
+    stdin_open: true
+    tty: true
+
+  test:
+    image: merge-anything-test
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    depends_on:
+      - build
