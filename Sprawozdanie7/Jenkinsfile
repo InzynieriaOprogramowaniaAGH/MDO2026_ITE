@@ -5,7 +5,7 @@ pipeline {
             steps {
                 deleteDir()
                 sh 'mkdir -p src/main/java/com/example'
-                
+
                 writeFile file: 'pom.xml', text: """
 <project xmlns="http://maven.apache.org/POM/4.0.0">
     <modelVersion>4.0.0</modelVersion>
@@ -54,14 +54,13 @@ public class DemoApplication {
 """
                 writeFile file: 'Dockerfile.prod', text: """
 FROM maven:3.9-eclipse-temurin-17-alpine AS build
-COPY . /usr/src/app
 WORKDIR /usr/src/app
+COPY . .
 RUN mvn clean package -DskipTests
 
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /usr/src/app
 COPY --from=build /usr/src/app/target/*.jar api.jar
-EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "api.jar"]
 """
             }
@@ -69,23 +68,24 @@ ENTRYPOINT ["java", "-jar", "api.jar"]
 
         stage('Build') {
             steps {
-                sh 'docker build --no-cache -t spring-api-prod:latest -f Dockerfile.prod .'
+                sh 'docker build --no-cache -t spring-api-prod:v2 -f Dockerfile.prod .'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'docker run --rm --entrypoint java spring-api-prod:latest -version'
+                sh 'docker run --rm --entrypoint java spring-api-prod:v2 -version'
             }
         }
 
         stage('Deploy (Sandbox)') {
             steps {
                 script {
-                    sh "docker run -d --name sandbox-api-${env.BUILD_ID} -p 8081:8080 spring-api-prod:latest"
-                    sh "sleep 15"
+                    sh "docker run -d --name sandbox-api-${env.BUILD_ID} -p 8081:8080 spring-api-prod:v2"
                     sh "docker logs sandbox-api-${env.BUILD_ID}"
-                    sh "curl -sI http://localhost:8081 | grep '200 OK'"
+
+                    sh "curl -s http://localhost:8081 | grep 'Hello from Jenkins Pipeline!'"
+
                     sh "docker stop sandbox-api-${env.BUILD_ID} && docker rm sandbox-api-${env.BUILD_ID}"
                 }
             }
@@ -94,12 +94,17 @@ ENTRYPOINT ["java", "-jar", "api.jar"]
         stage('Publish') {
             steps {
                 script {
-                    sh "docker create --name temp-art-${env.BUILD_ID} spring-api-prod:latest"
+                    sh "docker create --name temp-art-${env.BUILD_ID} spring-api-prod:v2"
                     sh "docker cp temp-art-${env.BUILD_ID}:/usr/src/app/api.jar ./api-v${env.BUILD_ID}.jar"
                     sh "docker rm temp-art-${env.BUILD_ID}"
                     archiveArtifacts artifacts: "*.jar", fingerprint: true
                 }
             }
+        }
+    }
+    post {
+        always {
+            deleteDir()
         }
     }
 }
