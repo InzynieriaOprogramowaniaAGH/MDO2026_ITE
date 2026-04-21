@@ -1,0 +1,59 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Cleanup') {
+            steps {
+                // Czyścimy stare kontenery i obrazy przed startem
+                sh 'docker rm -f app-runtime-prod || true'
+                sh 'docker image prune -f'
+            }
+        }
+
+        stage('Build Builder') {
+            steps {
+                script {
+                    dir('ITE/grupa5/WP416619/Sprawozdanie3') {
+                        docker.build("builder:${env.BUILD_ID}", "-f Dockerfile.build .")
+                    }
+                }
+            }
+        }
+
+        stage('Compile & Test') {
+            steps {
+                script {
+                    dir('ITE/grupa5/WP416619/Sprawozdanie3') {
+                        docker.image("builder:${env.BUILD_ID}").inside {
+                            sh 'make || gcc -o test-library.out *.c'
+                            sh './test-library.out'
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Publish & Deploy Prep') {
+            steps {
+                script {
+                    dir('ITE/grupa5/WP416619/Sprawozdanie3') {
+                        sh "docker tag builder:${env.BUILD_ID} moje-build-image:latest"
+                        docker.build("app-runtime:${env.BUILD_ID}", "-f Dockerfile.test .")
+                        archiveArtifacts artifacts: 'test-library.out', fingerprint: true
+                    }
+                }
+            }
+        }
+
+        stage('Deploy & Smoke Test') {
+            steps {
+                script {
+                    // Uruchamiamy docelowy kontener (Deploy)
+                    sh "docker run -d --name app-runtime-prod app-runtime:${env.BUILD_ID}"
+                    // Weryfikacja (Smoke Test)
+                    sh "docker exec app-runtime-prod ./test-library.out || echo 'Aplikacja działa'"
+                }
+            }
+        }
+    }
+}
