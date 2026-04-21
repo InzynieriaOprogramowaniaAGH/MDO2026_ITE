@@ -1,13 +1,5 @@
 .npm
 node_modules/
-out/
-api/
 .nyc_output/
 coverage/
-public/
-test/
-package.json
-package-lock.json
-server.js
-README.md
-LICENSE
+app-source/
