@@ -1,0 +1,117 @@
+pipeline {
+    agent any
+
+    environment {
+        BUILD_IMG = 'build-image'
+        TEST_IMG  = 'test-image'
+        DEPLOY_NAME = 'express-app-deploy'
+        NETWORK_NAME = 'mdo-network'
+        // Wersjonowanie na podstawie numeru buildu Jenkinsa (Semantic Versioning 1.0.BUILD_ID)
+        APP_VERSION = "1.0.${env.BUILD_ID}"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'AJ420697', url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo "Budowanie wersji ${APP_VERSION}..."
+                sh "docker build -f grupa2/AJ420697/Sprawozdanie3/Dockerfile.build -t ${BUILD_IMG}:${APP_VERSION} -t ${BUILD_IMG}:latest ."
+            }
+        }
+
+        stage('Test') {
+            steps {
+                script {
+                    // Przekierowujemy wynik testów do pliku, żeby mieć artefakt
+                    sh "docker build -f grupa2/AJ420697/Sprawozdanie3/Dockerfile.test -t ${TEST_IMG} ."
+                    sh "docker run --rm ${TEST_IMG} > test_results.log 2>&1"
+                }
+            }
+            post {
+                always {
+                    archiveArtifacts artifacts: 'test_results.log', fingerprint: true
+                }
+            }
+        }
+
+        stage('Deploy & Smoke Test') {
+            steps {
+                script {
+                    sh "docker network create ${NETWORK_NAME} || true"
+
+                    sh """
+                    docker run -d \
+                        --name ${DEPLOY_NAME} \
+                        --network ${NETWORK_NAME} \
+                        --network-alias moja-apka \
+                        ${BUILD_IMG}:latest \
+                        node examples/hello-world/index.js
+                    """
+                    
+                    sleep 5
+                    
+                    // Zapisujemy logi kontenera do pliku
+                    sh "docker logs ${DEPLOY_NAME} > container_deploy.log 2>&1"
+
+                    echo 'Walidacja (Smoke Test)...'
+                    // Zapisujemy wynik curla do pliku
+                    sh """
+                    docker run --rm \
+                        --network ${NETWORK_NAME} \
+                        alpine/curl \
+                        curl -v http://moja-apka:3000/ > validation.log 2>&1
+                    """
+                }
+            }
+            post {
+                always {
+                    // Archiwizacja wszystkich logów z tego etapu
+                    archiveArtifacts artifacts: '*.log', allowEmptyArchive: true
+                }
+            }
+        }
+
+        stage('Publish') {
+            steps {
+                script {
+                    echo "Publishing Docker image ${BUILD_IMG} as version ${APP_VERSION}..."
+
+                    // 1. Zapisujemy obraz do pliku .tar z numerem buildu w nazwie
+                    // Dzięki temu nazwa pliku jednoznacznie identyfikuje pochodzenie
+                    sh "docker save ${BUILD_IMG}:${APP_VERSION} -o ${BUILD_IMG}_build_${env.BUILD_ID}.tar"
+                    
+                    // 2. Tworzymy plik metadanych (identyfikacja pochodzenia wewnątrz artefaktu)
+                    sh """
+                        echo 'Build Information' > metadata.txt
+                        echo 'Build Number: ${env.BUILD_ID}' >> metadata.txt
+                        echo 'Git Commit: ${sh(script: 'git rev-parse HEAD', returnStdout: true).trim()}' >> metadata.txt
+                        echo 'Image Tag: ${BUILD_IMG}:${APP_VERSION}' >> metadata.txt
+                        echo 'Date: \$(date)' >> metadata.txt
+                    """
+
+                    // 3. Archiwizujemy oba pliki w Jenkinsie
+                    archiveArtifacts artifacts: "${BUILD_IMG}_build_${env.BUILD_ID}.tar, metadata.txt", fingerprint: true
+                    
+                    echo "Artifacts archived: ${BUILD_IMG}_build_${env.BUILD_ID}.tar and metadata.txt"
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Sprzątanie środowiska...'
+            sh "docker stop ${DEPLOY_NAME} || true"
+            sh "docker rm ${DEPLOY_NAME} || true"
+            sh "docker network rm ${NETWORK_NAME} || true"
+        }
+        success {
+            echo "Pipeline zakończony sukcesem dla wersji ${APP_VERSION}"
+        }
+    }
+}
