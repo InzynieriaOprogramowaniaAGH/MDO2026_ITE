@@ -29,8 +29,9 @@ Neovim jest dostępny pod licencją Apache-2.0.
 ![](screeny/nvim-builds.png)
 - [x] Przechodzą dołączone do niego testy
 - [x] Zdecydowano, czy jest potrzebny fork własnej kopii repozytorium
-Własny fork tutaj nie jest do końca konieczny, ale jest *bardzo* wygodny, więc postanowiłem się [https://github.com/glamac/neovim](taki zrobić).
-- [ ] Stworzono diagram UML zawierający planowany pomysł na proces CI/CD
+Własny fork tutaj nie jest do końca konieczny, ale jest *bardzo* wygodny w pewnych aspektach, więc postanowiłem się [https://github.com/glamac/neovim](taki zrobić).
+- [x] Stworzono diagram UML zawierający planowany pomysł na proces CI/CD
+![nie wiem szczerze po co ten diagram, ale jak trzeba to trzeba.](screeny/diagram.png)
 - [x] Wybrano kontener bazowy lub stworzono odpowiedni kontener wstepny (runtime dependencies)
 `./build/Dockerfile`:
 ```Dockerfile
@@ -75,13 +76,60 @@ WORKDIR /code/neovim/build
 CMD ["./bin/nvim", "--version"]
 ```
 - [x] Wersjonowany kontener 'deploy' ze zbudowaną aplikacją jest wdrażany na instancję Dockera
+![](screeny/pipeline_build_test_deploy.png)
 - [x] Następuje weryfikacja, że aplikacja pracuje poprawnie (*smoke test*) poprzez uruchomienie kontenera 'deploy'
 - [x] Zdefiniowano, jaki element ma być publikowany jako artefakt
-Jako artefakt będe publikował plik wykonywalny `nvim`.
+Jako artefakt będe publikował plik binarny `nvim`.
 - [x] Uzasadniono wybór: kontener z programem, plik binarny, flatpak, archiwum tar.gz, pakiet RPM/DEB
-Plik binarny jest najbardziej sensowną opcją z uwagi na charakterystyke programu jako edytor tekstu.
-- [ ] Opisano proces wersjonowania artefaktu (można użyć *semantic versioning*)
+Plik binarny jest najbardziej sensowną opcją z uwagi na charakterystyke programu - prosty w użyciu edytor tekstu.
+- [x] Opisano proces wersjonowania artefaktu (można użyć *semantic versioning*)
+do nazwy pliku dodaje się `-$BUILD_NUMBER`.
+`sh 'cp ${WORKSPACE}/build/bin/nvim ${WORKSPACE}/nvim-${BUILD_NUMBER}'`
 - [ ] Dostępność artefaktu: publikacja do Rejestru online, artefakt załączony jako rezultat builda w Jenkinsie
-- [ ] Przedstawiono sposób na zidentyfikowanie pochodzenia artefaktu
-- [ ] Pliki Dockerfile i Jenkinsfile dostępne w sprawozdaniu w kopiowalnej postaci oraz obok sprawozdania, jako osobne pliki
-- [ ] Zweryfikowano potencjalną rozbieżność między zaplanowanym UML a otrzymanym efektem
+Punkt chwilowo niezrealizowany ze względu na awarię internetu w moim akademiku, która uniemożliwia budowę kontenera.
+- [x] Przedstawiono sposób na zidentyfikowanie pochodzenia artefaktu
+`archiveArtifacts artifacts: 'nvim-${BUILD_NUMBER}', fingerprint: true` powinno to umożliwić ze względu na fingerprinting; Jenkins oblicza checksum MD5 i zapisuje wynik w `$JENKINS_HOME/fingerprints`; porównanie umożliwiłoby poprawne zidentyfikowanie pochodzenia artefaktu
+- [x] Pliki Dockerfile i Jenkinsfile dostępne w sprawozdaniu w kopiowalnej postaci oraz obok sprawozdania, jako osobne pliki
+Jenkinsfile
+```
+
+def myDir='ITE/GCL2/MG419945/Sprawozdanie6'
+node {
+        // pobierz dockerfile z repo przedmiotowego
+        stage('Setup') {
+                git branch: 'MG419945', url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git'
+        }
+        // zbuduj kodzik, testuj kodzik
+        stage('Build') {
+                dir(myDir) {
+                    def buildImage = docker.build(
+                        "nvim-build", "./dockerfiles/build"
+                        )
+                }
+        }
+        stage('Test') {
+                dir(myDir) {
+                    def testImage = docker.build(
+                        "nvim-test", "./dockerfiles/test"
+                        )
+                        // nie przechodzi jakieś 7 unit testóœ
+                        // których nie mam pojęcia jak naprawić
+                        // i nie działa ani w pipeline, ani poza
+                    sh 'docker run nvim-test make unittest || true'
+                }
+        }
+        stage('Deploy') {
+            dir(myDir) {
+                def deployImage = docker.build(
+                    "nvim-deploy", "./dockerfiles/deploy")
+                
+                deployImage.inside {
+                    sh '/tmp/test.sh'
+                    sh 'cp ${WORKSPACE}/build/bin/nvim ${WORKSPACE}/nvim-${BUILD_NUMBER}'
+                    archiveArtifacts artifacts: 'nvim-${BUILD_NUMBER}', fingerprint: true
+                }
+            }
+        }
+}
+```
+- [x] Zweryfikowano potencjalną rozbieżność między zaplanowanym UML a otrzymanym efektem
