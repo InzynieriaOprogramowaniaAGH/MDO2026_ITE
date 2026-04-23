@@ -9,10 +9,10 @@ RUN useradd -ms /bin/bash jenkins
 WORKDIR /code
 RUN chown -R jenkins:jenkins /code
 RUN chmod 755 /code
-USER jenkins
 RUN git clone https://github.com/glamac/neovim
 
 WORKDIR /code/neovim
+USER jenkins
 
 ENV CMAKE_BUILD_TYPE=RelWithDebInfo
 RUN make
