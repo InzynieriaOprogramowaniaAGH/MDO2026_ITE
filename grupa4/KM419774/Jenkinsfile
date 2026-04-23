@@ -11,15 +11,13 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'docker build -t express-km419774 .'
+                sh 'docker build -t express-km419774 ./grupa4/KM419774'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'echo "TEST: placeholder"'
-                // opcjonalnie:
-                // sh 'docker run --rm express-km419774 npm test'
+                sh 'echo "TEST OK (placeholder)"'
             }
         }
 
