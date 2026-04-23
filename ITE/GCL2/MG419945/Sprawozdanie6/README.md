@@ -76,8 +76,10 @@ CMD ["./bin/nvim", "--version"]
 ```
 - [x] Wersjonowany kontener 'deploy' ze zbudowaną aplikacją jest wdrażany na instancję Dockera
 - [x] Następuje weryfikacja, że aplikacja pracuje poprawnie (*smoke test*) poprzez uruchomienie kontenera 'deploy'
-- [ ] Zdefiniowano, jaki element ma być publikowany jako artefakt
-- [ ] Uzasadniono wybór: kontener z programem, plik binarny, flatpak, archiwum tar.gz, pakiet RPM/DEB
+- [x] Zdefiniowano, jaki element ma być publikowany jako artefakt
+Jako artefakt będe publikował plik wykonywalny `nvim`.
+- [x] Uzasadniono wybór: kontener z programem, plik binarny, flatpak, archiwum tar.gz, pakiet RPM/DEB
+Plik binarny jest najbardziej sensowną opcją z uwagi na charakterystyke programu jako edytor tekstu.
 - [ ] Opisano proces wersjonowania artefaktu (można użyć *semantic versioning*)
 - [ ] Dostępność artefaktu: publikacja do Rejestru online, artefakt załączony jako rezultat builda w Jenkinsie
 - [ ] Przedstawiono sposób na zidentyfikowanie pochodzenia artefaktu
