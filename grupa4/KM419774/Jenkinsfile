@@ -11,13 +11,15 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'docker build -t express-km419774 .'
+                sh 'docker build -t express-km419774 ./grupa4/KM419774'
             }
         }
 
         stage('Run') {
             steps {
-                sh 'docker run -d -p 3000:3000 express-km419774 || true'
+                sh 'docker stop express || true'
+                sh 'docker rm express || true'
+                sh 'docker run -d --name express -p 3000:3000 express-km419774'
             }
         }
     }
