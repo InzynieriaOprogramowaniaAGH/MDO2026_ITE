@@ -10,7 +10,21 @@ pipeline {
         APP_VERSION = "1.0.${env.BUILD_ID}"
     }
 
+    options {
+        // czyszczenie katalogu roboczeog
+        skipDefaultCheckout() 
+    }
+
     stages {
+        stage('Checkout & Clean') {
+            steps {
+                // czyszczenie
+                cleanWs()
+                checkout scm
+            }
+        }
+
+
         stage('Checkout') {
             steps {
                 git branch: 'AJ420697', url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git'
