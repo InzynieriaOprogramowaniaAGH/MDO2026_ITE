@@ -1,0 +1,404 @@
+Started by user AdminUser
+
+Obtained MP420244/Sprawozdanie7/Jenkinsfile from git https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins
+ in /var/jenkins_home/workspace/Lab7 jenkinsfile
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+The recommended git tool is: git
+No credentials specified
+Cloning the remote Git repository
+Cloning repository https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+ > git init /var/jenkins_home/workspace/Lab7 jenkinsfile # timeout=10
+Fetching upstream changes from https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+ > git rev-parse origin/MP420244^{commit} # timeout=10
+Checking out Revision 20ddd845aa9dca0f76c5cef3dad8c082086263b0 (origin/MP420244)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 20ddd845aa9dca0f76c5cef3dad8c082086263b0 # timeout=10
+Commit message: "Jenkinsfile v0.1.10"
+ > git rev-list --no-walk ed84693a12a1b1687ea1b50ee12467d5b8252aab # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Prepare)
+[Pipeline] echo
+---=== STAGE: PREPARE ===---
+[Pipeline] echo
+Cleaning up artifacts...
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ rm -rf ART_*
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] echo
+---=== STAGE: BUILD ===---
+[Pipeline] echo
+Building application...
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ docker build --no-cache --target builder -t my-app-build:BLDR -f MP420244/Sprawozdanie7/Dockerfile .
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 569B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/gcc:latest
+#2 DONE 1.7s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [builder 1/6] FROM docker.io/library/gcc:latest@sha256:1b8e87c57408eecb774f3e92f1ac6e580438f0d1a0addf541ec686d0474d8c21
+#4 resolve docker.io/library/gcc:latest@sha256:1b8e87c57408eecb774f3e92f1ac6e580438f0d1a0addf541ec686d0474d8c21 0.0s done
+#4 sha256:9cc4be4b00ddf83bdf6327c1ca6f60be10cb1dd5fa5040da640fc400c0475327 2.49kB / 2.49kB done
+#4 sha256:c037a0f8a4576284927ff21e8ba19a9038b87db64e3253d39ae56f4a3139656a 7.42kB / 7.42kB done
+#4 sha256:f33970743aee750df25f6c661132b7401c8fefe930e5f4803f4c8b6f567a6b55 0B / 25.62MB 0.1s
+#4 sha256:5397da1d1537c4d725f3090c5688a582e14eeaf7743d75d9b38bad1649554987 0B / 67.78MB 0.1s
+#4 sha256:a7730063fcfe708b222d34c4f07d633dfe087a28c05c4daaab2fa9943854c155 0B / 49.30MB 0.1s
+#4 sha256:1b8e87c57408eecb774f3e92f1ac6e580438f0d1a0addf541ec686d0474d8c21 7.63kB / 7.63kB done
+#4 sha256:a7730063fcfe708b222d34c4f07d633dfe087a28c05c4daaab2fa9943854c155 5.24MB / 49.30MB 0.6s
+#4 sha256:a7730063fcfe708b222d34c4f07d633dfe087a28c05c4daaab2fa9943854c155 10.49MB / 49.30MB 0.8s
+#4 sha256:f33970743aee750df25f6c661132b7401c8fefe930e5f4803f4c8b6f567a6b55 2.10MB / 25.62MB 1.0s
+#4 sha256:a7730063fcfe708b222d34c4f07d633dfe087a28c05c4daaab2fa9943854c155 15.20MB / 49.30MB 1.0s
+#4 sha256:a7730063fcfe708b222d34c4f07d633dfe087a28c05c4daaab2fa9943854c155 18.87MB / 49.30MB 1.1s
+#4 sha256:f33970743aee750df25f6c661132b7401c8fefe930e5f4803f4c8b6f567a6b55 4.19MB / 25.62MB 1.5s
+#4 sha256:a7730063fcfe708b222d34c4f07d633dfe087a28c05c4daaab2fa9943854c155 24.12MB / 49.30MB 1.5s
+#4 sha256:f33970743aee750df25f6c661132b7401c8fefe930e5f4803f4c8b6f567a6b55 7.34MB / 25.62MB 1.8s
+#4 sha256:a7730063fcfe708b222d34c4f07d633dfe087a28c05c4daaab2fa9943854c155 30.41MB / 49.30MB 1.8s
+#4 sha256:5397da1d1537c4d725f3090c5688a582e14eeaf7743d75d9b38bad1649554987 4.19MB / 67.78MB 1.9s
+#4 sha256:a7730063fcfe708b222d34c4f07d633dfe087a28c05c4daaab2fa9943854c155 35.65MB / 49.30MB 2.0s
+#4 sha256:a7730063fcfe708b222d34c4f07d633dfe087a28c05c4daaab2fa9943854c155 38.80MB / 49.30MB 2.1s
+#4 sha256:f33970743aee750df25f6c661132b7401c8fefe930e5f4803f4c8b6f567a6b55 10.49MB / 25.62MB 2.2s
+#4 sha256:f33970743aee750df25f6c661132b7401c8fefe930e5f4803f4c8b6f567a6b55 12.58MB / 25.62MB 2.6s
+#4 sha256:5397da1d1537c4d725f3090c5688a582e14eeaf7743d75d9b38bad1649554987 8.39MB / 67.78MB 2.6s
+#4 sha256:f33970743aee750df25f6c661132b7401c8fefe930e5f4803f4c8b6f567a6b55 14.68MB / 25.62MB 2.8s
+#4 sha256:a7730063fcfe708b222d34c4f07d633dfe087a28c05c4daaab2fa9943854c155 48.23MB / 49.30MB 2.8s
+#4 sha256:f33970743aee750df25f6c661132b7401c8fefe930e5f4803f4c8b6f567a6b55 16.78MB / 25.62MB 2.9s
+#4 sha256:5397da1d1537c4d725f3090c5688a582e14eeaf7743d75d9b38bad1649554987 12.58MB / 67.78MB 2.9s
+#4 sha256:f33970743aee750df25f6c661132b7401c8fefe930e5f4803f4c8b6f567a6b55 18.87MB / 25.62MB 3.1s
+#4 sha256:5397da1d1537c4d725f3090c5688a582e14eeaf7743d75d9b38bad1649554987 16.78MB / 67.78MB 3.1s
+#4 sha256:a7730063fcfe708b222d34c4f07d633dfe087a28c05c4daaab2fa9943854c155 49.30MB / 49.30MB 3.0s done
+#4 sha256:f33970743aee750df25f6c661132b7401c8fefe930e5f4803f4c8b6f567a6b55 20.97MB / 25.62MB 3.2s
+#4 sha256:1ecbddc58afba44ec9b55fb51ec8bfdee5112cd31b39b564f5abb4567d094ffc 0B / 236.08MB 3.2s
+#4 sha256:f33970743aee750df25f6c661132b7401c8fefe930e5f4803f4c8b6f567a6b55 25.17MB / 25.62MB 3.4s
+#4 sha256:5397da1d1537c4d725f3090c5688a582e14eeaf7743d75d9b38bad1649554987 20.97MB / 67.78MB 3.4s
+#4 sha256:f33970743aee750df25f6c661132b7401c8fefe930e5f4803f4c8b6f567a6b55 25.62MB / 25.62MB 3.6s done
+#4 sha256:5397da1d1537c4d725f3090c5688a582e14eeaf7743d75d9b38bad1649554987 26.21MB / 67.78MB 3.9s
+#4 sha256:03df1355a17c245bb9b7436c4c6d1a86e01526e2ac34a3c5d4c3f834a4feab8d 0B / 4.59MB 3.9s
+#4 extracting sha256:a7730063fcfe708b222d34c4f07d633dfe087a28c05c4daaab2fa9943854c155
+#4 sha256:5397da1d1537c4d725f3090c5688a582e14eeaf7743d75d9b38bad1649554987 31.46MB / 67.78MB 4.2s
+#4 sha256:03df1355a17c245bb9b7436c4c6d1a86e01526e2ac34a3c5d4c3f834a4feab8d 3.15MB / 4.59MB 4.4s
+#4 sha256:5397da1d1537c4d725f3090c5688a582e14eeaf7743d75d9b38bad1649554987 36.70MB / 67.78MB 4.6s
+#4 sha256:1ecbddc58afba44ec9b55fb51ec8bfdee5112cd31b39b564f5abb4567d094ffc 15.73MB / 236.08MB 4.6s
+#4 sha256:03df1355a17c245bb9b7436c4c6d1a86e01526e2ac34a3c5d4c3f834a4feab8d 4.59MB / 4.59MB 4.5s done
+#4 sha256:060f6b1e24554f6fdfb4738e7aee48dfe43631b19631bfce79651acde47360a7 0B / 168.14MB 4.8s
+#4 sha256:5397da1d1537c4d725f3090c5688a582e14eeaf7743d75d9b38bad1649554987 40.89MB / 67.78MB 4.9s
+#4 sha256:5397da1d1537c4d725f3090c5688a582e14eeaf7743d75d9b38bad1649554987 47.19MB / 67.78MB 5.4s
+#4 sha256:060f6b1e24554f6fdfb4738e7aee48dfe43631b19631bfce79651acde47360a7 9.44MB / 168.14MB 5.5s
+#4 sha256:5397da1d1537c4d725f3090c5688a582e14eeaf7743d75d9b38bad1649554987 51.38MB / 67.78MB 5.7s
+#4 sha256:1ecbddc58afba44ec9b55fb51ec8bfdee5112cd31b39b564f5abb4567d094ffc 30.41MB / 236.08MB 5.7s
+#4 sha256:5397da1d1537c4d725f3090c5688a582e14eeaf7743d75d9b38bad1649554987 57.67MB / 67.78MB 6.2s
+#4 sha256:1ecbddc58afba44ec9b55fb51ec8bfdee5112cd31b39b564f5abb4567d094ffc 44.04MB / 236.08MB 6.4s
+#4 sha256:060f6b1e24554f6fdfb4738e7aee48dfe43631b19631bfce79651acde47360a7 18.87MB / 168.14MB 6.6s
+#4 sha256:5397da1d1537c4d725f3090c5688a582e14eeaf7743d75d9b38bad1649554987 62.91MB / 67.78MB 6.8s
+#4 sha256:5397da1d1537c4d725f3090c5688a582e14eeaf7743d75d9b38bad1649554987 67.11MB / 67.78MB 7.2s
+#4 sha256:060f6b1e24554f6fdfb4738e7aee48dfe43631b19631bfce79651acde47360a7 28.31MB / 168.14MB 7.2s
+#4 sha256:5397da1d1537c4d725f3090c5688a582e14eeaf7743d75d9b38bad1649554987 67.78MB / 67.78MB 7.4s done
+#4 sha256:1ecbddc58afba44ec9b55fb51ec8bfdee5112cd31b39b564f5abb4567d094ffc 60.82MB / 236.08MB 7.5s
+#4 sha256:827c0fa58d5a2f739ce2fb4afce8ee5e5c1830b69eec9967303c36270d07c66f 0B / 10.65kB 7.5s
+#4 sha256:827c0fa58d5a2f739ce2fb4afce8ee5e5c1830b69eec9967303c36270d07c66f 10.65kB / 10.65kB 7.8s done
+#4 sha256:ca52f4331e6876eb3b52303d60f0b365296826138dbabd1d2b026042e09daddd 0B / 2.00kB 7.9s
+#4 sha256:ca52f4331e6876eb3b52303d60f0b365296826138dbabd1d2b026042e09daddd 2.00kB / 2.00kB 8.2s done
+#4 sha256:060f6b1e24554f6fdfb4738e7aee48dfe43631b19631bfce79651acde47360a7 37.75MB / 168.14MB 8.8s
+#4 extracting sha256:a7730063fcfe708b222d34c4f07d633dfe087a28c05c4daaab2fa9943854c155 5.4s
+#4 sha256:060f6b1e24554f6fdfb4738e7aee48dfe43631b19631bfce79651acde47360a7 47.19MB / 168.14MB 10.0s
+#4 sha256:1ecbddc58afba44ec9b55fb51ec8bfdee5112cd31b39b564f5abb4567d094ffc 73.40MB / 236.08MB 10.1s
+#4 sha256:1ecbddc58afba44ec9b55fb51ec8bfdee5112cd31b39b564f5abb4567d094ffc 89.13MB / 236.08MB 10.9s
+#4 sha256:060f6b1e24554f6fdfb4738e7aee48dfe43631b19631bfce79651acde47360a7 59.77MB / 168.14MB 10.9s
+#4 sha256:1ecbddc58afba44ec9b55fb51ec8bfdee5112cd31b39b564f5abb4567d094ffc 103.28MB / 236.08MB 11.3s
+#4 sha256:060f6b1e24554f6fdfb4738e7aee48dfe43631b19631bfce79651acde47360a7 70.25MB / 168.14MB 11.3s
+#4 sha256:060f6b1e24554f6fdfb4738e7aee48dfe43631b19631bfce79651acde47360a7 79.69MB / 168.14MB 11.5s
+#4 sha256:1ecbddc58afba44ec9b55fb51ec8bfdee5112cd31b39b564f5abb4567d094ffc 119.54MB / 236.08MB 11.8s
+#4 sha256:060f6b1e24554f6fdfb4738e7aee48dfe43631b19631bfce79651acde47360a7 90.18MB / 168.14MB 12.2s
+#4 sha256:1ecbddc58afba44ec9b55fb51ec8bfdee5112cd31b39b564f5abb4567d094ffc 134.22MB / 236.08MB 12.5s
+#4 sha256:060f6b1e24554f6fdfb4738e7aee48dfe43631b19631bfce79651acde47360a7 99.61MB / 168.14MB 12.5s
+#4 sha256:060f6b1e24554f6fdfb4738e7aee48dfe43631b19631bfce79651acde47360a7 110.10MB / 168.14MB 12.9s
+#4 sha256:1ecbddc58afba44ec9b55fb51ec8bfdee5112cd31b39b564f5abb4567d094ffc 146.80MB / 236.08MB 13.3s
+#4 sha256:060f6b1e24554f6fdfb4738e7aee48dfe43631b19631bfce79651acde47360a7 119.54MB / 168.14MB 13.7s
+#4 sha256:1ecbddc58afba44ec9b55fb51ec8bfdee5112cd31b39b564f5abb4567d094ffc 159.38MB / 236.08MB 13.8s
+#4 sha256:1ecbddc58afba44ec9b55fb51ec8bfdee5112cd31b39b564f5abb4567d094ffc 173.02MB / 236.08MB 14.4s
+#4 sha256:060f6b1e24554f6fdfb4738e7aee48dfe43631b19631bfce79651acde47360a7 133.17MB / 168.14MB 14.4s
+#4 extracting sha256:a7730063fcfe708b222d34c4f07d633dfe087a28c05c4daaab2fa9943854c155 10.6s
+#4 sha256:060f6b1e24554f6fdfb4738e7aee48dfe43631b19631bfce79651acde47360a7 144.70MB / 168.14MB 14.7s
+#4 sha256:1ecbddc58afba44ec9b55fb51ec8bfdee5112cd31b39b564f5abb4567d094ffc 186.65MB / 236.08MB 14.9s
+#4 sha256:060f6b1e24554f6fdfb4738e7aee48dfe43631b19631bfce79651acde47360a7 155.19MB / 168.14MB 15.0s
+#4 sha256:1ecbddc58afba44ec9b55fb51ec8bfdee5112cd31b39b564f5abb4567d094ffc 200.28MB / 236.08MB 15.5s
+#4 sha256:060f6b1e24554f6fdfb4738e7aee48dfe43631b19631bfce79651acde47360a7 168.03MB / 168.14MB 15.5s
+#4 sha256:1ecbddc58afba44ec9b55fb51ec8bfdee5112cd31b39b564f5abb4567d094ffc 219.15MB / 236.08MB 15.8s
+#4 sha256:060f6b1e24554f6fdfb4738e7aee48dfe43631b19631bfce79651acde47360a7 168.14MB / 168.14MB 15.7s done
+#4 sha256:1ecbddc58afba44ec9b55fb51ec8bfdee5112cd31b39b564f5abb4567d094ffc 236.08MB / 236.08MB 16.2s
+#4 sha256:1ecbddc58afba44ec9b55fb51ec8bfdee5112cd31b39b564f5abb4567d094ffc 236.08MB / 236.08MB 16.3s done
+#4 extracting sha256:a7730063fcfe708b222d34c4f07d633dfe087a28c05c4daaab2fa9943854c155 12.6s done
+#4 extracting sha256:f33970743aee750df25f6c661132b7401c8fefe930e5f4803f4c8b6f567a6b55
+#4 extracting sha256:f33970743aee750df25f6c661132b7401c8fefe930e5f4803f4c8b6f567a6b55 0.6s done
+#4 extracting sha256:5397da1d1537c4d725f3090c5688a582e14eeaf7743d75d9b38bad1649554987
+#4 extracting sha256:5397da1d1537c4d725f3090c5688a582e14eeaf7743d75d9b38bad1649554987 2.5s done
+#4 extracting sha256:1ecbddc58afba44ec9b55fb51ec8bfdee5112cd31b39b564f5abb4567d094ffc
+#4 extracting sha256:1ecbddc58afba44ec9b55fb51ec8bfdee5112cd31b39b564f5abb4567d094ffc 5.1s
+#4 extracting sha256:1ecbddc58afba44ec9b55fb51ec8bfdee5112cd31b39b564f5abb4567d094ffc 6.9s done
+#4 extracting sha256:03df1355a17c245bb9b7436c4c6d1a86e01526e2ac34a3c5d4c3f834a4feab8d
+#4 extracting sha256:03df1355a17c245bb9b7436c4c6d1a86e01526e2ac34a3c5d4c3f834a4feab8d 0.1s done
+#4 extracting sha256:060f6b1e24554f6fdfb4738e7aee48dfe43631b19631bfce79651acde47360a7 0.1s
+#4 extracting sha256:060f6b1e24554f6fdfb4738e7aee48dfe43631b19631bfce79651acde47360a7 7.0s
+#4 extracting sha256:060f6b1e24554f6fdfb4738e7aee48dfe43631b19631bfce79651acde47360a7 12.1s
+#4 extracting sha256:060f6b1e24554f6fdfb4738e7aee48dfe43631b19631bfce79651acde47360a7 12.7s done
+#4 extracting sha256:827c0fa58d5a2f739ce2fb4afce8ee5e5c1830b69eec9967303c36270d07c66f done
+#4 extracting sha256:ca52f4331e6876eb3b52303d60f0b365296826138dbabd1d2b026042e09daddd done
+#4 DONE 46.8s
+
+#5 [builder 2/6] WORKDIR /app
+#5 DONE 3.0s
+
+#6 [builder 3/6] RUN apt-get update && apt-get install -y git make && rm -rf /var/lib/apt/lists/*
+#6 1.412 Get:1 http://deb.debian.org/debian trixie InRelease [140 kB]
+#6 1.440 Get:2 http://deb.debian.org/debian trixie-updates InRelease [47.3 kB]
+#6 1.481 Get:3 http://deb.debian.org/debian-security trixie-security InRelease [43.4 kB]
+#6 1.516 Get:4 http://deb.debian.org/debian trixie/main amd64 Packages [9671 kB]
+#6 5.755 Get:5 http://deb.debian.org/debian trixie-updates/main amd64 Packages [5412 B]
+#6 5.778 Get:6 http://deb.debian.org/debian-security trixie-security/main amd64 Packages [125 kB]
+#6 6.532 Fetched 10.0 MB in 5s (1881 kB/s)
+#6 6.532 Reading package lists...
+#6 7.241 Reading package lists...
+#6 7.795 Building dependency tree...
+#6 7.929 Reading state information...
+#6 8.226 git is already the newest version (1:2.47.3-0+deb13u1).
+#6 8.226 make is already the newest version (4.4.1-2).
+#6 8.226 0 upgraded, 0 newly installed, 0 to remove and 13 not upgraded.
+#6 DONE 8.3s
+
+#7 [builder 4/6] RUN git clone https://github.com/deftio/C-and-Cpp-Tests-with-CI-CD-Example.git
+#7 0.397 Cloning into 'C-and-Cpp-Tests-with-CI-CD-Example'...
+#7 DONE 3.3s
+
+#8 [builder 5/6] WORKDIR /app/C-and-Cpp-Tests-with-CI-CD-Example
+#8 DONE 0.1s
+
+#9 [builder 6/6] RUN make
+#9 0.150 gcc -c -o lib.o lib.c -I. -Wall -Wextra -ftest-coverage -fprofile-arcs -O0  
+#9 0.241 gcc -c -o test-library.o test-library.c -I. -Wall -Wextra -ftest-coverage -fprofile-arcs -O0  
+#9 0.293 gcc -o test-library.out lib.o test-library.o -I. -Wall -Wextra -ftest-coverage -fprofile-arcs -lm -lncurses -O0  
+#9 DONE 0.4s
+
+#10 exporting to image
+#10 exporting layers
+#10 exporting layers 0.2s done
+#10 writing image sha256:9b67d5e31b3811c1b703cf772ec562f725a40965f9f72484864f9b0c7ad706a6
+#10 writing image sha256:9b67d5e31b3811c1b703cf772ec562f725a40965f9f72484864f9b0c7ad706a6 done
+#10 naming to docker.io/library/my-app-build:BLDR done
+#10 DONE 0.2s
+[Pipeline] sh
++ docker build --no-cache -t my-app-build:13 -f MP420244/Sprawozdanie7/Dockerfile .
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 569B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/gcc:latest
+#2 DONE 0.5s
+
+#3 [internal] load metadata for docker.io/library/debian:stable-slim
+#3 DONE 1.4s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [builder 1/6] FROM docker.io/library/gcc:latest@sha256:1b8e87c57408eecb774f3e92f1ac6e580438f0d1a0addf541ec686d0474d8c21
+#5 DONE 0.0s
+
+#6 [builder 2/6] WORKDIR /app
+#6 CACHED
+
+#7 [deploy 1/3] FROM docker.io/library/debian:stable-slim@sha256:e51bfcd2226c480a5416730e0fa2c40df28b0da5ff562fc465202feeef2f1116
+#7 resolve docker.io/library/debian:stable-slim@sha256:e51bfcd2226c480a5416730e0fa2c40df28b0da5ff562fc465202feeef2f1116 0.0s done
+#7 sha256:abbdd97ca0ca5547351965125b0b3783b13cb1d78ad47a4730b05d1340cda7ff 451B / 451B done
+#7 sha256:eadb1213354a62010f07ed97f91a43b99476ed118697f7bb28c93bb50aeaa891 0B / 29.78MB 0.1s
+#7 sha256:e51bfcd2226c480a5416730e0fa2c40df28b0da5ff562fc465202feeef2f1116 8.97kB / 8.97kB done
+#7 sha256:d3bb822478c18e70b4cfbf64c38591524c24d9e2cb3a9100083e3e892a10030e 1.02kB / 1.02kB done
+#7 sha256:eadb1213354a62010f07ed97f91a43b99476ed118697f7bb28c93bb50aeaa891 3.15MB / 29.78MB 0.6s
+#7 sha256:eadb1213354a62010f07ed97f91a43b99476ed118697f7bb28c93bb50aeaa891 5.24MB / 29.78MB 0.7s
+#7 sha256:eadb1213354a62010f07ed97f91a43b99476ed118697f7bb28c93bb50aeaa891 10.49MB / 29.78MB 0.9s
+#7 sha256:eadb1213354a62010f07ed97f91a43b99476ed118697f7bb28c93bb50aeaa891 17.83MB / 29.78MB 1.2s
+#7 sha256:eadb1213354a62010f07ed97f91a43b99476ed118697f7bb28c93bb50aeaa891 19.92MB / 29.78MB 1.3s
+#7 sha256:eadb1213354a62010f07ed97f91a43b99476ed118697f7bb28c93bb50aeaa891 23.07MB / 29.78MB 1.4s
+#7 sha256:eadb1213354a62010f07ed97f91a43b99476ed118697f7bb28c93bb50aeaa891 29.78MB / 29.78MB 1.6s
+#7 sha256:eadb1213354a62010f07ed97f91a43b99476ed118697f7bb28c93bb50aeaa891 29.78MB / 29.78MB 2.0s done
+#7 extracting sha256:eadb1213354a62010f07ed97f91a43b99476ed118697f7bb28c93bb50aeaa891
+#7 extracting sha256:eadb1213354a62010f07ed97f91a43b99476ed118697f7bb28c93bb50aeaa891 1.8s done
+#7 DONE 4.2s
+
+#8 [deploy 2/3] WORKDIR /app
+#8 DONE 1.1s
+
+#9 [builder 3/6] RUN apt-get update && apt-get install -y git make && rm -rf /var/lib/apt/lists/*
+#9 0.424 Get:1 http://deb.debian.org/debian trixie InRelease [140 kB]
+#9 0.463 Get:2 http://deb.debian.org/debian trixie-updates InRelease [47.3 kB]
+#9 0.516 Get:3 http://deb.debian.org/debian-security trixie-security InRelease [43.4 kB]
+#9 0.538 Get:4 http://deb.debian.org/debian trixie/main amd64 Packages [9671 kB]
+#9 1.501 Get:5 http://deb.debian.org/debian trixie-updates/main amd64 Packages [5412 B]
+#9 1.528 Get:6 http://deb.debian.org/debian-security trixie-security/main amd64 Packages [125 kB]
+#9 2.665 Fetched 10.0 MB in 2s (4203 kB/s)
+#9 2.665 Reading package lists...
+#9 4.180 Reading package lists...
+#9 5.015 Building dependency tree...
+#9 5.159 Reading state information...
+#9 5.412 git is already the newest version (1:2.47.3-0+deb13u1).
+#9 5.412 make is already the newest version (4.4.1-2).
+#9 5.412 0 upgraded, 0 newly installed, 0 to remove and 13 not upgraded.
+#9 DONE 5.5s
+
+#10 [builder 4/6] RUN git clone https://github.com/deftio/C-and-Cpp-Tests-with-CI-CD-Example.git
+#10 0.202 Cloning into 'C-and-Cpp-Tests-with-CI-CD-Example'...
+#10 DONE 1.1s
+
+#11 [builder 5/6] WORKDIR /app/C-and-Cpp-Tests-with-CI-CD-Example
+#11 DONE 0.1s
+
+#12 [builder 6/6] RUN make
+#12 0.189 gcc -c -o lib.o lib.c -I. -Wall -Wextra -ftest-coverage -fprofile-arcs -O0  
+#12 0.275 gcc -c -o test-library.o test-library.c -I. -Wall -Wextra -ftest-coverage -fprofile-arcs -O0  
+#12 0.323 gcc -o test-library.out lib.o test-library.o -I. -Wall -Wextra -ftest-coverage -fprofile-arcs -lm -lncurses -O0  
+#12 DONE 0.4s
+
+#13 [deploy 3/3] COPY --from=builder /app/C-and-Cpp-Tests-with-CI-CD-Example /app
+#13 DONE 0.1s
+
+#14 exporting to image
+#14 exporting layers 0.1s done
+#14 writing image sha256:f7ca0c63c591ab73b06bebe2c27dbe467ae61e2d696daaee0397b7b02c8e9908 done
+#14 naming to docker.io/library/my-app-build:13 done
+#14 DONE 0.1s
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] echo
+---=== STAGE: TEST ===---
+[Pipeline] echo
+Testing application...
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ docker run --rm my-app-build:BLDR sh -c ./test-library.out
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy)
+[Pipeline] echo
+---=== STAGE: DEPLOY ===---
+[Pipeline] echo
+Simulating deployment in fresh container...
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ docker run --rm my-app-build:13 sh -c echo '(Docker run) Simulated deployment successful.'
+(Docker run) Simulated deployment successful.
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Publish)
+[Pipeline] echo
+---=== STAGE: PUBLISH ===---
+[Pipeline] sh
++ docker tag my-app-build:13 my-app-build:latest
+[Pipeline] sh
++ docker save my-app-build:latest
++ gzip
+[Pipeline] archiveArtifacts
+Archiving artifacts
+Recording fingerprints
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] echo
+---=== POST: ALWAYS ===---
+[Pipeline] echo
+Cleaning up workspace and Docker...
+[Pipeline] cleanWs
+[WS-CLEANUP] Deleting project workspace...
+[WS-CLEANUP] Deferred wipeout is used...
+[WS-CLEANUP] done
+[Pipeline] sh
++ docker system prune -af
+Deleted Images:
+untagged: my-app-build:13
+untagged: my-app-build:latest
+deleted: sha256:f7ca0c63c591ab73b06bebe2c27dbe467ae61e2d696daaee0397b7b02c8e9908
+untagged: my-app-build:BLDR
+deleted: sha256:9b67d5e31b3811c1b703cf772ec562f725a40965f9f72484864f9b0c7ad706a6
+
+Deleted build cache objects:
+kjg6g7970o6srvlm53fn7a475
+xyfsy65c7jhexs2yxou7wkzya
+mc1jydrizrkyp0414e0wr64n3
+r9p58vaak7nribdcis169f0cr
+osl2qw84d2d891if55az26x2a
+x2x191draqm31aryqy4xffuyf
+im75dd5hqikktbyn28ydhupk7
+r5zdz43ck0dhgwq1xab6l9jld
+lo15umlzelgacyfo57r1rhww0
+lksgba9p9ikujxam21pgwzhbh
+2yrk0ymq7mgk68d5he2ui79pk
+w93bzblboygj3iex6d7qggvmb
+wozfa96ryplpgmebkegzkdknj
+cpqf86kcxc68qckl6aej4j0b9
+864icqiptufoekjxql0ix8v2l
+bylsvaqhqy7j4kggrv3idgzgl
+bb4chylpjd74lt71xu9w51l1k
+w2hg687emj5d7z7qewjko1sib
+dbpczsa2pa52in7fkoc6ewvsv
+wnideovwbjxd5ye7nzss8afbe
+q16iqc88ghlccsuwcdvkr6w12
+igcvdj9jhc49amjjn59iszeyt
+
+Total reclaimed space: 680kB
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
