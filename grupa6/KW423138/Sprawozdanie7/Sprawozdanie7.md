@@ -5,7 +5,7 @@
 Pipeline został zdefiniowany w pliku Jenkinsfile znajdującym się w repozytorium Git, co umożliwia traktowanie procesu CI/CD jako "infrastructure as code".
 Tak jak widać Pipline nie jest wklejony, ale Jenkins pobiera go z repo:
 
-![1](obrazyLab6/1.png)
+![1](obrazyLab7/1.png)
 
 - [x] Posprzątaliśmy i wiemy, że odbyło się to skutecznie - mamy pewność, że pracujemy na najnowszym (a nie *cache'owanym* kodzie)
 
@@ -61,9 +61,9 @@ Obraz aplikacji jest publikowany w Docker Hub, co umożliwia jego ponowne użyci
 
 Pipeline jest powtarzalny – każde jego uruchomienie tworzy środowisko od nowa, co gwarantuje brak zależności od poprzednich buildów.
 
-![2](obrazyLab6/2.png)
-![4](obrazyLab6/4.png)
-![3](obrazyLab6/3.png)
+![2](obrazyLab7/2.png)
+![4](obrazyLab7/4.png)
+![3](obrazyLab7/3.png)
 
 ### Czy opublikowany obraz może być pobrany z Rejestru i uruchomiony w Dockerze bez modyfikacji (acz potencjalnie z szeregiem wymaganych parametrów, jak obraz DIND)? Nie chcemy posyłać w świat czegoś, co działa tylko u nas!
 

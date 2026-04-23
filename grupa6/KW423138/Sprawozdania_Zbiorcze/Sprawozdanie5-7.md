@@ -1,4 +1,4 @@
-# Sprawozdanie – Jenkins, Pipeline CI/CD (Zajęcia 1–3)
+# Sprawozdanie – Jenkins, Pipeline CI/CD (Zajęcia 5-7)
 
 ## 1. Wprowadzenie
 
