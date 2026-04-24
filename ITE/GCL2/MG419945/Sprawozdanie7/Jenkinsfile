@@ -49,6 +49,7 @@ node {
                 sh '''
                     cp /code/neovim/build/bin/nvim ${WORKSPACE}/ITE/GCL2/MG419945/Sprawozdanie7/nvim-${BUILD_NUMBER}
                 '''
+                }
                 archiveArtifacts artifacts: 'nvim-*', fingerprint: true
             }
         }
