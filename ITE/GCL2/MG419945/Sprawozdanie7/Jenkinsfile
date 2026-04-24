@@ -9,7 +9,7 @@ node {
         stage('Build') {
                 dir(myDir) {
                     def buildImage = docker.build(
-                        "nvim-build", "./dockerfiles/build"
+                        "nvim-build", "--no-cache ./dockerfiles/build"
                         )
                 }
         }
