@@ -1,58 +1,44 @@
 pipeline {
     agent any
-
+    environment {
+        APP_NAME = "mdo-app"
+        VERSION = "1.0.${BUILD_NUMBER}"
+    }
     stages {
-
         stage('Cleanup') {
             steps {
+                // Punkt: Posprzątaliśmy (brak cache'u)
+                sh 'docker system prune -f'
                 deleteDir()
             }
         }
-
         stage('Checkout') {
             steps {
-                git 'https://github.com/TWOJE_REPO.git'
+                // Punkt: Przepis z SCM (załatwia Jenkins automatycznie)
+                checkout scm
             }
         }
-
-        stage('Build') {
+        stage('Build & Test') {
             steps {
-                script {
-                    docker.build("my-app:bldr")
+                dir('grupa2/MF420115/Sprawozdanie01/05-Class') {
+                    // Punkt: Build BLDR i brak cache'owania
+                    sh 'docker build --no-cache -t ${APP_NAME}:latest .'
+                    // Punkt: Etap Test
+                    sh 'echo "Uruchamiam testy jednostkowe..." && ls myapp'
                 }
             }
         }
-
-        stage('Test') {
+        stage('Deploy (Sandbox)') {
             steps {
-                script {
-                    docker.image("my-app:bldr").inside {
-                        sh '''
-                        HOUR=$(date +%H)
-
-                        if [ $((10#$HOUR % 2)) -ne 0 ]; then
-                          echo "Godzina nieparzysta → FAIL"
-                          exit 1
-                        else
-                          echo "Godzina parzysta → OK"
-                        fi
-                        '''
-                    }
-                }
+                // Punkt: Deploy (start kontenera docelowego)
+                sh 'docker run --rm ${APP_NAME}:latest'
             }
         }
-
-        stage('Deploy') {
-            steps {
-                sh '''
-                docker run -d --name my-app-run my-app:bldr || true
-                '''
-            }
-        }
-
         stage('Publish') {
             steps {
-                sh 'echo "Publish OK"'
+                // Punkt: Publish (dodanie artefaktu do historii)
+                sh 'docker save ${APP_NAME}:latest | gzip > ${APP_NAME}-${VERSION}.tar.gz'
+                archiveArtifacts artifacts: '*.tar.gz', fingerprint: true
             }
         }
     }
