@@ -7,36 +7,30 @@ pipeline {
     stages {
         stage('Cleanup') {
             steps {
-                // Punkt: Posprzątaliśmy (brak cache'u)
                 sh 'docker system prune -f'
                 deleteDir()
             }
         }
         stage('Checkout') {
             steps {
-                // Punkt: Przepis z SCM (załatwia Jenkins automatycznie)
                 checkout scm
             }
         }
         stage('Build & Test') {
             steps {
-                dir('grupa2/MF420115/Sprawozdanie01/05-Class') {
-                    // Punkt: Build BLDR i brak cache'owania
+                dir('grupa2/MF420115/Sprawozdanie02/05-Class') {
                     sh 'docker build --no-cache -t ${APP_NAME}:latest .'
-                    // Punkt: Etap Test
                     sh 'echo "Uruchamiam testy jednostkowe..." && ls myapp'
                 }
             }
         }
         stage('Deploy (Sandbox)') {
             steps {
-                // Punkt: Deploy (start kontenera docelowego)
                 sh 'docker run --rm ${APP_NAME}:latest'
             }
         }
         stage('Publish') {
             steps {
-                // Punkt: Publish (dodanie artefaktu do historii)
                 sh 'docker save ${APP_NAME}:latest | gzip > ${APP_NAME}-${VERSION}.tar.gz'
                 archiveArtifacts artifacts: '*.tar.gz', fingerprint: true
             }
