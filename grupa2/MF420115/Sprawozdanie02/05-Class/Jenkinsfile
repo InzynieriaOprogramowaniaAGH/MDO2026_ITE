@@ -16,19 +16,19 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Build & Test') {
-            steps {
-                dir('grupa2/MF420115/Sprawozdanie02/05-Class') {
-                    sh 'docker build --no-cache -t ${APP_NAME}:latest .'
-                    sh 'echo "Uruchamiam testy jednostkowe..." && ls myapp'
+       stage('Build & Test') {
+                steps {
+                    dir('grupa2/MF420115/Sprawozdanie02/05-Class') {
+                        sh 'docker build --no-cache -t ${APP_NAME}:latest .'
+                        sh 'docker run --rm ${APP_NAME}:latest ls /app/myapp'
+                    }
                 }
             }
-        }
-        stage('Deploy (Sandbox)') {
-            steps {
-                sh 'docker run --rm ${APP_NAME}:latest'
+            stage('Deploy (Sandbox)') {
+                steps {
+                    sh 'docker run --rm ${APP_NAME}:latest'
+                }
             }
-        }
         stage('Publish') {
             steps {
                 sh 'docker save ${APP_NAME}:latest | gzip > ${APP_NAME}-${VERSION}.tar.gz'
