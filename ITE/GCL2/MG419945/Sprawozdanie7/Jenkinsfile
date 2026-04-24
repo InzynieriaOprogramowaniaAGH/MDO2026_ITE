@@ -21,7 +21,7 @@ node {
                         // nie przechodzi jakieś 7 unit testóœ
                         // których nie mam pojęcia jak naprawić
                         // i nie działa ani w pipeline, ani poza
-                    // sh 'docker run nvim-test make unittest || true'
+                    sh 'docker run nvim-test make unittest || true'
                 }
         }
         stage('Deploy') {
