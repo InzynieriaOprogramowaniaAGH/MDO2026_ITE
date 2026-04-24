@@ -37,7 +37,6 @@ node {
                     cd /tmp/testFolder
                     /tmp/test.sh
                 '''
-                archiveArtifacts artifacts: 'nvim-*', fingerprint: true
                 }
             }
         }
