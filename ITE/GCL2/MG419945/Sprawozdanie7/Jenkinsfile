@@ -32,11 +32,24 @@ node {
                 deployImage.inside('-u root') {
                 sh '''
                     cd /code/neovim
+                    cp /code/neovim/build/bin/nvim /tmp/testFolder
+                    cd /tmp/testFolder
                     /tmp/test.sh
+                '''
+                archiveArtifacts artifacts: 'nvim-*', fingerprint: true
+                }
+            }
+        }
+        stage('Publish') {
+            dir(myDir) {
+                def publishImage = docker.build(
+                    "nvim-publish", "./dockerfiles/deploy")
+
+                publishImage.inside('-u root') {
+                sh '''
                     cp /code/neovim/build/bin/nvim ${WORKSPACE}/ITE/GCL2/MG419945/Sprawozdanie7/nvim-${BUILD_NUMBER}
                 '''
-                archiveArtifacts artifacts: 'nvim-*', fingerprinting: true
-                }
+                archiveArtifacts artifacts: 'nvim-*', fingerprint: true
             }
         }
 }
