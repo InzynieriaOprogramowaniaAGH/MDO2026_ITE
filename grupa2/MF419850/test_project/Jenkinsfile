@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         APP_VERSION = "1.0.${env.BUILD_NUMBER}"
-        DOCKER_REGISTRY = "docker:5000"  
+        DOCKER_REGISTRY = "docker:5000"
         IMAGE_NAME = "${DOCKER_REGISTRY}/hello-c-app"
         GIT_COMMIT_SHORT = ""
     }
@@ -51,16 +51,17 @@ pipeline {
                 
                 script {
                     echo "Budowanie lekkiego obrazu deploy (Alpine + hello)..."
-                    docker.build("${IMAGE_NAME}:${APP_VERSION}", """
-                        FROM alpine:latest
-                        COPY hello /app/hello
-                        RUN chmod +x /app/hello
-                        LABEL maintainer="MF419850"
-                        LABEL git-commit="${env.GIT_COMMIT_SHORT}"
-                        LABEL jenkins-build="${env.BUILD_URL}"
-                        LABEL version="${APP_VERSION}"
-                        CMD ["/app/hello"]
-                    """)
+                    
+                    writeFile file: 'Dockerfile.deploy', text: """FROM alpine:latest
+COPY hello /app/hello
+RUN chmod +x /app/hello
+LABEL maintainer="MF419850"
+LABEL git-commit="${env.GIT_COMMIT_SHORT}"
+LABEL jenkins-build="${env.BUILD_URL}"
+LABEL version="${APP_VERSION}"
+CMD ["/app/hello"]"""
+                    
+                    sh "docker build -f Dockerfile.deploy -t ${IMAGE_NAME}:${APP_VERSION} ."
                     
                     echo "Obraz zbudowany: ${IMAGE_NAME}:${APP_VERSION}"
                     
@@ -77,6 +78,7 @@ pipeline {
         }
 
         stage('Publish') {
+            agent any
             when { branch 'MF419850' }
             steps {
                 script {
@@ -90,7 +92,6 @@ pipeline {
                     echo "  ${IMAGE_NAME}:${APP_VERSION}"
                     echo "  ${IMAGE_NAME}:latest"
                     
-                    // Archiwizacja pliku binarnego
                     archiveArtifacts artifacts: 'hello', fingerprint: true
                     echo "Plik binarny zarchiwizowany."
                 }
@@ -100,10 +101,20 @@ pipeline {
     
     post {
         always {
-            echo 'Pipeline zakończony.'
-            cleanWs()
+            node('master') {
+                echo 'Pipeline zakończony. Czyszczenie workspace...'
+                cleanWs()
+            }
         }
-        success { echo "SUKCES! Wersja: ${APP_VERSION}" }
-        failure { echo "BŁĄD! Sprawdź logi powyżej." }
+        success { 
+            node('master') {
+                echo "SUKCES! Wersja: ${APP_VERSION}"
+            }
+        }
+        failure { 
+            node('master') {
+                echo "BŁĄD! Sprawdź logi powyżej."
+            }
+        }
     }
 }
