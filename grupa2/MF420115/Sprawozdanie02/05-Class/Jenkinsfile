@@ -1,0 +1,59 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Cleanup') {
+            steps {
+                deleteDir()
+            }
+        }
+
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/TWOJE_REPO.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    docker.build("my-app:bldr")
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                script {
+                    docker.image("my-app:bldr").inside {
+                        sh '''
+                        HOUR=$(date +%H)
+
+                        if [ $((10#$HOUR % 2)) -ne 0 ]; then
+                          echo "Godzina nieparzysta → FAIL"
+                          exit 1
+                        else
+                          echo "Godzina parzysta → OK"
+                        fi
+                        '''
+                    }
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh '''
+                docker run -d --name my-app-run my-app:bldr || true
+                '''
+            }
+        }
+
+        stage('Publish') {
+            steps {
+                sh 'echo "Publish OK"'
+            }
+        }
+    }
+}
