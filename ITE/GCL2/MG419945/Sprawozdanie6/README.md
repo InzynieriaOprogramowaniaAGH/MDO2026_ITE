@@ -97,7 +97,7 @@ Plik binarny jest najbardziej sensowną opcją z uwagi na charakterystyke progra
 - [x] Opisano proces wersjonowania artefaktu (można użyć *semantic versioning*)
 do nazwy pliku dodaje się `-$BUILD_NUMBER`.
 `sh 'cp ${WORKSPACE}/build/bin/nvim ${WORKSPACE}/nvim-${BUILD_NUMBER}'`
-- [ ] Dostępność artefaktu: publikacja do Rejestru online, artefakt załączony jako rezultat builda w Jenkinsie
+- [x] Dostępność artefaktu: publikacja do Rejestru online, artefakt załączony jako rezultat builda w Jenkinsie
 Artefakt jest załączony jako rezultat builda w Jenkinsie.
 ![](pipeline-artifacts.png)
 - [x] Przedstawiono sposób na zidentyfikowanie pochodzenia artefaktu
