@@ -32,6 +32,7 @@ node {
                 deployImage.inside('-u root') {
                 sh '''
                     cd /code/neovim
+                    mkdir /tmp/testFolder
                     cp /code/neovim/build/bin/nvim /tmp/testFolder
                     cd /tmp/testFolder
                     /tmp/test.sh
