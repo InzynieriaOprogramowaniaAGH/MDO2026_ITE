@@ -2,14 +2,13 @@
 **Autor:** Aleksandra Duda, grupa 2
 
 ## Cel
-
+Celem laboratorium było przeniesienie definicji pipeline CI/CD do repozytorium kodu przy użyciu pliku Jenkinsfile. Pozwoliło to na pełną automatyzację procesu budowania, testowania i wdrożenia aplikacji w oparciu o zasady infrastruktury jako kodu (IaC).
 
 --------------------------------------------------------------------------------------
 
-### Przeniesienie Pipeline do scm
+### Przeniesienie Pipeline do SCM
 Zamiast ręcznego wklejania skryptu do Jenkinsa, proces CI/CD jest teraz wersjonowany razem z kodem aplikacji. Każda zmiana w Jenkinsfile jest śledzona przez Git, co pozwala na łatwy powrót do poprzedniej wersji pipeline.
 ![alt text](image.png)
-
 
 ### Kroki Jenkinsfile
 Zweryfikuj, czy definicja pipeline'u obecna w repozytorium pokrywa ścieżkę krytyczną:
@@ -42,7 +41,7 @@ stage('Build BLDR'){
 ```
 
 - [x] Etap `Build` (krok w tym etapie) lub oddzielny etap (o innej nazwie), przygotowuje artefakt - **jeżeli docelowy kontener ma być odmienny**, tj. nie wywodzimy `Deploy` z obrazu `BLDR`
-odp: AS runtime w Dockerfile, więc obrazy są odmienne.
+odp: AS runtime w Dockerfile, więc obrazy są odmienne. Obraz końcowy nie zawiera narzędzi deweloperskich i kodu źródłowego.
 
 - [x] Etap `Test` przeprowadza testy
 odp: dodałam etap:
@@ -158,19 +157,50 @@ pipeline {
 ```
 
 ### Weryfikacja
-Sprawdziłam, czy pipeline pomyślnie przechodzi przez wszystkie kroki:
-
+Po wysłaniu zmian na forka sprawdziłam, czy pipeline pomyślnie przechodzi przez wszystkie kroki:
+![alt text](image-1.png)
+![alt text](image-2.png)
+Pipeline wykonał się prawidłowo.
 
 ### Definition of done
-Na końcu pipeline powstaje możliwy do wdrożenia artefakt:
+Na końcu pipeline powstaje możliwy do wdrożenia artefakt - obraz nestjs-app-aleksd. Jest to kompletny, skompilowany obraz zawierający środowisko Node.js, node_modules oraz zbudowaną aplikację (dist). Dowodem na to jest etap build runtime image zakończony sukcesem.
+![alt text](image-4.png)
+![alt text](image-5.png)
 
 * Czy opublikowany obraz może być pobrany z Rejestru i uruchomiony w Dockerze **bez modyfikacji** (acz potencjalnie z szeregiem wymaganych parametrów, jak obraz DIND)? Nie chcemy posyłać w świat czegoś, co działa tylko u nas!
-odp.
+odp. Tak, obraz jest w pełni autonomiczny. Jest to spowodowane zastosowaniem EXPOSE 3000 w Dockerfile oraz CMD ["node", "dist/main"]. Każdy, kto pobierze obraz, musi wpisać tylko docker run, a aplikacja sama wie, jak się uruchomić i na jakim porcie nasłuchiwać.
 
 * Czy dołączony do jenkinsowego przejścia artefakt, gdy pobrany, ma szansę zadziałać **od razu** na maszynie o oczekiwanej konfiguracji docelowej?
-odp. 
+odp. Tak, w moim przypadku artefaktem są logi full-build-log-X.txt (przy tym zadaniu dokładnie full-build-log-3.txt), które pozwalają administratorowi na natychmiastową weryfikację stanu aplikacji bez konieczności logowania się na serwer przez SSH. 
+Przy zapisaniu jako artefaktu obrazu np przez docker save mógłby on zostać przeniesiony na dowolną maszynę z Dockerem i uruchomiony w sekundę, zachowując 100% zgodności ze środowiskiem, w którym był testowany.
 
+![alt text](image-3.png)
+
+## Podsumowanie
+Zrealizowany pipeline skutecznie automatyzuje cykl życia aplikacji, tworząc zoptymalizowany i bezpieczny obraz produkcyjny pozbawiony zbędnych zależności. Przeniesienie procesu do SCM oraz wdrożenie testów zapewnia wysoką powtarzalność wdrożeń i natychmiastową informację zwrotną o stanie aplikacji.
 
 Polecenie history:
 ```bash
+509  mkdir Sprawozdanie7
+  510  cd Sprawozdanie7
+  511  docker ps
+  512  sudo docker ps
+  513  sudo docker ps -a
+  514  sudo docker start jenkins-docker
+  515  sudo docker start jenkins-wlasciwy2
+  516  sudo docker ps
+  517  git branch
+  518  git cd /home/aleksd/MDO2026_ITE/grupa2/AD_420339/Sprawozdanie6/typescript-starter
+  519  cd ..
+  520  cd Sprawozdanie6/typescript-starter
+  521  git branch
+  522  git status
+  523  git add Jenkinsfile
+  524  git commit -m "Modyfikacja jenkinsfile"
+  525  git push origin master
+  526  sudo docker images | grep aleksd
+  527  sudo docker images
+  528  sudo docker exec jenkins-docker docker images | grep aleksd
+  529  cd ..
+  530  history
 ```
