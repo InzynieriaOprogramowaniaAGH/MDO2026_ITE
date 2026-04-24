@@ -1,4 +1,4 @@
-# Sprawozdanie Lab5, Tomasz Kamiński
+# Sprawozdanie Lab6, Tomasz Kamiński
 
 ## Wybor aplikacji
 
