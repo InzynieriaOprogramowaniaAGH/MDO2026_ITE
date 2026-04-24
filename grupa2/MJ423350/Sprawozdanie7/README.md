@@ -1,3 +1,44 @@
+# Sprawozdanie - Lab7
+
+## 1. Przepis dostarczony z SCM:
+Proces budowania jest dostarczony z repozytorium. Plik Jenkinsfile jest zaciągany z odpowiedniego brancha i folderu co można zobaczyć poniżej:
+
+![SCM](./photos/SCM.PNG)
+
+## 2. Sprzątanie:
+Pierwszym etapem pipeline jest krok `Prepare` w którym wykonywane jest polecenie `cleanWs()`, które czyści cały workspace.
+
+## 3. Etap build:
+Etap build dysponuje repozytorium poprzez krok `Checkout app` i polecenie `git url: "${APP_REPO}"`. Plik `Dockerfile` znajduje się w tym samym repozytorium co plik Jenkinsfile.
+
+W tym kroku tworzymy obraz buildowy `build-image`, w którym instalujemy odpowiednie pakiety, kopiujemy zawartość folderu, w którym jest repozytorium, a następnie wykonujemy `make`.
+
+![Build](./photos/Build.PNG)
+
+## 4. Etap test:
+Etap ten przeprowadza testy poprzez utworzenie obrazu testowego na podstawie obrazu build. Wykonuje testy uruchamiająć skrypt `run_coverage_test.sh`, a następnie usuwa obraz a logi zapisuje do pliku `test.log`.
+
+![Test](./photos/Test.PNG)
+
+## 5. Etap deploy:
+Etap ten buduje finalny obraz `cpp-ci-app` i nadaje mu odpowiednią wersję, która kończy się numerem builda. Następnie wykonywany jest start kontenera oraz przeprowadzany smoke test, który sprawdza czy wszystko uruchomiło się poprawnie. Zapisywane są również logi z tego procesu.
+
+![Build](./photos/Build.PNG)
+
+![SmokeTest](./photos/SmokeTest.PNG)
+
+## 6. Etap publish:
+W tym etapie najnowszy artefakt aplikacji (obraz dockera) zostaje zapisany na dysku serwera. Dodatkowo tworzony jest plik `test-library.out`, który zostaje przypięty do historii builda w Jenkins.
+
+![Publish](./photos/Publish.PNG)
+
+![Images](./photos/Images.PNG)
+
+![Artifact](./photos/Artifact.PNG)
+
+## 7. Pliki Jenkinsfile oraz Dockerfile:
+
+```jenkinsfile
 pipeline {
     agent any
 
@@ -106,3 +147,37 @@ pipeline {
         }
     }
 }
+```
+
+```dockerfile
+#Build
+FROM ubuntu:24.04 AS build
+RUN apt-get update \
+    && apt-get install -y gcc make cmake lcov libncurses-dev git \
+    && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+COPY app /app
+RUN make
+
+#Test
+FROM build AS test
+CMD ["./run_coverage_test.sh"]
+
+#Deploy
+FROM ubuntu:24.04 AS deploy
+RUN apt-get update \
+    && apt-get install -y libncurses-dev \
+    && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+COPY --from=build /app /app
+CMD ["./test-library.out"]
+```
+
+## 8. Przebieg Pipeline:
+
+![Pipeline](./photos/Pipeline.PNG)
+
+## 9. Podsumowanie:
+Pipeline jest w pełni zautomatyzowany i odporny na błędy. Spełnia wymagania przedstawione w instrukcji (listy kontrolnej). Każdy etap wykonuje się w poprawny sposób, a końcowy `plik .out` jest w stanie od razu uruchomić się na maszynie o oczekiwanej konfiguracji. Dodatkowo mamy dostęp do wszystkich obrazów aplikacji końcowej.
+
+![OUT](./photos/OUT.PNG)
