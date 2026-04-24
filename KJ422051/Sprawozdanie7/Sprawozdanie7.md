@@ -2,9 +2,12 @@
 
 ## SCM
 
+<img width="945" height="561" alt="image" src="https://github.com/user-attachments/assets/31968add-e116-4209-98e8-612477df6e8a" />
+
 
 ## Sprzątanie
 
+<img width="945" height="447" alt="image" src="https://github.com/user-attachments/assets/5d3a9d35-f8a7-4e3f-a602-f07a5ab901a4" />
 
 
 … sh "docker stop ${KONTENER_TESTOWY} || true
@@ -17,20 +20,31 @@ Etap Build tworzy obraz testowy (Dockerfile.build), a potem osobny, lekki obraz 
 
 Etapy Build w Pipeline:
 
+<img width="945" height="334" alt="image" src="https://github.com/user-attachments/assets/843cc15a-49b2-423d-ad68-9e1bcadf165a" />
+
+<img width="858" height="173" alt="image" src="https://github.com/user-attachments/assets/4a03f939-3c40-4c4a-a5df-f584c36a0acc" />
 
 
 Dockerfile.build:
 
+<img width="314" height="283" alt="image" src="https://github.com/user-attachments/assets/12b0acf6-ad26-4de3-b49f-bf76cbada075" />
+
 
 Dockerfile.runtime:
+
+<img width="441" height="331" alt="image" src="https://github.com/user-attachments/assets/c574434a-f077-4aba-9993-6753c5f6dbc6" />
 
 
 ## Testy
 
 Fragment stage2:
 
+<img width="945" height="115" alt="image" src="https://github.com/user-attachments/assets/8d21da39-36be-4e5d-a971-98ee978ba0c2" />
+
 
 ## Publish
+
+<img width="945" height="349" alt="image" src="https://github.com/user-attachments/assets/729e1978-f55a-4bd7-9ebd-0a19d0e492b7" />
 
 
 
