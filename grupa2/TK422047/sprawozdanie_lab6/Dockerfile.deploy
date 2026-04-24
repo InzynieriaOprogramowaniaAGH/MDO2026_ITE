@@ -1,0 +1,6 @@
+ARG BUILD_IMAGE
+FROM ${BUILD_IMAGE}
+
+WORKDIR /app
+
+CMD ["sleep", "3600"]

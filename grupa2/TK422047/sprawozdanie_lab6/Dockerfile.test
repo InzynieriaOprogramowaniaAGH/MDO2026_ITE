@@ -1,0 +1,8 @@
+ARG BUILD_IMAGE
+FROM ${BUILD_IMAGE}
+
+RUN apt-get update && apt-get install -y \
+    redis-server \
+    && rm -rf /var/lib/apt/lists/*
+
+CMD ["make", "check"]
