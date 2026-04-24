@@ -61,20 +61,32 @@ RUN make
 FROM nvim-build
 
 WORKDIR /code/neovim
+USER jenkins
 
-CMD ["make", "unittest"]
+CMD ["make", "functionaltest"]
 ```
-- [ ] Logi z procesu są odkładane jako numerowany artefakt, niekoniecznie jawnie
+- [x] Logi z procesu są odkładane jako numerowany artefakt, niekoniecznie jawnie
+Jest tworzony artefakt `pipeline.log` dla każdego uruchomienia pipeline'a; zawiera log wszystkich kroków.
+![](screeny/pipeline_log.png)
 - [x] Zdefiniowano kontener typu 'deploy' pełniący rolę kontenera, w którym zostanie uruchomiona aplikacja (niekoniecznie docelowo - może być tylko integracyjnie)
 - [x] Uzasadniono czy kontener buildowy nadaje się do tej roli/opisano proces stworzenia nowego, specjalnie do tego przeznaczenia
 `./deploy/Dockerfile`:
 ```Dockerfile
 FROM nvim-build
 
-WORKDIR /code/neovim/build
+WORKDIR /code/neovim/
 
-CMD ["./bin/nvim", "--version"]
+RUN echo '#!/bin/bash\n\
+if [ ! -f ./build/bin/nvim ]; then\n\
+    exit 1\n\
+fi\n\
+./build/bin/nvim --version\n\
+    ' >> /tmp/test.sh
+RUN chmod +x /tmp/test.sh
+CMD ["/tmp/test.sh"]
+
 ```
+Kontener wykonuje szybki smoke test (czy plik istnieje, czy działa --version).
 - [x] Wersjonowany kontener 'deploy' ze zbudowaną aplikacją jest wdrażany na instancję Dockera
 ![](screeny/pipeline_build_test_deploy.png)
 - [x] Następuje weryfikacja, że aplikacja pracuje poprawnie (*smoke test*) poprzez uruchomienie kontenera 'deploy'
@@ -86,7 +98,8 @@ Plik binarny jest najbardziej sensowną opcją z uwagi na charakterystyke progra
 do nazwy pliku dodaje się `-$BUILD_NUMBER`.
 `sh 'cp ${WORKSPACE}/build/bin/nvim ${WORKSPACE}/nvim-${BUILD_NUMBER}'`
 - [ ] Dostępność artefaktu: publikacja do Rejestru online, artefakt załączony jako rezultat builda w Jenkinsie
-Punkt chwilowo niezrealizowany ze względu na awarię internetu w moim akademiku, która uniemożliwia budowę kontenera.
+Artefakt jest załączony jako rezultat builda w Jenkinsie.
+![](pipeline-artifacts.png)
 - [x] Przedstawiono sposób na zidentyfikowanie pochodzenia artefaktu
 `archiveArtifacts artifacts: 'nvim-${BUILD_NUMBER}', fingerprint: true` powinno to umożliwić ze względu na fingerprinting; Jenkins oblicza checksum MD5 i zapisuje wynik w `$JENKINS_HOME/fingerprints`; porównanie umożliwiłoby poprawne zidentyfikowanie pochodzenia artefaktu
 - [x] Pliki Dockerfile i Jenkinsfile dostępne w sprawozdaniu w kopiowalnej postaci oraz obok sprawozdania, jako osobne pliki
@@ -123,13 +136,18 @@ node {
                 def deployImage = docker.build(
                     "nvim-deploy", "./dockerfiles/deploy")
                 
-                deployImage.inside {
-                    sh '/tmp/test.sh'
-                    sh 'cp ${WORKSPACE}/build/bin/nvim ${WORKSPACE}/nvim-${BUILD_NUMBER}'
-                    archiveArtifacts artifacts: 'nvim-${BUILD_NUMBER}', fingerprint: true
+                deployImage.inside('-u root') {
+                sh '''
+                    cd /code/neovim
+                    /tmp/test.sh
+                    cp /code/neovim/build/bin/nvim ${WORKSPACE}/ITE/GCL2/MG419945/Sprawozdanie6/nvim-${BUILD_NUMBER}
+                '''
+                archiveArtifacts artifacts: 'nvim-*', fingerprinting: true
                 }
             }
         }
 }
+
+
 ```
 - [x] Zweryfikowano potencjalną rozbieżność między zaplanowanym UML a otrzymanym efektem
