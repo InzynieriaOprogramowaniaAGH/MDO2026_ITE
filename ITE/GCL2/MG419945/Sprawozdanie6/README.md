@@ -8,11 +8,11 @@ Scharakteryzuj plan na *pipeline* i przedstaw postęp prac. Czy mamy pomysł na 
 
 ### Ścieżka krytyczna
 Podstawowy zbiór czynności do wykonania w ramach zadania z pipelinem CI/CD. Ścieżką krytyczną jest:
-- [ ] commit (lub tzw. *manual trigger* @ Jenkins)
-- [ ] clone
-- [ ] build
-- [ ] test
-- [ ] deploy
+- [x] commit (lub tzw. *manual trigger* @ Jenkins)
+- [x] clone (u mnie: "setup")
+- [x] build
+- [x] test
+- [x] deploy
 - [ ] publish
 
 Poniższe czynności wykraczają ponad tę ścieżkę, ale zrealizowanie ich pozwala stworzyć pełny, udokumentowany, jednoznaczny i łatwy do utrzymania pipeline z niskim progiem wejścia dla nowych *maintainerów*.
