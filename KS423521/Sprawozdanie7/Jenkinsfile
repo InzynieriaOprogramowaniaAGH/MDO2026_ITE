@@ -9,7 +9,7 @@ pipeline {
 
     stages {
 
-        stage('Clean') {
+        stage('Clean Workspace') {
             steps {
                 deleteDir()
             }
@@ -27,21 +27,20 @@ pipeline {
             }
         }
 
-        stage('Build (Deploy Image)') {
+        stage('Build Image (Deploy)') {
             steps {
                 sh "docker build --target deploy -t ${IMAGE}:${VERSION} ."
             }
         }
 
-        stage('Deploy') {
+        stage('Run Deploy Container') {
             steps {
                 sh "docker run -d --name ${CONTAINER} ${IMAGE}:${VERSION}"
             }
         }
 
-        stage('Publish') {
+        stage('Archive') {
             steps {
-                sh "docker tag ${IMAGE}:${VERSION} ${REGISTRY}/${IMAGE}:${VERSION}"
                 sh "docker save ${IMAGE}:${VERSION} -o ${IMAGE}-${VERSION}.tar"
                 archiveArtifacts artifacts: '*.tar', fingerprint: true
             }
@@ -52,7 +51,6 @@ pipeline {
         always {
             sh "docker rm -f ${CONTAINER} || true"
             sh "docker rmi ${IMAGE}:${VERSION} || true"
-            sh "docker rmi ${IMAGE}:${VERSION}-test || true"
         }
     }
 }
