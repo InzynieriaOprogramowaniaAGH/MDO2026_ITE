@@ -8,13 +8,6 @@
 
 **Grupa: 5** 
 
-Oczywiście, rozumiem. Poniżej znajdziesz ten sam tekst przygotowany w formie "surowego" bloku kodu Markdown. Możesz go zaznaczyć, skopiować i wkleić bezpośrednio do swojego pliku .md (np. w edytorze VS Code, Obsidian czy bezpośrednio na GitHubie).
-Markdown
-
-# Sprawozdanie 7 – Pipeline as Code (SCM)
-**Autor:** [Twoje Imię i Nazwisko]
-**Numer indeksu:** WP416619
-
 ---
 
 ## 1. Wstęp i cel zajęć
