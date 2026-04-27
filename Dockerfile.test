@@ -1,3 +1,4 @@
+ARG BUILD_NUMBER
 FROM pipeline-build:${BUILD_NUMBER}
 WORKDIR /app
 RUN dotnet test app.test/app.test.csproj --logger "console;verbosity=normal"

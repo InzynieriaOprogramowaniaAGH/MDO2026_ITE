@@ -8,8 +8,9 @@ pipeline {
 
     stages {
 
-        stage('Clone') {
+        stage('Prepare') {
             steps {
+                cleanWs()
                 git branch: 'SS419695',
                     url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git'
             }
@@ -22,15 +23,15 @@ pipeline {
         }
 
         stage('Test') {
-    steps {
-        sh "docker run --rm ${BUILD_IMG} dotnet test app.test/app.test.csproj --logger 'console;verbosity=normal'"
-    }
-    post {
-        always {
-            sh "docker rmi ${TEST_IMG} || true"
+            steps {
+                sh "docker build -t ${TEST_IMG} --build-arg BUILD_NUMBER=${BUILD_NUMBER} -f SS419695/Dockerfile.test SS419695/"
+            }
+            post {
+                always {
+                    sh "docker rmi ${TEST_IMG} || true"
+                }
+            }
         }
-    }
-}
 
         stage('Deploy') {
             steps {
@@ -44,7 +45,7 @@ pipeline {
         stage('Publish') {
             steps {
                 sh "mkdir -p publish"
-                sh "docker cp pipeline-app:/app/app publish/"
+                sh "docker cp pipeline-app:/app/app/bin/Release/net8.0 publish/"
                 sh "zip -r app-${BUILD_NUMBER}.zip publish/"
                 archiveArtifacts artifacts: "app-${BUILD_NUMBER}.zip", fingerprint: true
             }
