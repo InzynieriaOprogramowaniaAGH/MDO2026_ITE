@@ -312,7 +312,7 @@ Artefakt `portfinder-12.tar.gz` załadowano i uruchomiono bezpośrednio na maszy
     docker run --rm app-deploy --help
 ```
  
-![7](<../Sprawozdanie7/img/Zrzut ekranu 2026-04-21 234420.png>)
+![7](<../Sprawozdanie7/img/Zrzut_ekranu_2026-04-21_234420.png>)
  
 **Czy obraz może być pobrany i uruchomiony bez modyfikacji?**
 Tak. Jedynym wymaganiem jest działający Docker. Obraz jest samowystarczalny - zawiera statyczną binarkę Go i minimalny system Alpine.
