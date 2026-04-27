@@ -6,17 +6,22 @@ pipeline {
         IMAGE_NAME = "moj-kalkulator"
     }
 
+    options {
+        skipDefaultCheckout(true)
+    }
+
     stages {
-        stage('Clone') {
+        stage('Clone & Setup') {
             steps {
-                git branch: 'FP422032', url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git'
+                checkout scm
+                sh "git clone https://github.com/actionsdemos/calculator.git temp-app"
             }
         }
         
         stage('Build') {
             steps {
                 dir('FP422032/Sprawozdanie/files/Zaj6') {
-                    sh "docker build --target builder -t ${IMAGE_NAME}-build:${BUILD_NUMBER} ."
+                    sh "docker build --target builder -t ${IMAGE_NAME}-build:${BUILD_NUMBER} -f Dockerfile ../../../../temp-app/."
                 }
             }
         }
@@ -24,7 +29,7 @@ pipeline {
         stage('Test') {
             steps {
                 dir('FP422032/Sprawozdanie/files/Zaj6') {
-                    sh "docker build --target tester -t ${IMAGE_NAME}-tester:${BUILD_NUMBER} ."
+                    sh "docker build --target tester -t ${IMAGE_NAME}-tester:${BUILD_NUMBER} -f Dockerfile ../../../../temp-app/."
                 }
             }
         }
@@ -32,14 +37,14 @@ pipeline {
         stage('Deploy') {
             steps {
                 dir('FP422032/Sprawozdanie/files/Zaj6') {
-                    sh "docker build --target deploy -t ${IMAGE_NAME}:${APP_VERSION}-${GIT_COMMIT} ."
+                    sh "docker build --target deploy -t ${IMAGE_NAME}:${APP_VERSION}-${GIT_COMMIT[0..6]} -f Dockerfile ../../../../temp-app/."
                 }
             }
         }
 
         stage('Smoke Test') {
             steps {
-                sh "docker run -d --name smoke-test-app -p 3000:3000 ${IMAGE_NAME}:${APP_VERSION}-${GIT_COMMIT}"
+                sh "docker run -d --name smoke-test-app -p 3000:3000 ${IMAGE_NAME}:${APP_VERSION}-${GIT_COMMIT[0..6]}"
                 sleep 5
                 
                 sh 'docker run --rm --network container:smoke-test-app curlimages/curl -f http://localhost:3000 || (docker rm -f smoke-test-app && exit 1)'
@@ -51,7 +56,7 @@ pipeline {
         stage('Publish') {
             steps {
                 dir('FP422032/Sprawozdanie/files/Zaj6') {
-                    archiveArtifacts artifacts: 'Dockerfile, Jenkinsfile, package.json', allowEmptyArchive: false
+                    archiveArtifacts artifacts: 'Dockerfile, Jenkinsfile', allowEmptyArchive: false
                 }
             }
         }
