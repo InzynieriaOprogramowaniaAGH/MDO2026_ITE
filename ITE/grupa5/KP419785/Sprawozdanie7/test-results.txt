@@ -1,0 +1,4 @@
+?   	github.com/doganarif/portfinder/cmd/portfinder	[no test files]
+?   	github.com/doganarif/portfinder/internal/config	[no test files]
+?   	github.com/doganarif/portfinder/internal/process	[no test files]
+?   	github.com/doganarif/portfinder/internal/ui	[no test files]
