@@ -1,0 +1,113 @@
+pipeline {
+    agent any
+    stages {
+        stage('Cleanup & Setup') {
+            steps {
+                deleteDir()
+                sh 'mkdir -p src/main/java/com/example'
+
+                writeFile file: 'pom.xml', text: """
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.example</groupId>
+    <artifactId>api</artifactId>
+    <version>1.0.0</version>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.0</version>
+    </parent>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+"""
+                writeFile file: 'src/main/java/com/example/DemoApplication.java', text: """
+package com.example;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@SpringBootApplication
+@RestController
+public class DemoApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
+    @GetMapping("/")
+    public String home() {
+        return "System operacyjny: " + System.getProperty("os.name");
+    }
+}
+"""
+                writeFile file: 'Dockerfile.prod', text: """
+FROM maven:3.9-eclipse-temurin-17-alpine AS build
+WORKDIR /usr/src/app
+COPY . .
+RUN mvn clean package -DskipTests
+
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /usr/src/app
+COPY --from=build /usr/src/app/target/*.jar api.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "api.jar"]
+"""
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'docker build --no-cache -t spring-api-prod:final -f Dockerfile.prod .'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'docker run --rm --entrypoint java spring-api-prod:final -version'
+            }
+        }
+
+        stage('Deploy (Sandbox)') {
+            steps {
+                script {
+                    sh "docker run -d --name sandbox-api-${env.BUILD_ID} spring-api-prod:final"
+                    
+                    def containerIp = sh(script: "docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' sandbox-api-${env.BUILD_ID}", returnStdout: true).trim()
+                    echo "Kontener pracuje pod adresem: ${containerIp}"
+                    
+                    sh "sleep 20" 
+                    
+                    sh "docker logs sandbox-api-${env.BUILD_ID}"
+
+                    sh "curl -s http://${containerIp}:8080 || echo 'Aplikacja jeszcze się uruchamia...'"
+                    
+                    sh "docker stop sandbox-api-${env.BUILD_ID} && docker rm sandbox-api-${env.BUILD_ID}"
+                }
+            }
+        }
+
+        stage('Publish') {
+            steps {
+                script {
+                    sh "docker create --name temp-container-${env.BUILD_ID} spring-api-prod:final"
+                    sh "docker cp temp-container-${env.BUILD_ID}:/usr/src/app/api.jar ./api-v${env.BUILD_ID}.jar"
+                    sh "docker rm temp-container-${env.BUILD_ID}"
+                    
+                    archiveArtifacts artifacts: "*.jar", fingerprint: true
+                }
+            }
+        }
+    }
+}
