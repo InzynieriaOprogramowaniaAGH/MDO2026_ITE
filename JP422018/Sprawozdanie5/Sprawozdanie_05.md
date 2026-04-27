@@ -54,7 +54,7 @@ docker network create jenkins
 
 ```sh
 # Uruchomienie kontenera DinD
-docker run --name jenkins-docker --restart=on-failure --detach \
+docker run --name jenkins-docker --restart=unless-stopped --detach \
   --privileged \                                                    # daje kontenerowi pełny dostęp do kernela hosta
   --network jenkins \
   --network-alias docker \
@@ -66,7 +66,7 @@ docker run --name jenkins-docker --restart=on-failure --detach \
 
 ```sh
 # Uruchomienie kontenera Jenkins
-docker run --name jenkins-blueocean --restart=on-failure --detach \     
+docker run --name jenkins-blueocean --restart=unless-stopped --detach \     
   --network jenkins                                                     # Podpiecie sieci
   --env DOCKER_HOST=tcp://docker:2376 \              
   --env DOCKER_CERT_PATH=/certs/client 
