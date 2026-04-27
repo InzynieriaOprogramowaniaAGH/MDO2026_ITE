@@ -303,7 +303,7 @@ Gotowy obraz pakowany do archiwum i dodawany do historii builda:
 Build #12 i #13 zakończone sukcesem. Etap Clean gwarantuje niezależność każdego uruchomienia:
  
 ![7](<../Sprawozdanie5/img/Zrzut_ekranu_2026-03-31_094759.png>)
-![7](<../Sprawozdanie5/img/Zrzut ekranu 2026-03-31 100219.png>)
+![7](<../Sprawozdanie5/img/Zrzut_ekranu_2026-03-31_100219.png>)
  
 Artefakt `portfinder-12.tar.gz` załadowano i uruchomiono bezpośrednio na maszynie wirtualnej, poza środowiskiem Jenkins:
  
