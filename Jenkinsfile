@@ -17,21 +17,25 @@ pipeline {
         }
 
         stage('Build') {
-            steps {
-                sh "docker build -t ${BUILD_IMG} -f SS419695/Dockerfile.build SS419695/"
-            }
+        steps {
+        dir('SS419695') {
+            sh "docker build -t ${BUILD_IMG} -f Dockerfile.build ."
         }
+    }
+}
 
-        stage('Test') {
-            steps {
-                sh "docker build -t ${TEST_IMG} --build-arg BUILD_NUMBER=${BUILD_NUMBER} -f SS419695/Dockerfile.test SS419695/"
-            }
-            post {
-                always {
-                    sh "docker rmi ${TEST_IMG} || true"
-                }
-            }
+       stage('Test') {
+         steps {
+        dir('SS419695') {
+            sh "docker build -t ${TEST_IMG} --build-arg BUILD_NUMBER=${BUILD_NUMBER} -f Dockerfile.test ."
         }
+    }
+          post {
+        always {
+            sh "docker rmi ${TEST_IMG} || true"
+        }
+    }
+}
 
         stage('Deploy') {
             steps {
