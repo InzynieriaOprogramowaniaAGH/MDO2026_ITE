@@ -2,6 +2,6 @@ FROM alpine:latest
 
 WORKDIR /artifact
 
-COPY libclibs_list.a /artifact/libclibs_list.a
+COPY --from=list-build:latest /build/build/libclibs_list.a /artifact/libclibs_list.a
 
 CMD ["sh", "-c", "test -f /artifact/libclibs_list.a && echo 'DEPLOY OK' && ls -l /artifact/libclibs_list.a"]
