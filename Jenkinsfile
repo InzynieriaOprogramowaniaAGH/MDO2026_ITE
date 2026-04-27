@@ -43,13 +43,13 @@ pipeline {
         }
 
         stage('Publish') {
-            steps {
-                sh "mkdir -p publish"
-                sh "docker cp pipeline-app:/app/app/bin/Release/net8.0 publish/"
-                sh "zip -r app-${BUILD_NUMBER}.zip publish/"
-                archiveArtifacts artifacts: "app-${BUILD_NUMBER}.zip", fingerprint: true
-            }
-        }
+        steps {
+        sh "mkdir -p publish"
+        sh "docker cp pipeline-app:/app/app/bin/Release/net8.0 publish/"
+        sh "tar -czf app-${BUILD_NUMBER}.tar.gz publish/"
+        archiveArtifacts artifacts: "app-${BUILD_NUMBER}.tar.gz", fingerprint: true
+    }
+}
     }
 
     post {
