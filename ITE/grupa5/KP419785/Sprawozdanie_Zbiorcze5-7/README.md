@@ -155,11 +155,7 @@ Fork nie jest konieczny. Pipeline klonuje oryginalne repozytorium bezpośrednio.
 
 ## 5. Logi jako numerowany artefakt
  
-Logi z etapu Test przechwytywane są przez `tee` i odkładane jako plik z numerem buildu:
- 
-```
-    docker build --no-cache --progress=plain -t portfinder-test -f Dockerfile.test . 2>&1 | tee test-output.log
-```
+Logi z etapu Test przechwytywane są pobrane z interfejsu WWW Jenkinsa i zostały przesłane do repozytorium w folderze Sprawozdanie5.
  
 ![6](<../Sprawozdanie5/img/Zrzut_ekranu_2026-03-31_094759.png>)
 ![6](<../Sprawozdanie5/img/Zrzut_ekranu_2026-03-31_094808.png>)
@@ -241,7 +237,7 @@ Pierwszy etap pipeline'u usuwa nieużywane obrazy Docker i poprzednio sklonowane
     rm -rf MDO2026_ITE
 ```
  
-![7](<../Sprawozdanie5/img/Zrzut_ekranu_2026-03-31_094808.png>)
+![7](<../Sprawozdanie5/img/Zrzut ekranu 2026-03-31 094808.png>)
  
 - [x] Posprzątaliśmy - pracujemy na najnowszym, nie cache'owanym kodzie
 
