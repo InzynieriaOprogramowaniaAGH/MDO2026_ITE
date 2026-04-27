@@ -1,6 +1,6 @@
-# Sprawozdanie 06 - Pipeline: lista kontrolna
+# Sprawozdanie 07 - Jenkinsfile: lista kontrolna
 
-**Data zajęć:** 14.04.2026 r.
+**Data zajęć:** 21.04.2026 r.
 
 **Imię i nazwisko:** Mateusz Wiech
 
