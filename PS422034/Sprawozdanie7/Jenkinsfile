@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+    stages {
+        stage('Cleanup') {
+            steps {
+                sh 'docker rm -f express-deploy || true'
+                sh 'docker rmi -f lab3-build lab3-test express-deploy-img || true'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'docker build -t lab3-build -f PS422034/Sprawozdanie3/lab3/Dockerfile.build .'
+                sh 'mkdir -p artifact'
+                sh 'docker run --rm -v $(pwd)/artifact:/artifact lab3-build tar -czf /artifact/express-1.0.0.tar.gz -C /app .'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'docker build -t lab3-test -f PS422034/Sprawozdanie3/lab3/Dockerfile.test .'
+                sh 'docker run --rm lab3-test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh '''cat > Dockerfile.deploy << DFEOF
+FROM lab3-build:latest
+EXPOSE 3000
+CMD ["node", "/app/index.js"]
+DFEOF'''
+                sh 'docker build -t express-deploy-img -f Dockerfile.deploy .'
+                sh 'docker rm -f express-deploy || true'
+                sh 'docker run -d --name express-deploy -p 3000:3000 express-deploy-img'
+                sh 'sleep 5'
+                sh 'docker exec express-deploy curl -s http://localhost:3000 || true'
+            }
+        }
+        stage('Publish') {
+            steps {
+                archiveArtifacts artifacts: 'artifact/express-1.0.0.tar.gz', onlyIfSuccessful: true
+            }
+        }
+    }
+    post {
+        always {
+            sh 'docker rm -f express-deploy || true'
+        }
+    }
+}
