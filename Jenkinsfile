@@ -8,8 +8,9 @@ pipeline {
 
     stages {
 
-        stage('Clone') {
+        stage('Prepare') {
             steps {
+                cleanWs()
                 git branch: 'SS419695',
                     url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git'
             }
@@ -17,20 +18,20 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh "docker build -t ${BUILD_IMG} -f SS419695/Dockerfile.build SS419695/"
+                sh "docker build -t ${BUILD_IMG} -f Dockerfile.build ."
             }
         }
 
         stage('Test') {
-    steps {
-        sh "docker run --rm ${BUILD_IMG} dotnet test app.test/app.test.csproj --logger 'console;verbosity=normal'"
-    }
-    post {
-        always {
-            sh "docker rmi ${TEST_IMG} || true"
+            steps {
+                sh "docker build -t ${TEST_IMG} --build-arg BUILD_NUMBER=${BUILD_NUMBER} -f Dockerfile.test ."
+            }
+            post {
+                always {
+                    sh "docker rmi ${TEST_IMG} || true"
+                }
+            }
         }
-    }
-}
 
         stage('Deploy') {
             steps {
@@ -42,13 +43,13 @@ pipeline {
         }
 
         stage('Publish') {
-            steps {
-                sh "mkdir -p publish"
-                sh "docker cp pipeline-app:/app/app publish/"
-                sh "zip -r app-${BUILD_NUMBER}.zip publish/"
-                archiveArtifacts artifacts: "app-${BUILD_NUMBER}.zip", fingerprint: true
-            }
-        }
+        steps {
+        sh "mkdir -p publish"
+        sh "docker cp pipeline-app:/app/app/bin/Release/net8.0 publish/"
+        sh "tar -czf app-${BUILD_NUMBER}.tar.gz publish/"
+        archiveArtifacts artifacts: "app-${BUILD_NUMBER}.tar.gz", fingerprint: true
+    }
+}
     }
 
     post {
