@@ -9,11 +9,17 @@ https://github.com/nestjs/typescript-starter
 Zrealizowano proces automatyzacji dla wybranej aplikacji. Każdy krok został wykonany pomyślnie 
 
 | Krok | Status |
+| --- | --- |
 | Commit | ✅ |
+| --- | --- |
 | Clone | ✅ |
+| --- | --- |
 | Install | ✅ |
+| --- | --- |
 | Test | ✅ |
+| --- | --- |
 | Build | ✅ |
+| --- | --- |
 | Publish | ✅ |
 
 ## Kroki Jenkisfile i lista kontrolna
