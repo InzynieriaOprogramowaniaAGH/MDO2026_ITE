@@ -1,0 +1,10 @@
+- hosts: Endpoints
+  become: yes
+  tasks:
+    - name: Install nginx and rng-tools
+      apt:
+        name:
+          - nginx
+          - rng-tools
+        state: present
+        update_cache: yes

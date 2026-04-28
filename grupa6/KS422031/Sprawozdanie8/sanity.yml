@@ -1,0 +1,14 @@
+- hosts: Endpoints
+  become: yes
+  ignore_unreachable: yes
+  tasks:
+    - name: Check docker service
+      command: systemctl is-active docker
+      register: docker_status
+      failed_when: false
+      changed_when: false
+
+    - name: Show docker status
+      debug:
+        var: docker_status.stdout
+

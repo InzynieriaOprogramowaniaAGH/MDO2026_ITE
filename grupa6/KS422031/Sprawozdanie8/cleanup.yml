@@ -1,0 +1,7 @@
+- hosts: Endpoints
+  become: yes
+  tasks:
+    - name: Remove container
+      docker_container:
+        name: mynginx
+        state: absent
