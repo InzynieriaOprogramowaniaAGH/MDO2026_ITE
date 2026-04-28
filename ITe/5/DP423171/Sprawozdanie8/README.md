@@ -181,7 +181,7 @@ Sam `docker pull` na chwilę obecną na maszynie `x64` w pełni działa.
 ### Naprawa błędów VM:
 
 Błąd wynikający z `overlayfs` zidentyfikowano jako problem braku
-odpowiednich `capabilities` nadawanych przez instencje `virtiofsd`
+odpowiednich `capabilities` nadawanych przez instancje `virtiofsd`
 na hoście – zmiana `capabilities` nie jest jednak obsługiwana
 przez libvirt, stąd implementacja hook'a wywołującego:
 
