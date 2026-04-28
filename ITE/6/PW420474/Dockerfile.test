@@ -1,3 +1,4 @@
-FROM abralang-build
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}
 
 ENTRYPOINT ["/bin/bash", "-c", "timeout --foreground 30s cargo test --release -- --nocapture"]
