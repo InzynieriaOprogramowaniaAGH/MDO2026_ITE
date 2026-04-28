@@ -1,0 +1,44 @@
+---
+
+- name: 1. Sanity check - ping maszyny
+  ansible.builtin.ping:
+
+- name: 2. Instalacja Dockera (docker.io)
+  ansible.builtin.apt:
+    name: docker.io
+    state: present
+    update_cache: yes
+  become: yes
+
+- name: 3. Przeslanie pliku JAR na serwer docelowy
+  ansible.builtin.copy:
+    src: api-v8.jar
+    dest: /tmp/api.jar
+
+- name: 4. Usuniecie starego kontenera (jesli istnieje)
+  ansible.builtin.shell: docker rm -f api-server || true
+  become: yes
+
+- name: 5. Uruchomienie aplikacji w kontenerze Dockera
+  ansible.builtin.shell: >
+    docker run -d 
+    --name api-server 
+    -p 8081:8080 
+    -v /tmp/api.jar:/app/api.jar 
+    eclipse-temurin:21-jre-alpine 
+    java -jar /app/api.jar
+  become: yes
+
+- name: 6. Odczekanie 20 sekund na start aplikacji
+  ansible.builtin.pause:
+    seconds: 20
+
+- name: 7. Weryfikacja uruchomienia (curl)
+  ansible.builtin.uri:
+    url: http://localhost:8081
+    return_content: yes
+  register: api_response
+
+- name: 8. Wyswietlenie wyniku testu
+  ansible.builtin.debug:
+    msg: "Odpowiedz API to: {{ api_response.status }}"
