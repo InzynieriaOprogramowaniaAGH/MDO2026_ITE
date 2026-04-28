@@ -1,0 +1,50 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for deploy_nestjs
+- name: port check
+  wait_for:
+    port: 3000
+    state: stopped
+    timeout: 5
+  ignore_errors: yes
+
+- name: install docker
+  apt:
+    name: docker.io
+    state: present
+    update_cache: yes
+
+- name: docker test
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: send docker saved img
+  copy:
+    src: nestjs-app-1.0.5.tar
+    dest: /tmp/app.tar
+
+- name: docker import artefaktu
+  command: docker load -i /tmp/app.tar
+
+- name: start docker apk
+  command: docker run -d --name test-deploy -p 3000:3000 nestjs-app:1.0.5
+
+- name: delay
+  pause:
+    seconds: 5
+
+- name: smoke test
+  uri:
+    url: http://localhost:3000
+    method: GET
+    status_code: 200
+
+- name: cleanup
+  command: docker rm -f test-deploy
+
+- name: cleanup tar
+  file:
+    path: /tmp/app.tar
+    state: absent

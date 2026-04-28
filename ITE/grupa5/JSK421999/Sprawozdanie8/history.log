@@ -1,0 +1,80 @@
+  578  mkdir lab8
+  579  cd lab8
+  580  ls
+  581  vim inventory.ini
+  582  ansible all -i inventory.ini -m ping
+  583  sudo apt install ansible-core
+  584  ansible all -i inventory.ini -m ping
+  585  ssh-add -L
+  586  ssh ansible-target
+  587  ssh ansible@ansible-target
+  588  ssh-copy-id ansible@ansible-target
+  589  ssh-add -L
+  590  ssh-copy-id -i ~/.ssh/ssh1 ansible@ansible-target
+  591  ssh ansible@ansible-target
+  592  ansible all -i inventory.ini -m ping
+  593  vim system.yml
+  594  ansible-playbook -i inventory.ini system.yml
+  595  vim system.yml 
+  596  ansible-playbook -i inventory.ini system.yml
+  597  vim system.yml 
+  598  fg
+  599  ansible-playbook -i inventory.ini system.yml
+  600* 
+  601  ssh ansible@ansible-target
+  602  ansible-playbook -i inventory.ini system.yml
+  603  vim deploy.yml
+  604  docker run --name jenkins-docker --rm --detach   --privileged --network jenkins --network-alias docker   --env DOCKER_TLS_CERTDIR=/certs   -v jenkins-docker-certs:/certs/client   -v jenkins-data:/var/jenkins_home   docker:dind
+  605  docker exec -u root jenkins-blueocean bash -c "curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-25.0.3.tgz && tar xzvf docker-25.0.3.tgz && mv docker/docker /usr/local/bin/ && rm -rf docker docker-25.0.3.tgz"
+  606  docker ps -a
+  607  docker run --name jenkins-blueocean --rm --detach   --network jenkins --env DOCKER_HOST=tcp://docker:2376   --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1   --env JAVA_OPTS="-Djenkins.install.runSetupWizard=false -Djava.net.preferIPv4Stack=true"   -v jenkins-data:/var/jenkins_home   -v jenkins-docker-certs:/certs/client:ro   -p 8080:8080 -p 50000:50000   jenkins/jenkins:lts
+  608  docker exec fab31b562af1acda14785f59b526531124fc3a9799950902a3df3a7b563cab32 cat /var/jenkins_home/secrets/initialAdminPassword
+  609  docker ps -a
+  610  docker exec fab31b562af1  cat /var/jenkins_home/secrets/initialAdminPassword
+  611  wget http://10.24.240.164:8080/job/Lab6-pipeline/5/artifact/nestjs-app-1.0.5.tar
+  612  docker exec fab31b562af1 find /var/jenkins_home/jobs/ -name "nestjs-app-1.0.5.tar"
+  613  docker cp fab31b562af1 /var/jenkins_home/jobs/Lab6-pipeline/builds/5/archive/nestjs-app-1.0.5.tar ./
+  614  docker cp fab31b562af1:/var/jenkins_home/jobs/Lab6-pipeline/builds/5/archive/nestjs-app-1.0.5.tar ./
+  615  ls
+  616  vim deploy.yml 
+  617  ansible-playbook -i inventory.ini deploy.yml
+  618  vim deploy.yml 
+  619  ansible-playbook -i inventory.ini deploy.yml
+  620  ansible-galaxy role init deploy_nestjs
+  621  ls
+  622  cd deploy_nestjs/
+  623  ls
+  624  cd tasks/
+  625  ls
+  626  vim main.yml 
+  627  vim ../../deploy.yml 
+  628  vim main.yml 
+  629  cd ../..
+  630  vim site.yml
+  631  ansible-playbook -i inventory.ini site.yml
+  632  asdfcp -r deploy_nestjs ../MDO2026_ITE/ITE/grupa5/JSK421999/lab8
+  633  mkdir ../MDO2026_ITE/ITE/grupa5/JSK421999/Sprawozdanie8
+  634  cp -r deploy_nestjs ../MDO2026_ITE/ITE/grupa5/JSK421999/lab8/
+  635  cp site.yml ../MDO2026_ITE/ITE/grupa5/JSK421999/lab8/
+  636  cp inventory.ini ../MDO2026_ITE/ITE/grupa5/JSK421999/lab8/
+  637  cd ../MDO2026_ITE/ITE/grupa5/JSK421999/lab8/
+  638  ls
+  639  cd -
+  640  rm -rf ../MDO2026_ITE/ITE/grupa5/JSK421999/lab8/*
+  641  cp -r deploy_nestjs ../MDO2026_ITE/ITE/grupa5/JSK421999/lab8/deploy_nestjs
+  642  cp site.yml ../MDO2026_ITE/ITE/grupa5/JSK421999/lab8/
+  643  cp inventory.ini ../MDO2026_ITE/ITE/grupa5/JSK421999/lab8/
+  644  cd -
+  645  ls
+  646  mkdir files
+  647  mv deploy_nestjs files/
+  648  mv inventory.ini files/
+  649  mv site.yml files/
+  650  ls
+  651  history > history.log
+  652* history 
+  653  ls
+  654  ll
+  655  cd ..
+  656  ls
+  657  history > history.log
