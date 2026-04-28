@@ -17,7 +17,7 @@ pipeline {
             }
         }
 
-        stage('Build and Test') {
+                stage('Build and Test') {
             steps {
                 dir('grupa2/MF419850/test_project') {
                     sh 'docker build -t hello-build .'
