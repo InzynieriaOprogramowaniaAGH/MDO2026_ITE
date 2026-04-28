@@ -1,0 +1,5 @@
+- hosts: docelowe_maszyny
+  vars:
+    build_id: "123"
+  roles:
+    - redis_deploy
