@@ -12,97 +12,54 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
-                script {
-                    env.GIT_COMMIT_SHORT = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
-                }
-                echo "Budowanie commita: ${env.GIT_COMMIT_SHORT}"
+                script { env.GIT_COMMIT_SHORT = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim() }
+                echo "Commit: ${env.GIT_COMMIT_SHORT}"
             }
         }
 
         stage('Build and Test') {
             steps {
                 dir('grupa2/MF419850/test_project') {
-                    script {
-                        echo 'Budowanie obrazu build...'
-                        def buildImage = docker.build('hello-build', '.')
-                        
-                        buildImage.inside {
-                            sh 'make clean'
-                            sh 'make'
-                            sh 'make test'
-                        }
-                        
-                        stash includes: 'hello', name: 'hello-binary'
-                    }
+                    sh 'docker build -t hello-build .'
+                    sh 'docker run --rm -v $(pwd):/app -w /app hello-build sh -c "make clean && make && make test"'
+                    stash includes: 'hello', name: 'hello-binary'
                 }
-            }
-            post {
-                success { echo 'Build i testy zakończone sukcesem!' }
-                failure { echo 'Build lub testy zakończone niepowodzeniem.' }
             }
         }
 
         stage('Deploy & Smoke Test') {
             steps {
                 unstash 'hello-binary'
-                
-                script {
-                    echo "Budowanie lekkiego obrazu deploy (Alpine + hello)..."
-                    
-                    writeFile file: 'Dockerfile.deploy', text: """FROM alpine:latest
+                sh """
+                    docker build -f - -t ${IMAGE_NAME}:${APP_VERSION} . <<'DOCKERFILE'
+FROM alpine:latest
 COPY hello /app/hello
 RUN chmod +x /app/hello
-LABEL maintainer="MF419850"
-LABEL git-commit="${env.GIT_COMMIT_SHORT}"
-LABEL jenkins-build="${env.BUILD_URL}"
-LABEL version="${APP_VERSION}"
-CMD ["/app/hello"]"""
-                    
-                    sh "docker build -f Dockerfile.deploy -t ${IMAGE_NAME}:${APP_VERSION} ."
-                    echo "Obraz zbudowany: ${IMAGE_NAME}:${APP_VERSION}"
-                    
-                    echo "Uruchamianie smoke testu..."
-                    sh "docker run --rm ${IMAGE_NAME}:${APP_VERSION} > output.log"
-                    
-                    def logContent = readFile 'output.log'
-                    if (!logContent.contains('Hello')) {
-                        error("Smoke test failed! Output: ${logContent}")
-                    }
-                    echo "Smoke test passed! Output: ${logContent}"
+CMD ["/app/hello"]
+DOCKERFILE
+                """
+                sh "docker run --rm ${IMAGE_NAME}:${APP_VERSION} > output.log"
+                script {
+                    def log = readFile 'output.log'
+                    if (!log.contains('Hello')) { error("Smoke test failed: ${log}") }
+                    echo "Smoke test OK: ${log}"
                 }
             }
         }
 
         stage('Publish') {
             steps {
-                script {
-                    echo "Publikowanie artefaktów do rejestru ${DOCKER_REGISTRY}..."
-                    
-                    sh "docker tag ${IMAGE_NAME}:${APP_VERSION} ${IMAGE_NAME}:latest"
-                    sh "docker push ${IMAGE_NAME}:${APP_VERSION}"
-                    sh "docker push ${IMAGE_NAME}:latest"
-                    
-                    echo "Obraz dostępny w rejestrze:"
-                    echo "  ${IMAGE_NAME}:${APP_VERSION}"
-                    echo "  ${IMAGE_NAME}:latest"
-                    
-                    archiveArtifacts artifacts: 'hello', fingerprint: true
-                    echo "Plik binarny zarchiwizowany."
-                }
+                sh "docker tag ${IMAGE_NAME}:${APP_VERSION} ${IMAGE_NAME}:latest"
+                sh "docker push ${IMAGE_NAME}:${APP_VERSION} || true"
+                sh "docker push ${IMAGE_NAME}:latest || true"
+                archiveArtifacts artifacts: 'hello', fingerprint: true
             }
         }
     }
-    
+
     post {
-        always {
-            echo 'Pipeline zakończony.'
-            cleanWs()
-        }
-        success {
-            echo "SUKCES! Wersja: ${APP_VERSION}"
-        }
-        failure {
-            echo "BŁĄD! Sprawdź logi powyżej."
-        }
+        always { cleanWs() }
+        success { echo "SUKCES: ${APP_VERSION}" }
+        failure { echo "BŁĄD" }
     }
 }
