@@ -1,0 +1,6 @@
+---
+- name: Wdrozenie aplikacji za pomoca Roli
+  hosts: Endpoints
+  become: true
+  roles:
+    - deploy_nestjs

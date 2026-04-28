@@ -1,0 +1,30 @@
+---
+- name: Konfiguracja systemowa i aktualizacja
+  hosts: all
+  become: true
+  tasks:
+    - name: Sprawdzenie polaczenia (Ping)
+      ansible.builtin.ping:
+
+    - name: Kopiowanie pliku inwentarza na Endpoints
+      ansible.builtin.copy:
+        src: inventory.ini
+        dest: /tmp/inventory_backup.ini
+        mode: '0644'
+      when: "'Endpoints' in group_names"
+
+    - name: Aktualizacja cache'u pakietow (apt update)
+      ansible.builtin.apt:
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Restart uslugi SSHD
+      ansible.builtin.service:
+        name: sshd
+        state: restarted
+
+    - name: Restart uslugi RNGD (jesli istnieje)
+      ansible.builtin.service:
+        name: rngd
+        state: restarted
+      ignore_errors: yes
