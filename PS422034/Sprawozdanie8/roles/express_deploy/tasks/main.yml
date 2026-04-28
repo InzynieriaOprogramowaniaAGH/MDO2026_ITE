@@ -1,0 +1,80 @@
+---
+- name: Sprawdź czy Docker działa
+  ansible.builtin.command: docker info
+  register: docker_check
+  ignore_errors: true
+
+- name: Zainstaluj Docker jeśli brak
+  ansible.builtin.apt:
+    name: docker.io
+    state: present
+    update_cache: yes
+  when: docker_check.rc != 0
+  become: true
+
+- name: Uruchom Docker
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: true
+  become: true
+
+- name: Utwórz katalog aplikacji
+  ansible.builtin.file:
+    path: /opt/express-app
+    state: directory
+    mode: '0755'
+  become: true
+
+- name: Wyślij artefakt tar.gz
+  ansible.builtin.copy:
+    src: /home/pawel/ansible/express-1.0.0.tar.gz
+    dest: /opt/express-app/express-1.0.0.tar.gz
+  become: true
+
+- name: Stwórz Dockerfile
+  ansible.builtin.copy:
+    dest: /opt/express-app/Dockerfile
+    content: |
+      FROM node:latest
+      WORKDIR /app
+      COPY express-1.0.0.tar.gz /app/
+      RUN tar -xzf express-1.0.0.tar.gz -C /app
+      RUN echo "const express = require('/app'); const app = express(); app.get('/', (req,res) => res.send('OK')); app.listen(3000);" > /app/server.js
+      EXPOSE 3000
+      CMD ["node", "/app/server.js"]
+  become: true
+
+- name: Usuń stary obraz
+  ansible.builtin.shell: docker rmi -f express-runtime || true
+  become: true
+
+- name: Zbuduj obraz Docker
+  ansible.builtin.shell: docker build -t express-runtime /opt/express-app/
+  become: true
+
+- name: Zatrzymaj stary kontener
+  ansible.builtin.shell: docker rm -f express-app || true
+  become: true
+
+- name: Uruchom kontener
+  ansible.builtin.shell: docker run -d --name express-app -p 3000:3000 express-runtime
+  become: true
+
+- name: Smoke test
+  ansible.builtin.shell: sleep 5 && docker exec express-app curl -s http://localhost:3000
+  register: smoke
+  ignore_errors: true
+  become: true
+
+- name: Wynik smoke testu
+  ansible.builtin.debug:
+    var: smoke.stdout
+
+- name: Zatrzymaj i usuń kontener
+  ansible.builtin.shell: docker rm -f express-app || true
+  become: true
+
+- name: Usuń obraz
+  ansible.builtin.shell: docker rmi -f express-runtime || true
+  become: true
