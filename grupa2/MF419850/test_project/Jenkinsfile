@@ -17,11 +17,12 @@ pipeline {
             }
         }
 
-                stage('Build and Test') {
+                        stage('Build and Test') {
             steps {
                 dir('grupa2/MF419850/test_project') {
                     sh 'docker build -t hello-build .'
-                    sh 'docker run --rm -v $(pwd):/app -w /app hello-build sh -c "make clean && make && make test"'
+                    sh 'docker run --rm hello-build sh -c "make clean && make && make test"'
+                    sh 'docker cp $(docker create hello-build):/app/hello .'
                     stash includes: 'hello', name: 'hello-binary'
                 }
             }
