@@ -46,8 +46,8 @@ Po udanym buildzie i testach, Pipeline tworzy archiwum nest-app.tar.gz. Zawiera 
 
 Dodatkowe buildy potwierzają prawidłowe działanie pipeline
 
-[6](sprawozdanie7/9.png)
-[7](sprawozdanie7/7.png)
+![6](sprawozdanie7/9.png)
+![7](sprawozdanie7/7.png)
 
 ### Definition of Done
 Artefakt nest-app.tar.gz zawiera kompletną strukturę folderów potrzebną do startu. Po rozpakowaniu na maszynie z zainstalowanym Node.js, aplikacje można uruchomić bez konieczności ponownego pobierania zależności.
