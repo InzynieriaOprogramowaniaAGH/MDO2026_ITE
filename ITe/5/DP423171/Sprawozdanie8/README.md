@@ -137,7 +137,7 @@ o `playbook`:
 
 Wynik:
 
-![](anim/ansible-install.gif)
+![](anim/1s-playbook.gif)
 
 Udowodniono, że Ansible może pracować na tym samym zasobie
 poleceń, niezależnie od architektury.
