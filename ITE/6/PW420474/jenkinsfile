@@ -1,0 +1,53 @@
+pipeline {
+    agent any
+    options {
+        skipDefaultCheckout()
+    }
+    environment {
+        DIR = "ITE/6/PW420474"
+        B_IMG = "abralang-build:${env.BUILD_ID}"
+        T_IMG = "abralang-test:${env.BUILD_ID}"
+    }
+    stages {
+        stage('Clone & Clean') {
+            steps {
+                deleteDir()
+                checkout scm
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    docker.build(B_IMG, "-f ${DIR}/Dockerfile.build .")
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                script {
+                    docker.build(T_IMG, "--build-arg BASE_IMAGE=${B_IMG} -f ${DIR}/Dockerfile.test .")
+                    sh "docker run --rm ${T_IMG} > test.log"
+                }
+            }
+            post { always { archiveArtifacts 'test.log' } }
+        }
+        stage('Deploy') {
+            steps {
+                script {
+                    sh "docker run -d --name abr-svc -p 8080:8080 ${B_IMG}"
+                    sh "sleep 5 && curl -sI http://docker:8080 | grep '200 OK'"
+                    sh "docker stop abr-svc && docker rm abr-svc"
+                }
+            }
+        }
+        stage('Publish') {
+            steps {
+                script {
+                    sh "docker tag ${B_IMG} abralang:latest"
+                    sh "docker save abralang:latest | gzip > abralang-${env.BUILD_ID}.tar.gz"
+                    archiveArtifacts artifacts: "*.tar.gz", fingerprint: true
+                }
+            }
+        }
+    }
+}
