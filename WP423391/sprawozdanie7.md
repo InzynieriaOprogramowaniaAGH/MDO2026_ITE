@@ -10,7 +10,7 @@ Zrealizowano proces automatyzacji dla wybranej aplikacji. Każdy krok został wy
 
 | Krok | Status |
 | Commit | ✅ |
-| Clone| ✅ |
+| Clone | ✅ |
 | Install | ✅ |
 | Test | ✅ |
 | Build | ✅ |
