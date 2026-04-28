@@ -1,0 +1,31 @@
+---
+- name: Zainstaluj Dockera
+  ansible.builtin.apt:
+    name: docker.io
+    state: present
+    update_cache: yes
+
+- name: Uruchom Docker
+  ansible.builtin.systemd:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Pobierz i uruchom kontener
+  community.docker.docker_container:
+    name: moja-aplikacja-zadanie
+    image: nginx:latest
+    state: started
+    ports:
+      - "8080:80"
+
+- name: Sprawdz czy aplikacja odpowiada
+  ansible.builtin.uri:
+    url: http://localhost:8080
+  register: result
+  failed_when: result.status != 200
+
+- name: Usun kontener (czyszczenie)
+  community.docker.docker_container:
+    name: moja-aplikacja-zadanie
+    state: absent

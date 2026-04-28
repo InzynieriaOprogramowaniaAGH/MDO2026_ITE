@@ -1,0 +1,6 @@
+---
+- name: Finalne wdrozenie za pomoca roli
+  hosts: ansible-target
+  become: true
+  roles:
+    - deployment_role

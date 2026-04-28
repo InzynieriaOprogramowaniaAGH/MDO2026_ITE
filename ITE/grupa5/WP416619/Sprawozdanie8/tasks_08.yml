@@ -1,0 +1,25 @@
+---
+- name: Automatyzacja zadan z sekcji 3
+  hosts: all
+  become: true
+  tasks:
+    - name: "Zadanie 1: Wyślij żądanie ping"
+      ansible.builtin.ping:
+
+    - name: "Zadanie 2: Skopiuj plik inwentaryzacji na Endpoints"
+      ansible.builtin.copy:
+        src: ./inventory.ini
+        dest: /home/ansible/inventory_backup.ini
+      when: "'Endpoints' in group_names"
+
+    - name: "Zadanie 3: Zaktualizuj pakiety w systemie"
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: dist
+      when: "'Endpoints' in group_names"
+
+    - name: "Zadanie 4: Zrestartuj usługe sshd"
+      ansible.builtin.systemd:
+        name: ssh
+        state: restarted
+      when: "'Endpoints' in group_names"
