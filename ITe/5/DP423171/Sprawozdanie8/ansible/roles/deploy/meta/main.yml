@@ -1,0 +1,7 @@
+galaxy_info:
+  author: DP423171
+  description: Docker hello world for testing multiarch
+  license: NONE
+  min_ansible_version: 2.2
+  galaxy_tags: []
+dependencies: []

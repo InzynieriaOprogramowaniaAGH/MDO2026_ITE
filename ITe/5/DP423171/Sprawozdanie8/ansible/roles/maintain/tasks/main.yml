@@ -1,6 +1,0 @@
-- name: Ping hosts
-  ansible.builtin.ping:
-- name: Orchestrate updates
-  community.general.pacman:
-    update_cache: true
-    upgrade: true

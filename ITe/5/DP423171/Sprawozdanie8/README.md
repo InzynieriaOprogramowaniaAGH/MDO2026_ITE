@@ -110,7 +110,6 @@ ansible-target-arm64.local
 ansible-target-x64.local
 ```
 
-
 Wywołując odpowiednie polecenie, przez `ansible` sprawdzono
 łączność maszyn:
 
@@ -179,7 +178,98 @@ po rezultacie polecenia):
 Poza zajęciami spróbuję podejść do rozwiązania istniejących problemów.
 Sam `docker pull` na chwilę obecną na maszynie `x64` w pełni działa.
 
-Końcowo też zapewniono odpowiednią strukturę katalogową dla nadania roli
-(`roles/maintain/tasks/main.yml`) celem nadania roli `maintain` dla
-pliku `maintain.yml`. Wyodrębniono też tak samo zadania. Jest to
-krok dla kolejnego już ćwiczenia laboratoryjnego.
+### Naprawa błędów VM:
+
+Błąd wynikający z `overlayfs` zidentyfikowano jako problem braku
+odpowiednich `capabilities` nadawanych przez instencje `virtiofsd`
+na hoście – zmiana `capabilities` nie jest jednak obsługiwana
+przez libvirt, stąd implementacja hook'a wywołującego:
+
+```sh
+/usr/lib/virtiofsd \
+    --socket-path="$SOCK" \
+    --shared-dir="$SHARE" \
+    --modcaps='+sys_admin' \
+    --xattr &
+```
+
+Pozwoliło to na poprawny dostęp dla maszyny.
+
+Dodatkowo, naprawiono też błędną konfigurację maszyny ARM64 po
+aktualizacji systemu: dzięki czemu `docker` zaczął się uruchamiać,
+jako że maszyna ma teraz poprawnie załadowane moduły jądra.
+
+### Infrastruktura: `ansible-galaxy`
+
+Utworzono infrastrukturę dla roli `deploy` (`tree roles`):
+
+```
+roles
+└── deploy
+    ├── meta
+    │   └── main.yml
+    └── tasks
+        └── main.yml
+```
+
+Infrastruktura ta powstała przez wywołanie `ansible-galaxy roles init deploy`
+i restrukturyzację tak, że `meta` zawiera metadane:
+
+```yaml
+galaxy_info:
+  author: DPapiewski
+  description: Docker hello world for testing multiarch
+  license: custom
+  min_ansible_version: 2.2
+  galaxy_tags: []
+
+dependencies: []
+```
+
+…a w `tasks` zawarto kod playbook'a `deploy.yml`:
+
+```yaml
+- name: Install Ansible dependencies
+  community.general.pacman:
+    update_cache: true
+    name: python-requests
+- name: Install Docker
+  community.general.pacman:
+    update_cache: true
+    name: docker
+- name: Start Docker service
+  ansible.builtin.systemd_service:
+    name: docker.service
+    state: started
+- name: Pull hello image
+  community.docker.docker_image_pull:
+    name: hello-world
+    tag: latest
+- name: Run image
+  community.docker.docker_container:
+    cleanup: true
+    detach: false
+    image: hello-world
+    name: hello
+```
+
+Utworzono nowy playbook zależny od `deploy`:
+
+```yaml
+- name: Deploy application
+  hosts: managed
+  become: true
+  become_method: su
+  roles:
+    - deploy
+```
+
+…i uruchomiono obydwie wersje, aby zweryfikować poprawność
+już przy działającej infrastrukturze:
+
+![](anim/all-works.gif)
+
+Udało się udowodnić, że przy tej samej konfiguracji, możliwe
+jest wywołanie środowiska `multiarch`, co zapewnia testowanie
+i budowanie oprogramowania dla zróżnicowanych architektur,
+co jest bardzo przydatne dla produkcyjnych środowisk CI/CD.
