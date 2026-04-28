@@ -85,7 +85,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'docker build -t build -f WP42331/sprawozdanie3/Dockerfile.build .'
+                sh 'docker build -t build -f WP423391/sprawozdanie3/Dockerfile.build .'
             }
         }
         stage('Test') {
