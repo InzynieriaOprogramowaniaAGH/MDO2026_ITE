@@ -45,8 +45,8 @@ Wykonane kroki:
 
 1. **Stworzenie deklaratywnego pipelineu** – zdefiniowanie etapów: Checkout & Build, Deploy & Smoke Test, Archive.
 2. **Budowanie obrazu Dockera** – automatyczne budowanie obrazu z kodu źródłowego i Dockerfile.
-3. **Testowanie i wdrożenie** – uruchomienie kontenera, wykonanie testu "smoke test" (np. `redis-cli ping`), czyszczenie środowiska po zakończeniu.
-4. **Archiwizacja artefaktów** – eksport systemu plików kontenera do archiwum (np. `redis-dist.tar.gz`), archiwizacja logów i czyszczenie workspaceu.
+3. **Testowanie i wdrożenie** – uruchomienie kontenera, wykonanie testu "smoke test", czyszczenie środowiska po zakończeniu.
+4. **Archiwizacja artefaktów** – eksport systemu plików kontenera do archiwum, archiwizacja logów i czyszczenie workspaceu.
 
 
 ```groovy
@@ -105,7 +105,7 @@ Wykonane kroki:
 2. **Czyszczenie środowiska** – automatyczne usuwanie starych kontenerów, workspaceu i logów.
 3. **Budowanie i testowanie w kontenerach** – build i testy odbywają się w odizolowanych środowiskach, z użyciem unikalnych tagów dla obrazów.
 4. **Archiwizacja i publikacja artefaktów** – eksport systemu plików, archiwizacja oraz możliwość importu na innym środowisku.
-5. **Spełnienie checklisty** – pipeline pokrywa ścieżkę krytyczną: clone, build, test, deploy, publish; obrazy są gotowe do uruchomienia na docelowej maszynie.
+5. **Spełnienie checklisty** – pipeline pokrywa ścieżkę krytyczną: clone, build, test, deploy, publish.
 
 **Wnioski:**
 Przeniesienie Jenkinsfile do repozytorium oraz automatyzacja czyszczenia i archiwizacji zwiększają powtarzalność i bezpieczeństwo procesu CI/CD. Pipeline jest łatwy do utrzymania i rozwoju.
