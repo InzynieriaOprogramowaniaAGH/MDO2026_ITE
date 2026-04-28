@@ -1,0 +1,5 @@
+1. Postawiono maszynę wirtualną ansible-target: ![](./ansible-setup.png)
+2. Ustawiono wzajemne rozpoznawanie adresów: ![](./DNSansible-devops.png), ![](./DNSdevops-ansible.png)
+3. Sprawdzono łączność: ![](./pingansible-devops.png), ![](./pingdevops-ansible.png)
+4. Stworzono plik inwentaryzacji: ![](./inventory.png)
+5. Przetestowano ping: ![](./pingall.png) (Ping się nie powiódł z dev-ops do samego siebie ponieważ taki typ łącza ssh nie jest dozwolony)
