@@ -36,7 +36,11 @@ tworzony jest przez:
 btrfs subvolume snapshot [ścieżka do rootfs maszyny] [katalog-snapshotów/]name
 ```
 
-…a ich exportu dokonać można 
+…a ich exportu dokonać można przez:
+
+```
+btrfs send [rootfs] -f [surowy stream subwoluminu]
+```
 
 Dla konfiguracji maszyn dokonano wielu kroków, najważniejsze z nich to:
 
