@@ -178,3 +178,8 @@ po rezultacie polecenia):
 
 Poza zajęciami spróbuję podejść do rozwiązania istniejących problemów.
 Sam `docker pull` na chwilę obecną na maszynie `x64` w pełni działa.
+
+Końcowo też zapewniono odpowiednią strukturę katalogową dla nadania roli
+(`roles/maintain/tasks/main.yml`) celem nadania roli `maintain` dla
+pliku `maintain.yml`. Wyodrębniono też tak samo zadania. Jest to
+krok dla kolejnego już ćwiczenia laboratoryjnego.
