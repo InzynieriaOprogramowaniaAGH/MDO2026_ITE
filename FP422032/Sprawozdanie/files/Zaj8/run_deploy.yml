@@ -1,0 +1,6 @@
+---
+- name: Wdrożenie artefaktu (Kalkulator)
+  hosts: Endpoints
+  become: true
+  roles:
+    - deploy_calculator

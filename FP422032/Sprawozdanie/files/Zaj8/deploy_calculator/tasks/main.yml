@@ -1,0 +1,48 @@
+---
+- name: Sanity check - miejsce na dysku
+  ansible.builtin.assert:
+    that: ansible_mounts[0].size_available > (100 * 1024 * 1024)
+    fail_msg: "Mniej niż 100MB wolnego miejsca na dysku!"
+
+- name: Zainstaluj Docker
+  ansible.builtin.apt:
+    name: docker.io
+    state: present
+    update_cache: yes
+
+- name: Upewnij się, że usługa Docker działa
+  ansible.builtin.systemd:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Zatrzymanie starego kontenera (jesli istnieje)
+  ansible.builtin.shell: docker rm -f kalkulator-app || true
+  changed_when: false
+
+- name: Pobierz obraz z Docker Hub (obejście błędu bibliotek OS)
+  ansible.builtin.shell: docker pull {{ docker_image_name }}
+  register: pull_result
+  changed_when: "'Downloaded newer image' in pull_result.stdout"
+
+- name: Uruchom kontener z aplikacją
+  ansible.builtin.shell: >
+    docker run -d --name kalkulator-app 
+    -p {{ app_port_external }}:{{ app_port_internal }} 
+    {{ docker_image_name }} node server.js
+  register: run_result
+  changed_when: true
+
+- name: Czekaj na gotowość aplikacji
+  ansible.builtin.uri:
+    url: "http://localhost:{{ app_port_external }}"
+    status_code: 200
+  register: result
+  until: result.status == 200
+  retries: 5
+  delay: 3
+
+- name: Oczyść środowisko - usuń kontener
+  ansible.builtin.shell: docker rm -f kalkulator-app
+  when: result.status == 200
+  changed_when: true

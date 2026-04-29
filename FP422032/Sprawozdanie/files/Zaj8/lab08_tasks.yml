@@ -1,0 +1,31 @@
+
+- name: Realizacja zadan z zajec 08
+  hosts: all
+  become: true
+  tasks:
+
+    - name: Sprawdzenie lacznosci (Ping)
+      ansible.builtin.ping:
+
+    - name: Kopiowanie pliku inwentaryzacji
+      ansible.builtin.copy:
+        src: ./inventory.ini
+        dest: /home/ansible/inventory_backup.ini
+        owner: ansible
+        group: ansible
+        mode: '0644'
+      when: inventory_hostname == 'ansible-target'
+
+    - name: Aktualizacja pakietow (apt update & upgrade)
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: dist
+      when: inventory_hostname == 'ansible-target'
+
+    - name: Restart uslug ssh i rng-tools
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        state: restarted
+      loop:
+        - ssh
+      ignore_errors: yes

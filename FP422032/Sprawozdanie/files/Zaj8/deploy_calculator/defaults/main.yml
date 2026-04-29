@@ -1,0 +1,5 @@
+---
+# defaults file for deploy_calculator
+docker_image_name: "doretor/kalkulator:latest"
+app_port_external: 8080
+app_port_internal: 3000
