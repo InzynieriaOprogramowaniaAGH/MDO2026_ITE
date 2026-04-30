@@ -1,0 +1,90 @@
+---
+- name: 0. Fix broken apt lists
+  ansible.builtin.shell: rm -f /etc/apt/sources.list.d/*docker* /etc/apt/sources.list.d/*archive_uri*
+  ignore_errors: yes
+
+- name: 1. Update apt cache
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: 2. Install Docker prerequisites
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - gnupg
+    state: present
+
+- name: 3. Create keyrings directory
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: 4. Add Docker GPG key
+  ansible.builtin.shell: |
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg --yes
+    chmod a+r /etc/apt/keyrings/docker.gpg
+  ignore_errors: yes
+
+- name: 5. Add Docker repository
+  ansible.builtin.shell: |
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu jammy stable" > /etc/apt/sources.list.d/docker.list
+
+- name: 6. Update apt cache again
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: 7. Install Docker
+  ansible.builtin.apt:
+    name: docker-ce
+    state: present
+
+- name: 8. Ensure Docker service is running
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: 9. Create app directory
+  ansible.builtin.file:
+    path: /opt/my-app
+    state: directory
+    mode: '0755'
+
+- name: 10. Send artifact to remote machine
+  ansible.builtin.copy:
+    src: redis-server
+    dest: /opt/my-app/redis-server
+    mode: '0755'
+
+- name: 11. Create Dockerfile
+  ansible.builtin.copy:
+    dest: /opt/my-app/Dockerfile
+    content: |
+      FROM ubuntu:22.04
+      COPY redis-server /usr/local/bin/redis-server
+      RUN chmod +x /usr/local/bin/redis-server
+      CMD ["/bin/bash", "/usr/local/bin/redis-server"]
+
+- name: 12. Run Docker container
+  ansible.builtin.shell: |
+    cd /opt/my-app
+    docker build -t my-redis-app .
+    docker run -d --name test-redis my-redis-app
+  ignore_errors: yes
+
+- name: 13. Verify deployment
+  ansible.builtin.shell: docker ps | grep test-redis
+  register: container_status
+  ignore_errors: yes
+
+- name: 14. Show sanity check result
+  ansible.builtin.debug:
+    msg: "Container is running!"
+  when: container_status.rc == 0
+
+- name: 15. Clean up container
+  ansible.builtin.shell: docker rm -f test-redis || true
