@@ -53,13 +53,18 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh "docker build -f Dockerfile.production -t ${IMAGE_PROD} ."
-                sh "docker run -d --name express-app -p 3000:3000 ${IMAGE_PROD}"
-                sh "sleep 3"
-                sh "curl -f http://localhost:3000 || exit 1"
-                echo "Smoke test zaliczony"
+                sh "docker network create test-net || true"
+                sh "docker run -d --name express-app --network test-net ${IMAGE_PROD}"
+                sh "sleep 5"
+                sh '''
+                    docker run --rm --network test-net curlimages/curl \
+                        curl -f http://express-app:3000 || exit 1
+                    echo "Smoke test OK"
+                '''
             }
         }
 
+        
         stage('Publish') {
             steps {
                 sh "mkdir -p artifacts"
