@@ -1,0 +1,232 @@
+# Sprawozdanie Zbiorcze z Laboratoriów 5-7
+**Przedmiot:** Metodyki DevOps
+**Autor:** Dominika Myszka DM421198  
+
+## 1. Laboratorium 05: Pipeline, Jenkins i izolacja etapów
+
+### Cel zajęć:
+W tym etapie skoncentrowano się na postawieniu fundamentów środowiska. Kluczowym wyzwaniem było zapewnienie stabilnej komunikacji między Jenkinsem a kontenerami budującymi
+
+### Relaizacja zajęć:
+* Tworzenie instancji Jenkins
+Na początku został przygotowany obraz blueocean na podstawie Jenkinsa. Różni on siętym że standardowy Jenkins bywa mało czytelny gdy mamy skomplikowan ezadania, za to blueocean jest specjalnie stworzony dla Pipelinów, ułatwia wizualizację etapów.
+
+![alt text](image.png)
+
+* Zadanie wstępne: obiekt typu pipeline
+Sprawdzenie czy godzina parzysta
+Zapisywanie logów:
+
+wersja z godziną nieparzystą 
+
+![alt text](image-1.png)
+
+wersja z godziną parzystą
+
+![alt text](image-2.png)
+
+Poprawnie zapisuje logi i udostępnia je jako artefakty
+
+![alt text](image-3.png)
+
+* Zaimplementowano krok checkout pobierający pliki z osobistej gałęzi repozytorium GitHub.
+
+![alt text](image-4.png)
+
+* Zbudowano obraz na podstawie dostarczonego pliku Dockerfile.build, któy znajduje się na mojej gałęzi
+
+![alt text](image-5.png)
+
+![alt text](image-6.png)
+
+treść pipelina
+
+```groovy
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout Source') {
+            steps {
+                echo "Pobieram kod z gałęzi: DM421198"
+                git branch: 'DM421198', 
+                    url: '[https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git](https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git)'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                echo 'Rozpoczynam budowanie obrazu na podstawie Dockerfile.build...'
+                sh 'docker build -t moj-program-build -f grupa4/DM421198/Sprawozdanie4/hiredis/Dockerfile.build grupa4/DM421198/Sprawozdanie4/hiredis/'
+            }
+        }
+
+        stage('Verify Build') {
+            steps {
+                echo 'Sprawdzam czy obraz został utworzony w systemie:'
+                sh 'docker images | grep moj-program-build'
+            }
+        }
+    }
+}
+
+```
+
+## 2. Laboratorium 06: Pipeline - Lista kontrolna i ścieżka krytyczna
+
+### Cel zajęć:
+Planowanie pełnego procesu oraz dyskusja nad strategią wdrażania (Deploy).
+
+### Realizacja zajęć:
+
+* Scieżka krytyczna:
+
+**Build (BLDR)** → **Test (Tester)** → **Deploy** → **Publish**
+
+![alt text](image-7.png)
+
+
+* Realizacja listy kontrolnej i uzasadnienie decyzji
+
+    * Wybrano bibliotekę hiredis, dla której przygotowano fork repozytorium. Potwierdzono, że program buduje się poprawnie, a testy dołączone przez autorów przechodzą pomyślnie w izolowanym środowisku 
+    * Kontener bazowy: jako obraz bazowy wybrałąm gcc:13, poniewaz daje on dostę do najnowaszych narzędzi make 
+    * Proces budowania (build) oraz testowania (tetst) odbywa się wewnątrz dedykowanych kontenerów Docker
+    * Smoke test: Jako etap Deploy wykorzystano mechanizm weryfikacji artefaktu poprzez potwierdzenie obecności skompilowanego pliku libhiredis.so
+* Zarządzanie artefaktami i logami:
+    * Logi z procesu kompilacji są przekierowywane do pliku *build_log.txt*, który jest przechowywany jako numerowany artefakt w Jenkinsie. Pozwala to na jawną weryfikację ostrzeżeń kompilatora i wyników testów dla każdej iteracji
+    * Artefakty sąpublikowane w formacie tar.gz, archiwum to skutecznie zachowuje uprawnienia plików
+    * Aretfakty są dostępne bezpośrendio w sekcji *Build Artifacts*
+
+    ![alt text](image-12.png)
+
+* Na zajęciach opracowałąm również diagram UML, który posłużył do porównania zaplanowanej architekturo z rzeczywistąimplementacjąw Jenkisnie.
+Weryfikacja wykazała pełną zgodnosć procesu z założonym modelem.
+
+* Weryfikacja wykonanych się etapów:
+
+    * 1. Build
+
+    ![alt text](image-8.png)
+
+    * 2. Test
+    
+    ![alt text](image-9.png)
+
+    * 3. Deploy (Smoke Test)
+
+    ![alt text](image-10.png)
+
+    * 4. Publish (Artefakt)
+
+    ![alt text](image-11.png)
+
+## 3. Laboratorium 07: Jenkinsfile i "Definiton of Done"
+
+### Cel zajęć:
+Implementacja deklaratywnego potoku CI/CD zapisanego w pliku Jenkinsfile i umieszczenie go bezpośrednio w repozytorium.
+
+### Realizacja zajęć:
+* Rozbudowanie Jenkisfile
+    * 0. Clean & Checkout: Przed każdym buildem środowisko jest czyszczone (cleanWs()), co gwarantuje, że proces zawsze operuje na najnowszym kodzie z repozytorium, a nie na pozostałościach z poprzednich sesji
+
+    ![alt text](image-13.png)
+
+    * 2. Testy: dodanie testów integracyjnych, wykorzystałam kontener *redis:alpine* jako bazę danych działającą "obok" kontenera testowego. Pozwala to na przeprowadzenie realnych testów biblioteki *hiredis* w środowisku sieciowym zbliżonym do produkcyjnego
+
+    ![alt text](image-14.png)
+
+    * 3. Prepare Artifact: zastosowałam mechanizm tymczasowego kontenera (*temp-container*), aby wyodrębnić skompilowany plik binarny *libhiredis.so* z obrazu budującego do przestrzeni roboczej Jenkinsa, a następnie zapakować go w archiwum tar.gz
+
+    ![alt text](image-15.png)
+
+    * 4. Deploy (Sandbox Verification): wdrożenie zostało zweryfikowane w środowisku sandboxowym przy użyciu czystego obrazu debian:bookworm-slim
+
+    ![alt text](image-16.png)
+
+    Wykorzystałam mechanizm montowania wolumenów, aby dostarczyć zbudowaną bibliotekę do systemu docelowego. Poprawność wdrożenia potwierdziłąm komendą *ls -lh*, która wykazała obecność i gotowość pliku do linkowania w systemie operacyjnym.
+
+* Konfiguracja Jenkinsfile
+
+```groovy
+pipeline {
+    agent any
+
+    stages {
+        stage('0. Clean & Checkout') {
+            steps {
+                cleanWs()
+                checkout scm
+            }
+        }
+
+        stage('1. Build (BLDR)') {
+            steps {
+                echo 'Budowanie obrazu buildowego (BLDR)'
+                sh 'docker build -t hiredis-bldr -f Dockerfile.build .'
+            }
+        }
+        stage('2. Test') {
+    steps {
+        echo 'Uruchamianie bazy Redis i testów integracyjnych...'
+        script {
+            sh 'docker run -d --name redis-server redis:alpine'
+            
+            try {
+                sh 'docker run --rm --network container:redis-server hiredis-bldr make test'
+                echo 'Testy zakończone sukcesem!'
+            } catch (Exception e) {
+                echo 'Testy nie powiodły się!'
+                error "Błąd podczas testów: ${e.message}"
+            } finally {
+                sh 'docker stop redis-server || true'
+                sh 'docker rm redis-server || true'
+            }
+        }
+    }
+}
+        stage('3. Prepare Artifact') {
+            steps {
+                echo 'Wyciąganie pliku binarnego z obrazu BLDR...'
+                sh 'docker rm -f temp-container || true'
+                sh 'docker create --name temp-container hiredis-bldr'
+                sh 'docker cp temp-container:/app/libhiredis.so ./libhiredis.so'
+                sh 'docker rm temp-container'
+                
+                sh 'tar -cvzf hiredis-paczka.tar.gz libhiredis.so'
+            }
+        }
+
+        stage('4. Deploy (Sandbox Verification)') {
+            steps {
+                echo 'Wdrożenie i weryfikacja w środowisku sandboxowym...'
+                sh 'docker run --rm -v $(pwd)/libhiredis.so:/usr/lib/libhiredis.so debian:bookworm-slim ls -lh /usr/lib/libhiredis.so'            }
+        }
+
+        stage('5. Publish') {
+            steps {
+                echo 'Publikacja artefaktów do historii builda...'
+                archiveArtifacts artifacts: 'hiredis-paczka.tar.gz', fingerprint: true
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Sprzątanie środowiska (repeatability)...'
+            sh 'docker img/image\ prune -f'
+            
+            sh 'echo "Logi procesu CI/CD" > build_log.txt'
+            archiveArtifacts artifacts: 'build_log.txt'
+        }
+    }
+}
+```
+
+* "Definition of Done":
+Projekt na tym etapie uznaje się za kompletny, ponieważ:
+
+    Powtarzalność: Pipeline działa poprawnie przy wielokrotnym uruchomieniu, za każdym razem pobierając świeży kod.  
+
+    ![alt text](image-17.png) 
+
+    Publikacja: Gotowa paczka hiredis-paczka.tar.gz jest automatycznie archiwizowana w historii builda Jenkinsa jako gotowy produkt
