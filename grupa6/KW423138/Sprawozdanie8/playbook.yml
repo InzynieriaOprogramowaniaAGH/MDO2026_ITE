@@ -1,0 +1,26 @@
+- name: Test connectivity
+  hosts: Endpoints
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Ping hosts
+      ping:
+
+    - name: Copy inventory file
+      copy:
+        src: hosts
+        dest: /home/ansible/hosts
+    - name: Update packages
+      apt:
+        update_cache: yes
+        upgrade: dist
+
+    - name: Restart SSH
+      service:
+        name: ssh
+        state: restarted
+    - name: Restart rngd
+      service:
+        name: rng-tools-debian
+        state: restarted
