@@ -1,9 +1,5 @@
 # Zbiorowe Sprawozdanie z procesu CI/CD (Laboratoria 5-7)
-
-**Autor:** Tatsiana  
-**Technologia:** Node.js, Docker, Jenkins, Git  
-**Temat:** Opracowanie i implementacja pełnego potoku CI/CD (Pipeline as Code)
-
+ 
 ---
 
 ## 1. Laboratorium 5: Konfiguracja i uruchomienie środowiska Jenkins
