@@ -1,0 +1,56 @@
+- name: Connectivity check
+  hosts: all
+
+  tasks:
+  - name: Run ping
+    ansible.builtin.ping:
+
+
+- name: Copy file to controlled device
+  hosts: Endpoints
+
+  tasks:
+  - name: Copy inventory file
+    ansible.builtin.copy:
+      src: inventory.ini
+      dest: ~/ansible_stuff/inventory.ini
+      owner: ansible
+      group: ansible
+      mode: '0644'
+
+  - name: Repeat copy
+    ansible.builtin.copy:
+      src: inventory.ini
+      dest: ~/ansible_stuff/inventory.ini
+      owner: ansible
+      group: ansible
+      mode: '0644'
+
+
+- name: Update system
+  hosts: Endpoints
+  become: yes
+
+  tasks:
+  - name: sudo apt update
+    ansible.builtin.apt:
+      update_cache: yes
+
+  - name: sudo apt dist-upgrade
+    ansible.builtin.apt:
+      upgrade: dist
+
+
+- name: Restart utilities
+  hosts: Endpoints
+  become: yes
+
+  tasks:
+  - name: Restart SSH
+    ansible.builtin.systemd:
+      name: ssh
+      state: restarted
+  - name: Restart RNG
+    ansible.builtin.systemd:
+      name: rng-tools
+      state: restarted

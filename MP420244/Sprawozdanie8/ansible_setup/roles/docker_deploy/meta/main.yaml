@@ -1,0 +1,16 @@
+galaxy_info:
+  role_name: docker_deploy
+  author: MP420244
+  description: Deploy Docker image from tar archive, run container, and validate output
+  company: AGH
+  license: my own
+
+  min_ansible_version: "2.14"
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy
+        - focal
+
+dependencies: []

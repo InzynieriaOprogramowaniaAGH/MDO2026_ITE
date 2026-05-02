@@ -1,0 +1,6 @@
+- name: Deploy Docker artifact
+  hosts: Endpoints
+  become: true
+
+  roles:
+    - docker_deploy

@@ -1,0 +1,126 @@
+- name: Deploy image bundle
+  hosts: Endpoints
+  become: true
+  vars:
+    workdir: /tmp/ansible_bundle
+    archive_name: ART_my-app-build_latest.tar.gz
+    image_name: my-app-build:latest
+    expected_container_output: '(Dockerfile: CMD ["echo"]) Application ready for deployment.'
+    expected_files:
+      - /app/CMakeLists.txt
+      - /app/LICENSE.txt
+      - /app/README.md
+      - /app/lib.c
+      - /app/lib.gcno
+      - /app/lib.h
+      - /app/lib.o
+      - /app/makefile
+      - /app/run_coverage_test.sh
+      - /app/test-library.c
+      - /app/test-library.gcno
+      - /app/test-library.o
+      - /app/test-library.out
+
+  tasks:
+
+    - name: Ping target
+      ansible.builtin.ping:
+
+    - name: Ensure work directory exists
+      ansible.builtin.file:
+        path: "{{ workdir }}"
+        state: directory
+        mode: '0755'
+
+    - name: Copy archive to target
+      ansible.builtin.copy:
+        src: "files/{{ archive_name }}"
+        dest: "{{ workdir }}/{{ archive_name }}"
+        mode: '0644'
+
+    - name: Install Docker
+      ansible.builtin.apt:
+        name: docker.io
+        update_cache: yes
+        state: present
+
+    - name: Verify docker binary exists
+      ansible.builtin.command:
+        cmd: which docker
+      register: docker_path
+      changed_when: false
+
+    - name: Fail if docker missing
+      ansible.builtin.fail:
+        msg: "Docker CLI not installed!"
+      when: docker_path.rc != 0
+
+    - name: Check docker version
+      ansible.builtin.command:
+        cmd: docker --version
+      register: docker_version
+      changed_when: false
+
+    - debug:
+        var: docker_version.stdout
+
+    - name: Load Docker image
+      ansible.builtin.shell: |
+        gunzip -c {{ workdir }}/{{ archive_name }} | docker load
+      register: docker_load
+
+    - name: Show loaded image result
+      ansible.builtin.debug:
+        var: docker_load.stdout
+
+    - name: Run container
+      ansible.builtin.command:
+        cmd: docker run --rm {{ image_name }}
+      register: container_out
+
+    - name: Assert container output echo
+      ansible.builtin.assert:
+        that:
+          - expected_container_output in container_out.stdout
+        fail_msg: "Unexpected container output echo! Verification failed."
+        success_msg: "Container output echo successfully verified."
+      ignore_errors: true
+
+    - name: List container contents
+      ansible.builtin.command:
+        cmd: docker run --rm {{ image_name }} ls -la /app
+      register: app_list
+
+    - name: Show container contents
+      ansible.builtin.debug:
+        var: app_list.stdout_lines
+
+    - name: Verify container file list
+      ansible.builtin.command:
+        cmd: docker run --rm {{ image_name }} test -f {{ item }}
+      loop: "{{ expected_files }}"
+      register: file_checks
+      failed_when: false
+      changed_when: false
+
+    - name: Assert container file list
+      ansible.builtin.assert:
+        that:
+          - item.rc == 0
+        fail_msg: "Missing file: {{ item.item }}"
+        success_msg: "Verified file: {{ item.item }}"
+      loop: "{{ file_checks.results }}"
+      ignore_errors: true
+
+    - name: Remove image
+      ansible.builtin.command:
+        cmd: docker rmi {{ image_name }}
+      ignore_errors: true
+
+    - name: Remove work dir
+      ansible.builtin.file:
+        path: "{{ workdir }}"
+        state: absent
+
+    - name: Final ping
+      ansible.builtin.ping:
