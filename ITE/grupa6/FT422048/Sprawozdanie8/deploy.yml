@@ -1,0 +1,6 @@
+---
+- name: Deploy application using Role
+  hosts: Endpoints
+  become: yes
+  roles:
+    - redis_deploy

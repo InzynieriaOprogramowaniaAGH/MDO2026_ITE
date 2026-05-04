@@ -1,0 +1,15 @@
+galaxy_info:
+  author: Franciszek
+  description: Rola do wdrazania serwera Redis w kontenerze Docker
+  company: AGH
+  license: MIT
+  min_ansible_version: "2.1"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy
+  galaxy_tags:
+    - redis
+    - docker
+    - deploy
+dependencies: []

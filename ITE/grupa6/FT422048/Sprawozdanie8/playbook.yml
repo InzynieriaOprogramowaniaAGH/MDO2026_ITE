@@ -1,0 +1,30 @@
+---
+- name: Automation and remote command execution
+  hosts: all
+  become: yes
+  tasks:
+    - name: 1. Send ping request
+      ansible.builtin.ping:
+
+    - name: 2. Copy inventory file to Endpoints
+      ansible.builtin.copy:
+        src: inventory.ini
+        dest: /tmp/inventory.ini
+      when: "'Endpoints' in group_names"
+
+    - name: 3. Update system packages
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: dist
+      when: "'Endpoints' in group_names"
+
+    - name: 4. Restart sshd service
+      ansible.builtin.service:
+        name: ssh
+        state: restarted
+
+    - name: 5. Restart rngd service
+      ansible.builtin.service:
+        name: rngd
+        state: restarted
+      ignore_errors: yes
