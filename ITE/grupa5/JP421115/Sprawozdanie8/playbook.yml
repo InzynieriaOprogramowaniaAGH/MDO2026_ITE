@@ -1,0 +1,32 @@
+- name: PingAll
+  hosts: all
+  tasks:
+    - name: Ping
+      ping:
+
+- name: ConfUpdate
+  hosts: Endpoints
+  become: yes
+  tasks:
+    - name: Coping
+      copy:
+        src: ./hosts.ini
+        dest: /tmp/inventory_backup.ini
+        owner: root
+        mode: '0644'
+
+    - name: UpdataUpgrade
+      apt:
+        update_cache: yes
+        upgrade: yes
+
+    - name: SSHRestart
+      service:
+        name: ssh
+        state: restarted
+
+    - name: RngdRestart
+      service:
+        name: rngd
+        state: restarted
+      ignore_errors: yes

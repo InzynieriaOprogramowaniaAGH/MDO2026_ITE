@@ -1,0 +1,63 @@
+---
+- name: "SanityCheck"
+  command: df -h /
+  register: disk_space
+  ignore_errors: yes
+
+- name: "InstallDocker"
+  apt:
+    name: docker.io
+    state: present
+    update_cache: yes
+
+- name: "DockerStart"
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: "Catalog"
+  file:
+    path: /tmp/cjson_app
+    state: "{{ item }}"
+  with_items:
+    - absent
+    - directory
+
+- name: "Unarchive"
+  unarchive:
+    src: cjson-artifact.tar.gz
+    dest: /tmp/cjson_app/
+
+- name: "AppWithArtifact"
+  copy:
+    dest: /tmp/cjson_app/main.c
+    content: |
+      #include <stdio.h>
+      extern const char* cJSON_Version(void);
+      int main() {
+          printf("SUKCES: Wersja cJSON: %s\n", cJSON_Version());
+          return 0;
+      }
+
+- name: "Compile"
+  command: >
+    docker run --rm -v /tmp/cjson_app:/app alpine sh -c
+    "apk add --no-cache gcc musl-dev &&
+     cd /app &&
+     find . -name 'libcjson.so*' -type f -exec cp {} libcjson.so \; &&
+     cp libcjson.so libcjson.so.1 &&
+     gcc main.c /app/libcjson.so -o test_app &&
+     LD_LIBRARY_PATH=. ./test_app"
+  register: app_output
+
+- name: Weryfikacja
+  assert:
+    that:
+      - "'Success' in app_output.stdout"
+    success_msg: "Succcess!"
+
+- name: Clean
+  file:
+    path: /tmp/cjson_app
+    state: absent
