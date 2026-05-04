@@ -1,0 +1,15 @@
+[control]
+ansible.local
+
+[managed]
+ansible-target-arm64.local
+ansible-target-x64.local
+
+[managed_x64]
+ansible-target-x64.local
+
+[managed_arm64]
+ansible-target-arm64.local
+
+[managed_native]
+ansible-target-x64.local

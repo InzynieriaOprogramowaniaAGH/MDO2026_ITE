@@ -4,7 +4,7 @@ Zbiorcze sprawozdanie z ćwiczeń 5–7
 Niniejszy dokument stanowi zbiorcze podsumowanie ćwiczeń 5, 6 i 7
 realizowanych w ramach przedmiotu DevOps. Obejmuje on pełną ścieżkę
 pracy z Jenkins CI/CD: od przygotowania środowiska i pierwszych zadań,
-przez budowę kompletnego pipeline’u dla rzeczywistego projektu, po
+przez budowę kompletnego pipeline'u dla rzeczywistego projektu, po
 finalizację rozwiązania w modelu definiowania pipeline jako kod z SCM
 oraz walidację odtwarzalności.
 
@@ -13,8 +13,8 @@ rozłożony na podstawy Git/Docker i przygotowanie gruntu pod CI,
 sprawozdanie 5–7 koncentruje się na inżynierii procesu CI/CD jako
 spójnym, wersjonowanym i audytowalnym przepływie.
 
-1. Cel i zakres serii ćwiczeń
------------------------------
+Cel i zakres serii ćwiczeń
+--------------------------
 
 Celem serii ćwiczeń było zaprojektowanie i uruchomienie pełnego procesu
 CI/CD dla wybranego projektu open-source, z zachowaniem wymagań
@@ -30,7 +30,7 @@ dotyczących:
 ### Zakres techniczny
 
 Zakres obejmował zarówno konfigurację Jenkinsa, jak i przygotowanie
-technicznej „treści” pipeline:
+technicznej „treści" pipeline:
 
 - `Jenkinsfile` (deklaratywny pipeline w Groovy),
 - `Dockerfile` dla środowisk budowy/testów/deploy,
@@ -39,8 +39,8 @@ technicznej „treści” pipeline:
 - organizację wersjonowania artefaktów na podstawie wersji upstream
   i numeru builda CI.
 
-2. Projekt realizowany w pipeline
----------------------------------
+Projekt realizowany w pipeline
+------------------------------
 
 Wybranym projektem był `pacman` (menedżer pakietów Arch Linux) budowany
 z repozytorium upstream. Nie był to projekt demonstracyjny, lecz realny
@@ -100,8 +100,8 @@ Dla obrazu docelowego ustawiono entrypoint oparty o `pacman` z opcją
 - smoke testu uruchomieniowego,
 - publikacji gotowego obrazu jako artefaktu.
 
-3. Przebieg ćwiczenia 5 (start CI i pierwszy pipeline)
--------------------------------------------------------
+Przebieg ćwiczenia 5 (start CI i pierwszy pipeline)
+---------------------------------------------------
 
 Ćwiczenie 5 miało charakter uruchomieniowo-fundamentowy: celem było
 postawienie działającej instancji Jenkins i wejście w praktykę
@@ -112,7 +112,7 @@ podstawowe obrazy środowiskowe. Nie zdefiniowałem integracji
 raportowania testów z Jenkinsem oraz wdrażania / publikacji
 wyniku pipeline.
 
-### 3.1 Przygotowanie środowiska Jenkins
+### Przygotowanie środowiska Jenkins
 
 Wykonałem instalację i konfigurację Jenkinsa (w tym obraz oparty o
 własny `Dockerfile` z interfejsem Blue Ocean). Uzupełniłem konfigurację
@@ -122,7 +122,7 @@ o elementy organizacyjne i bezpieczeństwa:
 - retencję logów,
 - podstawową politykę dostępu.
 
-### 3.2 Zadania wprowadzające
+### Zadania wprowadzające
 
 Przygotowałem dwa proste projekty typu freestyle:
 
@@ -134,7 +134,7 @@ poprawności mechaniki konfiguracja → uruchomienie → log,
 a także zapoznanie się z prostą automatyzacją przez
 Jenkins.
 
-### 3.3 Pierwsza wersja pipeline
+### Pierwsza wersja pipeline
 
 Następnie uruchomiłem pierwszy pipeline dla właściwego repozytorium:
 
@@ -146,13 +146,13 @@ Następnie uruchomiłem pierwszy pipeline dla właściwego repozytorium:
 W ten sposób otrzymałem prosty etap CI/CD sprawdzający ciągłość budowy
 oprogramowania i stan testów.
 
-4. Przebieg ćwiczenia 6 (pełny cykl build-test-deploy-publish)
----------------------------------------------------------------
+Przebieg ćwiczenia 6 (pełny cykl build-test-deploy-publish)
+-----------------------------------------------------------
 
 Ćwiczenie 6 było kluczowe merytorycznie: pipeline został domknięty
 do pełnego cyklu CI/CD.
 
-### 4.1 Rozszerzenie etapu testów o raportowanie JUnit
+### Rozszerzenie etapu testów o raportowanie JUnit
 
 W trakcie budowy/testów wykorzystałem mechanizm:
 
@@ -164,7 +164,7 @@ To usprawnia diagnostykę regresji i przybliża pipeline do praktyki
 produkcyjnej, gdzie możliwa ocena jest jakości oprogramowania przez
 analizę trendów i statystyk testów.
 
-### 4.2 Dodanie etapu `deploy`
+### Dodanie etapu `deploy`
 
 Wprowadziłem osobny obraz deploy oparty o podejście wieloetapowe
 (`multi-stage Dockerfile`):
@@ -175,12 +175,12 @@ Wprowadziłem osobny obraz deploy oparty o podejście wieloetapowe
 
 To pozwoliło na efektywne ograniczenie wielkości rezultatu budowy.
 
-#### 4.2.1 Smoke test etapu deploy
+#### Smoke test etapu deploy
 
 Po zbudowaniu obrazu wykonywałem uruchomienie kontrolne (np. `--version`),
 co potwierdzało, że obraz jest nie tylko zbudowany, ale i używalny.
 
-### 4.3 Dodanie etapu `publish`
+### Dodanie etapu `publish`
 
 Etap publikacji realizował eksport obrazu do artefaktu, wraz z *odciskiem palca*
 i informacją o wystąpieniu artefaktu. Przyjąłem spójny schemat nazewnictwa:
@@ -191,7 +191,7 @@ my-{upstream_name}-{upstream_tag}-b{build-id}.tar.gz
 
 Przykładowo: dla budowy `#43` artefaktem będzie `my-pacman-7.1.0-b43.tar.gz`.
 
-### 4.4 Parametryzacja wersji upstream
+### Parametryzacja wersji upstream
 
 Aby uniknąć *hard-codingu* w kwestii doboru wersji dla oprogramowania,
 zdefiniowałem argument `PACMAN_TAG` w `Dockerfile`. Dla definicji
@@ -199,7 +199,7 @@ wersji na przestrzeni pipeline, zdefiniowałem zmienną środowiskową
 `PACMAN_VERSION`. Zapewniło to jedną oś wersjonowania dla
 build/test/deploy/publish i ułatwiło aktualizację wersji w pipeline.
 
-#### 4.4.1 Efekt po ćwiczeniu 6
+#### Efekt po ćwiczeniu 6
 
 Po ćwiczeniu 6 pipeline był funkcjonalnie kompletny:
 
@@ -210,36 +210,36 @@ title: Pipeline w Jenkins CI/CD
 stateDiagram-v2
     [*] --> checkout
     note left of checkout: Zaciąganie repozytorium
-    
+
     checkout --> build: repozytorium
     state build {
       main: build:main
       note left of main: Budowa Dockerfile z kodem
-      
+
       test: build:test
       note left of test: Budowa Dockerfile z wywołaniem testów
-      
+
       [*] --> main
       main --> test
       test --> [*]: stan testów
     }
-    
+
     build --> deploy
     note left of deploy: Wdrażanie w środowisko obrazu
-    
+
     deploy --> publish
     note left of publish: Publikacja jako artefakt obrazu
-    
+
     publish --> [*]: artefakt
 ```
 
-5. Przebieg ćwiczenia 7 (finalizacja i pipeline z SCM)
-------------------------------------------------------
+Przebieg ćwiczenia 7 (finalizacja i pipeline z SCM)
+---------------------------------------------------
 
 Ćwiczenie 7 zakończyło realizację wymagań organizacyjno-procesowych i
 skupiło się na odtwarzalności oraz formalnym sposobie dostarczania przepisu pipeline.
 
-### 5.1 Przeniesienie źródła pipeline do repozytorium
+### Przeniesienie źródła pipeline do repozytorium
 
 Pipeline przestał być utrzymywany jako ręcznie wklejony skrypt w UI.
 Definicja została dostarczana z repozytorium (`Jenkinsfile` z SCM),
@@ -249,7 +249,7 @@ co oznacza:
 - łatwiejsze review,
 - pełniejszy audyt historii modyfikacji procesu.
 
-### 5.2 Etap przygotowania i czyszczenie środowiska
+### Etap przygotowania i czyszczenie środowiska
 
 Dodałem etap `prepare` oraz operacje czyszczące:
 
@@ -260,14 +260,14 @@ Dodałem etap `prepare` oraz operacje czyszczące:
 Celem było ograniczenie wpływu lokalnych pozostałości i cache na wynik
 pipeline.
 
-#### 5.2.1 Uwagi praktyczne
+#### Uwagi praktyczne
 
 Tak agresywne czyszczenie ma koszt czasowy, ale pozwala na demonstrację
 odtwarzalności i pracy na aktualnym stanie. W praktyce produkcyjnej
 często stosowany jest caching zależności, a nawet samej kompilacji
 i budowy, celem optymalizacji czasu i kosztu budowy.
 
-### 5.3 Walidacja odtwarzalności
+### Walidacja odtwarzalności
 
 Porównałem logi z kolejnych uruchomień. Różnice dotyczyły głównie czasu
 wykonania i technicznych identyfikatorów warstw, natomiast logika kroków
@@ -276,7 +276,7 @@ i stany końcowe pozostawały zgodne.
 To potwierdziło, że pipeline działa powtarzalnie i nie zależy od
 przypadkowego stanu wcześniejszych przebiegów.
 
-### 5.4 Architektura finalnego pipeline
+### Architektura finalnego pipeline
 
 Finalny przepływ można opisać następująco:
 
@@ -299,26 +299,26 @@ title: Pipeline w Jenkins CI/CD
 stateDiagram-v2
     [*] --> checkout
     note left of checkout: Zaciąganie repozytorium
-    checkout --> cleanup: czysty stan Docker
-    cleanup --> build: repozytorium
+    checkout --> cleanup: repozytorium
+    cleanup --> build: czysty stan Dockera
     state build {
       main: build:main
       note left of main: Budowa Dockerfile z kodem
-      
+
       test: build:test
       note left of test: Budowa Dockerfile z wywołaniem testów
-      
+
       [*] --> main
       main --> test
       test --> [*]: stan testów
     }
-    
+
     build --> deploy
     note left of deploy: Wdrażanie w środowisko obrazu
-    
+
     deploy --> publish
     note left of publish: Publikacja jako artefakt obrazu
-    
+
     publish --> [*]: artefakt
 ```
 
@@ -331,17 +331,17 @@ Pipeline w finalnej postaci realizuje:
 - powtarzalność uruchomień bez zależności od stanu poprzedniego,
 - **oczyszczanie stanu budowy** (widoczna różnica między diagramami).
 
-6. Kluczowe problemy i decyzje inżynierskie
--------------------------------------------
+Kluczowe problemy i decyzje inżynierskie
+----------------------------------------
 
-### 6.1 Problem: testy `expected fail` a interpretacja CI
+### Problem: testy `expected fail` a interpretacja CI
 
 Część testów była klasyfikowana jako `expected fail` po stronie projektu,
 ale interfejs CI mógł pokazywać je po stronie niepowodzeń. Wymagało to
 świadomej interpretacji metryk i logów, zamiast bezrefleksyjnego
 traktowania każdego statusu `failed` jako regresji funkcjonalnej.
 
-### 6.2 Decyzja: artefakt jako obraz kontenerowy eksportowany do tar.gz
+### Decyzja: artefakt jako obraz kontenerowy eksportowany do tar.gz
 
 Nie publikowałem obrazu do zewnętrznego rejestru — zamiast tego
 archiwizowałem go w Jenkinsie. Jest to kompromis poprawny dla laboratorium:
@@ -350,11 +350,11 @@ złożoności operacyjnej i zachowaniu prywatności w publikacji obrazu:
 obraz nie opuszcza prywatnego środowiska i jest hostowany lokalnie
 jako artefakt Jenkinsa.
 
-7. Wnioski końcowe
-------------------
+Wnioski końcowe
+---------------
 
 1. Seria ćwiczeń 5–7 skutecznie przeprowadziła proces od uruchomienia
-   Jenkinsa do dojrzałego pipeline’u utrzymywanego jako kod w SCM.
+   Jenkinsa do dojrzałego pipeline'u utrzymywanego jako kod w SCM.
 
 2. Sama budowa stanowi słabe sprawdzenie jakości oprogramowania: warto
    też realizować testy i analizować ich statystykę (pokrycie i/lub
@@ -381,3 +381,4 @@ Podsumowując, ćwiczenia 5–7 zrealizowały kompletny i technicznie
 spójny przypadek użycia Jenkins CI/CD dla rzeczywistego projektu
 open-source, z naciskiem na reprodukowalność, przejrzystość testów
 i praktyczne zarządzanie artefaktami.
+

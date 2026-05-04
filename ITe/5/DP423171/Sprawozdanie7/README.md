@@ -24,8 +24,8 @@ title: Pipeline w Jenkins CI/CD
 stateDiagram-v2
     [*] --> checkout
     note left of checkout: Zaciąganie repozytorium
-    checkout --> cleanup: czysty stan Docker
-    cleanup --> build: repozytorium
+    checkout --> cleanup: repozytorium
+    cleanup --> build: czysty stan Dockera
     state build {
       main: build:main
       note left of main: Budowa Dockerfile z kodem

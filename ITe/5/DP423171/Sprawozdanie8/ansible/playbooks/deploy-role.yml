@@ -1,0 +1,6 @@
+- name: Deploy application
+  hosts: managed
+  become: true
+  become_method: su
+  roles:
+    - deploy
