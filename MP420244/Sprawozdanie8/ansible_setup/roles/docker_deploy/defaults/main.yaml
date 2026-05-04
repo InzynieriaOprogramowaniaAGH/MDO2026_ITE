@@ -1,0 +1,18 @@
+workdir: /tmp/ansible_bundle
+archive_name: ART_my-app-build_latest.tar.gz
+image_name: my-app-build:latest
+expected_container_output: '(Dockerfile: CMD ["echo"]) Application ready for deployment.'
+expected_files:
+  - /app/CMakeLists.txt
+  - /app/LICENSE.txt
+  - /app/README.md
+  - /app/lib.c
+  - /app/lib.gcno
+  - /app/lib.h
+  - /app/lib.o
+  - /app/makefile
+  - /app/run_coverage_test.sh
+  - /app/test-library.c
+  - /app/test-library.gcno
+  - /app/test-library.o
+  - /app/test-library.out
