@@ -1,0 +1,7 @@
+---
+# defaults file for merge_anything_deploy
+artifact_name: merge-anything-dist-24.tar.gz
+remote_artifact: /tmp/merge-anything-dist.tar.gz
+remote_dir: /opt/merge-anything
+container_name: merge-anything-runtime
+runtime_image: node:18-slim
