@@ -1,0 +1,10 @@
+- hosts: Endpoints
+  become: yes
+  tasks:
+    - name: Run nginx container
+      docker_container:
+        name: mynginx
+        image: nginx
+        state: started
+        ports:
+          - "8080:80"

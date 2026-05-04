@@ -1,0 +1,13 @@
+
+- hosts: Endpoints
+  become: yes
+  tasks:
+    - name: Restart ssh
+      service:
+        name: ssh
+        state: restarted
+
+    - name: Restart rng-tools
+      service:
+        name: rng-tools
+        state: restarted
