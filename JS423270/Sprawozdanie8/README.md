@@ -1,4 +1,4 @@
-# Sprawozdanie z laboratorium: Instalacja i konfiguracja zarządcy Ansible
+# Sprawozdanie z laboratorium 8: Instalacja i konfiguracja zarządcy Ansible
 
 ## 1. Konfiguracja maszyny docelowej (ansible-target)
 Pierwszym krokiem było przygotowanie nowej maszyny wirtualnej z systemem Ubuntu Server. Zweryfikowano obecność niezbędnego oprogramowania (`tar` oraz `sshd`). Następnie nadano maszynie odpowiednią nazwę hosta oraz utworzono dedykowanego użytkownika `ansible`.
