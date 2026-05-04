@@ -1,0 +1,5 @@
+---
+- name: Deploy Express App via rola
+  hosts: Endpoints
+  roles:
+    - express_deploy
