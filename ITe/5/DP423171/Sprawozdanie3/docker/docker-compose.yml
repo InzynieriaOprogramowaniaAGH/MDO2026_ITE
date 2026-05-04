@@ -1,0 +1,15 @@
+services:
+  main:
+    image: build-env-main:latest
+    container_name: main
+    build:
+      context: main
+      dockerfile: Dockerfile
+  test:
+    image: build-env:latest
+    build:
+      context: test
+      dockerfile: Dockerfile
+    container_name: test
+    depends_on:
+      - main

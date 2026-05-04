@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+
+    environment {
+        VERSION = "1.0.${BUILD_NUMBER}"
+        IMAGE = "markdown-it"
+        CONTAINER = "md-${BUILD_NUMBER}"
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build & Test') {
+            steps {
+                sh "docker build --target test -t ${IMAGE}:${VERSION}-test ."
+            }
+        }
+
+        stage('Build Image (Deploy)') {
+            steps {
+                sh "docker build --target deploy -t ${IMAGE}:${VERSION} ."
+            }
+        }
+
+        stage('Run Deploy Container') {
+            steps {
+                sh "docker run -d --name ${CONTAINER} ${IMAGE}:${VERSION}"
+            }
+        }
+
+        stage('Archive') {
+            steps {
+                sh "docker save ${IMAGE}:${VERSION} -o ${IMAGE}-${VERSION}.tar"
+                archiveArtifacts artifacts: '*.tar', fingerprint: true
+            }
+        }
+    }
+
+    post {
+        always {
+            sh "docker rm -f ${CONTAINER} || true"
+            sh "docker rmi ${IMAGE}:${VERSION} || true"
+        }
+    }
+}

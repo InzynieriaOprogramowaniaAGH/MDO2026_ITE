@@ -1,0 +1,28 @@
+  384  sudo apt update
+  385  ip a
+  386  sudo ip link set dev ens18 mtu 1200
+  387  docker ps -a
+  388  docker images
+  389  docker run --name jenkins-docker --rm --detach   --privileged --network jenkins --network-alias docker   --env DOCKER_TLS_CERTDIR=/certs   -v jenkins-docker-certs:/certs/client   -v jenkins-data:/var/jenkins_home   docker:dind
+  390  docker run --name jenkins-blueocean --rm --detach   --network jenkins --env DOCKER_HOST=tcp://docker:2376   --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1   --env JAVA_OPTS="-Djenkins.install.runSetupWizard=false"   -v jenkins-data:/var/jenkins_home   -v jenkins-docker-certs:/certs/client:ro   -p 8080:8080 -p 50000:50000   jenkins/jenkins:lts
+  391  docker ps -a
+  392  docker logs jenking
+  393  docker logs d243b15d14cc
+  394  docker exec jenkins-blueocean cat /var/jenkins_home/secrets/initialAdminPassword
+  395  docker exec -u root jenkins-blueocean bash -c "curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-25.0.3.tgz && tar xzvf docker-25.0.3.tgz && mv docker/docker /usr/local/bin/ && rm -rf docker docker-25.0.3.tgz"
+  396  docker rm -f jenkins-blueocean
+  397  docker run --name jenkins-blueocean --rm --detach   --network jenkins --env DOCKER_HOST=tcp://docker:2376   --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1   --env JAVA_OPTS="-Djenkins.install.runSetupWizard=false -Djava.net.preferIPv4Stack=true"   -v jenkins-data:/var/jenkins_home   -v jenkins-docker-certs:/certs/client:ro   -p 8080:8080 -p 50000:50000   jenkins/jenkins:lts
+  398  docker exec -u root jenkins-blueocean jenkins-plugin-cli --plugins workflow-aggregator blueocean
+  399  ip a
+  400  git fetch
+  401  ssh-add -L ~/.ssh/ssh1
+  402  ssh-add ~/.ssh/ssh1
+  403  git fetch
+  404  git rebase grupa5 JSK421999
+  405  git status
+  406  git rebase --abort
+  407  git commit -s
+  408  ls
+  409  cd Sprawozdanie5
+  410  ls
+  411  history > history.log

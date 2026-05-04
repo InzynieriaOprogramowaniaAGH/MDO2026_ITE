@@ -1,0 +1,241 @@
+Started by user SpacingBat3
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/MDO2026_ITE
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (checkout)
+[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/MDO2026_ITE/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git # timeout=10
+Fetching upstream changes from https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/DP423171^{commit} # timeout=10
+Checking out Revision d72c8bc1a035c4b239b86b865211953b6c929abb (refs/remotes/origin/DP423171)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f d72c8bc1a035c4b239b86b865211953b6c929abb # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D DP423171 # timeout=10
+ > git checkout -b DP423171 d72c8bc1a035c4b239b86b865211953b6c929abb # timeout=10
+Commit message: "`deploy` w Dockerfile."
+ > git rev-list --no-walk d72c8bc1a035c4b239b86b865211953b6c929abb # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (build)
+[Pipeline] stage
+[Pipeline] { (build:main)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker build -t build-env-main:latest --build-arg PACMAN_TAG=7.1.0 ITe/5/DP423171/Sprawozdanie3/docker/main
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 548B done
+#1 DONE 0.2s
+
+#2 [internal] load metadata for docker.io/library/archlinux:base-devel
+#2 DONE 0.7s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.2s
+
+#4 [1/7] FROM docker.io/library/archlinux:base-devel@sha256:01bd0ee1c23c3dec1dcb0fce558150a222ee2ef0a3776404de33d0714bcefbb0
+#4 DONE 0.0s
+
+#5 [3/7] RUN git clone -b v7.1.0 https://gitlab.archlinux.org/pacman/pacman.git /repo
+#5 CACHED
+
+#6 [4/7] WORKDIR /repo
+#6 CACHED
+
+#7 [6/7] WORKDIR /repo/build
+#7 CACHED
+
+#8 [5/7] RUN meson setup build --prefix=/usr/local
+#8 CACHED
+
+#9 [2/7] RUN pacman -Syu --asdeps --noconfirm git gpgme libarchive curl python fakechroot fakeroot meson
+#9 CACHED
+
+#10 [7/7] RUN meson compile
+#10 CACHED
+
+#11 exporting to image
+#11 exporting layers done
+#11 writing image sha256:a1a5cd248a379e82cd18e7dd821afff4ab04e99d6408f71f73635af0c755be34 0.1s done
+#11 naming to docker.io/library/build-env-main:latest
+#11 naming to docker.io/library/build-env-main:latest 0.1s done
+#11 DONE 0.5s
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (build:test)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker build -t build-env-test:latest ITe/5/DP423171/Sprawozdanie3/docker/test
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 DONE 0.0s
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile:
+#1 transferring dockerfile: 568B 0.0s done
+#1 DONE 0.5s
+
+#2 [internal] load metadata for docker.io/library/build-env-main:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.2s
+
+#4 [1/3] FROM docker.io/library/build-env-main:latest
+#4 DONE 0.0s
+
+#5 [2/3] RUN fakechroot meson test || true
+#5 CACHED
+
+#6 [3/3] RUN pacman -Rcsu --noconfirm base-devel $(pacman -Qqdt)
+#6 CACHED
+
+#7 exporting to image
+#7 exporting layers done
+#7 writing image sha256:64624a4c847eb6fd1131570f97f9965d95a0d26393a02bf436a84eae89f0d1e9 0.1s done
+#7 naming to docker.io/library/build-env-test:latest
+#7 naming to docker.io/library/build-env-test:latest 0.1s done
+#7 DONE 0.2s
+[Pipeline] }
+[Pipeline] // withEnv
+Did you forget the `def` keyword? WorkflowScript seems to be setting a field named image (to a value of type Image) which could lead to memory leaks or other issues.
+[Pipeline] isUnix
+[Pipeline] sh
++ docker run -d build-env-test:latest
+[Pipeline] sh
++ mkdir -p meson-logs
++ docker cp 8e7fa947194e822f6802842847d1e440537d7917fbc8596e59734133e10f9cf2:/repo/build/meson-logs/testlog.junit.xml meson-logs/testlog.junit.xml
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker stop 8e7fa947194e822f6802842847d1e440537d7917fbc8596e59734133e10f9cf2
+8e7fa947194e822f6802842847d1e440537d7917fbc8596e59734133e10f9cf2
++ docker rm -f --volumes 8e7fa947194e822f6802842847d1e440537d7917fbc8596e59734133e10f9cf2
+8e7fa947194e822f6802842847d1e440537d7917fbc8596e59734133e10f9cf2
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // script
+Post stage
+[Pipeline] script
+[Pipeline] {
+[Pipeline] junit
+Recording test results
+[Checks API] No suitable checks publisher found.
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (deploy)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker build -t my-pacman:7.1.0-b23 ITe/5/DP423171/Sprawozdanie6/docker/deploy
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 653B done
+#1 DONE 0.2s
+
+#2 [internal] load metadata for docker.io/library/build-env-main:latest
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/archlinux:base
+#3 DONE 0.4s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.1s
+
+#5 [stage-1 1/2] FROM docker.io/library/archlinux:base@sha256:4c24063e3e3fa753b0c1f5cd0486ed5bee0173da61b1e73a3fb872f10163f760
+#5 DONE 0.0s
+
+#6 [devenv 1/3] FROM docker.io/library/build-env-main:latest
+#6 DONE 0.0s
+
+#7 [devenv 2/3] RUN DESTDIR=/tarball meson install
+#7 CACHED
+
+#8 [stage-1 2/2] COPY --from=devenv /tarball /
+#8 CACHED
+
+#9 exporting to image
+#9 exporting layers done
+#9 writing image sha256:d78150d10036cb0fcd9deb7d1d81ca204edb1c8b4f5d3d1cfae0a69ac949047c 0.0s done
+#9 naming to docker.io/library/my-pacman:7.1.0-b23 0.1s done
+#9 DONE 0.3s
+[Pipeline] }
+[Pipeline] // withEnv
+Did you forget the `def` keyword? WorkflowScript seems to be setting a field named image (to a value of type Image) which could lead to memory leaks or other issues.
+[Pipeline] sh
++ docker run -t --rm my-pacman:7.1.0-b23 --version
+[?25l
+ .--.                  Pacman v7.1.0 - libalpm v16.0.1
+/ _.-' .-.  .-.  .-.   Copyright (C) 2006-2025 Pacman Development Team
+\  '-. '-'  '-'  '-'   Copyright (C) 2002-2006 Judd Vinet
+ '--'
+                       This program may be freely redistributed under
+                       the terms of the GNU General Public License.
+
+[?25h
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (publish)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ docker save my-pacman:7.1.0-b23
++ gzip
+[Pipeline] }
+[Pipeline] // script
+Post stage
+[Pipeline] archiveArtifacts
+Archiving artifacts
+Recording fingerprints
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: UNSTABLE

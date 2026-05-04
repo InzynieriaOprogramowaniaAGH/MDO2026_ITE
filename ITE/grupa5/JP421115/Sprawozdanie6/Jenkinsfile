@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo "Building..."
+                sh 'docker build --target builder -t cjson-builder:latest .'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo "Testing..."
+                sh 'docker build --target tester -t cjson-tester:latest .'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo "Deploying..."
+                sh 'docker build --target deploy -t cjson-deploy:latest .'
+                sh 'docker run --rm cjson-deploy:latest'
+            }
+        }
+
+        stage('Publish') {
+            steps {
+                echo "Publishing..."
+                sh '''
+                docker create --name cjson-extractor cjson-deploy:latest
+                docker cp cjson-extractor:/usr/lib/libcjson.so ./libcjson.so
+                docker rm cjson-extractor
+                tar -czvf cjson-artifact.tar.gz libcjson.so
+                '''
+                archiveArtifacts artifacts: 'cjson-artifact.tar.gz', fingerprint: true
+            }
+        }
+    }
+}

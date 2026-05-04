@@ -1,0 +1,58 @@
+---
+- name: instalacja wymaganych pakietow
+  ansible.builtin.apt:
+    name:
+      - ca-certificates
+      - curl
+      - gnupg
+    state: present
+    update_cache: yes
+
+- name: utworzenie nowoczesnego katalogu na klucze
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: pobranie klucza GPG Dockera
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    dest: /etc/apt/keyrings/docker.asc
+    mode: '0644'
+
+- name: dodanie repozytorium Dockera
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu noble stable"
+    state: present
+    filename: docker
+
+- name: instalacja Dockera 
+  ansible.builtin.apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    state: present
+    update_cache: yes
+
+- name: dodanie uzytkownika ansible do grupy docker
+  ansible.builtin.user:
+    name: ansible
+    groups: docker
+    append: yes
+
+- name: kopiowanie obrazu aplikacji na serwer docelowy
+  ansible.builtin.copy:
+    src: /home/karro/MDO2026_ITE/ITE/grupa5/KP419785/Sprawozdanie7/portfinder-12.tar.gz
+    dest: /tmp/portfinder.tar.gz
+
+- name: wczytanie obrazu Dockera
+  ansible.builtin.command: docker load -i /tmp/portfinder.tar.gz
+
+- name: uruchomienie kontenera w tle
+  ansible.builtin.command: docker run -d --name my_portfinder portfinder-deploy sleep 60
+  ignore_errors: yes
+
+- name: zatrzymaj i usun kontener po weryfikacji
+  ansible.builtin.command: docker rm -f my_portfinder
+  ignore_errors: yes

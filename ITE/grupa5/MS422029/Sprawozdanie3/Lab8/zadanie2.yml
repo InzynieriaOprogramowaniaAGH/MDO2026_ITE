@@ -1,0 +1,33 @@
+---
+- name: Zadanie 2 - Wdrożenie kontenera
+  hosts: Endpoints
+  become: yes
+  tasks:
+    - name: Sanity check - sprawdzenie czy maszyna dziala
+      ping:
+
+    - name: 1. Instalacja Dockera i bibliotek Pythona
+      apt:
+        name: 
+          - docker.io
+          - python3-docker
+        state: present
+        update_cache: yes
+
+    - name: 2. Pobranie i uruchomienie kontenera z aplikacja
+      docker_container:
+        name: moja_aplikacja_testowa
+        image: nginx:latest
+        state: started
+        ports:
+          - "8080:80"
+
+    - name: 3. Weryfikacja łączności z kontenerem
+      uri:
+        url: "http://127.0.0.1:8080"
+        status_code: 200
+
+    - name: 4. Zatrzymanie i usunięcie kontenera
+      docker_container:
+        name: moja_aplikacja_testowa
+        state: absent

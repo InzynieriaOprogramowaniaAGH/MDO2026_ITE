@@ -1,0 +1,40 @@
+---
+- name: Ping wszystkich
+  hosts: all
+  tasks:
+    - name: Ping
+      ansible.builtin.ping:
+
+- name: Kopiuj inventory na Endpoints
+  hosts: Endpoints
+  tasks:
+    - name: Kopiuj plik inventory
+      ansible.builtin.copy:
+        src: /home/pawel/ansible/inventory.ini
+        dest: /home/ansible/inventory.ini
+        owner: ansible
+        mode: '0644'
+
+- name: Aktualizuj pakiety na Endpoints
+  hosts: Endpoints
+  become: true
+  tasks:
+    - name: apt update + upgrade
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: dist
+
+- name: Restart usług
+  hosts: Endpoints
+  become: true
+  tasks:
+    - name: Restart sshd
+      ansible.builtin.service:
+        name: ssh
+        state: restarted
+
+    - name: Restart rngd (ignoruj błąd jeśli brak)
+      ansible.builtin.service:
+        name: rngd
+        state: restarted
+      ignore_errors: true

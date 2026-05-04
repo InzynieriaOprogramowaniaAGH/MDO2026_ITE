@@ -1,0 +1,37 @@
+1.
+docker volume create vol_in
+docker volume create vol_out 
+docker run --rm -v vol_in:/workspace alpine/git clone [https://github.com/doganarif/portfinder.git](https://github.com/doganarif/portfinder.git) /workspace/projekt
+docker run -it --rm -v vol_in:/src -v vol_out:/build golang:1.24-alpine sh
+apk add make
+cd /src/projekt
+make build
+cp bin/pf /build/
+docker run --rm -v vol_out:/check alpine ls -la /check
+apk add make git
+git clone [https://github.com/doganarif/portfinder.git](https://github.com/doganarif/portfinder.git) projekt2
+cd projekt2
+make build
+cp bin/pf /build/
+exit
+
+2. 
+docker run -it --rm --name iperf-server alpine sh -c "apk add iperf3 && iperf3 -s"
+docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' iperf-server
+docker run -it --rm alpine sh -c "apk add iperf3 && iperf3 -c 172.17.0.3"
+docker network create my-net
+docker run -it --rm --name iperf-server --network my-net -p 5201:5201 alpine sh -c "apk add iperf3 && iperf3 -s"
+docker run -it --rm --network my-net alpine sh -c "apk add iperf3 && iperf3 -c iperf-server"
+
+3.
+docker run -it --rm --name ssh-server -p 2222:22 ubuntu:24.04 bash
+apt update && apt install -y openssh-server
+echo 'root:testpass' | chpasswd
+/usr/sbin/sshd
+ssh root@127.0.0.1 -p 2222
+
+4. 
+docker network create jenkins
+docker run --name jenkins-docker --rm --detach --privileged --network jenkins --network-alias docker --env DOCKER_TLS_CERTDIR=/certs --volume jenkins-docker-certs:/certs/client --volume jenkins-data:/var/jenkins_home --publish 2376:2376 docker:dind --storage-driver overlay2
+docker build -t myjenkins-blueocean:2.492.2-1 --file Dockerfile.jenkins .
+docker run --name jenkins-blueocean --restart=on-failure --detach --network jenkins --env DOCKER_HOST=tcp://docker:2376 --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 --publish 8080:8080 --publish 50000:50000 --volume jenkins-data:/var/jenkins_home --volume jenkins-docker-certs:/certs/client:ro myjenkins-blueocean:2.492.2-1

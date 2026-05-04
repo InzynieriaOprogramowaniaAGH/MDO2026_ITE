@@ -1,0 +1,5 @@
+FROM lab3-build:latest
+
+WORKDIR /app
+
+CMD ["npm", "test"]

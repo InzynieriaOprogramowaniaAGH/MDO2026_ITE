@@ -1,0 +1,13 @@
+Started by user AdminUser
+
+Running as SYSTEM
+Building in workspace /var/jenkins_home/workspace/ErrOnOddHour
+[ErrOnOddHour] $ /bin/sh -xe /tmp/jenkins13961566077668368688.sh
++ date +%-H
++ hour=9
++ [ 1 -ne 0 ]
++ echo Error: Current hour 9 is odd.
+Error: Current hour 9 is odd.
++ exit 1
+Build step 'Execute shell' marked build as failure
+Finished: FAILURE

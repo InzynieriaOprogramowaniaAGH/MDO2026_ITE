@@ -1,0 +1,40 @@
+  230  cd typescript-starter/
+  231  npm install
+  232  sudo apt install npm
+  233  ls
+  234  npm install
+  235  npm run build
+  236  npm test
+  237  docker run -it node:20 /bin/bash
+  238  ls
+  239  cd ..
+  240  ll
+  241  rm -rf typescript-starter/
+  242  cd MDO2026_ITE/
+  243  ls
+  244  cd ITE/
+  245  ls
+  246  cd grupa5/
+  247  ls
+  248  cd JSK421999/
+  249  ls
+  250  cd Sprawozdanie3
+  251  ls
+  252  vim Dockerfile.build
+  253  cd
+  254  ls
+  255  git clone https://github.com/nestjs/typescript-starter.git
+  256  cd typescript-starter/
+  257  l
+  258  vim Dockerfile.build
+  259  docker build -t nest-app:build -f Dockerfile.build .
+  260  vim Dockerfile.test
+  261  docker build -t nest-app:test -f Dockerfile.test .
+  262  docker run --rm nest-app:test
+  263  cd
+  264  ls
+  265  cd MDO2026_ITE/ITE/grupa5/JSK421999/
+  266  ls
+  267  cd Sprawozdanie3
+  268  ls
+  269  history > history.log

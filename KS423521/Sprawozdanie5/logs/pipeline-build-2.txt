@@ -1,0 +1,74 @@
+Started by user admin
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/pipeline-docker
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Clone repo)
+[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/pipeline-docker/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE # timeout=10
+Fetching upstream changes from https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/KS423521^{commit} # timeout=10
+Checking out Revision bbd5ea47707a7c30bb1a8ce00b286cfe2430565c (refs/remotes/origin/KS423521)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f bbd5ea47707a7c30bb1a8ce00b286cfe2430565c # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D KS423521 # timeout=10
+ > git checkout -b KS423521 bbd5ea47707a7c30bb1a8ce00b286cfe2430565c # timeout=10
+Commit message: "KS423521: add dockerfiles"
+ > git rev-list --no-walk bbd5ea47707a7c30bb1a8ce00b286cfe2430565c # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Dockerfile)
+[Pipeline] sh
++ docker build -t app-build -f KS423521/Sprawozdanie3/Dockerfile.build .
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.build
+#1 transferring dockerfile: 248B 0.0s done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/node:20-slim
+#2 DONE 0.9s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/6] FROM docker.io/library/node:20-slim@sha256:1e85773c98c31d4fe5b545e4cb17379e617b348832fb3738b22a08f68dec30f3
+#4 DONE 0.0s
+
+#5 [5/6] RUN npm install
+#5 CACHED
+
+#6 [2/6] RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+#6 CACHED
+
+#7 [3/6] WORKDIR /app
+#7 CACHED
+
+#8 [4/6] RUN git clone https://github.com/markdown-it/markdown-it .
+#8 CACHED
+
+#9 [6/6] RUN npm run build
+#9 CACHED
+
+#10 exporting to image
+#10 exporting layers done
+#10 writing image sha256:300e7ab8f307682640aa2d59b52b86275805c12cb3b3183825b99f0683e3d09d 0.0s done
+#10 naming to docker.io/library/app-build 0.0s done
+#10 DONE 0.1s
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

@@ -1,0 +1,14 @@
+services:
+  build:
+    build:
+      context: .
+      dockerfile: Dockerfile.build
+    image: humanizer-build
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    image: humanizer-test
+    depends_on:
+      - build

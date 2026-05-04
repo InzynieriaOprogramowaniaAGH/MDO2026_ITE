@@ -1,0 +1,9 @@
+Started by user AdminUser
+
+Running as SYSTEM
+Building in workspace /var/jenkins_home/workspace/ErrOnOddHour
+[ErrOnOddHour] $ /bin/sh -xe /tmp/jenkins6682131308734534776.sh
++ date +%-H
++ hour=8
++ [ 0 -ne 0 ]
+Finished: SUCCESS

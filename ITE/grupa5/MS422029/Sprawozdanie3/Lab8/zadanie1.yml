@@ -1,0 +1,33 @@
+---
+- name: Zadanie 1 - Zdalne procedury i administracja
+  hosts: all
+  become: yes
+  tasks:
+    - name: 1. Ping do wszystkich maszyn
+      ping:
+
+    - name: 2. Kopiowanie pliku inwentaryzacji na Endpoints
+      copy:
+        src: ./hosts
+        dest: /tmp/hosts_backup.txt
+      when: "'Endpoints' in group_names"
+
+    - name: 3. Aktualizacja pakietów w systemie
+      apt:
+        update_cache: yes
+        upgrade: dist
+
+    - name: 4. Zapewnienie, ze rng-tools istnieje (do usługi rngd)
+      apt:
+        name: rng-tools-debian
+        state: present
+      ignore_errors: yes
+
+    - name: 5. Restart usług sshd i rngd
+      service:
+        name: "{{ item }}"
+        state: restarted
+      loop:
+        - ssh
+        - rng-tools-debian
+      ignore_errors: yes

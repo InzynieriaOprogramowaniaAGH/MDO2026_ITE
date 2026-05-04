@@ -1,0 +1,222 @@
+Started by user AdminUser
+
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins
+ in /var/jenkins_home/workspace/MyFirstPipeline
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Clone Repository)
+[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/MyFirstPipeline/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git # timeout=10
+Fetching upstream changes from https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/MP420244^{commit} # timeout=10
+Checking out Revision 5fc6a62bb02ba0e8baa0574e81a0a6856e6e0c7f (refs/remotes/origin/MP420244)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 5fc6a62bb02ba0e8baa0574e81a0a6856e6e0c7f # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D MP420244 # timeout=10
+ > git checkout -b MP420244 5fc6a62bb02ba0e8baa0574e81a0a6856e6e0c7f # timeout=10
+Commit message: "Sprawozdanie zbiorcze 1-4"
+First time build. Skipping changelog.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Docker build)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ docker build -t test-project -f MP420244/Sprawozdanie3/Dockerfile.build MP420244/Sprawozdanie3/
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.build
+#1 transferring dockerfile: 259B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/gcc:latest
+#2 DONE 2.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [1/6] FROM docker.io/library/gcc:latest@sha256:34214606c5ff7f9f6f0530c0edf7ce30d12ff6ac973fda861e61c92e99f4f607
+#4 resolve docker.io/library/gcc:latest@sha256:34214606c5ff7f9f6f0530c0edf7ce30d12ff6ac973fda861e61c92e99f4f607 0.0s done
+#4 sha256:34214606c5ff7f9f6f0530c0edf7ce30d12ff6ac973fda861e61c92e99f4f607 7.63kB / 7.63kB done
+#4 sha256:4a6484db82415d1f59a653c9882f3e6c044e0964b2f84bd71b64b04a25471742 2.49kB / 2.49kB done
+#4 sha256:9a52dbcd9b633eceb82cc9e3f1eb383ec274185ed8ee05cc58105a3f6598bc1e 7.42kB / 7.42kB done
+#4 sha256:8f6ad858d0a46fa8ee628532c70b8dc82d06179d543b0b09ec19fc03d4c5b373 0B / 49.30MB 0.1s
+#4 sha256:ee3a0e7d77f0c84203cab438fcf345647c8121bbd80506a3c692f8608a14c4f4 0B / 67.78MB 0.1s
+#4 sha256:b012eb15dff0bce418c03ec940325aee6aa4300d771c325728855697e620c63a 0B / 25.62MB 0.1s
+#4 sha256:8f6ad858d0a46fa8ee628532c70b8dc82d06179d543b0b09ec19fc03d4c5b373 3.15MB / 49.30MB 1.3s
+#4 sha256:b012eb15dff0bce418c03ec940325aee6aa4300d771c325728855697e620c63a 2.10MB / 25.62MB 1.9s
+#4 sha256:8f6ad858d0a46fa8ee628532c70b8dc82d06179d543b0b09ec19fc03d4c5b373 6.29MB / 49.30MB 2.2s
+#4 sha256:8f6ad858d0a46fa8ee628532c70b8dc82d06179d543b0b09ec19fc03d4c5b373 9.44MB / 49.30MB 3.3s
+#4 sha256:ee3a0e7d77f0c84203cab438fcf345647c8121bbd80506a3c692f8608a14c4f4 4.19MB / 67.78MB 3.3s
+#4 sha256:b012eb15dff0bce418c03ec940325aee6aa4300d771c325728855697e620c63a 4.19MB / 25.62MB 3.3s
+#4 sha256:b012eb15dff0bce418c03ec940325aee6aa4300d771c325728855697e620c63a 6.29MB / 25.62MB 4.3s
+#4 sha256:8f6ad858d0a46fa8ee628532c70b8dc82d06179d543b0b09ec19fc03d4c5b373 12.58MB / 49.30MB 4.5s
+#4 sha256:8f6ad858d0a46fa8ee628532c70b8dc82d06179d543b0b09ec19fc03d4c5b373 15.73MB / 49.30MB 5.5s
+#4 sha256:b012eb15dff0bce418c03ec940325aee6aa4300d771c325728855697e620c63a 8.39MB / 25.62MB 5.5s
+#4 sha256:ee3a0e7d77f0c84203cab438fcf345647c8121bbd80506a3c692f8608a14c4f4 8.39MB / 67.78MB 5.7s
+#4 sha256:8f6ad858d0a46fa8ee628532c70b8dc82d06179d543b0b09ec19fc03d4c5b373 18.87MB / 49.30MB 6.7s
+#4 sha256:b012eb15dff0bce418c03ec940325aee6aa4300d771c325728855697e620c63a 10.49MB / 25.62MB 6.7s
+#4 sha256:b012eb15dff0bce418c03ec940325aee6aa4300d771c325728855697e620c63a 12.58MB / 25.62MB 8.0s
+#4 sha256:8f6ad858d0a46fa8ee628532c70b8dc82d06179d543b0b09ec19fc03d4c5b373 22.02MB / 49.30MB 8.2s
+#4 sha256:ee3a0e7d77f0c84203cab438fcf345647c8121bbd80506a3c692f8608a14c4f4 12.58MB / 67.78MB 8.2s
+#4 sha256:b012eb15dff0bce418c03ec940325aee6aa4300d771c325728855697e620c63a 14.68MB / 25.62MB 9.0s
+#4 sha256:8f6ad858d0a46fa8ee628532c70b8dc82d06179d543b0b09ec19fc03d4c5b373 25.17MB / 49.30MB 9.4s
+#4 sha256:ee3a0e7d77f0c84203cab438fcf345647c8121bbd80506a3c692f8608a14c4f4 16.78MB / 67.78MB 9.8s
+#4 sha256:b012eb15dff0bce418c03ec940325aee6aa4300d771c325728855697e620c63a 16.78MB / 25.62MB 9.8s
+#4 sha256:8f6ad858d0a46fa8ee628532c70b8dc82d06179d543b0b09ec19fc03d4c5b373 28.31MB / 49.30MB 10.6s
+#4 sha256:b012eb15dff0bce418c03ec940325aee6aa4300d771c325728855697e620c63a 18.87MB / 25.62MB 10.9s
+#4 sha256:ee3a0e7d77f0c84203cab438fcf345647c8121bbd80506a3c692f8608a14c4f4 20.97MB / 67.78MB 11.5s
+#4 sha256:b012eb15dff0bce418c03ec940325aee6aa4300d771c325728855697e620c63a 20.97MB / 25.62MB 11.7s
+#4 sha256:8f6ad858d0a46fa8ee628532c70b8dc82d06179d543b0b09ec19fc03d4c5b373 31.46MB / 49.30MB 11.9s
+#4 sha256:b012eb15dff0bce418c03ec940325aee6aa4300d771c325728855697e620c63a 23.07MB / 25.62MB 12.7s
+#4 sha256:ee3a0e7d77f0c84203cab438fcf345647c8121bbd80506a3c692f8608a14c4f4 25.17MB / 67.78MB 13.1s
+#4 sha256:8f6ad858d0a46fa8ee628532c70b8dc82d06179d543b0b09ec19fc03d4c5b373 34.60MB / 49.30MB 13.3s
+#4 sha256:b012eb15dff0bce418c03ec940325aee6aa4300d771c325728855697e620c63a 25.17MB / 25.62MB 13.7s
+#4 sha256:b012eb15dff0bce418c03ec940325aee6aa4300d771c325728855697e620c63a 25.62MB / 25.62MB 14.0s done
+#4 sha256:8688d0f2f567884eb217c6f80efa063bdb13a1951e92e6c5cac1ae5b736f5e1b 0B / 236.08MB 14.2s
+#4 sha256:8f6ad858d0a46fa8ee628532c70b8dc82d06179d543b0b09ec19fc03d4c5b373 37.75MB / 49.30MB 14.4s
+#4 sha256:ee3a0e7d77f0c84203cab438fcf345647c8121bbd80506a3c692f8608a14c4f4 29.36MB / 67.78MB 15.0s
+#4 sha256:8f6ad858d0a46fa8ee628532c70b8dc82d06179d543b0b09ec19fc03d4c5b373 40.89MB / 49.30MB 15.5s
+#4 sha256:8f6ad858d0a46fa8ee628532c70b8dc82d06179d543b0b09ec19fc03d4c5b373 44.04MB / 49.30MB 16.5s
+#4 sha256:ee3a0e7d77f0c84203cab438fcf345647c8121bbd80506a3c692f8608a14c4f4 33.55MB / 67.78MB 16.7s
+#4 sha256:8f6ad858d0a46fa8ee628532c70b8dc82d06179d543b0b09ec19fc03d4c5b373 47.19MB / 49.30MB 17.8s
+#4 sha256:8f6ad858d0a46fa8ee628532c70b8dc82d06179d543b0b09ec19fc03d4c5b373 49.30MB / 49.30MB 18.4s done
+#4 sha256:ee3a0e7d77f0c84203cab438fcf345647c8121bbd80506a3c692f8608a14c4f4 37.75MB / 67.78MB 18.5s
+#4 sha256:eee40697fb17e972c9ad4305c8d3f7c975ebbbb0d897ff530f716465c53a1aa1 0B / 4.59MB 18.5s
+#4 extracting sha256:8f6ad858d0a46fa8ee628532c70b8dc82d06179d543b0b09ec19fc03d4c5b373
+#4 sha256:8688d0f2f567884eb217c6f80efa063bdb13a1951e92e6c5cac1ae5b736f5e1b 10.49MB / 236.08MB 19.3s
+#4 sha256:eee40697fb17e972c9ad4305c8d3f7c975ebbbb0d897ff530f716465c53a1aa1 1.05MB / 4.59MB 20.1s
+#4 sha256:ee3a0e7d77f0c84203cab438fcf345647c8121bbd80506a3c692f8608a14c4f4 41.94MB / 67.78MB 20.4s
+#4 sha256:eee40697fb17e972c9ad4305c8d3f7c975ebbbb0d897ff530f716465c53a1aa1 2.10MB / 4.59MB 20.5s
+#4 sha256:eee40697fb17e972c9ad4305c8d3f7c975ebbbb0d897ff530f716465c53a1aa1 3.15MB / 4.59MB 20.9s
+#4 sha256:eee40697fb17e972c9ad4305c8d3f7c975ebbbb0d897ff530f716465c53a1aa1 4.59MB / 4.59MB 21.5s
+#4 sha256:eee40697fb17e972c9ad4305c8d3f7c975ebbbb0d897ff530f716465c53a1aa1 4.59MB / 4.59MB 21.5s done
+#4 sha256:0c9e6e5676c9953de7dcb8959a2bcf291c1ec01d7d61256d6ce1e18d276c63bb 0B / 168.14MB 21.7s
+#4 sha256:ee3a0e7d77f0c84203cab438fcf345647c8121bbd80506a3c692f8608a14c4f4 46.14MB / 67.78MB 22.1s
+#4 sha256:ee3a0e7d77f0c84203cab438fcf345647c8121bbd80506a3c692f8608a14c4f4 50.33MB / 67.78MB 23.4s
+#4 extracting sha256:8f6ad858d0a46fa8ee628532c70b8dc82d06179d543b0b09ec19fc03d4c5b373 5.1s
+#4 sha256:8688d0f2f567884eb217c6f80efa063bdb13a1951e92e6c5cac1ae5b736f5e1b 18.87MB / 236.08MB 24.4s
+#4 sha256:ee3a0e7d77f0c84203cab438fcf345647c8121bbd80506a3c692f8608a14c4f4 54.53MB / 67.78MB 24.8s
+#4 sha256:ee3a0e7d77f0c84203cab438fcf345647c8121bbd80506a3c692f8608a14c4f4 58.72MB / 67.78MB 25.9s
+#4 sha256:0c9e6e5676c9953de7dcb8959a2bcf291c1ec01d7d61256d6ce1e18d276c63bb 9.44MB / 168.14MB 25.9s
+#4 extracting sha256:8f6ad858d0a46fa8ee628532c70b8dc82d06179d543b0b09ec19fc03d4c5b373 8.2s done
+#4 sha256:ee3a0e7d77f0c84203cab438fcf345647c8121bbd80506a3c692f8608a14c4f4 62.91MB / 67.78MB 27.3s
+#4 extracting sha256:b012eb15dff0bce418c03ec940325aee6aa4300d771c325728855697e620c63a 0.1s
+#4 sha256:ee3a0e7d77f0c84203cab438fcf345647c8121bbd80506a3c692f8608a14c4f4 67.11MB / 67.78MB 28.5s
+#4 sha256:ee3a0e7d77f0c84203cab438fcf345647c8121bbd80506a3c692f8608a14c4f4 67.78MB / 67.78MB 29.1s done
+#4 sha256:b7866b3a34d04c0473a5d272ff8766a382af3d4e57cf4783bc659f9143f53f7c 0B / 10.61kB 29.3s
+#4 sha256:8688d0f2f567884eb217c6f80efa063bdb13a1951e92e6c5cac1ae5b736f5e1b 31.46MB / 236.08MB 29.4s
+#4 sha256:0c9e6e5676c9953de7dcb8959a2bcf291c1ec01d7d61256d6ce1e18d276c63bb 18.87MB / 168.14MB 29.6s
+#4 sha256:b7866b3a34d04c0473a5d272ff8766a382af3d4e57cf4783bc659f9143f53f7c 10.61kB / 10.61kB 29.6s done
+#4 sha256:2aa2db63af646000c482b077b739a827bc5b7c60732c4d008a01d4c50841d62e 0B / 2.01kB 29.7s
+#4 sha256:2aa2db63af646000c482b077b739a827bc5b7c60732c4d008a01d4c50841d62e 2.01kB / 2.01kB 30.2s done
+#4 sha256:0c9e6e5676c9953de7dcb8959a2bcf291c1ec01d7d61256d6ce1e18d276c63bb 28.31MB / 168.14MB 32.0s
+#4 extracting sha256:b012eb15dff0bce418c03ec940325aee6aa4300d771c325728855697e620c63a 4.8s done
+#4 extracting sha256:ee3a0e7d77f0c84203cab438fcf345647c8121bbd80506a3c692f8608a14c4f4
+#4 sha256:8688d0f2f567884eb217c6f80efa063bdb13a1951e92e6c5cac1ae5b736f5e1b 45.09MB / 236.08MB 33.6s
+#4 sha256:0c9e6e5676c9953de7dcb8959a2bcf291c1ec01d7d61256d6ce1e18d276c63bb 37.75MB / 168.14MB 35.2s
+#4 extracting sha256:ee3a0e7d77f0c84203cab438fcf345647c8121bbd80506a3c692f8608a14c4f4 5.1s
+#4 sha256:8688d0f2f567884eb217c6f80efa063bdb13a1951e92e6c5cac1ae5b736f5e1b 57.67MB / 236.08MB 37.4s
+#4 sha256:0c9e6e5676c9953de7dcb8959a2bcf291c1ec01d7d61256d6ce1e18d276c63bb 47.19MB / 168.14MB 38.2s
+#4 sha256:8688d0f2f567884eb217c6f80efa063bdb13a1951e92e6c5cac1ae5b736f5e1b 70.25MB / 236.08MB 40.4s
+#4 sha256:0c9e6e5676c9953de7dcb8959a2bcf291c1ec01d7d61256d6ce1e18d276c63bb 56.62MB / 168.14MB 41.1s
+#4 extracting sha256:ee3a0e7d77f0c84203cab438fcf345647c8121bbd80506a3c692f8608a14c4f4 10.2s
+#4 sha256:8688d0f2f567884eb217c6f80efa063bdb13a1951e92e6c5cac1ae5b736f5e1b 82.84MB / 236.08MB 43.2s
+#4 sha256:0c9e6e5676c9953de7dcb8959a2bcf291c1ec01d7d61256d6ce1e18d276c63bb 66.06MB / 168.14MB 44.3s
+#4 extracting sha256:ee3a0e7d77f0c84203cab438fcf345647c8121bbd80506a3c692f8608a14c4f4 12.3s done
+#4 sha256:8688d0f2f567884eb217c6f80efa063bdb13a1951e92e6c5cac1ae5b736f5e1b 95.42MB / 236.08MB 46.4s
+#4 sha256:8688d0f2f567884eb217c6f80efa063bdb13a1951e92e6c5cac1ae5b736f5e1b 108.00MB / 236.08MB 48.7s
+#4 sha256:0c9e6e5676c9953de7dcb8959a2bcf291c1ec01d7d61256d6ce1e18d276c63bb 75.50MB / 168.14MB 48.7s
+#4 sha256:0c9e6e5676c9953de7dcb8959a2bcf291c1ec01d7d61256d6ce1e18d276c63bb 84.93MB / 168.14MB 51.8s
+#4 sha256:8688d0f2f567884eb217c6f80efa063bdb13a1951e92e6c5cac1ae5b736f5e1b 120.59MB / 236.08MB 52.2s
+#4 sha256:0c9e6e5676c9953de7dcb8959a2bcf291c1ec01d7d61256d6ce1e18d276c63bb 94.37MB / 168.14MB 54.4s
+#4 sha256:0c9e6e5676c9953de7dcb8959a2bcf291c1ec01d7d61256d6ce1e18d276c63bb 103.81MB / 168.14MB 56.4s
+#4 sha256:8688d0f2f567884eb217c6f80efa063bdb13a1951e92e6c5cac1ae5b736f5e1b 133.17MB / 236.08MB 56.7s
+#4 sha256:0c9e6e5676c9953de7dcb8959a2bcf291c1ec01d7d61256d6ce1e18d276c63bb 113.25MB / 168.14MB 58.4s
+#4 sha256:0c9e6e5676c9953de7dcb8959a2bcf291c1ec01d7d61256d6ce1e18d276c63bb 122.68MB / 168.14MB 60.4s
+#4 sha256:8688d0f2f567884eb217c6f80efa063bdb13a1951e92e6c5cac1ae5b736f5e1b 145.75MB / 236.08MB 60.6s
+#4 sha256:0c9e6e5676c9953de7dcb8959a2bcf291c1ec01d7d61256d6ce1e18d276c63bb 132.12MB / 168.14MB 63.1s
+#4 sha256:8688d0f2f567884eb217c6f80efa063bdb13a1951e92e6c5cac1ae5b736f5e1b 158.33MB / 236.08MB 64.8s
+#4 sha256:0c9e6e5676c9953de7dcb8959a2bcf291c1ec01d7d61256d6ce1e18d276c63bb 140.51MB / 168.14MB 68.2s
+#4 sha256:8688d0f2f567884eb217c6f80efa063bdb13a1951e92e6c5cac1ae5b736f5e1b 164.63MB / 236.08MB 69.8s
+#4 sha256:0c9e6e5676c9953de7dcb8959a2bcf291c1ec01d7d61256d6ce1e18d276c63bb 149.95MB / 168.14MB 72.0s
+#4 sha256:0c9e6e5676c9953de7dcb8959a2bcf291c1ec01d7d61256d6ce1e18d276c63bb 159.38MB / 168.14MB 74.7s
+#4 sha256:8688d0f2f567884eb217c6f80efa063bdb13a1951e92e6c5cac1ae5b736f5e1b 174.06MB / 236.08MB 74.8s
+#4 sha256:0c9e6e5676c9953de7dcb8959a2bcf291c1ec01d7d61256d6ce1e18d276c63bb 168.14MB / 168.14MB 76.9s
+#4 sha256:0c9e6e5676c9953de7dcb8959a2bcf291c1ec01d7d61256d6ce1e18d276c63bb 168.14MB / 168.14MB 77.3s done
+#4 sha256:8688d0f2f567884eb217c6f80efa063bdb13a1951e92e6c5cac1ae5b736f5e1b 187.70MB / 236.08MB 78.6s
+#4 sha256:8688d0f2f567884eb217c6f80efa063bdb13a1951e92e6c5cac1ae5b736f5e1b 200.28MB / 236.08MB 80.6s
+#4 sha256:8688d0f2f567884eb217c6f80efa063bdb13a1951e92e6c5cac1ae5b736f5e1b 212.86MB / 236.08MB 83.2s
+#4 sha256:8688d0f2f567884eb217c6f80efa063bdb13a1951e92e6c5cac1ae5b736f5e1b 226.49MB / 236.08MB 85.3s
+#4 sha256:8688d0f2f567884eb217c6f80efa063bdb13a1951e92e6c5cac1ae5b736f5e1b 236.08MB / 236.08MB 87.3s done
+#4 extracting sha256:8688d0f2f567884eb217c6f80efa063bdb13a1951e92e6c5cac1ae5b736f5e1b
+#4 extracting sha256:8688d0f2f567884eb217c6f80efa063bdb13a1951e92e6c5cac1ae5b736f5e1b 5.1s
+#4 extracting sha256:8688d0f2f567884eb217c6f80efa063bdb13a1951e92e6c5cac1ae5b736f5e1b 9.3s done
+#4 extracting sha256:eee40697fb17e972c9ad4305c8d3f7c975ebbbb0d897ff530f716465c53a1aa1
+#4 extracting sha256:eee40697fb17e972c9ad4305c8d3f7c975ebbbb0d897ff530f716465c53a1aa1 0.3s done
+#4 extracting sha256:0c9e6e5676c9953de7dcb8959a2bcf291c1ec01d7d61256d6ce1e18d276c63bb 0.1s
+#4 extracting sha256:0c9e6e5676c9953de7dcb8959a2bcf291c1ec01d7d61256d6ce1e18d276c63bb 5.2s
+#4 extracting sha256:0c9e6e5676c9953de7dcb8959a2bcf291c1ec01d7d61256d6ce1e18d276c63bb 8.8s done
+#4 extracting sha256:b7866b3a34d04c0473a5d272ff8766a382af3d4e57cf4783bc659f9143f53f7c done
+#4 extracting sha256:2aa2db63af646000c482b077b739a827bc5b7c60732c4d008a01d4c50841d62e done
+#4 DONE 107.3s
+
+#5 [2/6] WORKDIR /app
+#5 DONE 0.2s
+
+#6 [3/6] RUN apt-get update && apt-get install -y git
+#6 1.022 Get:1 http://deb.debian.org/debian trixie InRelease [140 kB]
+#6 1.233 Get:2 http://deb.debian.org/debian trixie-updates InRelease [47.3 kB]
+#6 1.305 Get:3 http://deb.debian.org/debian-security trixie-security InRelease [43.4 kB]
+#6 1.399 Get:4 http://deb.debian.org/debian trixie/main amd64 Packages [9671 kB]
+#6 3.338 Get:5 http://deb.debian.org/debian trixie-updates/main amd64 Packages [5412 B]
+#6 3.380 Get:6 http://deb.debian.org/debian-security trixie-security/main amd64 Packages [114 kB]
+#6 4.358 Fetched 10.0 MB in 3s (2926 kB/s)
+#6 4.358 Reading package lists...
+#6 5.567 Reading package lists...
+#6 6.561 Building dependency tree...
+#6 6.802 Reading state information...
+#6 7.192 git is already the newest version (1:2.47.3-0+deb13u1).
+#6 7.192 0 upgraded, 0 newly installed, 0 to remove and 17 not upgraded.
+#6 DONE 7.3s
+
+#7 [4/6] RUN git clone https://github.com/deftio/C-and-Cpp-Tests-with-CI-CD-Example.git
+#7 0.388 Cloning into 'C-and-Cpp-Tests-with-CI-CD-Example'...
+#7 DONE 1.7s
+
+#8 [5/6] WORKDIR /app/C-and-Cpp-Tests-with-CI-CD-Example
+#8 DONE 0.2s
+
+#9 [6/6] RUN make
+#9 0.372 gcc -c -o lib.o lib.c -I. -Wall -Wextra -ftest-coverage -fprofile-arcs -O0  
+#9 0.451 gcc -c -o test-library.o test-library.c -I. -Wall -Wextra -ftest-coverage -fprofile-arcs -O0  
+#9 0.555 gcc -o test-library.out lib.o test-library.o -I. -Wall -Wextra -ftest-coverage -fprofile-arcs -lm -lncurses -O0  
+#9 DONE 0.8s
+
+#10 exporting to image
+#10 exporting layers
+#10 exporting layers 0.3s done
+#10 writing image sha256:9773a4c2b7ae49a8bf5ccbabbd188c28053527b07a37d54d2c86acb730e5be8d
+#10 writing image sha256:9773a4c2b7ae49a8bf5ccbabbd188c28053527b07a37d54d2c86acb730e5be8d done
+#10 naming to docker.io/library/test-project done
+#10 DONE 0.3s
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

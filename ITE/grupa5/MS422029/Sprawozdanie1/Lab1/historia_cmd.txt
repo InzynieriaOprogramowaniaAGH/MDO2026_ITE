@@ -1,0 +1,152 @@
+Microsoft Windows [Version 10.0.19045.6466]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Mateusz>ssh -p 2222 ms422029@127.0.0.1
+ssh: connect to host 127.0.0.1 port 2222: Connection refused
+
+C:\Users\Mateusz>ssh -p 2222 ms422029@127.0.0.1
+The authenticity of host '[127.0.0.1]:2222 ([127.0.0.1]:2222)' can't be established.
+ED25519 key fingerprint is SHA256:oCFzd/ppbkA+TbeDJafuSjatASfgJESAaXNdsjuGgf4.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '[127.0.0.1]:2222' (ED25519) to the list of known hosts.
+ms422029@127.0.0.1's password:
+Welcome to Ubuntu 24.04.4 LTS (GNU/Linux 6.17.0-14-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Fri Mar  6 03:56:53 PM UTC 2026
+
+  System load:             0.0
+  Usage of /:              23.1% of 11.21GB
+  Memory usage:            5%
+  Swap usage:              0%
+  Processes:               104
+  Users logged in:         1
+  IPv4 address for enp0s3: 10.0.2.15
+  IPv6 address for enp0s3: fd17:625c:f037:2:a00:27ff:fec9:ae6d
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+5 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+ms422029@mdomatstep:~$ ssh-keygen -t ed25519 -C "MDO"
+Generating public/private ed25519 key pair.
+Enter file in which to save the key (/home/ms422029/.ssh/id_ed25519):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /home/ms422029/.ssh/id_ed25519
+Your public key has been saved in /home/ms422029/.ssh/id_ed25519.pub
+The key fingerprint is:
+SHA256:Px/hB3Ee2cpGn48zYNk5WNAE2/h8IqbqBL6fs35qt/Q MDO
+The key's randomart image is:
++--[ED25519 256]--+
+|            o+.  |
+|             =.o |
+|            + B .|
+|             & =.|
+|      . S   X %.o|
+|     . . . = * =.|
+|      . . = o = .|
+|       oo+o+ o o |
+|      .=O*..E    |
++----[SHA256]-----+
+ms422029@mdomatstep:~$ ssh-keygen -t ecdsa -b 521 -C "MDO_bez_hasla"
+Generating public/private ecdsa key pair.
+Enter file in which to save the key (/home/ms422029/.ssh/id_ecdsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /home/ms422029/.ssh/id_ecdsa
+Your public key has been saved in /home/ms422029/.ssh/id_ecdsa.pub
+The key fingerprint is:
+SHA256:/iE/1rvGKh54XZQxlFnmrQXmYblR1GLHNc4ZB/Ce9qk MDO_bez_hasla
+The key's randomart image is:
++---[ECDSA 521]---+
+|           .==OOB|
+|            o@B+O|
+|            o.+Oo|
+|           . ..+ |
+|        S   . =  |
+|       o . . . ..|
+|      . = oo   ..|
+|       ..=o.+ .  |
+|       ..o++oE   |
++----[SHA256]-----+
+ms422029@mdomatstep:~$ cat ~/.ssh/id_ed25519.pub
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFy47oe/olhmjjiMHHpwxX4EzYN0QgFXCWrxObv/lvDQ MDO
+ms422029@mdomatstep:~$ git clone git@github.com:InzynieriaOprogramowaniaAGH/MDO2026_ITE.git ms422029_ssh
+Cloning into 'ms422029_ssh'...
+The authenticity of host 'github.com (140.82.121.4)' can't be established.
+ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'github.com' (ED25519) to the list of known hosts.
+Enter passphrase for key '/home/ms422029/.ssh/id_ed25519':
+remote: Enumerating objects: 266, done.
+remote: Counting objects: 100% (74/74), done.
+remote: Compressing objects: 100% (65/65), done.
+remote: Total 266 (delta 13), reused 25 (delta 3), pack-reused 192 (from 2)
+Receiving objects: 100% (266/266), 5.97 MiB | 1.88 MiB/s, done.
+Resolving deltas: 100% (36/36), done.
+ms422029@mdomatstep:~$
+
+VSCODE:
+ms422029@mdomatstep:~/ms422029_ssh$ cd grupa5/MS422029
+ms422029@mdomatstep:~/ms422029_ssh/grupa5/MS422029$ cd ..
+ms422029@mdomatstep:~/ms422029_ssh/grupa5$ cd ..
+ms422029@mdomatstep:~/ms422029_ssh$ rmdir grupa5/
+rmdir: failed to remove 'grupa5/': Directory not empty
+ms422029@mdomatstep:~/ms422029_ssh$ rmdir -r grupa5/
+rmdir: invalid option -- 'r'
+Try 'rmdir --help' for more information.
+ms422029@mdomatstep:~/ms422029_ssh$ rmdir grupa5/MS422029/
+ms422029@mdomatstep:~/ms422029_ssh$ ls
+DevOps_Sprawozdanie1_KingaPytel_Gr5.pdf  grupa5  KP419785  MS423500  README.md  READMEs
+ms422029@mdomatstep:~/ms422029_ssh$ ls
+DevOps_Sprawozdanie1_KingaPytel_Gr5.pdf  grupa5  KP419785  MS423500  README.md  READMEs
+ms422029@mdomatstep:~/ms422029_ssh$ rmdir grupa5/
+ms422029@mdomatstep:~/ms422029_ssh$ git checkout MS422029
+Already on 'MS422029'
+ms422029@mdomatstep:~/ms422029_ssh$ mkdir MS422029/Sprawozdanie1
+mkdir: cannot create directory ‘MS422029/Sprawozdanie1’: No such file or directory
+ms422029@mdomatstep:~/ms422029_ssh$ mkdir -p  MS422029/Sprawozdanie1
+ms422029@mdomatstep:~/ms422029_ssh$ cd MS422029/
+ms422029@mdomatstep:~/ms422029_ssh/MS422029$ ls
+Sprawozdanie1
+ms422029@mdomatstep:~/ms422029_ssh/MS422029$ cp MS422029/commit-msg .git/hooks/commit-msg
+cp: cannot stat 'MS422029/commit-msg': No such file or directory
+ms422029@mdomatstep:~/ms422029_ssh/MS422029$ cd ..
+ms422029@mdomatstep:~/ms422029_ssh$ cp MS422029/commit-msg .git/hooks/commit-msg
+cp: cannot stat 'MS422029/commit-msg': No such file or directory
+ms422029@mdomatstep:~/ms422029_ssh$ code MS422029/commit-msg
+ms422029@mdomatstep:~/ms422029_ssh$ cp MS422029/commit-msg .git/hooks/commit-msg
+ms422029@mdomatstep:~/ms422029_ssh$ chmod +x .git/hooks/commit-msg
+ms422029@mdomatstep:~/ms422029_ssh$ pwd
+/home/ms422029/ms422029_ssh
+ms422029@mdomatstep:~/ms422029_ssh$ git status
+On branch MS422029
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        MS422029/
+
+nothing added to commit but untracked files present (use "git add" to track)
+ms422029@mdomatstep:~/ms422029_ssh$ ls MS422029
+commit-msg  Sprawozdanie1
+ms422029@mdomatstep:~/ms422029_ssh$ mkdir -p ITE/grupa5
+ms422029@mdomatstep:~/ms422029_ssh$ mv MS422029 ITE/grupa5/
+ms422029@mdomatstep:~/ms422029_ssh$ ls ITE/grupa5/
+MS422029
+ms422029@mdomatstep:~/ms422029_ssh$ code ITE/grupa5/MS422029/Sprawozdanie1/README.md
+ms422029@mdomatstep:~/ms422029_ssh$ 

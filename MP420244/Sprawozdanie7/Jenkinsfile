@@ -1,0 +1,83 @@
+pipeline {
+    agent any
+
+    environment {
+        ARTIFACT_PREF = 'ART_'
+        IMAGE_NAME = 'my-app-build'
+        DOCKERFILE_PATH = 'MP420244/Sprawozdanie7/Dockerfile'
+    }
+
+    stages {
+        stage('Prepare') {
+            steps {
+                echo '---=== STAGE: PREPARE ===---'
+                echo 'Cleaning up artifacts...'
+
+                script {
+                    sh "rm -rf ${ARTIFACT_PREF}* || true"
+                }
+            }
+        }
+        stage('Build') {
+
+            steps {
+                echo '---=== STAGE: BUILD ===---'
+                echo 'Building application...'
+
+                script {
+                    sh "docker build --no-cache --target builder -t ${IMAGE_NAME}:BLDR -f ${DOCKERFILE_PATH} ."
+                    sh "docker build --no-cache -t ${IMAGE_NAME}:${BUILD_NUMBER} -f ${DOCKERFILE_PATH} ."
+                }
+            }
+        }
+        stage('Test') {
+
+            steps {
+                echo '---=== STAGE: TEST ===---'
+                echo 'Testing application...'
+
+                script {
+
+                    def status = sh(
+                        script: "docker run --rm ${IMAGE_NAME}:BLDR sh -c \"./test-library.out\" > ${ARTIFACT_PREF}test-results.txt 2>&1",
+                        returnStatus: true
+                    )
+
+                    if (status != 0) {
+                        currentBuild.result = 'FAILURE'
+                        error("Tests failed. See ${ARTIFACT_PREF}test-results.txt")
+                    }
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo '---=== STAGE: DEPLOY ===---'
+                echo 'Simulating deployment in fresh container...'
+
+                script {
+                    sh "docker run --rm ${IMAGE_NAME}:${BUILD_NUMBER} sh -c \"echo '(Docker run) Simulated deployment successful.'\""
+                }
+            }
+        }
+        stage('Publish') {
+            steps {
+                echo '---=== STAGE: PUBLISH ===---'
+
+                sh "docker tag ${IMAGE_NAME}:${BUILD_NUMBER} ${IMAGE_NAME}:latest"
+                sh "docker save ${IMAGE_NAME}:latest | gzip > ${ARTIFACT_PREF}${IMAGE_NAME}_latest.tar.gz"
+                archiveArtifacts artifacts: "${ARTIFACT_PREF}*", fingerprint: true
+            }
+        }
+    }
+
+    post {
+        always {
+            echo '---=== POST: ALWAYS ===---'
+            echo 'Cleaning up workspace and Docker...'
+
+            cleanWs()
+            sh "docker system prune -af || true"
+        }
+    }
+}

@@ -1,0 +1,44 @@
+  167  docker ps -a
+  168  docker 
+  169  docker login
+  170  docker run hello-world
+  171  docke ps -a
+  172  docker ps -a
+  173  docker run busybox
+  174  docker run ubuntu
+  175  docker run mariadb
+  176  docker run runtime
+  177  docker run aspnet
+  178  docker run mcr.microsoft.com/dotnet/sdk:8.0
+  179  docker images
+  180  docker run -it busybox /bin/sh
+  181  docker run -it ubuntu /bin/bash
+  182  ls
+  183  cd MDO2026_ITE/ITE/grupa5/JSK421999/
+  184  ls
+  185  vim Sprawozdanie2
+  186  mkdir Sprawozdanie2
+  187  cd Sprawozdanie2
+  188  vim Dockerfile
+  189  mv Dockerfile ../Sprawozdanie1
+  190  cd ../Sprawozdanie1
+  191  ls
+  192  docker
+  193* docker build -t spr1-dockerfile
+  194  docker build -t spr1-dockerfile .
+  195  docker run -it spr1-dockerfile
+  196  ps -a
+  197  docker ps -a
+  198  docker container prune
+  199  ls
+  200  mv Dockerfile ../Sprawozdanie2
+  201  ls
+  202  git status
+  203  git add .
+  204  git status
+  205  git add ../Sprawozdanie2/
+  206  git status
+  207  ls
+  208  cd ../Sprawozdanie2
+  209  ls
+  210  history > history.log

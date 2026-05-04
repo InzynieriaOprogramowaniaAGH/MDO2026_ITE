@@ -1,0 +1,64 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('checkout') {
+            steps {
+                git branch: 'DP423171',
+                    url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git'
+            }
+        }
+        stage('build') {
+            stages {
+                stage('build:main') {
+                    steps {
+                        script {
+                            docker.build("build-env-main:latest", "ITe/5/DP423171/Sprawozdanie3/docker/main")
+                        }
+                    }
+                }
+                stage('build:test') {
+                    steps {
+                        script {
+                            image = docker.build("build-env-test:latest", "ITe/5/DP423171/Sprawozdanie3/docker/test")
+                            image.withRun { container ->
+                                sh """
+                                    mkdir -p meson-logs
+                                    docker cp ${container.id}:/repo/build/meson-logs/testlog.junit.xml meson-logs/testlog.junit.xml
+                                """
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            script {
+                                junit 'meson-logs/testlog.junit.xml'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        stage('deploy') {
+            steps {
+                script {
+                    image = docker.build("my-pacman:7.1.0-b${BUILD_ID}", "ITe/5/DP423171/Sprawozdanie6/docker/deploy")
+                    sh 'docker run -t --rm ${image.imageName()} --version'
+                }
+            }
+        }
+        stage('publish') {
+            steps {
+                script {
+                    sh 'docker save "my-pacman:7.1.0-b${BUILD_ID}" | gzip > my-pacman-7.1.0-b${BUILD_ID}.tar.gz'
+                }
+            }
+            post {
+                always {
+                    archiveArtifacts artifacts: 'my-pacman-7.1.0-b${BUILD_ID}.tar.gz',
+                        fingerprint: true
+                }
+            }
+        }
+    }
+}
