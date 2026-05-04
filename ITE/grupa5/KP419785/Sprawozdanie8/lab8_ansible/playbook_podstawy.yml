@@ -1,0 +1,22 @@
+---
+- name: podstawowy konfig
+  hosts: Endpoints
+  become: yes
+
+  tasks:
+    - name: wysylanie ping
+      ansible.builtin.ping:
+
+    - name: copy plik inwent
+      ansible.builtin.copy:
+        src: ./inventory.ini
+        dest: /tmp/inventory.ini
+
+    - name: update pakietow
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: restard sshd
+      ansible.builtin.systemd:
+        name: ssh
+        state: restarted

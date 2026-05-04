@@ -1,0 +1,13 @@
+ip a
+ssh-keygen -t ed25519
+ssh-copy-id karro@192.168.1.38
+ssh karro@192.168.1.38
+ssh-copy-id ansible@192.168.1.38
+ssh ansible@192.168.1.38
+ansible all -m ping -i inventory.ini
+ansible-playbook -i inventory.ini playbook_podstawy.yml -K
+ssh karro@ansible-target
+echo "ansible ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ansible
+ansible-playbook -i inventory.ini playbook_podstawy.yml
+ansible-galaxy init deploy_portfinder
+ansible-playbook -i inventory.ini wdrozenie.yml
