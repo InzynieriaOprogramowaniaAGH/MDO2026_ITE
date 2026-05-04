@@ -1,0 +1,24 @@
+---
+- name: Aktualizacja pakietow i restart uslug
+  hosts: Endpoints
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Aktualizacja cache apt
+      ansible.builtin.apt:
+        update_cache: true
+
+    - name: Upgrade pakietow
+      ansible.builtin.apt:
+        upgrade: dist
+
+    - name: Restart ssh
+      ansible.builtin.service:
+        name: ssh
+        state: restarted
+
+    - name: Restart rng-tools
+      ansible.builtin.service:
+        name: rng-tools
+        state: restarted
+      ignore_errors: true

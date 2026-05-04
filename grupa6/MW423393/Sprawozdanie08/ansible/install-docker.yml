@@ -1,0 +1,21 @@
+---
+- name: Instalacja Dockera na Endpoints
+  hosts: Endpoints
+  become: true
+  tasks:
+    - name: Instalacja dockera
+      ansible.builtin.apt:
+        name: docker.io
+        state: present
+
+    - name: Uruchom docker
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Dodaj ansible do grupy docker
+      ansible.builtin.user:
+        name: ansible
+        groups: docker
+        append: true

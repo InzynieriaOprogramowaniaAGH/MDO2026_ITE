@@ -1,0 +1,6 @@
+---
+- name: Wdrozenie artefaktu przy uzyciu roli
+  hosts: Endpoints
+  become: true
+  roles:
+    - merge_anything_deploy

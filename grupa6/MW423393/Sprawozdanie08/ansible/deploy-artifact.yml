@@ -1,0 +1,66 @@
+---
+- name: Wdrozenie artefaktu na Endpoints
+  hosts: Endpoints
+  become: true
+  vars:
+    artifact_name: merge-anything-dist-24.tar.gz
+    remote_artifact: /tmp/merge-anything-dist.tar.gz
+    remote_dir: /opt/merge-anything
+    container_name: merge-anything-runtime
+    runtime_image: node:18-slim
+
+  tasks:
+    - name: Sanity check - sprawdz docker
+      ansible.builtin.command: docker --version
+      register: docker_check
+      changed_when: false
+      failed_when: docker_check.rc != 0
+
+    - name: Utworz katalog docelowy
+      ansible.builtin.file:
+        path: "{{ remote_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: Skopiuj artefakt na host docelowy
+      ansible.builtin.copy:
+        src: "{{ artifact_name }}"
+        dest: "{{ remote_artifact }}"
+        mode: "0644"
+
+    - name: Rozpakuj artefakt
+      ansible.builtin.unarchive:
+        src: "{{ remote_artifact }}"
+        dest: "{{ remote_dir }}"
+        remote_src: true
+
+    - name: Pobierz obraz runtime
+      ansible.builtin.command: docker pull {{ runtime_image }}
+      changed_when: true
+
+    - name: Usun stary kontener jesli istnieje
+      ansible.builtin.command: docker rm -f {{ container_name }}
+      ignore_errors: true
+      changed_when: true
+
+    - name: Uruchom kontener runtime z artefaktem
+      ansible.builtin.command: >
+        docker run -d
+        --name {{ container_name }}
+        -v {{ remote_dir }}:/app
+        {{ runtime_image }}
+        tail -f /dev/null
+      changed_when: true
+
+    - name: Zweryfikuj obecność pliku index.js
+      ansible.builtin.command: docker exec {{ container_name }} test -f /app/dist/index.js
+      changed_when: false
+
+    - name: Listing katalogu dist
+      ansible.builtin.command: docker exec {{ container_name }} ls -la /app/dist
+      register: dist_listing
+      changed_when: false
+
+    - name: Pokaz listing
+      ansible.builtin.debug:
+        var: dist_listing.stdout_lines
