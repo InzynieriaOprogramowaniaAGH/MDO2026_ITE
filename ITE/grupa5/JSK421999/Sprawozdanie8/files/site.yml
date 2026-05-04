@@ -1,0 +1,5 @@
+- name: pelne uruchomienie
+  hosts: Endpoints
+  become: yes
+  roles:
+    - deploy_nestjs
