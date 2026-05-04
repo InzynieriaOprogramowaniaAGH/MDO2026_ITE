@@ -1,0 +1,26 @@
+- name: Install Docker
+  apt:
+    name: docker.io
+    state: present
+    update_cache: yes
+
+- name: Start Docker
+  service:
+    name: docker
+    state: started
+
+- name: Install rng-tools
+  apt:
+    name: rng-tools
+    state: present
+
+- name: Restart rng service (Debian variant)
+  service:
+    name: rng-tools-debian
+    state: restarted
+  ignore_errors: yes
+
+- name: Restart SSH
+  service:
+    name: ssh
+    state: restarted

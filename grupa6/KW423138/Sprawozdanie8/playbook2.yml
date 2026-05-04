@@ -1,0 +1,29 @@
+- name: Install Docker and start service
+  hosts: Endpoints
+  become: yes
+
+  tasks:
+    - name: Check if system is reachable
+      ping:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+
+    - name: Start Docker
+      service:
+        name: docker
+        state: started
+
+    - name: Run nginx container
+      docker_container:
+        name: mynginx
+        image: nginx
+        state: started
+        ports:
+          - "8080:80"
+    - name: Stop container
+      docker_container:
+        name: mynginx
+        state: absent

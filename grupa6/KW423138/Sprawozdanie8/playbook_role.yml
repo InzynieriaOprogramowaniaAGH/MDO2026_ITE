@@ -1,0 +1,6 @@
+- name: Run my role
+  hosts: Endpoints
+  become: yes
+
+  roles:
+    - myrole
