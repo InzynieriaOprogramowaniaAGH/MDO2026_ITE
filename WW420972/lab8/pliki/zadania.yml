@@ -1,0 +1,59 @@
+---
+- name: Pierwsze kroki zdalnego wykonywania
+  hosts: all
+  tasks:
+    - name: Wyslij zadanie ping do wszystkich maszyn
+      ansible.builtin.ping:
+
+    - name: Skopiuj plik inwentaryzacyjny na maszyny Endpoints
+      ansible.builtin.copy:
+        src: inventory.ini
+        dest: /home/ansible/inventory_backup.ini
+      when: "'Endpoints' in group_names"
+    - name: Zaktualizuj pakiety w systemie
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: dist
+      become: true
+      when: "'Endpoints' in group_names"
+
+    - name: Zrestartuj usluge sshd
+      ansible.builtin.service:
+        name: sshd
+        state: restarted
+      become: true
+      when: "'Endpoints' in group_names"
+
+    - name: Zrestartuj usluge rngd
+      ansible.builtin.service:
+        name: rngd
+        state: restarted
+      become: true
+      ignore_errors: yes
+      when: "'Endpoints' in group_names"
+
+    - name: Usun stare i zdublowane pliki repozytoriow
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /etc/apt/sources.list.d/docker.list
+        - /etc/apt/sources.list.d/download_docker_com_linux_ubuntu.list
+        - /tmp/get-docker.sh
+      become: true
+      when: "'Endpoints' in group_names"
+
+    - name: Zainstaluj natywny pakiet docker.io (obejscie bledu z Githuba)
+      ansible.builtin.shell: |
+        apt-get update
+        apt-get install -y docker.io docker-compose
+      become: true
+      when: "'Endpoints' in group_names"
+
+    - name: Upewnij sie, ze Docker dziala
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: yes
+      become: true
+      when: "'Endpoints' in group_names"
