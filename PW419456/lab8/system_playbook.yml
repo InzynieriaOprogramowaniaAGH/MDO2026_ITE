@@ -1,0 +1,33 @@
+---
+- name: Konfiguracja systemowa
+  hosts: all
+  become: yes
+  tasks:
+    - name: Ping machine
+      ansible.builtin.ping:
+
+    - name: Kopiowanie pliku inwentaryzacji (tylko na Endpoints)
+      ansible.builtin.copy:
+        src: inventory.ini
+        dest: /tmp/inventory.ini
+      when: inventory_hostname in groups['Endpoints']
+
+    - name: Instalacja rng-tools (wymagane do usługi rngd)
+      ansible.builtin.apt:
+        name: rng-tools
+        state: present
+        update_cache: yes
+
+    - name: Aktualizacja pakietów apt
+      ansible.builtin.apt:
+        upgrade: dist
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+
+    - name: Restart sshd i rngd
+      ansible.builtin.service:
+        name: "{{ item }}"
+        state: restarted
+      loop:
+        - ssh
+        - rng-tools
