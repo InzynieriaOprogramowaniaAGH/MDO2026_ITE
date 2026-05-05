@@ -1,0 +1,4 @@
+flac_binary_src_path: "files/flac"
+flac_container_name: "flac_container"
+flac_docker_image: "ubuntu:22.04"
+flac_workdir: "/flac_app"

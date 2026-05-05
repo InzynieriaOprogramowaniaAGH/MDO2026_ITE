@@ -1,0 +1,79 @@
+
+- name: Sanity check - czy cel jest dostępny
+  ping:
+
+- name: Sanity check - czy docker może zostać zainstalowany
+  package:
+    name: docker.io
+    state: present
+  check_mode: yes
+  register: docker_check
+  ignore_errors: yes
+
+- name: Obsłużenie awarii jeśli docker nie może zostać zainstalowany
+  fail:
+    msg: "Docker nie może zostać zainstalowany na {{ inventory_hostname }} - koniec deploymentu."
+  when: docker_check is failed
+
+- name: Instalacja Dockera
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - docker.io
+    - python3-docker
+  become: yes
+
+- name: Kopiowanie plików binarnych FLAC do celu
+  copy:
+    src: "{{ flac_binary_src_path }}"
+    dest: "/tmp/{{ flac_binary_src_path | basename }}"
+    mode: '0755'
+  register: flac_binary_copy
+
+- name: Pobranie obrazu dockera
+  community.docker.docker_image:
+    name: "{{ flac_docker_image }}"
+    source: pull
+  become: yes
+
+- name: Stworzenie i uruchomienie kontenera FLAC
+  community.docker.docker_container:
+    name: "{{ flac_container_name }}"
+    image: "{{ flac_docker_image }}"
+    command: "tail -f /dev/null"
+    volumes:
+      - "/tmp/{{ flac_binary_src_path | basename }}:{{ flac_workdir }}/flac:ro"
+    working_dir: "{{ flac_workdir }}"
+    state: started
+  become: yes
+
+- name: Uruchomienie FLAC w kontenerze
+  community.docker.docker_container_exec:
+    container: "{{ flac_container_name }}"
+    command: "./flac --version"
+  register: flac_exec
+  become: yes
+
+- name: Wypisanie wyniku
+  debug:
+    var: flac_exec.stdout_lines
+
+- name: Weryfikacja uruchomienia flac
+  assert:
+    that:
+      - flac_exec is success
+      - flac_exec.stdout is search("FLAC")
+    fail_msg: "FLAC nie uruchomił się poprawnie - container log:\n{{ flac_exec.stderr }}"
+    success_msg: "FLAC poprawnie się uruchomił."
+
+- name: Usuwanie kontenera FLAC
+  docker_container:
+    name: "{{ flac_container_name }}"
+    state: absent
+  become: yes
+
+- name: Usuwanie FLAC
+  file:
+    path: "/tmp/{{ flac_binary_src_path | basename }}"
+    state: absent

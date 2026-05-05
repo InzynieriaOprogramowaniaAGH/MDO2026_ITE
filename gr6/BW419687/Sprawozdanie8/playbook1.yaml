@@ -1,0 +1,60 @@
+---
+- name: Konfiguracja i testy dla serwerów Endpoints
+  hosts: Endpoints
+  gather_facts: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  tasks:
+    # 1 Zadanie: Wyślij żądanie ping do wszystkich maszyn
+    - name: 1. Weryfikacja łączności i dostępności Pythona (ansible.builtin.ping)
+      ansible.builtin.ping:
+
+    # 2 Zadanie: Skopiuj plik inwentaryzacji na maszyny Endpoints
+    - name: 2. Kopiowanie pliku inventory.ini na serwer docelowy
+      ansible.builtin.copy:
+        src: ./inventory.ini
+        dest: /tmp/inventory_copy.ini
+        mode: '0644'
+      register: copy_result
+
+    # 3 Zadanie: Ponów operację i porównaj różnice w wyjściu
+    - name: 3. Ponowne kopiowanie z wyświetleniem różnic (tryb --diff)
+      ansible.builtin.copy:
+        src: ./inventory.ini
+        dest: /tmp/inventory_copy.ini
+        mode: '0644'
+      diff: yes
+      check_mode: yes
+      register: diff_result
+
+    - name: 3b. Wyświetlenie różnic (jeśli istnieją)
+      debug:
+        msg: "Różnice w pliku: {{ diff_result.diff | default('Brak różnic - plik jest aktualny') }}"
+
+    # 4 Zadanie: Zaktualizuj pakiety w systemie
+    - name: 4. Aktualizacja listy pakietów (apt update)
+      ansible.builtin.apt:
+        update_cache: yes
+        cache_valid_time: 3600
+      become: yes
+
+    - name: 4b. Bezpieczna aktualizacja wszystkich pakietów
+      ansible.builtin.apt:
+        name: "*"
+        state: latest
+      become: yes
+      register: apt_result
+
+    # 5 Zadanie: Zrestartuj usługi sshd i rngd
+    - name: 5. Restart usługi SSH (sshd)
+      ansible.builtin.service:
+        name: sshd
+        state: restarted
+      become: yes
+
+    - name: 5b. Restart usługi rngd
+      ansible.builtin.service:
+        name: rngd
+        state: restarted
+      become: yes
