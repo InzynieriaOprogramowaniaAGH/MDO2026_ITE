@@ -147,18 +147,12 @@ styl logowania `/sbin/init`, jaki zapewnia i wyróżnia `systemd`:
 
 ![](img/install-process.png)
 
-Po instalacji z poziomu `virt-manager` dostępne jest już połączenie
-serialowe z uwierzytelnionym użytkownikiem `root`, a sama Fedora
-wykrywana jest poprawnie jako maszyna wirtualna:
-
-![](img/install-remote.png)
-
 Na tym momencie polecam zaparzyć kawę lub herbatkę: niestety może
 chwilę potrwać zaciąganie obrazu fedory na etapie wykonywania usługi
 `dracut-initqueue.service/start` w bazowym obrazie sieciowym fedory.
 
-Po uruchomieniu, automatycznie powinnien uruchomić się instalator
-`anaconda`. Instalację dokonano w sposób graficzny przez RDP, jako
+Po kompletnym uruchomieniu systemu, automatycznie powinnien uruchomić się
+instalator `anaconda`. Instalację dokonano w sposób graficzny przez RDP, jako
 że sama Fedora zaleca taki format instalacji dla łatwiejszego i
 zaawansowanego partycjonowania dysku:
 
@@ -187,7 +181,8 @@ In pixman_region32_init_rect: Invalid rectangle passed
 Set a breakpoint on '_pixman_log_error' to debug
 ```
 
-Na tym etapie łączę się z adresem zamazanym przez pole `[REDACTED]`:
+Na tym etapie łączę się z adresem maszyny wirtualnej,
+zamazanym przez pole `[REDACTED]` (tak jak z logów u góry):
 
 ```console
 # xfreerdp3 /u:fedora /p:fedora /v:[REDACTED]
@@ -277,14 +272,15 @@ listening on: http://0.0.0.0:8080/
 Po stronie konfiguracji maszyny wystarczy podać jedynie lokalizację sieciową
 dla pliku:
 
-![]()
+![](img/install-unattend-01.png)
 
 `REDACTED` celowo zasłania adres, aby nie leakować konfiguracji libvirt
 dla stosu sieciowego, który jest przewidywalny (adres sieci jest niezmienny,
 maszyny wirtualne oraz host mają stały adres IP, dla maszyn dodatkowo przydzielony
 jest on automatycznie z danej puli).
 
-To, że ta konfiguracja działa, widać będzie po logach serwera HTTP:
+To, że ta konfiguracja działa, widać będzie po logach serwera HTTP, który zarejestrował
+żądanie maszyny do pliku *kickstart*:
 
 ```
 $ darkhttpd conf/simple
@@ -302,7 +298,7 @@ nadzoru:
 
 ![](img/install-success-unattend-02.png)
 
-Na tym etapie zrealizowano bazową ideę instalacji nienadwzorowanej.
+Na tym etapie zrealizowano bazową ideę instalacji nienadzorowanej.
 
 ### 4. Dalsza konfiguracja pod instalacje *unattended*
 
@@ -314,7 +310,10 @@ Fedora była wyposarzona w obraz, który utworzyłem, wygląda następująco.
    generyczne podejście w konfiguracji i wdrażaniu maszyn, a zapewniając
    dostęp *tylko do odczytu* do katalogu z wyeksportowanymi obrazami,
    mogę też dodatkowo zabezpieczyć obrazy przed nadpisaniem przez
-   maszyny wirtualne.
+   maszyny wirtualne. `virtiofs` pozwala mi też uniknąć wrzutu maszyny
+   na rejest Docker, przez co moje dane są trzymane w mojej lokalnej
+   przestrzenii, nie potrzebuję polegać na bezpieczeństwie i możliwościach
+   jakiejkolwiek usługi sieciowej z zewnątrz, a idea zrzutu obrazu jest podobna.
 
 2. Pozostałe oprogramowanie i sam obraz maszyny konfigurowany jest przez
    plik *kickstart*, zgodnie z założeniami zadania.
@@ -352,7 +351,7 @@ obrazu z pipeline.
 > pozwala na ograniczenie konsekwencji penetracji jednej maszyny i ataku dalszych, co
 > najmniej dając dłuższy czas reakcji na atak zespołowi administracyjnemu.
 
-Dokonuje także modyfikacji dla uzyskania docelowego pliku *kickstart*:
+Dokonuje także kolejnej już modyfikacji dla uzyskania docelowego pliku *kickstart*:
 
 ```diff
 @@ -1 +1 @@
@@ -478,6 +477,11 @@ Dokonuje także modyfikacji dla uzyskania docelowego pliku *kickstart*:
 +# Auto reboot after install
 +reboot
 ```
+Komentarze są w języku angielskim, podążając za komentarzami domyślnego pliku
+*kickstart*. Opisałem w nich swoją metodykę i jej uzasadnienie, a także już
+skategoryzowałem poszczególne elementy konfiguracji.
+
+Gotowy plik [dostarczono wraz z sprawozdaniem](conf/complex/anaconda-ks.cfg).
 
 Dodatkowo, celem automatyzacji tworzenia maszyn wirtualnych, utworzyłem skrypt:
 
@@ -507,6 +511,11 @@ samym zapewnić skrypt, który jest bliższy kryteriom bezpieczeństwa oprogramo
 produkcyjnego:
 
 ![](anim/setup-fedora-unattended.gif)
+
+Jak widać, udało mi się zapewnić pełną instalację nienadzorowaną, jedynie z konfiguracją
+user'a z nadzorem, ale wdrożenie aplikacji, samej maszyny, jak i nawet uruchomienie
+maszyny ponownie celem początkowej konfiguracji, osiągnięto już w pełni autonomicznie
+jako element wdrażania maszyn wirtualnych w środowisko `libvirt` hosta.
 
 [^1]: Używam tego określenia, bo w praktyce `virtiofs` powstało właśnie
 by zapewnić alternatywę dla kontenerów opartą o pełną wirtualizację: miało
