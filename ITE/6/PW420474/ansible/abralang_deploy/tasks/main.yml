@@ -1,0 +1,43 @@
+---
+# tasks file for abralang_deploy
+- name: Instalacja Dockera i Pythona
+  become: yes
+  apt:
+    name: [docker.io, python3-docker]
+    state: present
+    update_cache: yes
+
+- name: Dodaj uzytkownika do grupy docker
+  become: yes
+  user:
+    name: ansible
+    groups: docker
+    append: yes
+
+- name: Przeslij artefakt .tar.gz
+  copy:
+    src: "./abralang-latest.tar.gz"
+    dest: "/tmp/abralang.tar.gz"
+
+- name: Zaladuj obraz do Dockera
+  become: yes
+  shell: "docker load < /tmp/abralang.tar.gz"
+
+- name: Uruchom kontener AbraLang
+  become: yes
+  shell: |
+    docker stop abralang-app || true
+    docker rm abralang-app || true
+    docker run -d --name abralang-app abralang:latest /usr/src/abralang/target/release/abra -r main.abra
+
+- name: Sanity Check
+  become: yes
+  shell: "docker logs abralang-app"
+  register: docker_logs
+  retries: 5
+  delay: 2
+  failed_when: "'error' in docker_logs.stdout.lower() or docker_logs.stdout == ''"
+
+- name: Wyswietl wynik wykonania
+  debug:
+    msg: "{{ docker_logs.stdout }}"

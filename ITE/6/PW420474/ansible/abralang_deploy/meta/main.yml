@@ -1,0 +1,17 @@
+galaxy_info:
+  author: PW420474
+  description: Rola Ansible do automatycznego wdrażania interpretera AbraLang (Rust) w kontenerze Docker.
+  company: AGH
+  license: MIT
+  min_ansible_version: 2.1
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
+  galaxy_tags:
+    - rust
+    - docker
+    - deployment
+    - abralang
+
+dependencies: []

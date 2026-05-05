@@ -1,0 +1,5 @@
+---
+- name: Deploy AbraLang
+  hosts: Endpoints
+  roles:
+    - abralang_deploy
