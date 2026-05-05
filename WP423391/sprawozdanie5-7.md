@@ -32,11 +32,20 @@ Blue Ocean: Nowoczesny interfejs graficzny dla Jenkinsa, który w sposób przejr
 - Tworzenie sieci i wolumenów
 Prace rozpoczęto od stworzenia dedykowanej sieci mostkowej (bridge) o nazwie jenkins, aby umożliwić komunikację między kontenerem serwera a kontenerem Dockera. Utworzono również wolumeny dla danych Jenkinsa i certyfikatów, co gwarantuje trwałość danych nawet po restarcie kontenerów.
 
+```bash
+docker network create jenkins 
+```
+
 - Uruchomienie kontenera Docker:dind
 Uruchomiono obraz docker:dind z flagą --privileged. Nadanie uprawnień uprzywilejowanych pozwala kontenerowi na bezpośredni dostęp do zasobów sprzętowych hosta, co jest wymogiem architektury Docker-in-Docker.
+![21](sprawozdanie7/21.png)
 
 - Budowa i start Jenkinsa
 Użyto dedykowanego obrazu Jenkinsa z zainstalowanymi narzędziami Docker CLI. Po uruchomieniu przeprowadzono wstępną konfigurację: odblokowanie hasłem administratora oraz instalację sugerowanych wtyczek.
+![22](sprawozdanie7/22.png)
+
+Dzięki wyświetleniu logów kontenera jenkins-blueocean, udało mi się pozyskać hasło administratora, które użyłem do zalogowania na jenkinsa, a następnie stworzyłem własne konto.
+![23](sprawozdanie7/23.png)
 
 ### 1.3. Weryfikacja środowiska – Projekty testowe 
 Aby potwierdzić poprawność konfiguracji, stworzono trzy małe projekty testowe. Pozwoliły one zweryfikować różne aspekty działania systemu.

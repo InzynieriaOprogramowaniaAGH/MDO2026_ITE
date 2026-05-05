@@ -1,0 +1,5 @@
+---
+- name: Wykonanie zadan
+  hosts: my_nodes
+  roles:
+    - my_docker_role
