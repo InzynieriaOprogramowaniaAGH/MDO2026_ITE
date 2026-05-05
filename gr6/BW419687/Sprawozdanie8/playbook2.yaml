@@ -1,0 +1,7 @@
+- name: Deploy FLAC
+  hosts: Endpoints
+  remote_user: ansible
+  become: yes
+
+  roles:
+    - ansible-role-flac-deploy

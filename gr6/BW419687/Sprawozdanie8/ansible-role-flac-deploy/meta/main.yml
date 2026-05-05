@@ -1,0 +1,17 @@
+galaxy_info:
+  role_name: flac_deploy
+  author: Bartłomiej Waliłko
+  description: Deployment plików binarnych FLAC i testowanie ich w kontenerze
+  license: MIT
+  min_ansible_version: 2.9
+  platforms:
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy
+  galaxy_tags:
+    - flac
+    - docker
+    - audio
+
+dependencies: []
