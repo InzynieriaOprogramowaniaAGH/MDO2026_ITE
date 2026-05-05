@@ -1,0 +1,34 @@
+---
+- name: Zdalne wywoływanie procedur
+  hosts: all
+  become: yes
+  tasks:
+    - name: Pink do wszyskich
+      ansible.builtin.ping:
+
+    - name: Skopiuj plik inwentaryzacji na maszyny Endpoints
+      ansible.builtin.copy:
+        src: ./inventory.ini
+        dest: /home/ansible/inventory_backup.ini
+        owner: ansible
+        mode: '0644'
+      when: "'Endpoints' in group_names"
+
+    - name: Zaktualizuj pakiety w systemie
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: safe
+        force_apt_get: yes
+      when: "'Endpoints' in group_names"
+      register: apt_output
+
+    - name: Zrestartuj usługe ssh
+      ansible.builtin.service:
+        name: ssh 
+        state: restarted
+
+    - name: Zrestartuj usługe rngd
+      ansible.builtin.service:
+        name: rng-tools  
+        state: restarted
+      ignore_errors: yes
