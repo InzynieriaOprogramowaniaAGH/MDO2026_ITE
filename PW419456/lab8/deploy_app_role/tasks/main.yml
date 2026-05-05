@@ -1,0 +1,29 @@
+---
+- name: Sanity check - sprawdzenie zajętości dysku (nie przerywa działania)
+      ansible.builtin.command: df -h /
+      register: disk_space
+      ignore_errors: yes
+
+    - name: Instalacja Dockera
+      ansible.builtin.apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+
+    - name: Pobranie obrazu aplikacji
+      ansible.builtin.command: docker pull piti83/libsodium-runtime:latest
+
+    - name: Uruchomienie kontenera w tle
+      ansible.builtin.command: docker run -d --name libsodium-test piti83/libsodium-runtime:latest sleep infinity
+
+    - name: Weryfikacja uruchomienia (ldconfig w kontenerze)
+      ansible.builtin.command: docker exec libsodium-test ldconfig -p
+      register: ldconfig_output
+
+    - name: Wyświetlenie wyniku weryfikacji
+      ansible.builtin.debug:
+        msg: "Wdrożenie udane! Znaleziono bibliotekę libsodium."
+      when: "'libsodium' in ldconfig_output.stdout"
+
+    - name: Czyszczenie - Zatrzymanie i usunięcie kontenera
+      ansible.builtin.command: docker rm -f libsodium-test
