@@ -190,9 +190,7 @@ zamazanym przez pole `[REDACTED]` (tak jak z logów u góry):
 
 Konfiguruję w oknie instalatora Fedory przez RDP:
 
-```
-ZASTĄPIĆ WRZUTKĄ NAGRANIA PRZEZ GITHUB!
-```
+https://github.com/user-attachments/assets/e6cfabbe-14eb-419d-b4ea-f114a46e218a
 
 Po uruchomieniu systemu ponownie, pokazuje się tym razem ekran logowania:
 
