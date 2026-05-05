@@ -1,0 +1,11 @@
+---
+- name: Cleanup AbraLang
+  hosts: Endpoints
+  become: yes
+  tasks:
+    - name: Stop and Remove Container
+      shell: "docker stop abralang-app && docker rm abralang-app"
+      ignore_errors: yes
+    - name: Remove Image
+      shell: "docker rmi abralang:latest"
+      ignore_errors: yes

@@ -1,0 +1,6 @@
+---
+- name: Wdrożenie aplikacji AbraLang przez rolę
+  hosts: Endpoints
+  become: yes
+  roles:
+    - abralang_deploy
