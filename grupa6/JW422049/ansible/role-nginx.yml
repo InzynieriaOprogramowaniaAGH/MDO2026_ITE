@@ -1,0 +1,6 @@
+---
+- name: Wdrozenie nginx przez role
+  hosts: Endpoints
+  become: true
+  roles:
+    - nginx_container

@@ -1,0 +1,10 @@
+---
+- name: Kopiowanie inventory na Endpoints
+  hosts: Endpoints
+  gather_facts: false
+  tasks:
+    - name: Skopiuj inventory.ini na endpoint
+      ansible.builtin.copy:
+        src: inventory.ini
+        dest: /home/ansible/inventory.ini
+        mode: '0644'

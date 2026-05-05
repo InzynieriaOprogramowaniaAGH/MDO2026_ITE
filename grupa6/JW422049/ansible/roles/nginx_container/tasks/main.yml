@@ -1,0 +1,31 @@
+---
+- name: Sprawdz docker
+  ansible.builtin.command: docker --version
+  register: docker_check
+  changed_when: false
+
+- name: Pokaz wersje dockera
+  ansible.builtin.debug:
+    var: docker_check.stdout
+
+- name: Pobierz obraz nginx
+  ansible.builtin.command: docker pull nginx:stable-alpine
+  changed_when: true
+
+- name: Usun stary kontener jesli istnieje
+  ansible.builtin.command: docker rm -f lab8-role-nginx
+  ignore_errors: true
+  changed_when: true
+
+- name: Uruchom kontener nginx z roli
+  ansible.builtin.command: docker run -d --name lab8-role-nginx -p 8082:80 nginx:stable-alpine
+  changed_when: true
+
+- name: Sprawdz dzialajacy kontener
+  ansible.builtin.command: docker ps --filter name=lab8-role-nginx
+  register: docker_ps
+  changed_when: false
+
+- name: Pokaz kontener
+  ansible.builtin.debug:
+    var: docker_ps.stdout_lines
