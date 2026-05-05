@@ -189,9 +189,7 @@ Przygotowany plik odpowiedzi Kickstart przeprowadził nienadzorowaną instalacj�
 
 ## 7. Wyświetlanie działań z sekcji `%post` na ekranie
 
-Zmodyfikowano sekcję `%post` pliku Kickstart tak, aby jej działania były widoczne bezpośrednio podczas instalacji. Wejście, wyjście standardowe oraz wyjście błędów przekierowano na `TTY3`, a kolejne operacje opatrzono komunikatami `echo`.
-
-Podczas instalacji możliwe jest obserwowanie na ekranie takich etapów jak tworzenie katalogów, pobieranie artefaktu, rozpakowywanie archiwum oraz przygotowanie usługi `systemd`.
+Zmodyfikowano sekcję `%post` pliku Kickstart tak, aby jej działania były widoczne bezpośrednio podczas instalacji. Zastosowano jednoczesne logowanie do pliku `ks-post.log` oraz przekierowanie standardowego wyjścia i błędów na `tty3` z użyciem `tee`. Kolejne operacje opatrzono komunikatami `echo`.
 
 Przykładowe wykorzystane dyrektywy:
 
@@ -206,6 +204,8 @@ echo "=== KS POST END ==="
 %end
 ```
 
-Podczas instalacji możliwe jest obserwowanie na ekranie takich etapów jak tworzenie katalogów, pobieranie artefaktu, rozpakowywanie archiwum oraz przygotowanie usługi `systemd`.
+Możliwe jest sprawdzenie etapów instalacji jak tworzenie katalogów, pobieranie artefaktu, rozpakowywanie archiwum oraz przygotowanie usługi `systemd` poprzed podgląd pliku `ks-post.log`:
+
+![Fedora ks-post.log](./SS/fedora_ks-post.png)
 
 ---
