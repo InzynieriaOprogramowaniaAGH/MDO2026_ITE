@@ -13,7 +13,7 @@ Głównym celem laboratoratorium była konfiguracja i zapoznanie z Jenkinsem
 Zakres ćwiczenia: 
 
 * utworzenie sieci Docker jenkins
-* uruchomienie
+* uruchomienie kontera jenkins dind
 * zbudowanie własnego obrazu myjenkins-blueocean
 * dodanie wtyczki dockera 
 * Utworzenie dwoch projektow frestyle oraz napisanie pipline 
