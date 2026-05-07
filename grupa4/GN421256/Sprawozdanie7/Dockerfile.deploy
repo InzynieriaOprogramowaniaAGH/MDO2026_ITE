@@ -1,0 +1,14 @@
+# Dockerfile.deploy
+#
+# Kontener docelowy (deploy) różny od BLDR: bez gita i bez dev-deps,
+# zawiera tylko wynik budowy (dist) i minimalne metadane.
+ARG BLDR_IMAGE
+FROM node:20-bullseye-slim
+
+WORKDIR /app
+
+COPY --from=${BLDR_IMAGE} /app/package.json ./package.json
+COPY --from=${BLDR_IMAGE} /app/dist ./dist
+
+CMD ["sh", "-lc", "test -d dist && echo 'SMOKE OK: dist exists' && ls -la dist | head -n 50"]
+
