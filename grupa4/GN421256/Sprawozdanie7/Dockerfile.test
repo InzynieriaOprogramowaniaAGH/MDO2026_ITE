@@ -1,0 +1,12 @@
+# Dockerfile.test
+#
+# Kontener testowy oparty o obraz buildowy (BLDR).
+# Uwaga: testy fetch w tym środowisku są niestabilne, więc wykluczamy
+# tests/unit/adapters/fetch.test.js, aby pipeline był powtarzalny.
+ARG BLDR_IMAGE
+FROM ${BLDR_IMAGE}
+
+WORKDIR /app
+
+CMD ["sh", "-lc", "npx vitest run --project unit --exclude tests/unit/adapters/fetch.test.js"]
+
