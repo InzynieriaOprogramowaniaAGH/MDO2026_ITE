@@ -15,9 +15,13 @@ Pipeline i kontenery znajdują się w tym folderze, obok sprawozdania:
 - `Dockerfile.test`
 - `Dockerfile.deploy`
 
-## Konfiguracja joba w Jenkins (do screena)
+## Konfiguracja joba w Jenkins 
 Job typu **Pipeline from SCM** powinien wskazywać repo przedmiotu i branch `GN421256` oraz ścieżkę do:
 - `grupa4/GN421256/Sprawozdanie7/Jenkinsfile`
+
+![](2.png)
+![](3.png)
+
 
 ## Kroki Jenkinsfile (checklista z zajęć 07)
 
@@ -112,3 +116,6 @@ docker load -i axios-deploy-image-<version>-<gitsha>.tar
 docker run --rm axios-deploy:<version>-<gitsha>
 ```
 
+Powtarzalność pipeline-u
+
+![](1.png)
