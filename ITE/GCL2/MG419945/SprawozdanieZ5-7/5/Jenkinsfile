@@ -1,0 +1,11 @@
+def dockerfile = 'RedisBuild.Dockerfile'
+node {
+        stage('Setup') {
+                git branch: 'MG419945', url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git'
+        }
+        stage('Build') {
+                dir('ITE/GCL2/MG419945/Sprawozdanie3') {
+                    docker.build("redis-build:${env.BUILD_ID}", "-f ${dockerfile} .")
+                }
+        }
+}
