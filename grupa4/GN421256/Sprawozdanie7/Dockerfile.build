@@ -5,7 +5,16 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 
-RUN git clone https://github.com/axios/axios.git .
+RUN set -eux; \
+  for i in 1 2 3 4 5; do \
+    echo "Clone attempt $i/5"; \
+    git clone --depth 1 https://github.com/axios/axios.git . && break; \
+    rc="$?"; \
+    echo "git clone failed (exit $rc), retrying..."; \
+    rm -rf .git 2>/dev/null || true; \
+    sleep "$((i * 3))"; \
+  done; \
+  test -f package.json
 
 RUN npm install
 
