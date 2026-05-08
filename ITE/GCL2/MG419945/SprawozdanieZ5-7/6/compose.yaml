@@ -1,0 +1,24 @@
+services:
+    nvim-build:
+        build: build
+        volumes:
+            - shared-vol:/code
+        image: nvim-build
+        command: ["echo", "built"]
+    nvim-test:
+        build: test
+        volumes:
+            - shared-vol:/code
+        image: nvim-test
+        depends_on:
+            - nvim-build
+    nvim-deploy:
+        build: deploy
+        volumes:
+            - shared-vol:/code
+        image: nvim-deploy
+        depends_on:
+            - nvim-build
+
+volumes:
+    shared-vol:

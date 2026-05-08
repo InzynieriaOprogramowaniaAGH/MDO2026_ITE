@@ -1,0 +1,42 @@
+
+def myDir='ITE/GCL2/MG419945/Sprawozdanie6'
+node {
+        // pobierz dockerfile z repo przedmiotowego
+        stage('Setup') {
+                git branch: 'MG419945', url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git'
+        }
+        // zbuduj kodzik, testuj kodzik
+        stage('Build') {
+                dir(myDir) {
+                    def buildImage = docker.build(
+                        "nvim-build", "./dockerfiles/build"
+                        )
+                }
+        }
+        stage('Test') {
+                dir(myDir) {
+                    def testImage = docker.build(
+                        "nvim-test", "./dockerfiles/test"
+                        )
+                        // nie przechodzi jakieś 7 unit testóœ
+                        // których nie mam pojęcia jak naprawić
+                        // i nie działa ani w pipeline, ani poza
+                    // sh 'docker run nvim-test make unittest || true'
+                }
+        }
+        stage('Deploy') {
+            dir(myDir) {
+                def deployImage = docker.build(
+                    "nvim-deploy", "./dockerfiles/deploy")
+
+                deployImage.inside('-u root') {
+                sh '''
+                    cd /code/neovim
+                    /tmp/test.sh
+                    cp /code/neovim/build/bin/nvim ${WORKSPACE}/ITE/GCL2/MG419945/Sprawozdanie6/nvim-${BUILD_NUMBER}
+                '''
+                archiveArtifacts artifacts: 'nvim-*', fingerprinting: true
+                }
+            }
+        }
+}

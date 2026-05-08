@@ -1,4 +1,4 @@
-# Sprawozdanie 6 - Maciej Gładysiak MG419945
+# Sprawozdanie 7 - Maciej Gładysiak MG419945
 ---
 ## 1. Wykorzystane środowisko
 Korzystam z systemu Linux na laptopie, na którym w Virtualboxie mam Ubuntu Server. Polecenia wykonywane podczas ćwiczenia są przez SSH na serwerze, jak i przez Jenkins przy uruchomieniu projektu/pipeline'a.
