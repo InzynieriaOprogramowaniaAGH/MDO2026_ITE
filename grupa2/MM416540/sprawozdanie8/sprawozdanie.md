@@ -119,18 +119,3 @@ Artefaktem z pipeline'u jest kontener `express-prod:5.2.1`.
 
 ![alt text](image-25.png)
 ![alt text](image-26.png)
-
-## Podsumowanie kroków
-
-| # | Co robisz | Gdzie |
-|---|-----------|-------|
-| 1-4 | Tworzysz VM ansible-target | VirtualBox |
-| 5 | Instalujesz Ansible | Główna maszyna |
-| 6-8 | Konfiguracja SSH | Terminal |
-| 9-10 | Plik inwentaryzacji | Terminal |
-| 11 | Ping do wszystkich | Terminal |
-| 12-14 | Playbook podstawowy | Terminal |
-| 15 | Instalacja Dockera Ansiblem | Terminal |
-| 16 | Deploy kontenera Express | Terminal |
-| 17-21 | Rola ansible-galaxy | Terminal |
-| 22 | Push do repo | Terminal |
