@@ -1,0 +1,14 @@
+galaxy_info:
+  author: MM416540
+  description: Rola wdrażająca Express.js w kontenerze Docker
+  license: MIT
+  min_ansible_version: "2.9"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy
+  galaxy_tags:
+    - docker
+    - nodejs
+    - express
+dependencies: []

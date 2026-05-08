@@ -1,0 +1,47 @@
+---
+- name: Instalacja Dockera na Endpoints
+  hosts: Endpoints
+  become: yes
+  tasks:
+
+    - name: Zainstaluj zależności
+      ansible.builtin.apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg
+          - lsb-release
+        state: present
+        update_cache: yes
+
+    - name: Dodaj klucz GPG Docker
+      ansible.builtin.apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Dodaj repozytorium Docker
+      ansible.builtin.apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+        state: present
+
+    - name: Zainstaluj Docker
+      ansible.builtin.apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+        update_cache: yes
+
+    - name: Uruchom i włącz Docker
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Dodaj użytkownika ansible do grupy docker
+      ansible.builtin.user:
+        name: ansible
+        groups: docker
+        append: yes

@@ -1,0 +1,27 @@
+---
+- name: Sanity check – czy Docker działa
+  ansible.builtin.command: docker info
+  ignore_errors: yes
+
+- name: Zatrzymaj stary kontener
+  ansible.builtin.command: docker stop {{ container_name }}
+  ignore_errors: yes
+
+- name: Usuń stary kontener
+  ansible.builtin.command: docker rm {{ container_name }}
+  ignore_errors: yes
+
+- name: Uruchom kontener Express
+  ansible.builtin.command: >
+    docker run -d
+    --name {{ container_name }}
+    -p {{ app_port }}:{{ app_port }}
+    {{ image_name }}:{{ image_tag }}
+
+- name: Weryfikacja działania
+  ansible.builtin.command: docker logs {{ container_name }}
+  register: logs
+
+- name: Wypisz logi
+  ansible.builtin.debug:
+    var: logs.stdout_lines
