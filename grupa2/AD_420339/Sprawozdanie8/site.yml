@@ -1,0 +1,5 @@
+- name: wdrożenie przez rolę
+  hosts: Endpoints
+  become: true
+  roles:
+    - deploy_app

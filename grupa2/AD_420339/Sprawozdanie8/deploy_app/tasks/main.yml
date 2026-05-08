@@ -1,0 +1,62 @@
+- name: "Sanity check: Sprawdzenie wolnego miejsca"
+  ansible.builtin.shell: "df -h / | awk 'NR==2 {print $4}'"
+  register: disk_space
+  ignore_errors: yes
+
+- name: "Wynik Sanity Check"
+  ansible.builtin.debug:
+    msg: "Dostępne miejsce na Target: {{ disk_space.stdout }}. Kontynuuję..."
+
+- name: "Instalacja pakietów bazowych i python3-docker"
+  ansible.builtin.apt:
+    name: [ca-certificates, curl, gnupg, python3-docker]
+    state: present
+    update_cache: yes
+
+- name: "Katalog na klucze"
+  ansible.builtin.file: { path: /etc/apt/keyrings, state: directory, mode: '0755' }
+
+- name: "Pobierz klucz GPG"
+  ansible.builtin.get_url: { url: "https://download.docker.com/linux/ubuntu/gpg", dest: "/etc/apt/keyrings/docker.asc" }
+
+- name: "Dodaj repo"
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+    state: present
+
+- name: "Instalacja Docker Engine"
+  ansible.builtin.apt:
+    name: [docker-ce, docker-ce-cli, containerd.io]
+    state: present
+
+- name: "Przesłanie artefaktu (.tar) z /tmp/ sterującej na /tmp/ docelowej"
+  ansible.builtin.copy:
+    src: /tmp/moja-app.tar
+    dest: /tmp/moja-app.tar
+    mode: '0644'
+
+- name: "Załadowanie obrazu do Dockera na Target"
+  ansible.builtin.shell: "docker load < /tmp/moja-app.tar"
+
+- name: "Uruchomienie kontenera aplikacji"
+  community.docker.docker_container:
+    name: moja-aplikacja-final
+    image: moja-app-test:latest
+    state: started
+    restart_policy: always
+    published_ports:
+      - "3000:3000"
+
+- name: "Weryfikacja: Czy aplikacja odpowiada na porcie 3000?"
+  ansible.builtin.uri:
+    url: "http://localhost:3000"
+    status_code: 200
+  register: result
+  until: result.status == 200
+  retries: 5
+  delay: 5
+
+- name: "Oczyszczanie: Usunięcie pliku .tar z maszyny docelowej"
+  ansible.builtin.file:
+    path: /tmp/moja-app.tar
+    state: absent
