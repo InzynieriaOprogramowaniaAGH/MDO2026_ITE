@@ -1,0 +1,13 @@
+---
+- name: aktualizacja pakietow
+  hosts: Endpoints
+  become: true
+  tasks:
+    - name: aktualizuj cache apt
+      ansible.builtin.apt:
+        update_cache: true
+
+    - name: aktualizuj pakiety
+      ansible.builtin.apt:
+        upgrade: dist
+        force_apt_get: true
