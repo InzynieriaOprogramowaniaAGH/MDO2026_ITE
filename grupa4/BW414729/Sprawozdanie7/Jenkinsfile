@@ -6,7 +6,7 @@ pipeline {
             steps {
                 echo 'Czyszczenie przestrzeni roboczej...'
                 // Usuwamy binarkę, jeśli została po starym buildzie
-                sh 'rm -f grupa4/BW414729/Sprawozdanie3/yt-dlp-bin || true'
+                sh 'rm -f grupa4/BW414729/Sprawozdanie7/yt-dlp-bin || true'
                 // Czyścimy dockera z wiszących obrazów
                 sh 'docker system prune -f'
             }
@@ -21,7 +21,7 @@ pipeline {
         stage('2. Build (BLDR)') {
             steps {
                 script {
-                    dir('grupa4/BW414729/Sprawozdanie3') {
+                    dir('grupa4/BW414729/Sprawozdanie7') {
                         sh 'docker build -t ytdlp-build -f Dockerfile.build .'
                     }
                 }
@@ -31,7 +31,7 @@ pipeline {
         stage('3. Test') {
             steps {
                 script {
-                    dir('grupa4/BW414729/Sprawozdanie3') {
+                    dir('grupa4/BW414729/Sprawozdanie7') {
                         sh 'docker build -t ytdlp-test -f Dockerfile.test .'
                         sh 'docker run --rm ytdlp-test'
                     }
@@ -42,7 +42,7 @@ pipeline {
         stage('4. Deploy (Prepare Image)') {
             steps {
                 script {
-                    dir('grupa4/BW414729/Sprawozdanie3') {
+                    dir('grupa4/BW414729/Sprawozdanie7') {
                         // Wyciągamy binarkę
                         sh 'docker create --name extract-ytdlp ytdlp-build'
                         sh 'docker cp extract-ytdlp:/app/yt-dlp ./yt-dlp-bin'
@@ -65,7 +65,7 @@ pipeline {
         stage('6. Publish') {
             steps {
                 script {
-                    dir('grupa4/BW414729/Sprawozdanie3') {
+                    dir('grupa4/BW414729/Sprawozdanie7') {
                         archiveArtifacts artifacts: 'yt-dlp-bin', fingerprint: true
                     }
                 }
