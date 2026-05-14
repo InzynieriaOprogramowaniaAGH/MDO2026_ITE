@@ -57,4 +57,4 @@ Dzięki Multi-stage Build drastycznie zmniejszono rozmiar obrazów końcowych, c
 
 Zastosowanie Jenkinsfile umożliwia pełną odtwarzalność środowiska – każda zmiana w kodzie automatycznie przechodzi przez te same rygorystyczne testy.
 
-Stabilność: Regularne CleanUp jest niezbędny w profesjonalnych systemach CI/CD, aby zapewnić powtarzalność wyników. Umożliwia to uniwersalnosc wyników na wszystkich urządzeniach.
+Regularne CleanUp jest niezbędny w profesjonalnych systemach CI/CD, aby zapewnić powtarzalność i stabilność wyników. Umożliwia to uniwersalnosc wyników na wszystkich urządzeniach.
