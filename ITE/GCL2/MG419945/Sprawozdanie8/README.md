@@ -1,4 +1,4 @@
-# Sprawozdanie 7 - Maciej Gładysiak MG419945
+# Sprawozdanie 8 - Maciej Gładysiak MG419945
 ---
 ## 1. Wykorzystane środowisko
 Korzystam z systemu Linux na laptopie, na którym w Virtualboxie mam Ubuntu Server. Polecenia wykonywane podczas ćwiczenia są przez SSH na serwerze Ubuntu Server, oraz na `ansible-target`/`ansible-target-2` przy użyciu ansible
