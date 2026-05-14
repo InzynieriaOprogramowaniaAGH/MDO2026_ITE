@@ -1,9 +1,5 @@
-Sklonowanie maszyny wirtualnej:
 
-<img width="945" height="652" alt="image" src="https://github.com/user-attachments/assets/9b617ddf-db94-4938-ac38-afafcd0cb5eb" />
-
- 
-Pełny klon – maszyna będzie działać samodzielnie,
+Stworzono pełnego klona – maszyna będzie działać samodzielnie,
 Wygeneruj nowe adresy MAC dla wszystkich kart sieciowych – dzięki temu obie maszyny będą mogły mieć różne adresy IP w sieci.
 
 Aby maszyny mogły się połączyć ustawiono sieć na:
