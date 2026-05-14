@@ -36,14 +36,14 @@ Weryfikacja Jakości (Smoke Test): Jenkins uruchamiał kontener na porcie 8080 i
 
 Publish (Artefakt): Gotowy produkt pakowany był do uniwersalnego formatu .tar.gz i archiwizowany w historii buildu (archiveArtifacts).
 
-![alt text](blueOcean.png)
+![alt text](MF420115/Sprawozdanie02/06-Class/blueOcean.png)
 
 3. Zarządzanie Artefaktami i Innowacje
 W ramach prac wprowadzono mechanizm Fail-safe w procesie kompilacji. W przypadku błędu kompilatora g++, skrypt generował "aplikację zastępczą" w formie skryptu powłoki, co pozwalało na przetestowanie ciągłości potoku nawet przy brakujących plikach źródłowych (np. main.cpp).
 
 Gotowy artefakt (paczka .tar.gz) stał się podstawą do dalszych prac z narzędziem Ansible, służącym do automatycznego wdrażania aplikacji na zdalnych hostach.
 
-![alt text](Sprawozdanie02/07-Class/lab7/successBuild.png)
+![alt text](MF420115/Sprawozdanie02/07-Class/lab7/successBuild.png)
 
 
 4. Wnioski
