@@ -1,0 +1,6 @@
+---
+- name: Wdrożenie aplikacji za pomocą roli Ansible
+  hosts: Endpoints
+  become: true
+  roles:
+    - deploy_cpp_app
