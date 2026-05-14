@@ -7,6 +7,7 @@ Data: 7 maja 2026 r.
 Temat: Automatyzacja cyklu życia aplikacji przy użyciu Jenkins Pipeline i architektury Docker-in-Docker (DinD).
 
 1. Wstęp i Architektura Systemu
+
 Celem laboratoriów było wdrożenie pełnego procesu CI/CD dla aplikacji webowej. Cały proces miał się opierać na Jenkins'ie – narzędzie open-source automatyzujące budowanie, testowanie i wdrażanie kodu.
 
 Architektura Docker-in-Docker (DinD):
@@ -19,6 +20,7 @@ Serwer Dockera: Osobny kontener pełniący rolę silnika, wewnątrz którego odb
 Komunikacja: Kontenery połączono w dedykowanej sieci, a Jenkins komunikował się z silnikiem poprzez zmienne środowiskowe DOCKER_HOST oraz DOCKER_CERT_PATH.
 
 2. Implementacja Pipeline
+
 Zrezygnowano z prostych zadań typu "Freestyle" na rzecz Pipeline as Code. Całość logiki została zapisana w pliku tekstowym Jenkinsfile znajdującym się w repozytorium (SCM).
 
 Struktura i proces:
@@ -39,6 +41,7 @@ Publish (Artefakt): Gotowy produkt pakowany był do uniwersalnego formatu .tar.g
 ![alt text](MF420115/Sprawozdanie02/06-Class/blueOcean.png)
 
 3. Zarządzanie Artefaktami i Innowacje
+
 W ramach prac wprowadzono mechanizm Fail-safe w procesie kompilacji. W przypadku błędu kompilatora g++, skrypt generował "aplikację zastępczą" w formie skryptu powłoki, co pozwalało na przetestowanie ciągłości potoku nawet przy brakujących plikach źródłowych (np. main.cpp).
 
 Gotowy artefakt (paczka .tar.gz) stał się podstawą do dalszych prac z narzędziem Ansible, służącym do automatycznego wdrażania aplikacji na zdalnych hostach.
@@ -47,6 +50,7 @@ Gotowy artefakt (paczka .tar.gz) stał się podstawą do dalszych prac z narzęd
 
 
 4. Wnioski
+
 Architektura DinD gwarantuje, że procesy budowania nie "śmiecą" w systemie operacyjnym hosta.
 
 Dzięki Multi-stage Build drastycznie zmniejszono rozmiar obrazów końcowych, co przyspiesza ich przesyłanie i start.
