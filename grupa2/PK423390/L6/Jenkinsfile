@@ -1,0 +1,56 @@
+cat > Jenkinsfile << 'EOF'
+pipeline {
+    agent any
+    environment {
+        IMAGE_NAME = "express-app-pk423390"
+        CONTAINER_NAME = "express-instance"
+    }
+    stages {
+        stage('Cleanup') {
+            steps {
+                sh "docker stop ${CONTAINER_NAME} || true"
+                sh "docker rm ${CONTAINER_NAME} || true"
+                sh "docker rmi ${IMAGE_NAME}:${BUILD_NUMBER} || true"
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building image...'
+                sh "docker build --target build -t ${IMAGE_NAME}:${BUILD_NUMBER} ."
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                sh "docker build --target test -t ${IMAGE_NAME}-test:${BUILD_NUMBER} ."
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying container...'
+                sh "docker build --target deploy -t ${IMAGE_NAME}-deploy:${BUILD_NUMBER} ."
+                sh "docker run -d --name ${CONTAINER_NAME} --network host ${IMAGE_NAME}-deploy:${BUILD_NUMBER}"
+            }
+        }
+        stage('Smoke Test') {
+            steps {
+                sleep 10
+                sh "docker run --rm --network host alpine sh -c 'apk add --no-cache curl && curl -f http://localhost:3000'"
+            }
+        }
+        stage('Publish') {
+            steps {
+                echo 'Archiving logs as artifact...'
+                sh "docker logs ${CONTAINER_NAME} > build-log-${BUILD_NUMBER}.txt"
+                archiveArtifacts artifacts: "*.txt", fingerprint: true
+            }
+        }
+    }
+    post {
+        always {
+            sh "docker stop ${CONTAINER_NAME} || true"
+            sh "docker rm ${CONTAINER_NAME} || true"
+        }
+    }
+}
+EOF
