@@ -191,4 +191,4 @@ pipeline {
 
 ## 11. Podsumowanie
 
-Pipeline jest w pełni zautomatyzowany i idempotentny – każde uruchomienie zaczyna od czystego stanu. Jenkinsfile przechowywany w repozytorium razem z kodem sprawia, że infrastruktura CI/CD jest wersjonowana i łatwa do odtworzenia. Zastosowanie sparse-checkout rozwiązało problem zbyt dużego repozytorium i timeoutów przy klonowaniu.
+Pipeline jest w pełni zautomatyzowany i idempotentny – każde uruchomienie zaczyna od czystego stanu. Jenkinsfile przechowywany w repozytorium razem z kodem sprawia, że infrastruktura CI/CD jest wersjonowana i łatwa do odtworzenia.
