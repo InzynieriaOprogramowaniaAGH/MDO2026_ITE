@@ -10,14 +10,13 @@ Wykonane kroki:
 
 - Na głównej maszynie wirtualnej zainstalowano Ansible z repozytorium dystrybucji Ubuntu.
 - Klucz publiczny przesłano na maszynę docelową (`ansible-target`, IP: 192.168.0.101) za pomocą `ssh-copy-id`, co umożliwia logowanie bez podawania hasła.
-- Skonfigurowano regułę `NOPASSWD` w `/etc/sudoers.d/`, pozwalającą Ansible na podnoszenie uprawnień (`become: true`) bez interakcji użytkownika.
 
 ```bash
 ssh-copy-id ansible@192.168.0.101
 ```
 
-![ssh-copy-id](IMG/Zrzut_ekranu_2026-05-15_061311.png)
-![ansible-version](IMG/Zrzut_ekranu_2026-05-15_062003.png)
+![ssh-copy-id](IMG/Zrzut%20ekranu%202026-05-15%20061311.png)
+![ansible-version](IMG/Zrzut%20ekranu%202026-05-15%20062003.png)
 
 ---
 
@@ -42,9 +41,9 @@ Weryfikacja łączności za pomocą modułu `ping`:
 ansible all -i inventory.ini -m ping
 ```
 
-Moduł `ping` nie jest zwykłym pingiem ICMP – sprawdza zdolność Ansible do zalogowania się przez SSH, uruchomienia skryptu Pythona i odebrania odpowiedzi JSON. Obie maszyny zwróciły status `SUCCESS`.
+Moduł `ping` sprawdza zdolność Ansible do zalogowania się przez SSH, uruchomienia skryptu Pythona i odebrania odpowiedzi JSON. Obie maszyny zwróciły status `SUCCESS`.
 
-![ansible-ping](IMG/Zrzut_ekranu_2026-05-15_062304.png)
+![ansible-ping](IMG/Zrzut%20ekranu%202026-05-15%20062304.png)
 
 ---
 
@@ -58,9 +57,9 @@ Plik inwentaryzacji skopiowano na maszynę docelową za pomocą modułu `copy`:
 ansible Endpoints -i inventory.ini -m copy -a "src=inventory.ini dest=/tmp/inventory.ini"
 ```
 
-Pierwsze uruchomienie zwróciło status `CHANGED` – plik został przesłany. Ponowne uruchomienie zwróciło `ok` – Ansible wykrył że plik już istnieje i jest identyczny, co demonstruje zasadę **idempotentności**.
+Pierwsze uruchomienie zwróciło status `CHANGED` - plik został przesłany. Ponowne uruchomienie zwróciło `ok` - Ansible wykrył że plik już istnieje i jest identyczny.
 
-![kopiowanie-inventory](IMG/Zrzut_ekranu_2026-05-15_062539.png)
+![kopiowanie-inventory](IMG/Zrzut%20ekranu%202026-05-15%20062539.png)
 
 ### 3.2. Aktualizacja pakietów
 
@@ -68,7 +67,7 @@ Pierwsze uruchomienie zwróciło status `CHANGED` – plik został przesłany. P
 ansible Endpoints -i inventory.ini -m apt -a "update_cache=yes" -b -K
 ```
 
-![apt-update](IMG/Zrzut%ekranu%2026-05-15%063343.png)
+![apt-update](IMG/Zrzut%20ekranu%202026-05-15%20063343.png)
 
 ### 3.3. Restart usług
 
@@ -78,59 +77,56 @@ Zrestartowano usługę `sshd` na maszynie docelowej. Usługa `rngd` nie była za
 ansible Endpoints -i inventory.ini -m service -a "name=ssh state=restarted" -b -K
 ```
 
-![restart-sshd](IMG/Zrzut_ekranu_2026-05-15_063545.png)
+![restart-sshd](IMG/Zrzut%20ekranu%202026-05-15%20063545.png)
 
 ---
 
-## 4. Playbook – zdalne wywoływanie procedur systemowych
+## 4. Playbook - zdalne wywoływanie procedur systemowych
 
-Wszystkie powyższe operacje zebrano w playbooku `playbook.yml`:
+Wszystkie powyższe operacje zebrano w playbooku `playbook_system.yml`:
 
 ```yaml
 ---
-- name: Zdalne wywoływanie procedur systemowych
+- name: Zdalne wywolywanie procedur systemowych
   hosts: Endpoints
   become: true
-  ignore_errors: true
   tasks:
     - name: 1. Wyslij zadanie ping do wszystkich maszyn
-      ansible.builtin.ping:
+      ping:
 
     - name: 2. Skopiuj plik inwentaryzacji na maszyne Endpoints
-      ansible.builtin.copy:
+      copy:
         src: inventory.ini
         dest: /tmp/inventory.ini
 
     - name: 3. Ponow operacje kopiowania (porownaj roznice)
-      ansible.builtin.copy:
+      copy:
         src: inventory.ini
         dest: /tmp/inventory.ini
 
     - name: 4. Zaktualizuj pakiety w systemie
-      ansible.builtin.apt:
+      apt:
         update_cache: yes
 
     - name: 5. Zrestartuj uslugi sshd
-      ansible.builtin.service:
+      service:
         name: ssh
         state: restarted
 
     - name: 6. Zrestartuj uslugi rngd
-      ansible.builtin.service:
+      service:
         name: rngd
         state: restarted
+      ignore_errors: yes
 ```
 
-Wynik uruchomienia playbooka – zadanie 3 zwróciło `ok` zamiast `changed`, co potwierdza idempotentność. Zadanie 6 (`rngd`) zgłosiło błąd ale zostało zignorowane.
+Wynik uruchomienia playbooka - zadanie 3 zwróciło `ok` zamiast `changed`, co potwierdza idempotentność. Zadanie 6 (`rngd`) zgłosiło błąd ale zostało zignorowane.
 
-![playbook-run-1](IMG/Zrzut_ekranu_2026-05-15_065157.png)
-![playbook-run-2](IMG/Zrzut_ekranu_2026-05-15_065213.png)
+![playbook-run-2](IMG/Zrzut%20ekranu%202026-05-15%20065213.png)
 
 ---
 
-## 5. Zarządzanie artefaktem – wdrożenie kontenera Express.js
-
-Artefaktem z pipeline'u CI/CD (lab 6/7) był obraz Docker z aplikacją Express.js. Wdrożenie zrealizowano przy pomocy playbooka opartego na roli Ansible.
+## 5. Zarządzanie artefaktem
 
 ### 5.1. Struktura roli
 
@@ -138,17 +134,6 @@ Rolę zainicjalizowano komendą:
 
 ```bash
 ansible-galaxy role init deploy_app
-```
-
-Główny plik playbooka `site.yml`:
-
-```yaml
----
-- name: Wdrożenie aplikacji Express.js
-  hosts: Endpoints
-  become: true
-  roles:
-    - deploy_app
 ```
 
 ### 5.2. Zadania roli (`roles/deploy_app/tasks/main.yml`)
@@ -199,10 +184,10 @@ Główny plik playbooka `site.yml`:
   ignore_errors: yes
 ```
 
-### 5.4. Wynik uruchomienia
+### 5.3. Wynik uruchomienia
 
 Wszystkie zadania zakończyły się sukcesem. Play recap: `ok=10 changed=7 unreachable=0 failed=0`.
 
-![deploy-playbook](IMG/Zrzut_ekranu_2026-05-15_071001.png)
+![deploy-playbook](IMG/Zrzut%20ekranu%202026-05-15%20071001.png)
 
 ---
