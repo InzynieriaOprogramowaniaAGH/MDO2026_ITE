@@ -1,0 +1,6 @@
+---
+- name: Wdrozenie artefaktu za pomoca roli
+  hosts: Endpoints
+  become: true
+  roles:
+    - deploy_app
