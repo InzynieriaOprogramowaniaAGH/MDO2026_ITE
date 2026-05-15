@@ -7,28 +7,24 @@ pipeline {
     stages {
         stage('Cleanup') {
             steps {
-                sh "docker stop ${CONTAINER_NAME} || true"
-                sh "docker rm ${CONTAINER_NAME} || true"
-                sh "docker rmi ${IMAGE_NAME}:${BUILD_NUMBER} || true"
+                sh "docker stop ${env.CONTAINER_NAME} || true"
+                sh "docker rm ${env.CONTAINER_NAME} || true"
             }
         }
         stage('Build') {
             steps {
-                echo 'Building image...'
-                sh "docker build --target build -t ${IMAGE_NAME}:${BUILD_NUMBER} ."
+                sh "docker build --target build -t ${env.IMAGE_NAME}:${env.BUILD_NUMBER} ."
             }
         }
         stage('Test') {
             steps {
-                echo 'Running tests...'
-                sh "docker build --target test -t ${IMAGE_NAME}-test:${BUILD_NUMBER} ."
+                sh "docker build --target test -t ${env.IMAGE_NAME}-test:${env.BUILD_NUMBER} ."
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying container...'
-                sh "docker build --target deploy -t ${IMAGE_NAME}-deploy:${BUILD_NUMBER} ."
-                sh "docker run -d --name ${CONTAINER_NAME} --network host ${IMAGE_NAME}-deploy:${BUILD_NUMBER}"
+                sh "docker build --target deploy -t ${env.IMAGE_NAME}-deploy:${env.BUILD_NUMBER} ."
+                sh "docker run -d --name ${env.CONTAINER_NAME} --network host ${env.IMAGE_NAME}-deploy:${env.BUILD_NUMBER}"
             }
         }
         stage('Smoke Test') {
@@ -39,16 +35,15 @@ pipeline {
         }
         stage('Publish') {
             steps {
-                echo 'Archiving logs as artifact...'
-                sh "docker logs ${CONTAINER_NAME} > build-log-${BUILD_NUMBER}.txt"
+                sh "docker logs ${env.CONTAINER_NAME} > build-log-${env.BUILD_NUMBER}.txt"
                 archiveArtifacts artifacts: "*.txt", fingerprint: true
             }
         }
     }
     post {
         always {
-            sh "docker stop ${CONTAINER_NAME} || true"
-            sh "docker rm ${CONTAINER_NAME} || true"
+            sh "docker stop ${env.CONTAINER_NAME} || true"
+            sh "docker rm ${env.CONTAINER_NAME} || true"
         }
     }
 }
