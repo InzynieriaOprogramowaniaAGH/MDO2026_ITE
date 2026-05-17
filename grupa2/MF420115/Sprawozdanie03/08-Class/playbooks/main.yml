@@ -1,0 +1,7 @@
+---
+- hosts: Endpoints
+  become: yes
+
+  roles:
+
+   - deploy

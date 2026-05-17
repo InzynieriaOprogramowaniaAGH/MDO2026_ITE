@@ -1,0 +1,6 @@
+---
+- name: Glowny potok orkiestracji srodowiska produkcyjnego
+  hosts: Endpoints
+  become: yes
+  roles:
+    - deploy_app

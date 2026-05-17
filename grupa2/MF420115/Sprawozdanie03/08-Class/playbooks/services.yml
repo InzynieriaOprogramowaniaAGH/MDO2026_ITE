@@ -1,0 +1,14 @@
+- name: Restart services
+  hosts: Endpoints
+  become: true
+  tasks:
+    - name: restart ssh
+      ansible.builtin.service:
+        name: ssh
+        state: restarted
+
+    - name: restart rngd
+      ansible.builtin.service:
+        name: rngd
+        state: restarted
+
