@@ -1,4 +1,4 @@
-# SPRAWOZDANIE – LABORATORIUM 8
+# SPRAWOZDANIE 8
 
 ## Środowisko uruchomieniowe
 
