@@ -1,0 +1,40 @@
+---
+# tasks file for docker_deploy
+
+- name: Zainstaluj Docker.io (jesli go nie ma)
+  ansible.builtin.shell: |
+    apt-get update
+    apt-get install -y docker.io
+  register: docker_install
+  changed_when: "'is already the newest version' not in docker_install.stdout"
+  become: true
+
+- name: Uruchom usluge Docker
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: yes
+  become: true
+
+- name: Pobierz i uruchom aplikacje z Docker Hub
+  ansible.builtin.shell: |
+    docker run -d --name moja-aplikacja-testowa -p 8080:80 nginx
+  register: docker_run
+  failed_when: "docker_run.rc != 0 and 'already in use' not in docker_run.stderr"
+  become: true
+
+- name: Zweryfikuj lacznosc z kontenerem (Sanity check)
+  ansible.builtin.shell: "curl -s localhost:8080"
+  register: check_result
+  ignore_errors: yes
+  become: true
+
+- name: Wyswietl wynik weryfikacji
+  ansible.builtin.debug:
+    msg: "Kontener odpowiedzial! Sanity check zaliczony."
+  when: check_result.rc == 0
+
+- name: Zatrzymaj i usun kontener
+  ansible.builtin.shell: "docker rm -f moja-aplikacja-testowa"
+  when: check_result.rc == 0
+  become: true

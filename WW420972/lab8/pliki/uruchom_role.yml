@@ -1,0 +1,6 @@
+---
+- name: Uruchomienie mojej Roli
+  hosts: Endpoints
+  roles:
+    - docker_deploy
+
