@@ -1,0 +1,34 @@
+---
+- name: ansible playbook lab8
+  hosts: Endpoints
+  tasks:
+    - name: "zadanie 1: ping do wszystkich maszyn"
+      ansible.builtin.ping:
+
+    - name: "zadanie 2: kopiowanie pliku inwentaryzacji na endpointy"
+      ansible.builtin.copy:
+        src: ./inventory.ini
+        dest: /home/ansible/inventory_copy.ini
+      when: "'Endpoints' in group_names"
+
+    - name: "zadanie 3: aktualizacja pakietów w systemie"
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: dist
+      become: yes
+
+    - name: "zadanie 3.5: upewnienie się, że rng jest zainstalowane"
+      ansible.builtin.apt:
+        name: rng-tools
+        state: present
+      become: yes
+
+    - name: "zadanie 4: restart usług sshd i rngd"
+      ansible.builtin.service:
+        name: "{{ item }}"
+        state: restarted
+      loop:
+        - ssh
+        - rng-tools
+      become: yes
+      # ignore_errors: yes #gdyby rngd nie było w systemie
