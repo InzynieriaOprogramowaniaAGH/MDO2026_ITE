@@ -1,0 +1,24 @@
+---
+- name: Instalacja pakietu docker.io
+  ansible.builtin.apt:
+    name: docker.io
+    state: present
+    update_cache: yes
+
+- name: Upewnienie sie, ze usluga Docker jest uruchomiona
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Przeslanie artefaktu z poprzednich zajec na target
+  ansible.builtin.copy:
+    src: /home/dezxer/MDO2026_ITE/grupa2/MF420115/Sprawozdanie02/05-Class/mdo-app-1.0.15.tar.gz
+    dest: /tmp/mdo-app.tar.gz
+
+- name: Ladowanie obrazu kontenera do lokalnego rejestru Docker
+  ansible.builtin.shell: docker load -i /tmp/mdo-app.tar.gz
+
+- name: Uruchomienie aplikacji produkcyjnej (Sekcja Deploy)
+  ansible.builtin.shell: docker run -d --name mdo-runtime-app -p 8080:80 mdo-app:latest
+# tasks file for deploy_app

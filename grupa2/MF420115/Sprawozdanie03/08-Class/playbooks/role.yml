@@ -1,0 +1,4 @@
+- name: Run role
+  hosts: Endpoints
+  roles:
+    - deploy_app

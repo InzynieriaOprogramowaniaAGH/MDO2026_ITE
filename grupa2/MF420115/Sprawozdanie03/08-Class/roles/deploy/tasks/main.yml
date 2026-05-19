@@ -1,0 +1,15 @@
+---
+
+- name: Ping
+  ping:
+
+- name: Kopiowanie inventory
+  copy:
+      src: hosts.ini
+      dest: /home/ansible/hosts.ini
+
+- name: restart ssh
+  service:
+      name: ssh
+      state: restarted
+# tasks file for deploy
