@@ -1,0 +1,5 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for deploy_cpp_app
+app_dir: "/opt/cpp_app"
+binary_name: "test-library.out"
