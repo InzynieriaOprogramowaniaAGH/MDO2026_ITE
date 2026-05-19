@@ -2,7 +2,9 @@
 1. Zainstalowano minikube, kubectl oraz uruchomiono Kubernetes: \
 ![](./start.png)
 
-2. Wymogi sprzętowe minikube to:
+2. Minikube jest narzędziem do nauki i testowania, więc pomija wiele mechanizmów bezpieczeństwa aby utrzymać wygodę użytkowania, przykładowo użytkownik ma standardowo pełny dostęp administracyjny i nie musi ustawiać kontroli dostępu.
+
+3. Wymogi sprzętowe minikube to:
 - 2 CPUs or more
 - 2GB of free memory
 - 20GB of free disk space
@@ -11,9 +13,9 @@
 
 Na komputerze na którym wykonano instalację zostały spełnione wszystkie wymogi sprzętowe, oraz jest dostępny: Docker, Virtualbox oraz KVM
 
-3. Na początku był już aktywny 1 worker: ![](./control-plane.png)
+4. Na początku był już aktywny 1 worker: ![](./control-plane.png)
 
-4. Następnie uruchomiono dashboard: \
+5. Następnie uruchomiono dashboard: \
 ![](./dashboard-term.png) \
 ![](./dashboard.png)
 
