@@ -1,0 +1,35 @@
+---
+# tasks file for rola_wdrozenie_dockera
+---
+# tasks file for rola_wdrozenie_dockera
+- name: Instalacja Dockera oraz zaleznosci (python3-docker)
+  ansible.builtin.apt:
+    name: 
+      - docker.io
+      - python3-docker
+    state: present
+    update_cache: yes
+
+- name: Upewnienie sie, ze serwis Docker dziala
+  ansible.builtin.systemd:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Pobranie i uruchomienie kontenera z aplikacja
+  community.docker.docker_container:
+    name: moja_aplikacja_testowa
+    image: nginx:alpine
+    state: started
+    ports:
+      - "8080:80"
+
+- name: Weryfikacja lacznosci z kontenerem (Smoke Test HTTP)
+  ansible.builtin.uri:
+    url: "http://localhost:8080"
+    return_content: yes
+  register: test_wynik
+
+- name: Wyswietlenie wyniku Smoke Testu
+  ansible.builtin.debug:
+    msg: "Kontener dziala! Serwer zwrocil status HTTP: {{ test_wynik.status }}"
