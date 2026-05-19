@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moja-aplikacja-deployment
+  labels:
+    app: moja-web-aplikacja
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: moja-web-aplikacja
+  template:
+    metadata:
+      labels:
+        app: moja-web-aplikacja
+    spec:
+      containers:
+      - name: nginx-kontener
+        image: moja-aplikacja:v1
+        ports:
+        - containerPort: 80
