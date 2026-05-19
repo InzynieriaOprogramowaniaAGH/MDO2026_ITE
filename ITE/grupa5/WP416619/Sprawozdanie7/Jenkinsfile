@@ -4,7 +4,6 @@ pipeline {
     stages {
         stage('Cleanup') {
             steps {
-                // Czyścimy stare kontenery i obrazy przed startem
                 sh 'docker rm -f app-runtime-prod || true'
                 sh 'docker image prune -f'
             }
@@ -48,9 +47,7 @@ pipeline {
         stage('Deploy & Smoke Test') {
             steps {
                 script {
-                    // Uruchamiamy docelowy kontener (Deploy)
                     sh "docker run -d --name app-runtime-prod app-runtime:${env.BUILD_ID}"
-                    // Weryfikacja (Smoke Test)
                     sh "docker exec app-runtime-prod ./test-library.out || echo 'Aplikacja działa'"
                 }
             }
