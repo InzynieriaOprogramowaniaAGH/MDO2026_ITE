@@ -1,0 +1,12 @@
+services:
+  speedtest:
+    container_name: speedtest
+    image: ghcr.io/librespeed/speedtest:latest
+    restart: always
+    environment:
+      MODE: standalone
+      TITLE: "Speedtest AGH"
+      TAGLINE: "...w oparciu o LibreSpeed"
+      USE_NEW_DESIGN: true
+    ports:
+      - "8880:8080"

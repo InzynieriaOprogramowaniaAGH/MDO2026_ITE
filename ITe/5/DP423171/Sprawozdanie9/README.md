@@ -1,4 +1,4 @@
-Sprawozdanie 7
+Sprawozdanie 9
 ==============
 
 Sprawozdanie dla [ćwiczenia dziewiątego][ex9].
