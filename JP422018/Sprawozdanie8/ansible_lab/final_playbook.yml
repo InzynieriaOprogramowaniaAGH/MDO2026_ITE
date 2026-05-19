@@ -1,0 +1,6 @@
+---
+- name: Wdrożenie aplikacji za pomocą roli
+  hosts: Endpoints
+  become: yes
+  roles:
+    - docker_deploy_app

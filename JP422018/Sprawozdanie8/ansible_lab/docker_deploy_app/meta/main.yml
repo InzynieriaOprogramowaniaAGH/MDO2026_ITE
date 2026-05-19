@@ -1,0 +1,23 @@
+---
+galaxy_info:
+  author: Twoje Imie
+  description: Rola instalująca Dockera i wdrażająca kontener Kanye-Counter
+  company: Twoja Firma/Uczelnia
+  license: MIT
+  min_ansible_version: "2.1"
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy
+        - focal
+    - name: Debian
+      versions:
+        - bullseye
+
+  galaxy_tags:
+    - docker
+    - deployment
+    - education
+
+dependencies: [] # Tutaj można by wpisać inne role, od których ta zależy
