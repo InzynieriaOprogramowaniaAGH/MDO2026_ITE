@@ -1,0 +1,25 @@
+- name: Instalacja Dockera i wdrożenie kontenera
+  hosts: Endpoints
+  become: yes
+  tasks:
+    - name: Instalacja zależności dla Dockera
+      ansible.builtin.apt:
+        name: [apt-transport-https, ca-certificates, curl, software-properties-common]
+        state: present
+
+    - name: Instalacja Dockera
+      ansible.builtin.apt:
+        name: docker.io
+        state: present
+
+    - name: Uruchomienie usługi Docker
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Uruchomienie Twojego kontenera (przykład z Hello World)
+      community.docker.docker_container:
+        name: moja-aplikacja
+        image: hello-world
+        state: started

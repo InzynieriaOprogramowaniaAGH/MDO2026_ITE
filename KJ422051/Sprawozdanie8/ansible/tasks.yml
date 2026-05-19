@@ -1,0 +1,29 @@
+---
+- name: Zadania konfiguracyjne
+  hosts: Endpoints
+  become: yes  # Pozwala na użycie sudo
+  tasks:
+    - name: Ping maszyn
+      ansible.builtin.ping:
+
+    - name: Skopiuj plik inwentaryzacji na Endpoints
+      ansible.builtin.copy:
+        src: ./hosts.ini
+        dest: /home/ansible/inventory_copy.ini
+
+    - name: Zaktualizuj pakiety (apt)
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: dist
+      ignore_errors: yes
+
+    - name: Restart sshd
+      ansible.builtin.service:
+        name: ssh
+        state: restarted
+
+    - name: Restart rngd
+      ansible.builtin.service:
+        name: rng-tools
+        state: restarted
+      ignore_errors: yes

@@ -1,0 +1,30 @@
+---
+# tasks file for deploy-role
+- name: 1. Pingowanie maszyny
+  ansible.builtin.ping:
+
+- name: 2. Kopiowanie inwentarza na klona
+  ansible.builtin.copy:
+    src: hosts.ini
+    dest: /home/ansible/inventory_copy.ini
+    owner: ansible
+    group: ansible
+    mode: '0644'
+
+- name: 3. Instalacja Dockera
+  ansible.builtin.apt:
+    name: docker.io
+    state: present
+    update_cache: yes
+
+- name: 4. Uruchomienie kontenera (Artefakt)
+  ansible.builtin.shell: "docker run -d --name moja-aplikacja -p 8080:80 nginx"
+  ignore_errors: yes
+
+- name: 5. Sanity Check - Sprawdzenie czy Docker dziala
+  ansible.builtin.shell: "docker ps"
+  register: docker_output
+
+- name: Wyswietl wynik docker ps
+  ansible.builtin.debug:
+    var: docker_output.stdout_lines

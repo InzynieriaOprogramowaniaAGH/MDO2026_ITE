@@ -1,0 +1,7 @@
+---
+- name: Uruchomienie roli wdrazajacej
+  hosts: Endpoints
+  become: yes
+  roles:
+    - deploy-role
+
