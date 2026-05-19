@@ -1,0 +1,53 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('1. Checkout SCM') {
+            steps {
+                echo 'Pobieram kod z GitHuba...'
+                git branch: 'BW414729', url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git'
+            }
+        }
+
+        stage('2. Build') {
+            steps {
+                echo 'Buduję narzędzie yt-dlp...'
+                script {
+                    dir('grupa4/BW414729/Sprawozdanie3') {
+                        sh 'docker build -t ytdlp-build -f Dockerfile.build .'
+                    }
+                }
+            }
+        }
+
+        stage('3. Test') {
+            steps {
+                echo 'Uruchamiam testy offline w osobnym kontenerze...'
+                script {
+                    dir('grupa4/BW414729/Sprawozdanie3') {
+                        sh 'docker build -t ytdlp-test -f Dockerfile.test .'
+                        sh 'docker run --rm ytdlp-test'
+                    }
+                }
+            }
+        }
+
+        stage('4. Deploy (Smoke Test)') {
+            steps {
+                echo 'Wyciągam binarkę i sprawdzam, czy działa w czystym środowisku...'
+                sh 'docker create --name extract-ytdlp ytdlp-build'
+                sh 'docker cp extract-ytdlp:/app/yt-dlp ./yt-dlp-bin'
+                sh 'docker rm extract-ytdlp'
+                sh 'chmod +x ./yt-dlp-bin'
+                sh 'docker run --rm -v ${WORKSPACE}/yt-dlp-bin:/yt-dlp python:3.10-slim /yt-dlp --version'
+            }
+        }
+
+        stage('5. Publish') {
+            steps {
+                echo 'Publikuję artefakt do pobrania...'
+                archiveArtifacts artifacts: 'yt-dlp-bin', fingerprint: true
+            }
+        }
+    }
+}
