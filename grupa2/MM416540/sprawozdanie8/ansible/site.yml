@@ -1,0 +1,6 @@
+---
+- name: Wdrożenie Express przez rolę
+  hosts: Endpoints
+  become: yes
+  roles:
+    - express_deploy

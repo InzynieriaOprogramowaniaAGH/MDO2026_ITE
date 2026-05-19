@@ -1,0 +1,15 @@
+FROM node:20.19.0-alpine
+
+LABEL maintainer="student@example.com"
+LABEL version="5.2.1"
+LABEL description="Builder dla Express.js"
+
+RUN apk add --no-cache git
+
+WORKDIR /app
+
+RUN git clone https://github.com/expressjs/express.git .
+
+RUN npm install
+
+CMD ["node", "-e", "console.log('Express version:', require('./package.json').version)"]

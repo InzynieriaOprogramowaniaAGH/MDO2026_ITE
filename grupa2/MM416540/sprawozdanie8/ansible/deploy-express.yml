@@ -1,0 +1,57 @@
+---
+- name: Wdrożenie Express.js na Endpoints
+  hosts: Endpoints
+  become: yes
+
+  tasks:
+
+    - name: Sanity check – czy Docker działa?
+      ansible.builtin.command: docker info
+      ignore_errors: yes
+
+    - name: Zatrzymaj stary kontener
+      ansible.builtin.command: docker stop express-app
+      ignore_errors: yes
+
+    - name: Usuń stary kontener
+      ansible.builtin.command: docker rm express-app
+      ignore_errors: yes
+
+    - name: Usuń stary obraz
+      ansible.builtin.command: docker rmi express-prod:5.2.1
+      ignore_errors: yes
+
+    - name: Skopiuj obraz na ansible-target
+      ansible.builtin.copy:
+        src: /tmp/express-prod.tar
+        dest: /tmp/express-prod.tar
+
+    - name: Załaduj obraz Docker
+      ansible.builtin.command: docker load -i /tmp/express-prod.tar
+
+    - name: Uruchom kontener Express
+      ansible.builtin.command: >
+        docker run -d
+        --name express-app
+        -p 3000:3000
+        express-prod:5.2.1
+
+    - name: Poczekaj na start
+      ansible.builtin.pause:
+        seconds: 3
+
+    - name: Sprawdź logi kontenera
+      ansible.builtin.command: docker logs express-app
+      register: logs
+
+    - name: Wypisz logi
+      ansible.builtin.debug:
+        var: logs.stdout_lines
+
+    - name: Sprawdź czy kontener działa
+      ansible.builtin.command: docker ps --filter name=express-app
+      register: ps_out
+
+    - name: Wypisz status
+      ansible.builtin.debug:
+        var: ps_out.stdout_lines
