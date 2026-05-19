@@ -1,0 +1,43 @@
+---
+
+
+- name:  Sanity check przed wdrożeniem
+  ansible.builtin.shell: df -h / | tail -1 | awk '{print $4}'
+  register: disk_space
+  ignore_errors: yes
+
+- name:  Instalacja Dockera
+  ansible.builtin.apt:
+    name: docker.io
+    state: present
+    update_cache: yes
+
+- name: Przesłanie artefaktu (paczka .tar.gz)
+  ansible.builtin.copy:
+    src: hiredis-paczka.tar.gz  
+    dest: /tmp/hiredis-paczka.tar.gz
+    mode: '0644'
+
+- name:  Rozpakowanie libhiredis.so
+  ansible.builtin.unarchive:
+    src: /tmp/hiredis-paczka.tar.gz
+    dest: /tmp/
+    remote_src: yes
+
+- name:  Uruchomienie kontenera
+  ansible.builtin.command: >
+    docker run -d --name hiredis_app
+    -v /tmp/libhiredis.so:/usr/lib/libhiredis.so:ro
+    debian:bookworm-slim tail -f /dev/null
+
+- name: Weryfikacja wewnątrz kontenera
+  ansible.builtin.command: docker exec hiredis_app ls -lh /usr/lib/libhiredis.so
+  register: verify_output
+  failed_when: "'libhiredis.so' not in verify_output.stdout"
+
+- name:  Wynik weryfikacji
+  ansible.builtin.debug:
+    msg: "Wdrożenie poprawne. Szczegóły: {{ verify_output.stdout }}"
+
+- name: Sprzątanie (Usuń kontener)
+  ansible.builtin.command: docker rm -f hiredis_app
