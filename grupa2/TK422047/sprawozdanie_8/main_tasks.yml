@@ -1,0 +1,41 @@
+- name: Realizacja zadan zdalnego wywolywania i zarzadzania
+  hosts: all
+  become: yes
+  
+  tasks:
+    - name: Wysłanie zadania ping do wszystkich maszyn
+      ansible.builtin.ping:
+
+    - name: Skopiwanie pliku inwentaryzacji na maszyne Endpoints
+      ansible.builtin.copy:
+        src: ./inventory.ini
+        dest: /home/ansible/inventory_backup.ini
+        owner: ansible
+        group: ansible
+        mode: '0644'
+      when: "'Endpoints' in group_names"
+
+    - name: Zaktualizuj pakiety w systemie
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: dist
+      when: "'Endpoints' in group_names"
+
+    - name: czy rngd istnieje 
+      ansible.builtin.shell: systemctl list-units --type=service | grep rngd
+      register: rngd_check
+      failed_when: false
+      changed_when: false
+      when: "'Endpoints' in group_names"
+
+    - name: Resetowanie usł 
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        state: restarted
+      loop:
+        - ssh
+        - rngd
+      when: 
+        - "'Endpoints' in group_names"
+        - "item == 'ssh' or (item == 'rngd' and rngd_check.rc == 0)"
+      ignore_errors: yes
