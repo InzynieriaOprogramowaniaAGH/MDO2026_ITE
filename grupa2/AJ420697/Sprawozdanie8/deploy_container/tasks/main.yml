@@ -1,0 +1,39 @@
+- name: Copy container image
+  ansible.builtin.copy:
+    src: build-image_build_24.tar
+    dest: /tmp/build-image_build_24.tar
+
+
+- name: Load Docker image
+  ansible.builtin.command:
+    cmd: docker load -i /tmp/build-image_build_24.tar
+  register: load_result
+
+- name: Extract image name
+  ansible.builtin.set_fact:
+    image_name: "{{ (load_result.stdout | regex_search('Loaded image: (.*)', '\\1'))[0] }}"
+
+- debug:
+    var: image_name
+
+- name: Run container
+  community.docker.docker_container:
+    name: app-hello-world
+    image: "{{ image_name }}"
+    state: started
+    ports:
+      - "6666:3000"
+
+- name: Check container
+  ansible.builtin.command:
+    cmd: docker ps
+  register: docker_ps
+  changed_when: false
+
+- debug:
+    var: docker_ps.stdout
+
+- name: Stop container
+  community.docker.docker_container:
+    name: app-hello-world
+    state: absent
