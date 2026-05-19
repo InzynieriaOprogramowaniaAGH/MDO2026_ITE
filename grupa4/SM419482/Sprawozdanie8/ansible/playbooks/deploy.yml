@@ -1,0 +1,5 @@
+---
+- name: Deploy Express App
+  hosts: Endpoints
+  roles:
+    - express_app
