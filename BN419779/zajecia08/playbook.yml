@@ -1,0 +1,31 @@
+---
+- name: Podst konfig
+  hosts: Endpoints
+  become: yes  # sudo
+
+  tasks:
+    - name: 1. Pingowanie
+      ping:
+
+    - name: 2. Kopiowanie pliku inwentaryzacji na serwer docelowy
+      copy:
+        src: hosts.ini
+        dest: /tmp/hosts.ini
+        owner: ansible
+        mode: '0644'
+
+    - name: 3. Aktualizacja pakietów w systemie
+      apt:
+        update_cache: yes
+        upgrade: dist
+
+    - name: 4. Restart usługi SSHD
+      service:
+        name: ssh
+        state: restarted
+
+    - name: 5. Restart usługi rngd
+      service:
+        name: rng-tools
+        state: restarted
+      ignore_errors: yes
