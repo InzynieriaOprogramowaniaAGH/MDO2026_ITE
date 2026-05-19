@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mdo-redis
+  labels:
+    app: mdo-redis
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: mdo-redis
+  template:
+    metadata:
+      labels:
+        app: mdo-redis
+    spec:
+      containers:
+        - name: redis
+          image: mdo-runtime:3
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 6379
+          args:
+            - "--protected-mode"
+            - "no"
+            - "--bind"
+            - "0.0.0.0"
