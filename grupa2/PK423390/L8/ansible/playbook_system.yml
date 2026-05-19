@@ -1,0 +1,32 @@
+---
+- name: Zdalne wywolywanie procedur systemowych
+  hosts: Endpoints
+  become: true
+  tasks:
+    - name: 1. Wyslij zadanie ping do wszystkich maszyn
+      ping:
+
+    - name: 2. Skopiuj plik inwentaryzacji na maszyne Endpoints
+      copy:
+        src: inventory.ini
+        dest: /tmp/inventory.ini
+
+    - name: 3. Ponow operacje kopiowania (porownaj roznice)
+      copy:
+        src: inventory.ini
+        dest: /tmp/inventory.ini
+
+    - name: 4. Zaktualizuj pakiety w systemie
+      apt:
+        update_cache: yes
+
+    - name: 5. Zrestartuj uslugi sshd
+      service:
+        name: ssh
+        state: restarted
+
+    - name: 6. Zrestartuj uslugi rngd
+      service:
+        name: rngd
+        state: restarted
+      ignore_errors: yes

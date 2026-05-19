@@ -1,0 +1,43 @@
+---
+- name: 1. Sanity check - czy maszyna zyje
+  ping:
+
+- name: 2. Instalacja Dockera na maszynie docelowej
+  apt:
+    name: docker.io
+    state: present
+    update_cache: yes
+
+- name: 3. Uruchomienie uslugi Docker
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: 4. Przygotowanie folderu na Dockerfile
+  file:
+    path: /tmp/app_build
+    state: directory
+
+- name: 5. Stworzenie Dockerfile - Artefakt
+  copy:
+    dest: /tmp/app_build/Dockerfile
+    content: |
+      FROM nginx:alpine
+      RUN echo "<h1>Laboratorium 8 - Ansible i Docker</h1>" > /usr/share/nginx/html/index.html
+
+- name: 6. Zbudowanie obrazu - Requirement Build
+  command: docker build -t moja-apka:v1 /tmp/app_build/
+
+- name: 7. Uruchomienie kontenera - Requirement Run
+  command: docker run -d -p 8080:80 --name final-app moja-apka:v1
+
+- name: 8. Weryfikacja lacznosci - Requirement Verify
+  uri:
+    url: "http://localhost:8080"
+    status_code: 200
+  register: result
+
+- name: 9. Oczyszczenie - zatrzymanie kontenera - Requirement Cleanup
+  command: docker rm -f final-app
+  ignore_errors: yes

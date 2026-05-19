@@ -1,0 +1,49 @@
+pipeline {
+    agent any
+    environment {
+        IMAGE_NAME = "express-app-pk423390"
+        CONTAINER_NAME = "express-instance"
+    }
+    stages {
+        stage('Cleanup') {
+            steps {
+                sh "docker stop ${env.CONTAINER_NAME} || true"
+                sh "docker rm ${env.CONTAINER_NAME} || true"
+            }
+        }
+        stage('Build') {
+            steps {
+                sh "docker build --target build -t ${env.IMAGE_NAME}:${env.BUILD_NUMBER} ."
+            }
+        }
+        stage('Test') {
+            steps {
+                sh "docker build --target test -t ${env.IMAGE_NAME}-test:${env.BUILD_NUMBER} ."
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh "docker build --target deploy -t ${env.IMAGE_NAME}-deploy:${env.BUILD_NUMBER} ."
+                sh "docker run -d --name ${env.CONTAINER_NAME} --network host ${env.IMAGE_NAME}-deploy:${env.BUILD_NUMBER}"
+            }
+        }
+        stage('Smoke Test') {
+            steps {
+                sleep 10
+                sh "docker run --rm --network host alpine sh -c 'apk add --no-cache curl && curl -f http://localhost:3000'"
+            }
+        }
+        stage('Publish') {
+            steps {
+                sh "docker logs ${env.CONTAINER_NAME} > build-log-${env.BUILD_NUMBER}.txt"
+                archiveArtifacts artifacts: "*.txt", fingerprint: true
+            }
+        }
+    }
+    post {
+        always {
+            sh "docker stop ${env.CONTAINER_NAME} || true"
+            sh "docker rm ${env.CONTAINER_NAME} || true"
+        }
+    }
+}
