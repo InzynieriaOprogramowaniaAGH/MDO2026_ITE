@@ -1,0 +1,7 @@
+---
+- name: Ping all machines
+  hosts: all
+
+  tasks:
+    - name: Send ping
+      ping:
