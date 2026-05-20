@@ -1,0 +1,6 @@
+---
+- name: Wdrozenie kontenera za pomoca roli
+  hosts: ansible-target
+  become: yes
+  roles:
+    - mdo2026_deploy
