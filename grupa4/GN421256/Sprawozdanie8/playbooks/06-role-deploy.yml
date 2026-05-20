@@ -1,0 +1,6 @@
+---
+- name: Wdrozenie przez role axios_deploy
+  hosts: Endpoints
+  become: true
+  roles:
+    - axios_deploy

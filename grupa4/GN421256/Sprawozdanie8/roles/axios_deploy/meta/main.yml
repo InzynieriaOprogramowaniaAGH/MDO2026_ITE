@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  author: GN421256
+  description: Wdrozenie artefaktu kontenerowego axios z pipeline (MDO zajecia 08)
+  company: AGH ITE
+  license: MIT
+  min_ansible_version: "2.16"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - noble
+  galaxy_tags:
+    - docker
+    - deploy
+    - mdo
+
+dependencies: []

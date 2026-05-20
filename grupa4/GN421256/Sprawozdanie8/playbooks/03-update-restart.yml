@@ -1,0 +1,27 @@
+---
+- name: Aktualizacja pakietow i restart uslug na Endpoints
+  hosts: Endpoints
+  become: true
+  tasks:
+    - name: Aktualizacja cache apt
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Aktualizacja zainstalowanych pakietow
+      ansible.builtin.apt:
+        upgrade: dist
+        autoremove: true
+      # Uwaga: https://github.com/ansible/ansible/issues/84634
+      # Przy problemach z apt uzyj: ansible-playbook ... -e ansible_python_interpreter=/usr/bin/python3
+
+    - name: Restart sshd
+      ansible.builtin.service:
+        name: ssh
+        state: restarted
+
+    - name: Restart rngd (jesli zainstalowany)
+      ansible.builtin.service:
+        name: rng-tools
+        state: restarted
+      ignore_errors: true
