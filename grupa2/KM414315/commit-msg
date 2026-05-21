@@ -1,0 +1,12 @@
+#!/bin/bash
+# .git/hooks/commit-msg
+
+PREFIX="KM414315"
+MESSAGE=$(cat "$1")
+
+if [[ ! $MESSAGE == $PREFIX* ]]; then
+  echo "BŁĄD: Wiadomość commita musi zaczynać się od $PREFIX!"
+  exit 1
+fi
+
+exit 0
