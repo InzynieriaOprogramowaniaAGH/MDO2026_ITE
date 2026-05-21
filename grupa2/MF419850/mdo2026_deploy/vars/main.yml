@@ -1,0 +1,4 @@
+---
+container_name: "hello-app"
+image_full_name: "10.0.2.3:5000/hello-c-app:latest"
+# vars file for mdo2026_deploy

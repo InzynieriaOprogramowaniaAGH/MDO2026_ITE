@@ -1,0 +1,46 @@
+---
+- name: Podstawowe operacje zdalne
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Wysylanie ping do wszystkich maszyn
+      ping:
+
+    - name: Kopiowanie pliku inwentaryzacji na maszyny Endpoints
+      copy:
+        src: inventory.ini
+        dest: /tmp/inventory.ini
+        mode: '0644'
+      when: inventory_hostname in groups['Endpoints']
+
+    - name: Wykonywanie aktualizacji pakietow
+      apt:
+        update_cache: yes
+        upgrade: dist
+      when: inventory_hostname in groups['Endpoints']
+      become: yes
+
+    - name: Restartowanie uslugi sshd
+      systemd:
+        name: ssh
+        state: restarted
+      when: inventory_hostname in groups['Endpoints']
+      become: yes
+
+    - name: Restartowanie uslugi rngd (jesli istnieje)
+      systemd:
+        name: rngd
+        state: restarted
+      when: inventory_hostname in groups['Endpoints']
+      become: yes
+      ignore_errors: yes
+
+    - name: Wyswietlanie zawartosci skopiowanego pliku
+      command: cat /tmp/inventory.ini
+      register: copied_file
+      when: inventory_hostname in groups['Endpoints']
+    
+    - name: Pokazywanie informacji o kopiowaniu pliku
+      debug:
+        msg: "Plik inventory.ini zostal skopiowany"
+      when: inventory_hostname in groups['Endpoints'] and copied_file is defined
