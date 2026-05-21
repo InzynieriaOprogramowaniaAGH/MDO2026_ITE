@@ -1,0 +1,20 @@
+---
+- name: Kopiowanie inventory na Endpoints
+  hosts: Endpoints
+  tasks:
+    - name: Skopiuj inventory.yml do katalogu domowego ansible
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../inventory.yml"
+        dest: /home/ansible/inventory.yml
+        owner: ansible
+        group: ansible
+        mode: "0644"
+
+    - name: Wyswietl zawartosc skopiowanego pliku (porownanie z oryginalem)
+      ansible.builtin.command: cat /home/ansible/inventory.yml
+      register: remote_inventory
+      changed_when: false
+
+    - name: Pokaz zawartosc na maszynie docelowej
+      ansible.builtin.debug:
+        var: remote_inventory.stdout_lines

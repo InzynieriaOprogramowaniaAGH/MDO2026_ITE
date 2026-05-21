@@ -1,0 +1,13 @@
+---
+all:
+  children:
+    Orchestrators:
+      hosts:
+        Ubuntu-Server:
+          ansible_connection: local
+    Endpoints:
+      hosts:
+        ansible-target:
+          ansible_host: 10.0.2.2
+          ansible_port: 2223
+          ansible_user: ansible
