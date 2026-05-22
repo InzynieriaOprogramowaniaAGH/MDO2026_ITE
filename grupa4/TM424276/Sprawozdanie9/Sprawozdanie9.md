@@ -22,7 +22,7 @@ W ramach sekcji poinstalacyjnej przygotowano skrypt, który włącza usługę Do
 
 Plik został udostępniony w sieci lokalnej za pomocą serwera HTTP w Pythonie (`python3 -m http.server 8000`).
 
-![Udostępnianie pliku ks.cfg](/screeny/01_python_server.png)
+![Udostępnianie pliku ks.cfg](screeny/01_python_server.png)
 *Rys 1. Serwer HTTP udostępniający plik instalacyjny dla nowej maszyny.*
 
 ---
@@ -35,7 +35,7 @@ Do parametrów jądra (sekcja `linux`) dopisano ścieżkę do pliku odpowiedzi z
 
 Instalator pomyślnie pobrał konfigurację, przeprowadził partycjonowanie, zainstalował pakiety i zrestartował maszynę bez jakiejkolwiek interakcji ze strony użytkownika.
 
-![Sukces instalacji i ekran logowania](/screeny/02_fedora_login.png)
+![Sukces instalacji i ekran logowania](screeny/02_fedora_login.png)
 *Rys 2. System pomyślnie zainstalowany z nadanym hostname'm 'fedora-auto'.*
 
 ---
@@ -45,12 +45,12 @@ Po zalogowaniu do nowego systemu zweryfikowano poprawność wykonania zadań z s
 
 1. **Weryfikacja Dockera:** Zastosowano komendę `docker ps`, która potwierdziła, że kontener `nginx:alpine` działa od razu po uruchomieniu systemu.
 
-![Weryfikacja kontenera Docker](/screeny/03_docker_i_curl_test.png)
+![Weryfikacja kontenera Docker](screeny/03_docker_i_curl_test.png)
 *Rys 3. Kontener Nginx został uruchomiony automatycznie w tle.*
 
 2. **Ostateczny test aplikacji (Smoke Test):** System wirtualny otrzymał adres IP w sieci lokalnej w trybie Bridged. Połączono się z nim bezpośrednio z przeglądarki na maszynie hosta (macOS), co dowodzi poprawnego działania całego zautomatyzowanego stosu technologicznego.
 
-![Weryfikacja działania w przeglądarce](/screeny/04_nginx_browser.png)
+![Weryfikacja działania w przeglądarce](screeny/04_nginx_browser.png)
 *Rys 4. Strona powitalna Nginx odpowiadająca z nowo zainstalowanego systemu.*
 
 ---
