@@ -1,0 +1,71 @@
+# Plik odpowiedzi Kickstart dla instalacji nienadzorowanej - Fedora 40
+text
+keyboard --vconsmap=pl --xlayouts='pl'
+lang pl_PL.UTF-8
+
+# 1. Definicja repozytoriów sieciowych (Fedora 40 Everything)
+url --mirrorlist=http://mirrors.fedoraproject.org/mirrorlist?repo=fedora-40&arch=x86_64
+repo --name=updates --mirrorlist=http://mirrors.fedoraproject.org/mirrorlist?repo=updates-released-f40&arch=x86_64
+
+# 2. Konfiguracja sieci i hostname (Inny niż localhost)
+network --bootproto=dhcp --device=link --activate
+network --hostname=fedora-mdo-host
+
+# 3. Bezpieczeństwo i użytkownicy
+rootpw --plaintext MojeTajneHasloRoota2026
+user --name=ansible --plaintext --password=HasloAnsible2026 --groups=wheel
+
+# 4. Czyszczenie dysku i partycjonowanie automatyczne (Wymóg: clearpart --all)
+zerombr
+clearpart --all --initlabel
+autopart
+
+# Instrukcja restartu po zakończeniu instalacji
+reboot
+
+# 5. Sekcja pakietów - instalacja Dockera oraz zależności (Wymóg: sekcja %packages)
+%packages
+@core
+docker
+gzip
+tar
+wget
+%end
+
+# 6. Sekcja skryptów po-instalacyjnych (Wymóg: sekcja %post)
+%post --log=/root/kickstart-post.log
+# Włączenie demona Docker (uruchomi się dopiero po restarcie systemu)
+systemctl enable docker
+
+# Tworzenie skryptu pierwszego uruchomienia (First Boot), ponieważ Docker nie działa podczas instalacji
+cat << 'EOF' > /etc/systemd/system/mdo-firstboot.service
+[Unit]
+Description=Uruchomienie kontenera MDO po pierwszym starcie systemu
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/mdo-launch.sh
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+cat << 'EOF' > /usr/local/bin/mdo-launch.sh
+#!/bin/bash
+
+sleep 10
+
+docker pull lemonx26/mdo-app:latest || docker pull alpine:latest
+
+docker run -d --name mdo-unattended-runtime -p 8080:80 lemonx26/mdo-app:latest || docker run -d --name mdo-unattended-runtime -p 8080:80 alpine sleep 3600
+
+systemctl disable mdo-firstboot.service
+EOF
+
+chmod +x /usr/local/bin/mdo-launch.sh
+systemctl enable mdo-firstboot.service
+%end
+
