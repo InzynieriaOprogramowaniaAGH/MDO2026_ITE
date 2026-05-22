@@ -1,0 +1,172 @@
+ 560  ansible-playbook -i hosts playbook.yml -u ansible
+  561  ssh ansible@ansible-target
+  562  ssh ansible@192.168.56.101
+  563  ls
+  564  nano hosts
+  565  nano /etc/host
+  566  nano /etc/hosts
+  567  sudo nano /etc/hosts
+  568  ping ansible-target
+  569  getent hosts ansible-target
+  570  ssh ansible@ansible-target
+  571  ansible-playbook -i hosts playbook.yml -u ansible
+  572  ssh ansible@ansible-target
+  573  nano playbook.yml
+  574  ansible-playbook -i hosts playbook.yml -u ansible -K
+  575  nano playbook.yml
+  576  ansible-playbook -i hosts playbook.yml -u ansible -K
+  577  sudo apt install rng-tools
+  578  nano playbook.yml
+  579  ansible-playbook -i hosts playbook.yml -u ansible -K
+  580  nano playbook.yml
+  581  ansible-playbook -i hosts playbook.yml -u ansible -K
+  582  ssh ansible@ansible-target
+  583  ansible-playbook -i hosts playbook.yml -u ansible -K
+  584  ssh ansible@ansible-target
+  585  nano playbook.yml
+  586  ansible-playbook -i hosts playbook.yml -u ansible -K
+  587  nano playbook.yml
+  588  ssh ansible@ansible-target
+  589  exit
+  590  ansible-playbook -i hosts playbook.yml -u ansible -K
+  591  nano playbook2.yml
+  592  ansible-playbook -i hosts playbook2.yml -u ansible -K
+  593  nano playbook2.yml
+  594  ansible-playbook -i hosts playbook2.yml -u ansible -K
+  595  nano playbook2.yml
+  596  ansible-playbook -i hosts playbook2.yml -u ansible -K
+  597  ssh ansible@ansible-target
+  598  ssh ansible@192.168.56.101
+  599  getent hosts ansible-target
+  600  sudo nano /etc/hosts
+  601  ssh ansible@ansible-target
+  602  ansible-playbook -i hosts playbook2.yml -u ansible -K
+  603  sudo docker ps
+  604  sudo nano /etc/hosts
+  605  nano playbook2.yml
+  606  sudo docker ps -a
+  607  ansible-playbook -i hosts playbook2.yml -u ansible -K
+  608  nano playbook2.yml
+  609  ansible-playbook -i hosts playbook2.yml -u ansible -K
+  610  nano playbook2.yml
+  611  ansible-galaxy role init myrole
+  612  tree myrole
+  613  ls -R myrole
+  614  cd myrole
+  615  nano tasks/main.yml
+  616  nano meta/main.yml
+  617  cd ..
+  618  nano playbook_role.yml
+  619  cat hosts
+  620  ansible-playbook -i hosts playbook_role.yml -K
+  621  nano playbook_role.yml
+  622  nano meta/main.yml
+  623  cd myrole
+  624  nano tasks/main.yml
+  625  cd ..
+  626  ansible-playbook -i hosts playbook_role.yml -K
+  627  ssh ansible@ansible-target
+  628  exit
+  629  ls
+  630  python3 -m http.server 8000
+  631  ls
+  632  python3 -m http.server 8000
+  633  ip a
+  634  python3 -m http.server 8000
+  635  exit
+  636  cd MDO2026_ITE/grupa6/KW423128
+  637  cd MDO2026_ITE/grupa6/KW423138
+  638  python3 -m http.server 8000
+  639  ip a
+  640  exit
+  641  ls
+  642  sudo docker -version
+  643  sudo docker -v
+  644  sudo systemctl status docker
+  645  curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+  646  sudo install minikube-linux-amd64 /usr/local/bin/minikube
+  647  minikube version
+  648  curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+  649  chmod +x kubectl
+  650  sudo mv kubectl /usr/local/bin/
+  651  kubectl version --client
+  652  minikube start --driver=docker
+  653  minikube status
+  654  minikube start
+  655  minikube status
+  656  sudo usermod -aG docker kpw22
+  657  newgrp docker
+  658  docker ps
+  659  groups
+  660  minikube start --driver=docker
+  661  sudo poweroff
+  662  kubectl proxy --address='0.0.0.0' --disable-filter=true
+  663  ip a
+  664  docker ps
+  665  minikube status
+  666  kubectl get pods -A
+  667  ip a
+  668  kubectl proxy
+  669  minikube status
+  670  kubectl get nodes
+  671  kubectl proxy
+  672  kubectl get pods -A
+  673  kubectl proxy --address='0.0.0.0' --disable-filter=true
+  674  xdg-open "http://127.0.0.1:44069/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/"
+  675  sudo poweroff
+  676  minikube status
+  677  kubectl get pods -A
+  678  kubectl proxy --address='0.0.0.0' --disable-filter=true
+  679  mkdir my-nginx
+  680  cd my-nginx
+  681  <h1>Moja aplikacja Kubernetes</h1>
+  682  nano index.html
+  683  nano Dockerfile
+  684  docker build -t my-nginx:v1 .
+  685  docker images
+  686  docker run -d -p 8080:80 my-nginx:v1
+  687  curl localhost:8080
+  688  minikube image load my-nginx:v1
+  689  docker images
+  690  minikube status
+  691  df -h
+  692  docker system prune -a
+  693  df -h
+  694  docker system prune -a
+  695  sudo du -h /var --max-depth=1 | sort -h
+  696  sudo apt autoremove --purge
+  697  sudo apt clean
+  698  sudo journalctl --vacuum-size=200M
+  699  df -h
+  700  minikube status
+  701  ls
+  702  minikube image load my-nginx:v1
+  703  kubectl run myapp --image=my-nginx:v1 --port=80 --labels app=myapp
+  704  kubectl get pods
+  705  kubectl describe pod myapp
+  706  kubectl port-forward pod/myapp 8080:80
+  707  kubectl port-forward pod/myapp 8081:80
+  708  nano deployment.yaml
+  709  kubectl apply -f deployment.yaml
+  710  kubectl get deployments
+  711  kubectl get pods
+  712  kubectl rollout status deployment/my-nginx-deployment
+  713  nano service.yaml
+  714  kubectl apply -f service.yaml
+  715  kubectl get services
+  716  kubectl port-forward service/my-nginx-service 8080:80
+  717  kubectl port-forward service/my-nginx-service 8081:80
+  718  minikube version
+  719  kubectl version --client
+  720  exit
+  721  ls
+  722  cd typescript-starter
+  723  ls
+  724  cd ..
+  725  cd ~/MDO2026_ITE/grupa6/KW423138
+  726  ls
+  727  mkdir Sprawozdanie10
+  728  cd Sprawozdanie10
+  729  mkdir obrazyLab10
+  730  nano Sprawozdanie10.md
+  731  history
