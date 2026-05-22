@@ -27,7 +27,7 @@ Przygotowano playbook `playbook_podstawy.yml`, który realizował następujące 
 * Aktualizacja pakietów systemowych (`apt update & upgrade`).
 * Restart usług systemowych (`ssh` oraz ignorowanie błędu dla brakującej usługi `rngd`).
 
-![Wykonanie playbooka podstawowego](/s8/02_playbook_podstawy.png)
+![Wykonanie playbooka podstawowego](s8/02_playbook_podstawy.png)
 *Rys 2. Logi z wykonania podstawowych operacji administracyjnych.*
 
 ### Test odporności na awarie (odpięta karta sieciowa)
