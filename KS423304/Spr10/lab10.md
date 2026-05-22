@@ -5,8 +5,11 @@
 Instalacja została przeprowadzona w bezpieczny sposób, pobierając binaria bezpośrednio z oficjalnych repozytoriów za pomocą HTTPS (`curl -LO`), przebiega ona zgodnie z poniższymi komendami:
 
 `curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64`
-```sudo install minikube-linux-amd64 /usr/local/bin/minikube`
+
+`sudo install minikube-linux-amd64 /usr/local/bin/minikube`
+
 `curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"`
+
 `sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl`
 
 2. Start z mitygacją zasobów
@@ -14,9 +17,8 @@ Instalacja została przeprowadzona w bezpieczny sposób, pobierając binaria bez
 Z powodu ograniczeń zasobów przydzielonych do maszyny wirtualnej, konieczna była mitygacja wymagań sprzętowych środowiska Minikube, zgodnie z poniższą komendą. 
 
 `minikube start --driver=docker --cpus=2 --memory=1800`
-mitygacja - 
 
-wynik (weryfikacja działania) `kubectl get nodes`
+Wynik (weryfikacja działania) `kubectl get nodes`
 
 ![img1](t1.png)
 
