@@ -1,0 +1,43 @@
+# Kontener wstepny (budowanie projektu)
+FROM node:20-alpine AS builder
+
+# Ścieżka do katalogu roboczego
+WORKDIR /usr/src/app
+
+# Kopiowanie ścieżek z zależnościami i pełna instalacja npm
+COPY package*.json ./
+RUN npm install
+
+# Kopia całego projektu do kontenera
+COPY . .
+
+# Budowanie projektu
+RUN npm run build
+
+#Multistage build - drugi etap
+# Kontener testowy oparty o kontener build
+FROM builder AS tester
+# Odpalenie testów, w tym e2e, po zbudowaniu projektu
+RUN npm run test && npm run test:e2e
+
+#Multistage build - trzeci etap
+# Kontener bazowy / runtime (wersja do produkcji)
+FROM node:20-alpine AS runtime
+
+# Katalog roboczy
+WORKDIR /usr/src/app
+
+#Kopia package.json i package-lock.json do kontenera runtime
+COPY package*.json ./
+
+# Instalacja TYLKO pakietów potrzebnych do działania (bez TypeScriptu itp.) dla produkcji
+RUN npm install --only=production
+
+# Kopiowanie ze wstępnego kontenera (builder) TYLKO gotowego, skompilowanego kodu
+COPY --from=builder /usr/src/app/dist ./dist
+
+# Informacja o porcie
+EXPOSE 3003
+
+# Uruchomienie aplikacji
+CMD ["node", "dist/main"]
