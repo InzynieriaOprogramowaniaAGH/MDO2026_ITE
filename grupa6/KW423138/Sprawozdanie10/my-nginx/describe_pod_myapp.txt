@@ -1,0 +1,52 @@
+kpw22@ubuntu-server:~/my-nginx$ kubectl describe pod myapp
+Name:             myapp
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Tue, 19 May 2026 18:48:33 +0000
+Labels:           app=myapp
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.12
+IPs:
+  IP:  10.244.0.12
+Containers:
+  myapp:
+    Container ID:   docker://f4d7b31036b54770a0ae42278e2a62d864518c87a2614af5ab1cf76221679971
+    Image:          my-nginx:v1
+    Image ID:       docker://sha256:fff8bc2b778ac4da79fbf7784dfd8343ee19e0f923cd9c17377021a07b06e9b1
+    Port:           80/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Tue, 19 May 2026 18:48:37 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-x455w (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True
+  Initialized                 True
+  Ready                       True
+  ContainersReady             True
+  PodScheduled                True
+Volumes:
+  kube-api-access-x455w:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  74s   default-scheduler  Successfully assigned default/myapp to minikube
+  Normal  Pulled     71s   kubelet            spec.containers{myapp}: Container image "my-nginx:v1" already present on machine and can be accessed by the pod
+  Normal  Created    71s   kubelet            spec.containers{myapp}: Container created
+  Normal  Started    70s   kubelet            spec.containers{myapp}: Container started
