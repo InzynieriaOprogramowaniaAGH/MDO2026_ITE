@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose -f compose.yml convert
+    kompose.version: 1.38.0 (HEAD)
+  labels:
+    io.kompose.service: speedtest
+  name: speedtest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: speedtest
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose -f compose.yml convert
+        kompose.version: 1.38.0 (HEAD)
+      labels:
+        io.kompose.service: speedtest
+    spec:
+      containers:
+        - env:
+            - name: MODE
+              value: standalone
+            - name: TAGLINE
+              value: '...w oparciu o LibreSpeed'
+            - name: TITLE
+              value: Speedtest AGH
+            - name: USE_NEW_DESIGN
+              value: "true"
+          image: ghcr.io/librespeed/speedtest:latest
+          name: speedtest
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+      restartPolicy: Always

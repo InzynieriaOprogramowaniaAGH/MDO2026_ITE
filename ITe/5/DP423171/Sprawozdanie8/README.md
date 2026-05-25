@@ -1,4 +1,4 @@
-Sprawozdanie 7
+Sprawozdanie 8
 ==============
 
 Sprawozdanie dla [ćwiczenia ósmego][ex8].
