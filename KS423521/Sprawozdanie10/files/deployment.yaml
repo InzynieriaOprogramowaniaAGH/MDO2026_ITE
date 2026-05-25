@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-lab10
+  labels:
+    app: myapp-lab10
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: myapp-lab10
+  template:
+    metadata:
+      labels:
+        app: myapp-lab10
+    spec:
+      containers:
+      - name: myapp-lab10
+        image: app-lab10
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
