@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mw423393-nginx-service
+spec:
+  selector:
+    app: mw423393-nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

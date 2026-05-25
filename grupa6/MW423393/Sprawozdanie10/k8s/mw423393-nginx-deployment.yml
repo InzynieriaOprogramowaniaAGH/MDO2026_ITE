@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mw423393-nginx-deployment
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: mw423393-nginx
+  template:
+    metadata:
+      labels:
+        app: mw423393-nginx
+    spec:
+      containers:
+        - name: mw423393-nginx
+          image: mw423393-nginx:v1
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
