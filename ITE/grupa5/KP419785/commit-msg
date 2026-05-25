@@ -7,7 +7,7 @@ COMMIT_MSG=$(head -n 1 "$COMMIT_MSG_FILE")
 EXPECTED_PATTERN="^$INITIALS$INDEX"
 
 if ! [[ "$COMMIT_MSG" =~ $EXPECTED_PATTERN ]]; then
-    echo "BŁĄD: Wiadomość commita musi zaczynać się od ciągu: '$INITIALS$INDEX'"
+    echo "BLAD: Wiadomosc commita musi zaczynac sie od ciagu: '$INITIALS$INDEX'"
     exit 1
 fi
 exit 0
