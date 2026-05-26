@@ -1,0 +1,2 @@
+FROM nest-api:v2
+CMD ["sh", "-c", "exit 1"]
