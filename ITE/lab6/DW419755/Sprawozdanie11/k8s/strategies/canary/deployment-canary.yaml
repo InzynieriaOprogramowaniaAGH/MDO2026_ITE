@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mdo-redis-canary
+  labels:
+    app: mdo-redis
+    deployment-strategy: canary
+    track: canary
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: mdo-redis
+      deployment-strategy: canary
+      track: canary
+  template:
+    metadata:
+      labels:
+        app: mdo-redis
+        deployment-strategy: canary
+        track: canary
+        version: v1
+    spec:
+      containers:
+        - name: redis
+          image: xyzpl/mdo-redis:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 6379
+          args:
+            - "--protected-mode"
+            - "no"
+            - "--bind"
+            - "0.0.0.0"
