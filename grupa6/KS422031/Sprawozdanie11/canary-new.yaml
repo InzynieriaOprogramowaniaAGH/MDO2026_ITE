@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kacper-nginx-canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kacper-nginx-canary
+      version: canary
+  template:
+    metadata:
+      labels:
+        app: kacper-nginx-canary
+        version: canary
+    spec:
+      containers:
+      - name: kacper-nginx
+        image: kacper-nginx-k8s:1.2
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
