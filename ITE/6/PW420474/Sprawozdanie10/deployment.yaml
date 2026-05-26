@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lab10-deployment
+  labels:
+    app: lab10-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: lab10-web
+  template:
+    metadata:
+      labels:
+        app: lab10-web
+    spec:
+      containers:
+      - name: test
+        image: apk_lab_11:2
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
