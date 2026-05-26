@@ -1,16 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: moja-aplikacja-deployment
+  name: aplikacja-rolling
 spec:
   replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 2
+      maxSurge: 25%
   selector:
     matchLabels:
-      app: moja-web-aplikacja
+      app: web-rolling
   template:
     metadata:
       labels:
-        app: moja-web-aplikacja
+        app: web-rolling
     spec:
       containers:
       - name: nginx-kontener
