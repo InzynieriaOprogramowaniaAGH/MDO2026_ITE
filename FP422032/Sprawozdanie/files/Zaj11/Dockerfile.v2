@@ -1,0 +1,2 @@
+FROM doretor/kalkulator:latest
+RUN find . -name "*.html" -exec sed -i 's/Kalkulator/Kalkulator v2/g' {} +

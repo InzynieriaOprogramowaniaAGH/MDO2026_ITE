@@ -1,0 +1,2 @@
+FROM doretor/kalkulator:latest
+CMD ["node", "plik_ktory_nie_istnieje.js"]
