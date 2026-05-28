@@ -1,0 +1,10 @@
+---
+- name: Restart services
+  hosts: Endpoints
+  become: true
+
+  tasks:
+    - name: Restart SSH
+      service:
+        name: ssh
+        state: restarted
