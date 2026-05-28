@@ -95,10 +95,12 @@ fi
 Recreate:
 - szybkie przełączenia
 - brak starych podów podczas update
+
 RollingUpdate:
 - brak przerwy
 - pody wymieniają się stopniowo
 - chwilowo więcej podów
+
 Canary:
 - równoczesne działanie dwóch wersji
 
