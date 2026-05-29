@@ -28,9 +28,14 @@ Ruch sieciowy przekierowano na wolny port hosta 8085. Test komunikacji zrealizow
 
 ![Wyświetlenie domyślnej strony powitalnej serwera aplikacji po poprawnym trasowaniu portów.](ss/welcomeToNginx.png)
 
-4. Deployment
+5. Deployment
 Stworzono aautomatyczny plik deployment w formacie yaml.Architekturę aplikacji wyskalowano do 4 niezależnych replik.
 
 ![Plik yaml](ss/deploymentYaml.png)
 
 ![Wyświetlenie 4 aktywnych Podów) utrzymujących status operacyjny](ss/kubernetesReplicas.png)
+
+6. Oczyszczenie środowiska
+Usunięcie zasobów testowych w celu zwolnienia pamięci:
+
+![Usuniecie Zasobów](ss/usuniecieZasobow.png)
