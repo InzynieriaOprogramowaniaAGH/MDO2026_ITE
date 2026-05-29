@@ -1,0 +1,114 @@
+# Zajęcia 09 – Pliki odpowiedzi dla wdrożeń nienadzorowanych
+## Sprawozdanie
+
+## 1. Cel zadania
+
+Celem zajęć było przygotowanie pliku odpowiedzi (Kickstart) umożliwiającego przeprowadzenie instalacji nienadzorowanej systemu Fedora. System po uruchomieniu ma automatycznie hostować aplikację Express.js w kontenerze Docker.
+
+---
+
+## 2. Instalacja Fedory i pobranie pliku odpowiedzi
+
+### Wybór obrazu ISO
+
+Pobrano obraz **Fedora Server 44** 
+
+### Instalacja wstępna
+
+Przeprowadzono standardową instalację Fedory w VirtualBox:
+
+![alt text](image.png)
+
+### Pobranie pliku anaconda-ks.cfg
+
+Po instalacji Fedora automatycznie generuje plik odpowiedzi na podstawie dokonanych wyborów:
+
+![alt text](image-1.png)
+
+Plik skopiowano na główną maszynę:
+![alt text](image-2.png)
+
+| Zmiana | Powód |
+|--------|-------|
+| Dodano `url --mirrorlist=...` | Plik nie zawierał repozytoriów |
+| Dodano `clearpart --all` | Zawsze formatuj cały dysk |
+| Zmieniono hostname na `express-host` | Wymaganie – nie `localhost` |
+| Dodano `reboot --eject` | Automatyczny restart po instalacji |
+| Rozszerzono `%packages` | Docker i zależności |
+| Dodano sekcję `%post` | Instalacja Dockera, konfiguracja autostartu |
+
+---
+
+## 4. Dlaczego `docker run` nie działa w `%post`?
+
+Sekcja `%post` wykonuje się **podczas instalacji systemu**, zanim jądro systemu zostanie w pełni uruchomione. Na tym etapie:
+
+- Demon `dockerd` nie jest uruchomiony
+- `systemctl start docker` nie zadziała (brak działającego init)
+- `docker run` zakończy się błędem
+
+**Rozwiązanie:** użycie `systemctl enable` – rejestruje usługę do uruchomienia przy **pierwszym restarcie** systemu, kiedy Docker już działa.
+
+```
+Instalacja → %post (instalacja Dockera, enable) → reboot → Docker start → express-app.service → docker run
+```
+
+---
+
+## 5. Udostępnienie pliku odpowiedzi przez HTTP
+
+Na głównej maszynie uruchomiono prosty serwer HTTP:
+![alt text](image-3.png)
+
+![alt text](image-4.png)
+
+### Modyfikacja parametrów GRUB
+
+Po uruchomieniu VM z ISO, w menu GRUB naciśnięto `e` aby edytować wpis bootowania. Na końcu linii `linuxefi` dodano:
+
+```
+inst.ks=http://10.119.160.27:8888/anaconda-ks.cfg
+```
+![alt text](image-6.png)
+
+Następnie naciśnięto `Ctrl+X` aby uruchomić instalację.
+
+### Przebieg instalacji nienadzorowanej
+
+Instalator Anaconda automatycznie:
+1. Pobrał plik odpowiedzi z podanego URL
+2. Skonfigurował partycje (`clearpart --all`)
+3. Zainstalował pakiety z `%packages`
+4. Wykonał skrypt `%post` (instalacja Dockera, konfiguracja autostartu)
+5. Uruchomił ponownie system (`reboot --eject`)
+
+
+## 7. Weryfikacja po instalacji
+
+![alt text](image-7.png)
+Po pierwszym uruchomieniu systemu zweryfikowano działanie:
+![alt text](image-8.png)
+
+---
+
+## 8. Dyskusja – kiedy instalacja nienadzorowana ma sens?
+
+### Zalety
+
+- **Powtarzalność** – każda instalacja jest identyczna
+- **Automatyzacja** – brak interakcji użytkownika
+- **Skalowalność** – można zainstalować setki maszyn równocześnie
+- **Dokumentacja** – plik kickstart to dokumentacja konfiguracji systemu
+
+### Wady
+
+- **Złożoność** – błąd w pliku kickstart może uniemożliwić instalację
+- **Debugowanie** – trudniej diagnozować problemy bez interakcji
+- **Ograniczenia `%post`** – brak możliwości uruchomienia Dockera podczas instalacji
+
+### Zastosowania
+
+- Provisioning serwerów w chmurze (AWS, Azure)
+- Instalacja środowisk testowych w CI/CD
+- Wdrożenie systemów IoT
+- Budowanie obrazów bazowych dla VM
