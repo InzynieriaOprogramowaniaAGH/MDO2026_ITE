@@ -13,7 +13,7 @@ minikube start --memory=2048mb
 
 Podczas startu Minikube automatycznie wybrał sterownik Docker, pobrał wymagane obrazy oraz utworzył lokalny klaster Kubernetes z pojedynczym węzłem typu control-plane.
 
-![Uruchomienie klastra Minikube](img/s2.png)
+![Uruchomienie klastra Minikube](img/s1.png)
 
 Po uruchomieniu sprawdzono status klastra:
 
@@ -23,7 +23,7 @@ minikube status
 
 Host, kubelet oraz apiserver działają poprawnie, a konfiguracja `kubeconfig` została utworzona.
 
-![Status klastra Minikube](img/s1.png)
+![Status klastra Minikube](img/s2.png)
 
 Następnie sprawdzono dostępność nodów Kubernetes:
 
