@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mw423393-nginx-stable
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mw423393-nginx-canary
+      track: stable
+  template:
+    metadata:
+      labels:
+        app: mw423393-nginx-canary
+        track: stable
+    spec:
+      containers:
+        - name: mw423393-nginx
+          image: mw423393-nginx:v1
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80

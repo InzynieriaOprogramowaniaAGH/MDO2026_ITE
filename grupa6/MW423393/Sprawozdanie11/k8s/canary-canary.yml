@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mw423393-nginx-canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mw423393-nginx-canary
+      track: canary
+  template:
+    metadata:
+      labels:
+        app: mw423393-nginx-canary
+        track: canary
+    spec:
+      containers:
+        - name: mw423393-nginx
+          image: mw423393-nginx:v2
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
