@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kinsu-deployment
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: kinsu-apka
+  template:
+    metadata:
+      labels:
+        app: kinsu-apka
+    spec:
+      containers:
+      - name: apka-kontener
+        image: kinsu-apka:error
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
