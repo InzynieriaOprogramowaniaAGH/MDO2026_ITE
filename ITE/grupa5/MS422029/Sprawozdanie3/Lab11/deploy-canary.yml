@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lab11-canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lab11-app
+  template:
+    metadata:
+      labels:
+        app: lab11-app
+    spec:
+      containers:
+      - name: web
+        image: moja-apka:v2
+        imagePullPolicy: Never
