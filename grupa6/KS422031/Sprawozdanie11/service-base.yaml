@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"kacper-nginx-service","namespace":"default"},"spec":{"ports":[{"port":80,"protocol":"TCP","targetPort":80}],"selector":{"app":"kacper-nginx"},"type":"ClusterIP"}}
+  creationTimestamp: "2026-05-19T08:46:46Z"
+  name: kacper-nginx-service
+  namespace: default
+  resourceVersion: "2172"
+  uid: 5487e0a8-b5a5-4c50-a31b-07d0bdeb0230
+spec:
+  clusterIP: 10.97.95.50
+  clusterIPs:
+  - 10.97.95.50
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: kacper-nginx
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

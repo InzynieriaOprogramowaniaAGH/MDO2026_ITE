@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kacper-nginx-recreate
+spec:
+  replicas: 4
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: kacper-nginx-recreate
+  template:
+    metadata:
+      labels:
+        app: kacper-nginx-recreate
+    spec:
+      containers:
+      - name: kacper-nginx
+        image: kacper-nginx-k8s:1.1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80

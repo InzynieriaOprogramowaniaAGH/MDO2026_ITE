@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kacper-nginx-rolling
+spec:
+  replicas: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 2
+      maxSurge: 50%
+  selector:
+    matchLabels:
+      app: kacper-nginx-rolling
+  template:
+    metadata:
+      labels:
+        app: kacper-nginx-rolling
+    spec:
+      containers:
+      - name: kacper-nginx
+        image: kacper-nginx-k8s:1.1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
