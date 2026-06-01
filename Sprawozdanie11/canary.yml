@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-deploy
+  template:
+    metadata:
+      labels:
+        app: spring-deploy
+        track: canary
+    spec:
+      containers:
+      - name: api-server
+        image: 64pseaqeze/spring-api-prod:final
+        ports:
+        - containerPort: 8080
