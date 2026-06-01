@@ -1,0 +1,18 @@
+pipeline {
+    agent any
+    environment {
+        NAMESPACE = "default"
+        DEPLOYMENT = "speedtest"
+    }
+    triggers {
+        cron('H/30 * * * *')
+    }
+    stages {
+        stage('Check') {
+            steps: {
+                sh 'sh ITe/5/DP423171/Sprawozdanie11/script/verify_deployment.sh'
+            }
+        }
+    }
+}
+    

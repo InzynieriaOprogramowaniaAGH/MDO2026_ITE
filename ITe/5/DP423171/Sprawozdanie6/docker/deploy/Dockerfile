@@ -12,5 +12,5 @@ COPY --from=devenv /tarball /
 # Skonfiguruj pod opcję "-v [mount]:/sysroot" dla zarządzania
 # pakietami w dystrybucji [mount] (funkcją obrazu jest recovery
 # i działania sysadmin na środowiskach ALPM):
-ENTRYPOINT [ "/usr/local/bin/pacman", "--sysroot", "/sysroot" ]
+ENTRYPOINT [ "env", "LD_LIBRARY_PATH=/usr/local/lib", "/usr/local/bin/pacman", "--sysroot", "/sysroot" ]
 CMD [ "--help" ]
