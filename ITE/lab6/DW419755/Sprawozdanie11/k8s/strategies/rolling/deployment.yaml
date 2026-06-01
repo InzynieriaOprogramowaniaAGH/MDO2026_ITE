@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mdo-redis-rolling
+  labels:
+    app: mdo-redis
+    deployment-strategy: rolling
+spec:
+  replicas: 6
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 2
+      maxSurge: 25%
+  selector:
+    matchLabels:
+      app: mdo-redis
+      deployment-strategy: rolling
+  template:
+    metadata:
+      labels:
+        app: mdo-redis
+        deployment-strategy: rolling
+        version: v1
+    spec:
+      containers:
+        - name: redis
+          image: xyzpl/mdo-redis:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 6379
+          args:
+            - "--protected-mode"
+            - "no"
+            - "--bind"
+            - "0.0.0.0"

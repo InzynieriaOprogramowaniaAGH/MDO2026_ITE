@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mdo-redis-recreate
+  labels:
+    app: mdo-redis
+    deployment-strategy: recreate
+spec:
+  replicas: 4
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: mdo-redis
+      deployment-strategy: recreate
+  template:
+    metadata:
+      labels:
+        app: mdo-redis
+        deployment-strategy: recreate
+        version: v1
+    spec:
+      containers:
+        - name: redis
+          image: xyzpl/mdo-redis:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 6379
+          args:
+            - "--protected-mode"
+            - "no"
+            - "--bind"
+            - "0.0.0.0"
