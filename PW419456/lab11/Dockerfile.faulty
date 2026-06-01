@@ -1,0 +1,3 @@
+FROM nginx:alpine
+# Celowo błędna komenda
+CMD ["/bin/sh", "-c", "echo 'Awaria!' && exit 1"]
