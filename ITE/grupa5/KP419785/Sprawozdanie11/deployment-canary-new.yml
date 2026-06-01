@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portfinder-canary
+  labels:
+    app: portfinder-canary
+    track: canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: portfinder-canary
+      track: canary
+  template:
+    metadata:
+      labels:
+        app: portfinder-canary
+        track: canary
+        version: v2
+    spec:
+      containers:
+      - name: portfinder-container
+        image: portfinder-web:v2
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
