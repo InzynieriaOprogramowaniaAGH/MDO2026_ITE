@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kalkulator-stable
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: kalkulator
+  template:
+    metadata:
+      labels:
+        app: kalkulator
+        version: v1
+    spec:
+      containers:
+      - name: kalkulator-container
+        image: doretor/kalkulator:v1
+        ports:
+        - containerPort: 3000
+        command: ["node", "server.js"]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kalkulator-canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kalkulator
+  template:
+    metadata:
+      labels:
+        app: kalkulator
+        version: v2
+    spec:
+      containers:
+      - name: kalkulator-container
+        image: doretor/kalkulator:v2
+        ports:
+        - containerPort: 3000
+        command: ["node", "server.js"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kalkulator-service
+spec:
+  selector:
+    app: kalkulator
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
