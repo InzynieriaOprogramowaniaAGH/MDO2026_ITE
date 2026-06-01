@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mw423393-nginx-recreate
+spec:
+  replicas: 4
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: mw423393-nginx-recreate
+  template:
+    metadata:
+      labels:
+        app: mw423393-nginx-recreate
+    spec:
+      containers:
+        - name: mw423393-nginx
+          image: mw423393-nginx:v1
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
