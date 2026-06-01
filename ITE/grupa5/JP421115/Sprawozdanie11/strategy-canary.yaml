@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+        track: stable
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:v0
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment-canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+        track: canary
+    spec:
+      containers:
+      - name: nginx-container
+        image: moj-nginx:v1
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
