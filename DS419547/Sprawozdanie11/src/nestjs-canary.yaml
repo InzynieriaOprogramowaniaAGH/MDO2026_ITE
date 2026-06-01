@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nestjs-app-canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nestjs-app
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: nestjs-app
+        version: v2
+    spec:
+      containers:
+      - name: nestjs-container
+        image: nestjs-app:v2
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
