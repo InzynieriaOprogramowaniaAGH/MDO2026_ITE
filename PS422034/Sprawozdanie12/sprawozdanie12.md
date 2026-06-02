@@ -1,5 +1,5 @@
 # Zajęcia 12
-#Wdrażanie na zarządzalne kontenery w chmurze (Azure)
+# Wdrażanie na zarządzalne kontenery w chmurze (Azure)
 
 ---
 
