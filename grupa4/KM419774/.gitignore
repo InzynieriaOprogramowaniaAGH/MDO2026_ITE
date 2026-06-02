@@ -33,3 +33,7 @@ jenkins_home/
 
 # IGNORUJEMY APP (Twoje wymaganie)
 app/
+
+minikube-linux-amd64
+*.iso
+*.bin
