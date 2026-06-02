@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-canary-svc
+spec:
+  selector:
+    app: nginx          # wspólna etykieta dla obu deploymentów
+  ports:
+    - port: 80
+      targetPort: 80
+  type: NodePort
