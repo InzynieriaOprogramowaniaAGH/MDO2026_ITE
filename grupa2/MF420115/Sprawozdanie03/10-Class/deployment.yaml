@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mdo-app-deployment
+  labels:
+    app: mdo-web
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: mdo-web
+  template:
+    metadata:
+      labels:
+        app: mdo-web
+    spec:
+      containers:
+      - name: mdo-app-container
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
