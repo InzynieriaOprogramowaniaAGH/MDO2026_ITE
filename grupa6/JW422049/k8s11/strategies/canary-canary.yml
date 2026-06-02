@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jw422049-nginx-canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jw422049-nginx-canary
+      track: canary
+  template:
+    metadata:
+      labels:
+        app: jw422049-nginx-canary
+        track: canary
+    spec:
+      containers:
+        - name: jw422049-nginx
+          image: jw422049-nginx-k8s:v2
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
