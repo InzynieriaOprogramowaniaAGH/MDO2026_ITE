@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yahtzee-production
+  labels:
+    app: yahtzee
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: yahtzee
+  template:
+    metadata:
+      labels:
+        app: yahtzee
+    spec:
+      containers:
+      - name: game-container
+        image: moja-gra:bad
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80

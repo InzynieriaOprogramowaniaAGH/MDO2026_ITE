@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yahtzee-canary
+  labels:
+    app: yahtzee
+    tier: canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: yahtzee
+      tier: canary
+  template:
+    metadata:
+      labels:
+        app: yahtzee
+        tier: canary
+    spec:
+      containers:
+      - name: game-container
+        image: moja-gra:bad
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
