@@ -1,0 +1,171 @@
+    1  ls
+    2  minikube
+    3  minikube start
+    4  minikube config set driver docker
+    5  minikube delete
+    6  minikube start
+    7  sudo minikube start
+    8  exit
+    9  sudo minikube start
+   10  groups
+   11  sudo minikube start
+   12  exit
+   13  bg
+   14  minikube status
+   15  minikube start
+   16  minikube status
+   17  minikube dashboard --url &
+   18  ls
+   19  ip a
+   20  sudo firewall-cmd --add-port 46451:tcp
+   21  sudo firewall-cmd --add-port 46451/tcp
+   22  sudo firewall-cmd --add-port 46451/udp
+   23  bg
+   24  fg
+   25  minikube --help dashboard
+   26  sudo firewall-cmd --add-port 2137/tcp
+   27  sudo firewall-cmd --add-port 2137/udp
+   28  minikube --help
+   29  minikube options
+   30  minikube --help dashboard
+   31  minikube dashboard --port 2137 --url
+   32  minikube dashboard --port 2137 --url &
+   33  ls
+   34  kubectl
+   35  minikubectl
+   36  minikube kubectl
+   37  minikube kubectl --help
+   38  minikube kubectl -- proxy --address='127.0.0.1' --disable-filter=true
+   39  bg
+   40  fg
+   41  minikube dashboard --port 2137 --url &
+   42  ls
+   43  fg
+   44  minikube dashboard --port 8001 --url &
+   45  ls
+   46  bg
+   47  fg
+   48  minikube dashboard --port 8001 --url &
+   49  ls
+   50  minikube kubectl -- proxy --address='127.0.0.1' --disable-filter=true
+   51  fg
+   52  minikube kubectl -- proxy --address='127.0.0.1' --disable-filter=true
+   53  minikube kubectl -- proxy --address='0.0.0.0' --disable-filter=true
+   54  minikube dashboard --port 8001 --url &
+   55  minikube kubectl -- proxy --address='0.0.0.0' --disable-filter=true
+   56  fg
+   57  minikube dashboard --port 2137 --url &
+   58  ls
+   59  minikube kubectl -- proxy --address='0.0.0.0' --disable-filter=true
+   60  ping 192.168.1.21
+   61  minikube kubectl -- proxy
+   62  minikube dashboard --port 2137 --url &
+   63  fg
+   64  minikube dashboard --port 2137 --url &
+   65  ls
+   66  curl localhost:2137
+   67  fg
+   68  minikube dashboard --url &
+   69  minikube kubectl -- proxy &
+   70  ls
+   71  nvim
+   72  vim
+   73  ls
+   74  clear
+   75  ls
+   76  ls -al .
+   77  vim stronka.html
+   78  ls
+   79  vim dockerfile
+   80  man alias
+   81  ls
+   82  vim nginx.conf
+   83  ls
+   84  vim dockerfile
+   85  docker build -t custom-nginx:latest .
+   86  docker images | grep nginx
+   87  eval $(minikube docker-env)
+   88  docker images
+   89  docker build -t custom-nginx:latest
+   90  docker build -t custom-nginx:latest .
+   91  minikube kubectl -- run nginx-pod --image=custom-nginx:latest --port=8080
+   92  minikube kubectl -- get pods
+   93  minikube kubectl -- logs nginx-pod
+   94  minikube kubectl -- run nginx-pod --image=custom-nginx:latest --port=8080 --image-pull-policy=Never
+   95  minikube kubectl -- delete pod nginx-pod
+   96  minikube kubectl -- run nginx-pod --image=custom-nginx:latest --port=8080 --image-pull-policy=Never
+   97  minikube kubectl -- get pods
+   98  minikube kubectl -- logs nginx-pod
+   99  curl localhost:8080
+  100  curl http://localhost:8080
+  101  curl http://localhost:8080/hostname
+  102  minikube kubectl -- logs nginx-pod
+  103  minikube kubectl -- port-forward pod/nginx-pod 8080:8080
+  104  ls
+  105  minikube kubectl -- port-forward pod/nginx-pod 8080:8080 &
+  106  ls
+  107  sudo firewall-cmd --add-port 8080:udp
+  108  sudo firewall-cmd --add-port 8080/tcp
+  109  sudo firewall-cmd --add-port 8080/udp
+  110  sudo firewall-cmd --restart
+  111  sudo systemctl restart firewalld
+  112  curl localhost:8080
+  113  vim deployment.yaml
+  114  ls
+  115  minikube kubectl -- apply deployment.yaml
+  116  minikube kubectl -- apply
+  117  minikube kubectl -- apply -f deployment.yaml
+  118  cat deployment.yaml
+  119  vim deployment.yaml
+  120  cat deployment.yaml
+  121  minikube kubectl -- apply -f deployment.yaml
+  122  minikube kubectl -- rollout status
+  123  minikube kubectl -- rollout status -f deployment.yaml
+  124  vim service.yaml
+  125  minikube kubectl -- rollout status -f service.yaml
+  126  vim service.yaml
+  127  minikube kubectl -- rollout status -f service.yaml
+  128  vim service.yaml
+  129  minikube kubectl -- rollout status -f service.yaml
+  130  vim service.yaml
+  131  minikube kubectl -- rollout status -f service.yaml
+  132  vim service.yaml
+  133  minikube kubectl -- rollout status -f service.yaml
+  134  vim service.yaml
+  135  minikube kubectl -- rollout status -f service.yaml
+  136  vim service.yaml
+  137  minikube kubectl -- rollout status -f service.yaml
+  138  vim service.yaml
+  139  minikube kubectl -- rollout status -f service.yaml
+  140  vim service.yaml
+  141  minikube kubectl -- rollout status -f service.yaml
+  142  vim service.yaml
+  143  minikube kubectl -- rollout status -f service.yaml
+  144  minikube kubectl -- apply service.yaml
+  145  minikube kubectl -- apply -f service.yaml
+  146  minikube kubectl -- get services
+  147  minikube kubectl -- port-forward service/devops-serwis 8080:8080
+  148  minikube kubectl -- port-forward service/devops-serwis 8080:2137
+  149  minikube kubectl -- port-forward service/devops-serwis 2137:8080
+  150  minikube kubectl -- port-forward service/devops-serwis 2137:8080 &
+  151  ls
+  152  curl localhost:2137
+  153  curl localhost:8080
+  154  curl localhost:2137
+  155  minikube kubectl -- port-forward service/devops-serwis 8080:8080
+  156  fg
+  157  minikube kubectl -- port-forward service/devops-serwis 8080:8080
+  158  minikube kubectl -- port-forward service/devops-serwis 8080:8080 &
+  159  ls
+  160  curl localhost:8080
+  161  minikube kubectl -- port-forward service/devops-serwis 8080:8080 &
+  162  systemctl
+  163  systemctl | grepk ub
+  164  systemctl | grep kub
+  165  systemctl | grep kuber
+  166  systemctl | grep mini
+  167  minikube
+  168  minikube status
+  169  history | grep nginx
+  170  ls
+  171  history > history.txt

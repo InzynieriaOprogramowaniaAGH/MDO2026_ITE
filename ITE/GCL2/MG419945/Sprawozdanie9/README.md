@@ -1,4 +1,4 @@
-# Sprawozdanie 8 - Maciej Gładysiak MG419945
+# Sprawozdanie 9 - Maciej Gładysiak MG419945
 ---
 ## 1. Wykorzystane środowisko
 Korzystam z systemu Linux na laptopie, na którym w Virtualboxie mam Ubuntu Server. Polecenia wykonywane podczas ćwiczenia są przez SSH na serwerze Ubuntu Server (np. ustawienie serwera http aby fedora miała z czego pobierać pliki), jak i na maszynie oddzielnej wirtualnej systemu Fedora.
