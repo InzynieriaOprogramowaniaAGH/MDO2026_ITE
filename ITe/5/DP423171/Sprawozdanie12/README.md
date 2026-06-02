@@ -48,3 +48,10 @@ co widać po logach, które zachowują się tak, jak jest to oczekiwane:
 To samo, ale robiąc w CLI (nie przez panel):
 
 ![](anim/cli-variant.gif)
+
+Z uwagi na to, że CLI nawet nie cenzurował informacji i udostępniał
+nawet więcej danych, niż udostępnić bym preferował, dokonałem całkowitej
+cenzury zwracanych informacji dla utworzonego kontenera, a jednocześnie
+(przez logi) wykazałem jego poprawne wdrożenie i uruchomienie.
+
+[ex12]: ../../../../READMEs/12-Class.md
