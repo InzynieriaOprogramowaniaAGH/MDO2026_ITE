@@ -32,7 +32,7 @@ RUN echo "deb [arch=$(dpkg --print-architecture) \
   signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \
   https://download.docker.com/linux/debian \
   $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
-RUN apt-get update && apt-get install -y docker-ce-cli
+RUN apt-get update && apt-get install -y docker-ce-cli && 
 
 # Powrot do bezpiecznego usera
 USER jenkins
@@ -74,6 +74,7 @@ docker run --name jenkins-blueocean --restart=unless-stopped --detach \
   --publish 8080:8080 --publish 50000:50000 \                           # Wystawienie interfejsu graficznego i portu 50000 dla agentów
   --volume jenkins-data:/var/jenkins_home \                             # Wolumen na pliki jenkinsa
   --volume jenkins-docker-certs:/certs/client:ro \                      # Wolumen Read-only z certyfikatami bezpieczeństwa
+  --volume terraform-state:/var/jenkins_home/terraform-state \
   myjenkins-blueocean:2.541.3                                           # Odpalamy wcześniej zbudowany obraz
 ```
 
