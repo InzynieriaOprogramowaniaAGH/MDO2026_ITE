@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  # Pierwszy kontener: tylko buduje aplikację i zapisuje ją jako obraz
+  app-build:
+    build:
+      context: .
+      dockerfile: Dockerfile.build
+    image: cjson-build:latest
+
+  # Drugi kontener: uruchamia testy na zbudowanym obrazie
+  app-test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    depends_on:
+      - app-build

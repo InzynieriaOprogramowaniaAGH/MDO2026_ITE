@@ -1,0 +1,12 @@
+#!/bin/bash
+
+ID="BN419779"
+
+MSG_FILE="$1"
+
+MESSAGE=$(cat "$MSG_FILE")
+
+if [[ ! "$MESSAGE" =~ ^$ID ]]; then
+    echo "Zle! Commita start to ' $ID'"
+    exit 1
+fi

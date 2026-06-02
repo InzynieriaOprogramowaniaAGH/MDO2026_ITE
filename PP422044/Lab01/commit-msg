@@ -1,0 +1,10 @@
+#!/bin/bash
+PREFIX="PP422044"
+
+COMMIT_MSG=$(head -n 1 "$1")
+
+if [[ "$COMMIT_MSG" != "$PREFIX"* ]]; then
+	echo "Blad, commit musi zaczynac sie od '$PREFIX'"
+	exit 1
+fi
+exit 0

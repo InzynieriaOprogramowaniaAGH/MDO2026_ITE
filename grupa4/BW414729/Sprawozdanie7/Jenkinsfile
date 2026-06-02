@@ -1,0 +1,75 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('0. Clean Workspace') {
+            steps {
+                echo 'Czyszczenie przestrzeni roboczej...'
+                // Usuwamy binarkę, jeśli została po starym buildzie
+                sh 'rm -f grupa4/BW414729/Sprawozdanie7/yt-dlp-bin || true'
+                // Czyścimy dockera z wiszących obrazów
+                sh 'docker system prune -f'
+            }
+        }
+
+        stage('1. Checkout SCM') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('2. Build (BLDR)') {
+            steps {
+                script {
+                    dir('grupa4/BW414729/Sprawozdanie7') {
+                        sh 'docker build -t ytdlp-build -f Dockerfile.build .'
+                    }
+                }
+            }
+        }
+
+        stage('3. Test') {
+            steps {
+                script {
+                    dir('grupa4/BW414729/Sprawozdanie7') {
+                        sh 'docker build -t ytdlp-test -f Dockerfile.test .'
+                        sh 'docker run --rm ytdlp-test'
+                    }
+                }
+            }
+        }
+
+        stage('4. Deploy (Prepare Image)') {
+            steps {
+                script {
+                    dir('grupa4/BW414729/Sprawozdanie7') {
+                        // Wyciągamy binarkę
+                        sh 'docker create --name extract-ytdlp ytdlp-build'
+                        sh 'docker cp extract-ytdlp:/app/yt-dlp ./yt-dlp-bin'
+                        sh 'docker rm extract-ytdlp'
+                        
+                        // Budujemy finalny, lekki obraz (z nowego pliku Dockerfile)
+                        sh 'docker build -t yt-dlp-final -f Dockerfile .'
+                    }
+                }
+            }
+        }
+
+        stage('5. Smoke Test') {
+            steps {
+                // Uruchamiamy testowo nasz nowy, czysty obraz
+                sh 'docker run --rm yt-dlp-final --version'
+            }
+        }
+
+        stage('6. Publish') {
+            steps {
+                script {
+                    dir('grupa4/BW414729/Sprawozdanie7') {
+                        archiveArtifacts artifacts: 'yt-dlp-bin', fingerprint: true
+                    }
+                }
+            }
+        }
+    }
+}

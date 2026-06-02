@@ -1,0 +1,45 @@
+Eksponowanie portu i łączność między kontenerami
+docker run -dit --name iperf-server networkstatic/iperf3 -s
+docker run -dit \ --name iperf-client \ --entrypoint sh \ networkstatic/iperf3 \ -c "while true; do sleep 1000; done"
+docker ps
+docker inspect iperf-server
+docker exec -it iperf-client bash
+root@3c777ebc8fe3:/# iperf3 -c 172.17.0.2
+docker network create moja-siec
+docker run -dit --name iperf-server --network moja-siec networkstatic/iperf3 -s
+docker run -dit --name iperf-client --network moja-siec networkstatic/iperf3 -s
+docker exec -it iperf-client bash
+iperf3 -c iperf-server
+docker run -dit --name iperf-server -p 5201:5201 networkstatic/iperf3 -s
+iperf3 -c localhost
+iperf3 -c 192.168.1.100
+iperf3: error - unable to connect to server - server may have stopped running or use a different port, firewall issue, etc.: Connection timed out
+docker logs iperf-server
+
+docker build -t myjenkins-blueocean:2.479.3-1 .
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon   2.56kB
+Step 1/8 : FROM jenkins/jenkins:2.479.3-jdk17
+ ---> 44c1caefd796
+Step 2/8 : USER root
+ ---> Using cache
+ ---> 3a7e721e8eed
+Step 3/8 : RUN apt-get update && apt-get install -y lsb-release
+ ---> Using cache
+ ---> 51774a9f66d4
+Step 4/8 : RUN curl -fsSLo /usr/share/keyrings/docker-archive-keyring.asc https://download.docker.com/linux/debian/gpg
+ ---> Running in c1abe5c4fc77
+ ---> Removed intermediate container c1abe5c4fc77
+ ---> f6a3322d462a
+Step 5/8 : RUN echo "deb [arch=$(dpkg --print-architecture) \ signed-by=/usr/share/keyrings/docker-archive-keyring.asc] \ https://download.docker.com/linux/debian \ $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
+ ---> Running in 6e54d5fc5385
+ ---> Removed intermediate container 6e54d5fc5385
+ ---> 3b6e2c85a570
+Step 6/8 : RUN apt-get update && apt-get install -y docker-ce-cli
+ ---> Running in 56c8a2d0d933
+E: Malformed entry 1 in list file /etc/apt/sources.list.d/docker.list ([option] too short)
+E: The list of sources could not be read.
+The command '/bin/sh -c apt-get update && apt-get install -y docker-ce-cli' returned a non-zero code: 100

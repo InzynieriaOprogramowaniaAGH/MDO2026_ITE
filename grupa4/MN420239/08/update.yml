@@ -1,0 +1,10 @@
+---
+- name: Update packages
+  hosts: Endpoints
+  become: true
+
+  tasks:
+    - name: Update apt packages
+      apt:
+        update_cache: yes
+        upgrade: dist

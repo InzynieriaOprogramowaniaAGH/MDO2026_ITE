@@ -1,0 +1,10 @@
+#!/bin/bash
+
+PREFIX="TN420202"
+COMMIT_MSG_FILE="$1"
+COMMIT_MSG="$(cat "$COMMIT_MSG_FILE")"
+
+if [[ ! "$COMMIT_MSG" =~ ^$PREFIX ]]; then
+    echo "Blad: commit message musi zaczynac sie od $PREFIX"
+    exit 1
+fi

@@ -1,0 +1,29 @@
+---
+- name: Zajecia 8
+  hosts: Endpoints
+  become: yes  
+  tasks:
+    - name: Wyślij żądanie ping do maszyn
+      ansible.builtin.ping:
+
+    - name: Skopiuj plik inwentaryzacji na Endpoints
+      ansible.builtin.copy:
+        src: ./hosts.ini
+        dest: /home/ansible/hosts.ini
+
+    - name: Zaktualizuj pakiety w systemie
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: safe
+        
+    - name: Zainstaluj rng-tools
+      ansible.builtin.apt:
+        name: rng-tools
+        state: present
+    - name: Zrestartuj usługi ssh i rngd
+      ansible.builtin.service:
+        name: "{{ item }}"
+        state: restarted
+      loop:
+        - ssh
+        - rng-tools  

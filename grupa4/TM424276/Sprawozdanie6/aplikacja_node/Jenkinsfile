@@ -1,0 +1,56 @@
+pipeline {
+    agent any
+    
+    environment {
+        APP_VERSION = "1.0.${env.BUILD_ID}"
+        IMAGE_NAME = "express-api"
+        WORK_DIR = "grupa4/TM424276/Sprawozdanie6/aplikacja_node"
+    }
+
+    stages {
+        stage('Budowanie i Testowanie') {
+            steps {
+                dir("${WORK_DIR}") {
+                    sh 'docker build --target test -t ${IMAGE_NAME}-test .'
+                }
+            }
+        }
+        
+        stage('Budowanie Finalnego Obrazu (Deploy)') {
+            steps {
+                dir("${WORK_DIR}") {
+                    sh 'docker build --target deploy -t ${IMAGE_NAME}:${APP_VERSION} .'
+                }
+            }
+        }
+
+stage('Smoke Test (Weryfikacja)') {
+            steps {
+                dir("${WORK_DIR}") {
+                    sh 'docker run -d --name smoke-test-app ${IMAGE_NAME}:${APP_VERSION}'
+                    
+                    sleep 3
+                    
+                    // Magiczna linijka: Jeśli test się nie uda, wydrukuj nam dokładne logi błędu z aplikacji!
+                    sh 'docker exec smoke-test-app wget -qO- http://localhost:3000/ || (docker logs smoke-test-app && exit 1)'
+                }
+            }
+            post {
+                always {
+                    sh 'docker rm -f smoke-test-app'
+                }
+            }
+        }
+        stage('Publikacja Artefaktu') {
+            steps {
+                dir("${WORK_DIR}") {
+                    // Zapisujemy gotowy obraz
+                    sh 'docker save ${IMAGE_NAME}:${APP_VERSION} | gzip > ${IMAGE_NAME}-v${APP_VERSION}.tar.gz'
+                    
+                    // Wystawiamy jako artefakt
+                    archiveArtifacts artifacts: '*.tar.gz', fingerprint: true
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,14 @@
+services:
+  build:
+    build:
+      context: .
+      dockerfile: Dockerfile.build
+    image: vscode-build
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    image: vscode-test
+    depends_on:
+      - build

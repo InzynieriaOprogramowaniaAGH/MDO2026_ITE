@@ -1,0 +1,119 @@
+# Sprawozdanie Zbiorcze z Laboratoriów 1-4
+**Przedmiot:** Inżynieria Oprogramowania  
+**Autor:** Dominika Myszka DM421198  
+
+
+---
+
+## 1. Laboratorium 01: Konfiguracja Środowiska i Git
+### Cel zajęć
+Przygotowanie stanowiska pracy, konfiguracja kluczy SSH oraz automatyzacja pracy z Git za pomocą hooków.
+
+### Realizacja zadań
+* **SSH:** Wygenerowano klucze typu ED25519 (z hasłem i bez). Skonfigurowano dostęp do GitHub przez protokół SSH.
+* **Git Hooks:** Przygotowano skrypt `commit-msg`, wymuszający format wiadomości zaczynający się od inicjałów i indeksu.
+  
+> **Kod Git Hooka:**
+> ```bash
+> #!/bin/bash
+> MSG_FILE=$1
+>MSG_CONTENT=$(cat MSG_FILE)
+> if [[ ! $MSG =~ ^DM421198 ]]; then
+>   echo "BLA: Twoj commit musi zaczynać się od DM421198!"
+>   exit 1
+> fi
+> ```
+
+---
+
+## 2. Laboratorium 02: Podstawy Docker
+### Cel zajęć
+Instalacja silnika Docker i analiza podstawowych obrazów systemowych.
+
+### Realizacja zadań
+* **Eksploracja obrazów:** Uruchomiono obrazy `busybox`, `ubuntu` oraz `fedora`.
+* **Analiza procesów:** Zweryfikowano PID 1 w kontenerze oraz procesy Dockera na hoście.
+* **Dockerfile:** Zbudowano własny obraz bazujący na Ubuntu z preinstalowanym Gitem.
+
+**Weryfikacja kontenerów:**
+
+![alt text](image.png)
+
+---
+
+## 3. Laboratorium 03: Dockerfiles i CI (Build & Test)
+### Cel zajęć
+Budowa oprogramowania w powtarzalnym środowisku kontenerowym.
+
+### Realizacja zadań
+* **Wybór projektu:** Wybrano repozytorium z plikiem `Makefile` wspierającym `make build` i `make test`.
+* **Multi-stage Build:** Przygotowano dwa Dockerfile:
+  1. **Builder:** Instaluje zależności i kompiluje kod.
+
+  ![alt text](image-1.png)
+
+  2. **Tester:** Bazuje na poprzednim obrazie i uruchamia testy jednostkowe.
+
+  ![alt text](image-2.png)
+
+
+**Wnioski:** Rozdzielenie środowiska budowania od testowego gwarantuje przenośność procesu CI.
+
+---
+
+## 4. Labolatorium 04 - Woluminy, Sieci i Usługi Jenkins
+### Zachowywanie stanu między kontenerami (Persistence)
+Celem tej części było zrozumienie mechanizmów składowania danych w Dockerze oraz izolacji procesów budowania od narzędzi kontroli wersji.
+
+#### Realizacja zadań:
+* **Tworzenie woluminów:** Utworzono woluminy nazwane (Named Volumes) za pomocą komendy `docker volume create`.
+* **Montowanie:** Podpięto woluminy do obrazu `ubuntu:24.04` wykorzystując flagę `-v`.
+* **Klonowanie bez Gita w kontenerze:** Repozytorium zostało sklonowane na hoście, a następnie udostępnione kontenerowi poprzez montowanie woluminu. Dzięki temu kontener budujący pozostał "lekki" i nie wymagał instalacji dodatkowych pakietów.
+* **Klonowanie wewnątrz kontenera:** W ramach porównania zainstalowano `git` bezpośrednio w kontenerze i tam przeprowadzono operację klonowania na wolumin wejściowy.
+
+#### Analiza porównawcza:
+| Cecha | Klonowanie na hoście (Wolumin) | Klonowanie w kontenerze |
+| :--- | :--- | :--- |
+| **Rozmiar obrazu** | Mniejszy (brak Gita i zależności). | Większy (wymaga instalacji Gita). |
+| **Bezpieczeństwo** | Wyższe (brak dostępu do sieci/kluczy SSH wewnątrz). | Niższe (większa powierzchnia ataku przez dostęp do sieci). |
+| **Kontrola** | Wymaga przełączania się między hostem a kontenerem. | Wszystkie operacje w jednym oknie, większa kontrola użytkownika. |
+
+#### Dyskusja: `RUN --mount`
+Zamiast tradycyjnego montowania woluminów flagą `-v`, nowoczesne rozwiązanie BuildKit pozwala na użycie instrukcji `RUN --mount=type=bind`.
+* **Zalety:** Pozwala na tymczasowe podpięcie zasobów (kodu) tylko na czas budowania obrazu. Skutkuje to bezpieczniejszym i mniejszym obrazem wynikowym, ponieważ kod źródłowy i klucze nie są kopiowane do warstw obrazu.
+
+### Eksponowanie portu i łączność między kontenerami
+Wykorzystano narzędzie iPerf3 (obraz `networkstatic/iperf3`) do przeprowadzenia diagnostyki sieciowej.
+
+#### Sieć dedykowana vs Domyślna:
+* **Sieć domyślna (`bridge`):** Kontenery łączą się jedynie przez bezpośrednie adresy IP.
+* **Własna sieć mostkowa:** Utworzono sieć dedykowaną, co umożliwiło korzystanie z mechanizmu DNS Dockera. Kontenery komunikowały się ze sobą za pomocą nazw (np. `serwer-iperf`), co znacznie ułatwia orkiestrację usług.
+
+#### Analiza przepustowości:
+Przeprowadzono testy wydajnościowe wykazujące wpływ warstw wirtualizacji na prędkość przesyłu:
+
+1. **Test #1 (z Hosta Linux):** Przepustowość ok. *4.4 Gbits/sec. Jest to komunikacja wewnątrz RAM maszyny wirtualnej.
+2. **Test #2 (spoza Hosta - Windows):** Przepustowość spadła do ok. 1.16 Gbits/sec.
+3. **Wniosek:** Spadek prędkości (ponad 20-krotny) wynika z konieczności przejścia pakietów przez stos sieciowy Windowsa, wirtualizację VirtualBox oraz NAT Dockera.
+4. **Problem techniczny**: Aby połączenie z Windowsa było możliwe, konieczne było ręczne dodanie reguły Port Forwarding w VirtualBox dla portu 5201.
+
+### Usługi w rozumieniu systemu i kontenera (SSH)
+Skonfigurowano serwer `openssh-server` wewnątrz kontenera Ubuntu.
+
+* **Zalety:** Łatwiejszy transfer plików.
+* **Wady:** Rozwiązanie uznawane za "antywzorzec" (anti-pattern) w Dockerze – obniża bezpieczeństwo i zwiększa wagę obrazu. 
+
+### Instancja Jenkins
+Uruchomiono skonteneryzowany serwer CI Jenkins z zachowaniem stanu.
+
+* **Trwałość danych:** Zastosowano wolumin nazwany `jenkins_data` montowany do `/var/jenkins_home`.
+* **Weryfikacja:** 1. Uruchomiono Jenkinsa, skonfigurowano projekt i użytkownika.
+    2. Usunięto kontener poleceniem `sudo docker rm -f moj-jenkins`.
+    3. Ponownie uruchomiono kontener z podpięciem tego samego woluminu.
+* **Wynik:** Wszystkie dane, wtyczki i zadania zostały zachowane, co potwierdziło poprawną separację danych od aplikacji.
+
+---
+
+## 5. Podsumowanie i wnioski końcowe (Laboratoria 1-4)
+
+Realizacja zajęć wykazała, że poprawna konfiguracja narzędzi Git i SSH oraz stosowanie automatyzacji poprzez Git Hooks stanowią niezbędną część do bezpieczeństwa i integralności każdego projektu. Wykorzystanie technologii Docker do budowy wieloetapowych obrazów udowodniło, że konteneryzacja gwarantuje pełną powtarzalność i przenośność procesów wytwórczych niezależnie od środowiska hosta. Przeprowadzona diagnostyka sieciowa i wdrożenie serwera Jenkins potwierdziły, że kluczem do stabilnej infrastruktury jest stosowanie dedykowanych sieci mostkowych oraz woluminów nazwanych, które zapewniają wydajną komunikację i trwałość danych krytycznych.

@@ -1,0 +1,13 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    git build-essential pkg-config libssl-dev zlib1g-dev \
+    libffi-dev libbz2-dev libreadline-dev libsqlite3-dev tzdata
+
+RUN git clone https://github.com/python/cpython.git /cpython
+
+WORKDIR /cpython
+
+RUN ./configure && make -j$(nproc)

@@ -1,0 +1,7 @@
+# Bazujemy na obrazie stworzonym przez pierwszy plik
+FROM cjson-build:latest
+
+WORKDIR /app
+
+# Domyślna komenda po uruchomieniu kontenera to wykonanie testów
+CMD ["make", "test"]

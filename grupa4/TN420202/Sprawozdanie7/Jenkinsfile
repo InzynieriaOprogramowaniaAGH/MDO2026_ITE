@@ -1,0 +1,56 @@
+pipeline {
+    agent any
+
+    options {
+        skipDefaultCheckout(true)
+    }
+
+    stages {
+        stage('Clone app repo') {
+            steps {
+                git branch: 'main', url: 'https://github.com/aws-samples/node-js-tests-sample.git'
+            }
+        }
+
+        stage('Build image') {
+            steps {
+                sh '''
+                printf '%s\n' \
+                'FROM node:18' \
+                'WORKDIR /app' \
+                'COPY . .' \
+                'RUN npm install' \
+                'CMD ["npm", "test"]' > Dockerfile
+
+                cat Dockerfile
+                docker build -t my-app .
+                '''
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'docker run --rm my-app'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh '''
+                docker rm -f my-app-deploy || true
+                docker run -d --name my-app-deploy my-app tail -f /dev/null
+                docker ps
+                '''
+            }
+        }
+
+        stage('Publish') {
+            steps {
+                sh '''
+                docker save my-app > my-app.tar
+                ls -lh my-app.tar
+                '''
+            }
+        }
+    }
+}

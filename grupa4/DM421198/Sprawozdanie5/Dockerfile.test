@@ -1,0 +1,5 @@
+
+FROM hiredis-build
+
+
+CMD ["./hiredis-test"]

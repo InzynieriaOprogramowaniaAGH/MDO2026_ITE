@@ -1,0 +1,10 @@
+FROM gcc:latest
+
+
+RUN apt-get update && apt-get install -y make git
+
+WORKDIR /build
+
+COPY . .
+
+RUN make

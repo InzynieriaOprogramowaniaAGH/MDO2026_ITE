@@ -1,0 +1,12 @@
+---
+- name: Sanity check
+  hosts: Endpoints
+
+  tasks:
+    - name: Check SSH
+      ping:
+
+    - name: Check Docker
+      shell: docker --version
+      register: docker_check
+      ignore_errors: true
