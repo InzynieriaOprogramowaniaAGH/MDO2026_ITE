@@ -47,9 +47,9 @@ az container create \
 ## 4. Weryfikacja i logi
 Po zakończeniu procesu wdrażania ("provisioningState": "Succeeded"), sprawdzono dostępność aplikacji pod wygenerowanym adresem. Aplikacja serwowała treść na porcie 3000. Dodatkowo sprawdzono logi kontenera, żeby upewnić się, że proces wystartował bez błędów.
 
-Status usługi:
-FQDN: `ds419547-app.polandcentral.azurecontainer.io`
+Status usługi i sposób dostępu do serwowanej usługi:
 Stan instancji: `Running`
+FQDN: `ds419547-app.polandcentral.azurecontainer.io`
 
 ![Działająca aplikacja w przeglądarce](screenshots/05-app-live.png)
 ![Logi startowe kontenera w chmurze](screenshots/06-app-logs.png)
@@ -58,6 +58,8 @@ Stan instancji: `Running`
 Ostatnim etapem było całkowite usunięcie grupy zasobów, żeby uniknąć naliczania kosztów po końcu ćwiczenia. Komenda `az group delete` usunęła jednocześnie kontener, adres IP i wszystkie powiązane metadane.
 
 ![Potwierdzenie usunięcia grupy zasobów](screenshots/07-cleanup.png)
+
+Po wykonaniu komendy sprawdzono, czy aby na pewno kontener się usunął. Rzeczywiście, usunięcie grupy było wystarczające.
 
 ## Wnioski
 Wdrażanie na Azure Container Instances jest znacznie szybsze niż konfiguracja pełnego klastra Kubernetes, ale wymaga zdefiniowania zasobów i uprawnień. Usługa ACI rzeczywiście upraszcza cykl życia aplikacji, pozwalając na szybkie uruchomienie kontenera bezpośrednio z Docker Hub bez zarządzania infrastrukturą serwerową.
