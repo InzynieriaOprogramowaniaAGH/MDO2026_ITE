@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-recreate
+spec:
+  strategy:
+    type: Recreate
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-recreate
+  template:
+    metadata:
+      labels:
+        app: nginx-recreate
+    spec:
+      containers:
+      - name: nginx
+        image: local/nginx-demo:v1
+        ports:
+        - containerPort: 80
