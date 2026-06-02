@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-canary
+spec:
+  replicas: 1          # początkowo mały ruch
+  selector:
+    matchLabels:
+      app: nginx
+      track: canary
+  template:
+    metadata:
+      labels:
+        app: nginx
+        track: canary
+        version: v2
+    spec:
+      containers:
+      - name: nginx
+        image: my-nginx:v2
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
