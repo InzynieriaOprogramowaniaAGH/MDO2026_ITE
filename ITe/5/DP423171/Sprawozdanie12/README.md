@@ -44,3 +44,7 @@ Zadanie zrealizowano graficznie w następujących krokach:
 co widać po logach, które zachowują się tak, jak jest to oczekiwane:
 
 ![](img/pacman-works.png)
+
+To samo, ale robiąc w CLI (nie przez panel):
+
+![](anim/cli-variant.gif)
