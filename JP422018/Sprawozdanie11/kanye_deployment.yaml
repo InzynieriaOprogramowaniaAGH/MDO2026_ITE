@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextjs-app
+  labels:
+    app: nextjs
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: nextjs
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: nextjs
+    spec:
+      containers:
+      - name: nextjs-container
+        image: jpadlo/kanye-counter:1.0.20
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000

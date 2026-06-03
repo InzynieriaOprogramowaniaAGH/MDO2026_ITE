@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextjs-recreate
+spec:
+  replicas: 4
+  strategy:
+    type: Recreate 
+  selector:
+    matchLabels:
+      app: nextjs
+      strategy: recreate
+  template:
+    metadata:
+      labels:
+        app: nextjs
+        strategy: recreate
+    spec:
+      containers:
+      - name: nextjs-container
+        image: jpadlo/kanye-counter:1.0.18
+        ports:
+        - containerPort: 3000

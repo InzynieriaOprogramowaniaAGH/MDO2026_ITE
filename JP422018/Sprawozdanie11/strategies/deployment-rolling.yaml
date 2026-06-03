@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextjs-rolling
+spec:
+  replicas: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 30%       # Tworzy do 3 nowych podów zanim usunie stare
+      maxUnavailable: 2   # Pozwala wyłączyć 2 pody w trakcie procesu
+  selector:
+    matchLabels:
+      app: nextjs
+      strategy: rolling
+  template:
+    metadata:
+      labels:
+        app: nextjs
+        strategy: rolling
+    spec:
+      containers:
+      - name: nextjs-container
+        image: jpadlo/kanye-counter:1.0.18
+        ports:
+        - containerPort: 3000
