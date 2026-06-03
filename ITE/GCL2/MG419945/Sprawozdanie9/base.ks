@@ -27,5 +27,6 @@ timezone Europe/Warsaw --utc
 @^server-product-environment
 dnf-plugins-core
 curl
+ca-certificates
 
 %end
