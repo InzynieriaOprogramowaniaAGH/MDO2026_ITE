@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-lab10-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-lab10-multipod
+  template:
+    metadata:
+      labels:
+        app: app-lab10-multipod
+    spec:
+      containers:
+      - name: nginx-container
+        image: app-lab10:v1
+        ports:
+        - containerPort: 80
