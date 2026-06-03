@@ -12,7 +12,7 @@ sudo apt install apache2 -y
 systemctl status apache2
 ```
 
-![apache2](</img/Screenshot 2026-05-28 at 15.57.49.png>)
+![apache2](<./img/Screenshot 2026-05-28 at 15.57.49.png>)
 
 ## Przygotowanie źródła instalacyjnego
 
@@ -86,7 +86,7 @@ echo "POST SCRIPT FINISHED" > /root/post-done.txt
 
 Sprawdzenie poprawności za pomocą polecenia `curl http://localhost/kickstart/ks.cfg`
 
-![ks](</img/Screenshot 2026-05-28 at 16.08.32.png>)
+![ks](<./img/Screenshot 2026-05-28 at 16.08.32.png>)
 
 ## Instalacja systemu operacyjnego na maszynie wirtualnej z wykorzystaniem przygotowanego źródła instalacyjnego
 
@@ -98,7 +98,7 @@ Tworzymy nową maszynę wirtualną z systemem Fedora 44, przeklikujemy wszystko.
 
 Po zobaczeniu menu startowego GRUB, naciskamy klawisz `e` w elu edycji. Odszukujemy linię, która zaczyna się od linux i na jej końcu po spacji dodajemy: `inst.ks=http://192.168.1.129/kickstart/ks.cfg`
 
-![grub](</img/Screenshot 2026-05-28 at 16.37.18.png>)
+![grub](<./img/Screenshot 2026-05-28 at 16.37.18.png>)
 
 ### Sprawdzenie poprawności instalacji
 
@@ -108,7 +108,7 @@ Po zobaczeniu menu startowego GRUB, naciskamy klawisz `e` w elu edycji. Odszukuj
 hostname
 ```
 
-![hostname](</img/Screenshot 2026-05-28 at 17.17.31.png>)
+![hostname](<./img/Screenshot 2026-05-28 at 17.17.31.png>)
 
 ---
 
@@ -118,7 +118,7 @@ hostname
 docker ps
 ```
 
-![docker](</img/Screenshot 2026-05-28 at 17.17.59.png>)
+![docker](<./img/Screenshot 2026-05-28 at 17.17.59.png>)
 
 ---
 
@@ -128,7 +128,7 @@ docker ps
 systemctl status nginx-container
 ```
 
-![nginx](</img/Screenshot 2026-05-28 at 17.18.31.png>)
+![nginx](<./img/Screenshot 2026-05-28 at 17.18.31.png>)
 
 ## Wnioski
 
