@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: moja-aplikacja-deployment
-  labels:
-    app: moja-aplikacja
+  name: moja-aplikacja-canary
 spec:
-  replicas: 4
+  replicas: 1 # Tylko 1 replika kanarkowa
   selector:
     matchLabels:
       app: moja-aplikacja
+      track: canary # Dodatkowa etykieta
   template:
     metadata:
       labels:
         app: moja-aplikacja
+        track: canary
     spec:
       containers:
-      - name: nginx-app
-        image: al5ksandra/moja-aplikacja:error
+      - name: app
+        image: al5ksandra/moja-aplikacja:v2
         imagePullPolicy: Always
         ports:
         - containerPort: 80

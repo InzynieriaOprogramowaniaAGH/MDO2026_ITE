@@ -1,11 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: moja-aplikacja-deployment
-  labels:
-    app: moja-aplikacja
+  name: moja-aplikacja-recreate
 spec:
   replicas: 4
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: moja-aplikacja
@@ -15,8 +15,8 @@ spec:
         app: moja-aplikacja
     spec:
       containers:
-      - name: nginx-app
-        image: al5ksandra/moja-aplikacja:error
+      - name: app
+        image: al5ksandra/moja-aplikacja:v2
         imagePullPolicy: Always
         ports:
         - containerPort: 80
