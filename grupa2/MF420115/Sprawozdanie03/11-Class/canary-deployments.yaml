@@ -1,0 +1,45 @@
+# 1. WERSJA PRODUKCYJNAa 3 Repliki, obraz v1
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mdo-canary-stable
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mdo-canary-workload
+      version: stable
+  template:
+    metadata:
+      labels:
+        app: mdo-canary-workload
+        version: stable
+    spec:
+      containers:
+      - name: web-container
+        image: lemonx26/mdo-app:v1
+        ports:
+        - containerPort: 80
+---
+# 2. WERSJA TESTOWA 1 Replika (25% ruchu), obraz v2
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mdo-canary-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mdo-canary-workload
+      version: canary
+  template:
+    metadata:
+      labels:
+        app: mdo-canary-workload
+        version: canary
+    spec:
+      containers:
+      - name: web-container
+        image: lemonx26/mdo-app:v2
+        ports:
+        - containerPort: 80
