@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moja-apka-canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moja-apka
+      version: canary
+  template:
+    metadata:
+      labels:
+        app: moja-apka
+        version: canary
+    spec:
+      containers:
+      - name: moja-apka
+        image: moja-apka:v2
