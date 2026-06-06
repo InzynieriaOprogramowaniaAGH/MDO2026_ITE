@@ -101,7 +101,7 @@ fi
 
 ![](3-kontrola.png)
 
-## Stragegie wdrożeń
+## Strategie wdrożeń
 
 ### Recreate
 
