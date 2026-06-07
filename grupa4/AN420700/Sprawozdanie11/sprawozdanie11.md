@@ -34,9 +34,9 @@ polecenia `kubectl` były wykonywane przez Minikube.
 
 Na potrzeby ćwiczenia przygotowano prostą aplikację HTTP opartą o obraz `httpd:2.4`. Utworzono trzy wersje obrazu:
 
-- `lab11-app:v1` — wersja stabilna,
-- `lab11-app:v2` — wersja zaktualizowana,
-- `lab11-app:broken` — wersja celowo wadliwa, która kończy działanie błędem.
+- `lab11-app:v1` - wersja stabilna,
+- `lab11-app:v2` - wersja zaktualizowana,
+- `lab11-app:broken` - wersja celowo wadliwa, która kończy działanie błędem.
 
 Obrazy zostały zbudowane lokalnie w Minikube przy użyciu polecenia:
 
@@ -670,9 +670,9 @@ Wariant Canary Deployment zrealizowano przez dwa osobne Deploymenty oraz jeden w
 
 Utworzono:
 
-- `lab11-canary-stable` — wersja stabilna `v1`, 3 repliki,
-- `lab11-canary-new` — wersja canary `v2`, 1 replika,
-- `lab11-canary-service` — Service kierujący ruch do obu deploymentów.
+- `lab11-canary-stable` - wersja stabilna `v1`, 3 repliki,
+- `lab11-canary-new` - wersja canary `v2`, 1 replika,
+- `lab11-canary-service` - Service kierujący ruch do obu deploymentów.
 
 Oba deploymenty miały wspólną etykietę:
 
