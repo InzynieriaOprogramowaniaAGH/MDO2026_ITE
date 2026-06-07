@@ -1,4 +1,4 @@
-# Sprawozdanie 12 - 
+# Sprawozdanie 12 - Wdrażanie na zarządzalne kontenery w chmurze (Azure)
 
 **Data zajęć:** 02.06.2026 r.
 
