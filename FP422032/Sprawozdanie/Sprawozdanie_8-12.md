@@ -203,3 +203,50 @@ az container create \
   --cpu 0.5 \
   --memory 0.5 \
   --command-line "node server.js"
+  ```
+
+Powyższa operacja zakończyła się sukcesem.
+
+![Potwierdzenie działającego kontenera w CLI](images/DzialajacyKontenerNaAzur.png)
+![Szczegóły działającego zasobu w formacie JSON](images/DzialajacyKontenerNaAzur2.png)
+
+---
+
+### 3. Weryfikacja dostępności usługi
+Aplikacji przypisano publiczny adres IP na wyznaczonym porcie `3000`. Nawiązanie przeze mnie połączenia z poziomu przeglądarki internetowej potwierdziło, że skonteneryzowany kalkulator działa poprawnie.
+
+![Działający kalkulator w przeglądarce](images/KalkulatorNaAzur.png)
+
+Dla administracyjnego potwierdzenia stabilności środowiska uruchomieniowego, wyciągnąłem logi z poziomu serwera Node.js działającego wewnątrz kontenera.
+
+![Logi serwera z wnętrza kontenera](images/LogiKonteneraNaAzur.png)
+
+---
+
+### 4. Zarządzanie stanem kontenera
+W ramach testowania elastyczności chmury, przeprowadziłem pomyślną operację wstrzymania działania usługi. Po wpisaniu polecenia zatrzymania, status kontenera odpowiednio się zaktualizował.
+
+![Zatrzymanie działania kontenera](images/ZatrzymanieKontenera.png)
+
+---
+
+### 5. Zniszczenie infrastruktury (Sprzątanie)
+Zgodnie z dobrymi praktykami zarządzania chmurą, w ostatnim kroku całkowicie usunąłem grupę zasobów. Operacja ta trwale zniszczyła kontener oraz adres IP, co zapobiegło ewentualnemu naliczaniu nieprzewidzianych opłat na koncie mojej subskrypcji.
+
+![Proces usuwania grupy zasobów w tle](images/UsuniecieResourceGroup.png)
+
+---
+
+## Informacja o użyciu AI (Laboratoria 8-12)
+
+1. **Błąd komunikacji Ansible z Dockerem (`http+docker`)**
+   * **Zapytanie**: "Dlaczego przy próbie pobrania obrazu z Docker Huba przez moduł `community.docker` otrzymuję błąd `Not supported URL scheme http+docker` na nowej maszynie?"
+   * **Weryfikacja**: AI wyjaśniło, że jest to znany konflikt bibliotek Pythona na systemie Ubuntu. Zaproponowało stworzenie obejścia przy użyciu modułu `shell` (komendy systemowe) z zachowaniem zasad idempotentności (dodanie warunków `changed_when`). Po wdrożeniu tego rozwiązania pobieranie i uruchamianie obrazu przebiegło bezbłędnie.
+
+2. **Ominięcie braku dostępu do kodu źródłowego przy tworzeniu wersji v2**
+   * **Zapytanie**: "Jak mogę stworzyć nową, zmodyfikowaną wersję obrazu z aplikacją (v2), jeśli nie mam dostępu do oryginalnego repozytorium na GitHubie, żeby edytować kod i przepuścić go przez pipeline?"
+   * **Weryfikacja**: AI zaproponowało utworzenie krótkiego pliku `Dockerfile`, który jako bazę bierze stary obraz kalkulatora i używa wewnątrz niego komendy `sed`. Wyjaśniło, że `sed` pozwala przeszukać pliki HTML i w locie podmienić dany ciąg znaków na "v2". Po zapoznaniu się z tym poleceniem, zbudowałem z niego obraz. Rozwiązanie zadziałało poprawnie, pozwalając na stworzenie drugiej, zauważalnie innej wersji aplikacji z całkowitym pominięciem repozytorium.
+
+3. **Automatyzacja wyszukiwania dostępnego regionu Azure**
+   * **Zapytanie**: "Jak skutecznie pozbyć się błędu `RequestDisallowedByAzure` i znaleźć region, który nie jest zablokowany dla konta studenckiego, bez konieczności ręcznego zgadywania?"
+   * **Weryfikacja**: AI podpowiedziało napisanie prostego skryptu w powłoce Bash, który zautomatyzował ten proces. Zamiast ręcznego sprawdzania, skrypt wykorzystał pętlę `for` do iteracji po tablicy potencjalnych regionów (np. `polandcentral`, `swedencentral`, `northeurope`), w każdym z nich próbując utworzyć grupę zasobów i wdrożyć kontener. Po przeanalizowaniu działania kodu, uruchomiłem skrypt w Cloud Shell. Algorytm pomyślnie zidentyfikował pierwszy wolny region (`polandcentral`).
