@@ -50,7 +50,7 @@ Zwykły Docker świetnie sprawdza się lokalnie na komputerze programisty, ale u
 Ostatnim etapem ewolucji jest wyjście poza fizyczne serwerownie i własne maszyny wirtualne (jak np. Minikube w VirtualBoxie).
 
 ### Kontenery jako usługa (Azure)
-**[Wiedza z Laboratorium 12]**
+**[LAB12]**
 
 * **Jaki problem to rozwiązuje?** Utrzymanie i zabezpieczanie własnych, fizycznych serwerów oraz klastrów Kubernetes jest niewyobrażalnie drogie i wymaga dedykowanego zespołu administratorów 24/7.
 * **Do czego się to stosuje?** Technologie Serverless, takie jak Azure Container Instances (ACI), zwalniają nas z myślenia o sprzęcie. Programistę interesuje tylko wypchnięcie gotowego obrazu na Docker Hub. W chmurze wskazujemy tylko ten obraz, prosimy np. o 1 GB RAM-u i ułamek mocy procesora. Chmura sama dba o to, gdzie i jak to uruchomić, wystawiając usługę od razu pod publicznym adresem (FQDN). Płacimy tu ułamki groszy wyłącznie za sekundy rzeczywistej pracy aplikacji.
