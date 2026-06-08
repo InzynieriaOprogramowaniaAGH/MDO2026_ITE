@@ -1,0 +1,11 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('docker pull') {
+            steps {
+                sh 'docker pull ubuntu:24.04'
+            }
+        }
+    }
+}
