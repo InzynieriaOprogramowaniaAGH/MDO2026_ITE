@@ -1,4 +1,5 @@
 # SPRAWOZDANIE ZBIORCZE 8-12
+
 ### Kinga Pytel
  
 ## Srodowisko uruchomieniowe
