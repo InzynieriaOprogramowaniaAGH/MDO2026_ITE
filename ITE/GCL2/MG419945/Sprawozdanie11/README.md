@@ -43,27 +43,42 @@ Uwaga: widoczna podczas niektórych screenach wersja "v4" jest *taka sama* jak "
 ## 3. Zmiany w deploymencie
 Plik yaml z wdrożeniem z ostatnich labów modyfikowałem jak instrukcja wskazuje.
 ### 1. 8 replik
+
 ![](screeny/kube_8.png)
 ### 2. repliki do 1
+
 ![](screeny/reduce_1.png)
+
 ### 3. repliki do 0
+
 ![](screeny/reduce_0.png)
 ### 4. repliki w górę do 4
+
 ![](screeny/increase_4.png)
+
 ### 5. update do nowej wersji
+
 ![](screeny/update_new.png)
+
 ### 6. update do starej i (wadliwie) wadliwej
+
 ![](screeny/old_and_faulty.png)
+
 ### 7. faktyczny wadliwy obraz ("v4")
+
 ![](screeny/deployment_fail.png)
+
 Jedna poprawna replika zniknęła; zostały 3 stare i 2 nowe wadliwe.
 ### 8. Przywracane przez `rollout history`, `rollout undo`
+9. 
 ![](screeny/undo_to_v3.png)
 
 ## 4. Kontrola wdrożenia
 ### 1. Historia wdrożenia, problemy
 Odnosząc się do fragmentu ostatniego zrzutu ekranu:
+
 ![](screeny/rollout_history.png)
+
 Widać co prawda numery `Revision`, które pokazują (akurat z uwagi na wadliwy "wadliwy kontener" wcześniej) cztery oddzielne wersje, aczkolwiek nie jestem w stanie z tego więcej odczytać w zakresie problemów.
 ### 2. Skrypt weryfikujący
 verify.sh
@@ -78,6 +93,7 @@ else
     exit 1
 fi
 ```
+
 ![](screeny/verify_script.png)
 
 ## 5. Strategie wdrożenia
@@ -108,6 +124,7 @@ spec:
         - containerPort: 80
 ```
 Po uruchomieniu i update:
+
 ![](screeny/strategy_recreate.png)
 
 Niszczone są wszystkie repliki wersji v1, po czym są tworzone repliki wersji v2.
@@ -115,7 +132,7 @@ Jest pewien downtime, ale jest pewność że wszystkie repliki są na najnowszej
 
 ### 2. Rolling Update:
 
-depl.rolling.yaml
+depl-rolling.yaml
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -144,6 +161,7 @@ spec:
 ```
 
 Po uruchomieniu i update:
+
 ![](screeny/strategy_rollingupdate.png)
 
 Niszczone są 2 repliki v1, tworzone są 2 repliki v2, po czym czynność się powtarza aż do momentu gdy 100% replik jest wersji v2.
@@ -218,8 +236,12 @@ spec:
       nodePort: 30002
 ```
 
-Po uruchomieniu:
+Po uruchomieniu obu deploymentów + serwisu:
+
 ![](screeny/canary_services.png)
+
 Trzy repliki stabilne, jedna replika kanarka.
+
 ![](screeny/canary_curl.png)
+
 Odpowiedzi dostaje zarówno od kanarka v2 (ok. 1/4 odpowiedzi), jak i stabilnych replik v1 (3/4 odpowiedzi)
