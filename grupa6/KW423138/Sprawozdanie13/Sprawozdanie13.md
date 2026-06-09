@@ -61,4 +61,4 @@ jobs:
 ![7](obrazyLab13/5.png)
 ![8](obrazyLab13/8.png)
 
-*Utworzony artefakt znajduje się w folderze `Sprawozdanie13` *
+**Utworzony artefakt znajduje się w folderze `Sprawozdanie13`**
