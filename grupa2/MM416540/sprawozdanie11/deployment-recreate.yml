@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-recreate
+  labels:
+    app: express-recreate
+    version: "5.2.1"
+spec:
+  replicas: 4
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: express-recreate
+  template:
+    metadata:
+      labels:
+        app: express-recreate
+        version: "5.2.1"
+    spec:
+      containers:
+      - name: express-app
+        image: express-prod:5.2.1
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3000

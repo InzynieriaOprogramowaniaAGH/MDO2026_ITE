@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-stable
+  labels:
+    app: express-app
+    track: stable
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: express-app
+      track: stable
+  template:
+    metadata:
+      labels:
+        app: express-app
+        track: stable
+        version: "5.2.1"
+    spec:
+      containers:
+      - name: express-app
+        image: express-prod:5.2.1
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3000
