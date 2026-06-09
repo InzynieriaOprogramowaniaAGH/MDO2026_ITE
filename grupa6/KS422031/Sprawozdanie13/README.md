@@ -58,4 +58,8 @@ Następnie wykonano dodatkową zmianę w repozytorium, aby sprawdzić, czy trigg
 
 ![Drugie wykonanie workflow po zmianie w ino\_dev](ss/workflow_2.png)
 
+---
 
+# 4. Wnioski
+
+Wykonane ćwiczenie pokazało, że GitHub Actions pozwala szybko dodać prosty proces CI do repozytorium. Workflow uruchamiał się automatycznie po zmianach w gałęzi ino_dev, co potwierdziło poprawne działanie triggera. Pipeline przygotowywał środowisko Node.js, instalował zależności, uruchamiał testy i zapisywał artefakt. Oba uruchomienia zakończyły się sukcesem, więc konfiguracja została wykonana poprawnie.
