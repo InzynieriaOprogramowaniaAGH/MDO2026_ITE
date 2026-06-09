@@ -129,7 +129,7 @@ Akcja uploaduje zbudowaną binarkę jako artefakt `portfinder-binary-6` o rozmia
 - [x] Zbudowany artefakt załączony za pomocą dedykowanej akcji `actions/upload-artifact`
 - [x] Artefakt dostępny do pobrania z poziomu historii buildu
 
-## 9. Weryfikacja triggera - brak reakcji na push do `main`
+## 9. Weryfikacja triggera
  
 Zweryfikowano, że akcja nie uruchamia się przy commicie do gałęzi `main`. Wypchnięto zmianę do `main` - w zakładce Actions widoczne pozostają wyłącznie runy z gałęzi `ino_dev`, brak nowego uruchomienia:
  
@@ -141,7 +141,7 @@ git commit -m "Test: should not trigger workflow"
 git push origin main
 ```
  
-![13](<img/Zrzut ekranu 2026-06-08 234723.png>)
+![13](<img/Zrzut ekranu 2026-06-09 082133.png>)
  
 Historia pokazuje workflow runy - wszystkie na gałęzi `ino_dev`. Push do `main` nie wywołał żadnej akcji, co potwierdza poprawność konfiguracji triggera.
  
