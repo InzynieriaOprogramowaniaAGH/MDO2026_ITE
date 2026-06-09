@@ -351,13 +351,9 @@ Zapobiega to wyciękowi haseł między maszynami i ułatwia skalowanie.
 ### Decyzja 2: Przechowywanie obrazów Docker lokalnie (virtiofs)
 
 Zamiast publikowania obrazów w rejestrze chmurowym, przechowywane są lokalnie
-poprzez virtiofs. Wymaga mniej infrastruktury i zachowuje prywatność danych.
-
-### Decyzja 3: Azure Container Instances zamiast AKS
-
-ACI jest prostsze do wdrażania dla pojedynczych kontenerów, natomiast AKS
-(Azure Kubernetes Service) byłby bardziej odpowiedni dla wielokontenerowych
-aplikacji produkcyjnych.
+poprzez virtiofs (jako punkt montowania / volumin – analogicznie do woluminów
+/ punktów montowania Docker'a). Wymaga mniej infrastruktury i zachowuje
+prywatność danych (nie ma potrzeby publikacji obrazów na zewnętrzne serwery).
 
 ## Wnioski końcowe
 
@@ -387,8 +383,8 @@ aplikacji produkcyjnych.
    - Na poziomie aplikacji (private registries, poświadczenia).
 
 7. **Prywatne rejestry i lokalne przechowywanie obrazów są praktyczne dla
-   laboratoriów i małych wdrażań**, ale w produkcji należy zastosować
-   publiczne rejestry z replikacją geograficzną i SLA.
+   laboratoriów i małych wdrażań**, w środowiskach *enterprise* często też
+   stosuje się *rejesty lokalne* lub samodzielnie hostowane rejesty prywatne.
 
 ---
 
