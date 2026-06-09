@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moja-aplikacja-recreate
+  labels:
+    app: moja-aplikacja
+    strategy: recreate
+spec:
+  replicas: 4
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: moja-aplikacja-recreate
+  template:
+    metadata:
+      labels:
+        app: moja-aplikacja-recreate
+    spec:
+      containers:
+      - name: nginx-container
+        image: app:v2
+        ports:
+        - containerPort: 80
+
