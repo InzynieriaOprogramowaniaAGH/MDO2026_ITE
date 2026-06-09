@@ -129,5 +129,5 @@ Warto zauważyć, że wymogiem ćwiczeń nie było publikacji forku: dodatkowo t
 pewne aspekty i wymagało nadania odpowiednich uprawnień dla odczytu prywatnych repozytorów
 (co widać w załączonym kodzie *inline* dla workflow'u).
 
-[ex12]: ../../../../READMEs/12-Class.md
-[`zed-industries/zed`]: /zed-industries/zed "Innowacyjny edytor kodu od twórców Atoma i tree-sitter'a napisany w Rust"
+[ex13]: ../../../../READMEs/13-Class.md
+[`zed-industries/zed`]: https://github.com/zed-industries/zed "Innowacyjny edytor kodu od twórców Atoma i tree-sitter'a napisany w Rust"
