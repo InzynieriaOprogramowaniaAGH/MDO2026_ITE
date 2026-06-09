@@ -1,0 +1,253 @@
+    1  ls
+    2  minikube
+    3  minikube start
+    4  minikube config set driver docker
+    5  minikube delete
+    6  minikube start
+    7  sudo minikube start
+    8  exit
+    9  sudo minikube start
+   10  groups
+   11  sudo minikube start
+   12  exit
+   13  curl localhost:2137
+   14  minikube dashboard &
+   15  minikube dashboard --url &
+   16  minikube kubectl -- proxy &
+   17  fg
+   18  exit
+   19  ls
+   20  ip a
+   21  ls
+   22  clear
+   23  ip a
+   24  ssh -L 12345:localhost:2137 vboxuser@192.168.1.51
+   25  ssh -L 2137:localhost:2137 vboxuser@192.168.1.51
+   26  man ssh
+   27  ssh -L 1984:localhost:2137 vboxuser@192.168.1.51
+   28  exit
+   29  ls
+   30  ping 10.244.0.9
+   31  exit
+   32  ls
+   33  cat ]
+   34  mkdir ver1
+   35  mkdir ver2
+   36  mkdir ver3
+   37  cd ver1
+   38  cd ..
+   39  ls
+   40  mv dockerfile dockerfile_old
+   41  vim dockerfile
+   42  ls
+   43  cp dockerfile ver{1..3}
+   44  cp dockerfile ver{1..3}/
+   45  cp dockerfile ver{1..3}/dockerfile
+   46  cp dockerfile ver{1..4}
+   47  cp dockerfile ver{1..3}
+   48  cp dockerfile -r ver{1..3}
+   49  ls
+   50  ls ver1
+   51  ls ver2
+   52  ls ver3
+   53  cd ver3
+   54  rm -r ver1
+   55  rm -r ver2
+   56  cd ..
+   57  cp dockerfile ./ver{1..3}
+   58  ls
+   59  ls ver1
+   60  ls ver3
+   61  cp dockerfile ver1
+   62  cp dockerfile ver2
+   63  ls
+   64  vim index.html
+   65  ls
+   66  cp index.html ver1
+   67  cp index.html ver2
+   68  cp index.html ver3
+   69  ls
+   70  cd ver1
+   71  cd ..
+   72  cd ver2
+   73  ls
+   74  vim index.html
+   75  ls
+   76  cd ../ver3
+   77  vim index.html
+   78  ls
+   79  clear
+   80  ls.
+   81  ls
+   82  cd ..
+   83  ls
+   84  cd ver1
+   85  docker build -t app:v1
+   86  docker build -t app:v1 .
+   87  cd ../ver2
+   88  docker build -t app:v2 .
+   89  cd ..
+   90  cd ver3
+   91  docker build -t app:v3 .
+   92  ls
+   93  cd ..
+   94  mkdir l11
+   95  mv ver1 l11
+   96  mv ver2 l11
+   97  mv ver3 l11
+   98  ls
+   99  cd l11
+  100  ls
+  101  vim deployment.yaml
+  102  ls
+  103  docker images
+  104  vim deployment.yaml
+  105  vim service.yaml
+  106  ls
+  107  minikube kubectl -- apply -f deployment.yaml
+  108  minikube start
+  109  minikube kubectl -- apply -f deployment.yaml
+  110  vim deployment.yaml
+  111  ls
+  112  docker images
+  113  minikube kubectl -- apply -f deployment.yaml
+  114  minikube kubectl -- apply -f service.yaml
+  115  minikube kubectl -- delete my-app-deployment
+  116  minikube kubectl -- delete deployment.apps/my-app-deployment
+  117  minikube kubectl -- delete service/my-app-service
+  118  minikube kubectl -- apply -f deployment.yaml
+  119  minikube kubectl -- apply -f service.yaml
+  120  minikube service app-service
+  121  minikube pods
+  122  minikube dashboard --url &
+  123  ls
+  124  history | grep proxy
+  125  history | grep proxy16 &
+  126  fg
+  127  minikube dashboard --url &
+  128  history | grep proxy
+  129  minikube kubectl -- proxy &
+  130  ls
+  131  ip a
+  132  docker images
+  133  minikube image load app:v1
+  134  minikube image load app:v2
+  135  minikube image load app:v3
+  136  minikube kubectl -- apply -f deployment.yaml
+  137  minikube kubectl -- get pods -w
+  138  minikube kubectl -- apply -f deployment.yaml
+  139  minikube kubectl -- get pods -w
+  140  minikube kubectl -- apply -f deployment.yaml
+  141  minikube kubectl -- rollout status deployment app-deployment
+  142  minikube kubectl -- set image deployment/app-deployment app-container=app:v2
+  143  minikube kubectl -- rollout status deployment app-deployment
+  144  minikube kubectl -- set image deployment/app-deployment app-container=app:v1
+  145  minikube kubectl -- rollout status deployment app-deployment
+  146  minikube kubectl -- set image deployment/app-deployment app-container=app:v3
+  147  minikube kubectl -- rollout status deployment app-deployment
+  148  ls
+  149  cd ver3
+  150  ls
+  151  vim dockerfile
+  152  docker build -t app:v3 .
+  153  cd ..
+  154  minikube kubectl -- set image deployment/app-deployment app-container=app:v3
+  155  minikube kubectl -- rollout status deployment app-deployment
+  156  minikube kubectl -- set image deployment/app-deployment app-container=app:v1
+  157  minikube kubectl -- rollout status deployment app-deployment
+  158  minikube kubectl -- set image deployment/app-deployment app-container=app:v3
+  159  minikube kubectl -- rollout status deployment app-deployment
+  160  history | grep docker
+  161  history | grep minikube
+  162  minikube image load app:v3
+  163  minikube kubectl -- set image deployment/app-deployment app-container=app:v3
+  164  minikube kubectl -- rollout status deployment app-deployment
+  165  minikube kubectl -- set image deployment/app-deployment app-container=app:v1
+  166  minikube kubectl -- rollout status deployment app-deployment
+  167  minikube kubectl -- set image deployment/app-deployment app-container=app:v3
+  168  minikube kubectl -- rollout status deployment app-deployment
+  169  minikube image load app:v3
+  170  ls
+  171  cd ver3
+  172  docker build -t app:v3
+  173  docker build -t app:v3 .
+  174  cd ..
+  175  minikube image load app:v3
+  176  minikube kubectl -- set image deployment/app-deployment app-container=app:v3
+  177  minikube kubectl -- rollout status deployment app-deployment
+  178  minikube kubectl -- set image deployment/app-deployment app-container=app:v1
+  179  minikube kubectl -- set image deployment/app-deployment app-container=app:v3
+  180  cd ver3
+  181  docker build -t app:v3 .
+  182  minikube image load app:v3
+  183  minikube kubectl -- set image deployment/app-deployment app-container=app:v1
+  184  minikube kubectl -- set image deployment/app-deployment app-container=app:v3
+  185  docker build -t app:v4 .
+  186  docker start app:v3
+  187  docker run app:v3
+  188  docker build -t app:v4 .
+  189  minikube image load  app:v4
+  190  ls
+  191  cd ..
+  192  ls
+  193  minikube kubectl -- set image deployment/app-deployment app-container=app:v4
+  194  minikube kubectl -- rollout history
+  195  minikube kubectl -- rollout history app-deployment
+  196  minikube kubectl -- rollout history app
+  197  minikube kubectl -- rollout history
+  198  minikube kubectl -- rollout history deployment app-deployment
+  199  minikube kubectl -- rollout undo deployment app-deployment
+  200  bg
+  201  fg
+  202  minikube kubectl -- proxy
+  203  minikube kubectl -- proxy &
+  204  ip a
+  205  ls
+  206  fg
+  207  minikube dashboard --url &
+  208  minikube kubectl -- proxy &
+  209  ip a
+  210  minikube kubectl -- rollout history deployment app-deployment
+  211  minikube kubectl -- rollout undo deployment app-deployment
+  212  ls
+  213  minikube kubectl -- rollout undo deployment app-deployment
+  214  ls
+  215  minikube kubectl -- rolloout history deployment app-deployment
+  216  minikube kubectl -- rollout history deployment app-deployment
+  217  minikube kubectl -- describe deployment app-deployment
+  218  pwd
+  219  ls
+  220  chmod +x ./verify.sh
+  221  ls
+  222  ./verify.sh
+  223  minikube kubectl -- rollout undo deployment app-deployment
+  224  ./ver
+  225  ./verify.sh
+  226  minikube kubectl -- delete deployment app-deployment
+  227  minikube kubectl -- apply -f depl-recreate.yaml
+  228  history > history.txt
+  229  minikube kubectl -- set image deployment app-deployment app-container=app:v2 && minikubectl kubectl -- get pods -w
+  230  minikube kubectl -- set image deployment app-recreate app-container=app:v2 && minikubectl kubectl -- get pods -w
+  231  minikube kubectl -- set image deployment app-recreate app-container=app:v3 && minikube kubectl -- get pods -w
+  232  minikube kubectl -- delete deployment app-recreate
+  233  minikube kubectl -- apply -f depl-rolling.yaml
+  234  minikube kubectl -- set image deployment app-rolling app-container=app:v2 && minikube kubectl -- get pods -w
+  235  minikube kubectl -- delete deployment app-rolling
+  236  minikube kubectl -- delete service app-service
+  237  minikube kubectl -- apply -f depl-stable.yaml
+  238  minikube kubectl -- apply -f depl-canary.yaml
+  239  minikube kubectl -- apply -f service-canary.yaml
+  240  minikube kubectl -- get pods -l app=app-canary-test
+  241  minikube kubectl -- apply -f depl-stable.yaml
+  242  minikube kubectl -- get pods -l app=app-canary-test
+  243  minikube kubectl -- service app-canary-service
+  244  minikube service app-canary-service
+  245  minikube kubectl -- delete service app-service
+  246  minikube kubectl -- apply -f service-canary.yaml
+  247  minikube service app-canary-service
+  248  minikube kubectl -- apply -f service-canary.yaml
+  249  minikube service app-canary-service
+  250  minikube service app-canary-service --url
+  251  curl 192.168.49.2:30002
+  252  minikube kubectl -- get pods -l app=app-canary-test
+  253  history > history.txt
