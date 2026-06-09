@@ -11,6 +11,11 @@ GitHub Actions jako środowisko CI/CD
 Przebieg ćwiczenia
 ------------------
 
+Przed wykonaniem ćwiczenia sprawdzono API GitHub Actions i cennik, choć
+dla mojego konta nie było to tak dużym ograniczeniem (studenci mogą liczyć
+na ograniczoną specjalnie dla studentów wersję GitHub Pro, co znacząco
+urozmaica możliwości GitHub Action).
+
 ### 1. Fork [`zed-industries/zed`] i usunięcie `.github`.
 
 …w tym usunięte jest też `workflows`, ale mój fork też nie potrzebował
@@ -91,6 +96,22 @@ Końcowo `check.yml` sprawdzające `cargo check` dla repozytorium [`zed-industri
 przebiegło pozytywnie:
 
 ![](img/cargo-check-success.png)
+
+Warto zaznaczyć, że puste logi (rozmiar artefaktu uwzględnia metadane ZIP)
+świadczą o braku zwróconego wyjścia przez polecenie `cargo check` oczekując,
+że dla problemów `cargo check` zwróci stan wyjścia różny od `0` oraz informację
+dla `stdout`. W `stderr` (logi workflow, nie artefakt) zawarte są wykonane
+akcje, każda bez żadnych ostrzeżeń czy informacji wskazujących na błędy
+w repozytorium.
+
+Logi załączono, jako że niemożliwym było na tym etapie załączenie zbudowanej
+aplikacji (odnosząc się do instrukcji):
+
+> Jeżeli to możliwe, załącz (…)
+
+…tak więc zdecydowano, że dla Code Quality check sensownym będzie załączenie
+pewnej formy logów jako artefaktów, jako że to nie jest nawet etap testów,
+a zwrócenie stanu przez kompilator / *language server*.
 
 ## Wnioski i uwagi końcowe
 
