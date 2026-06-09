@@ -97,9 +97,7 @@ Po wypchnięciu pliku workflow GitHub Actions automatycznie uruchomił pierwszą
 
 ## 6. Iteracyjna naprawa workflow i finalne uruchomienie
  
-Pierwsze uruchomienia zakończyły się niepowodzeniem z powodu błędu w komendzie budowania. Po poprawieniu komendy `go build` wypchnięto kolejny commit:
- 
-![13](<img/Zrzut ekranu 2026-06-09 082054.png>)
+Pierwsze uruchomienia zakończyły się niepowodzeniem z powodu błędu w komendzie budowania. Po poprawieniu komendy `go build` wypchnięto kolejny commit.
  
 Run #6 pod nazwą `Add GitHub Actions CI workflow for ino_dev` uruchomił się automatycznie po commicie do `ino_dev`:
  
@@ -108,6 +106,7 @@ Run #6 pod nazwą `Add GitHub Actions CI workflow for ino_dev` uruchomił się a
 Run #6 zakończył się statusem **Success** w 26 sekund. Widoczny 1 artefakt:
  
 ![13](<img/Zrzut ekranu 2026-06-09 082133.png>)
+![13](<img/Zrzut ekranu 2026-06-09 082054.png>)
  
 - [x] Program buduje się poprawnie wewnątrz akcji po zacommitowaniu zmiany do gałęzi
 
