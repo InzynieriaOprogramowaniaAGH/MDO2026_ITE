@@ -1,0 +1,33 @@
+name: Compiler insights
+on:
+  push:
+    branches:
+      - ino_dev
+      - master
+env:
+  CARGO_TERM_COLOR: always
+permissions:
+    contents: read
+jobs:
+  build:
+    runs-on: windows-11-arm
+    steps:
+    - name: Set Git identity
+      run: |
+        git config --global user.name  "github-actions[bot]"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+    - name: Checkout
+      uses: actions/checkout@v6
+    - name: Enable long paths
+      run: |
+        git config --system core.longpaths true
+        New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled" -Value 1 -PropertyType DWORD -Force
+    - name: Check
+      run: cargo check > cargo-check.log
+    - name: Upload a check logs
+      if: always()
+      uses: actions/upload-artifact@v7.0.1
+      with:
+        name: cargo-check.log
+        path: cargo-check.log
+        compression-level: 9

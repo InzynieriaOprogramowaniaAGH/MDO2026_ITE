@@ -1,4 +1,4 @@
-Sprawozdanie 11
+Sprawozdanie 12
 ===============
 
 Sprawozdanie dla [ćwiczenia dwunastego][ex12].
