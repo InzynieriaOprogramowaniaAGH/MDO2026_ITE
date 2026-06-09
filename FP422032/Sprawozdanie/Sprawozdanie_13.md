@@ -5,11 +5,11 @@
 ## 1. Sforkowanie repozytorium i przygotowanie środowiska
 Pracę nad laboratorium rozpocząłem od zapoznania się z koncepcją GitHub Actions oraz cennikiem (plan darmowy jest w pełni wystarczający dla publicznych repozytoriów oraz małych projektów). Następnie, zgodnie z wytycznymi, sforkowałem wybrane repozytorium `actionsdemos/calculator` na swoje prywatne konto, aby móc niezależnie pracować nad potokami CI/CD, bez modyfikowania głównego projektu.
 
-![Proces tworzenia forka repozytorium](SforkowanieRepo.png)
+![Proces tworzenia forka repozytorium](images/SforkowanieRepo.png)
 
 Kolejnym krokiem było pobranie sklonowanego repozytorium na dysk lokalny i utworzenie dedykowanej gałęzi o nazwie `ino_dev`.
 
-![Utworzenie i przełączenie na nową gałąź w terminalu](UtworzenieNowegoBrancha.png)
+![Utworzenie i przełączenie na nową gałąź w terminalu](images/UtworzenieNowegoBrancha.png)
 
 ## 2. Konfiguracja potoku CI (Workflow)
 Upewniwszy się, że w repozytorium nie ma żadnych starych plików konfiguracyjnych dla akcji, utworzyłem odpowiednią strukturę katalogów (`.github/workflows`) i przygotowałem własny plik definicji potoku `build.yml`.
@@ -57,6 +57,6 @@ Po zacommitowaniu i wypchnięciu plików na serwer (zdarzenie push), usługa Git
 
 Weryfikacja w interfejsie graficznym GitHub Actions potwierdziła, że wszystkie zdefiniowane kroki (od instalacji po testy) zakończyły się sukcesem. Ponieważ wybrany program (kalkulator w Node.js) buduje się bardzo szybko i ma mały rozmiar, nie przekroczył on darmowych limitów obciążenia. W związku z tym nie było konieczności modyfikowania akcji, jednak potok ten jest w pełni gotowy na ewentualne dodanie kroku np. sprawdzającego podatności w kodzie.
 
-![Pomyślnie wykonany potok GitHub Actions](UdanyTrigger.png)
+![Pomyślnie wykonany potok GitHub Actions](images/UdanyTrigger.png)
 
 Ostatnim etapem było potwierdzenie, że aplikacja została poprawnie spakowana. Zgodnie z instrukcją, użyłem dedykowanej wtyczki `actions/upload-artifact@v4`. Wygenerowany artefakt w postaci archiwum (`.tgz`) poprawnie załączył się do podsumowania Workflow i był dostępny do bezpośredniego pobrania.
