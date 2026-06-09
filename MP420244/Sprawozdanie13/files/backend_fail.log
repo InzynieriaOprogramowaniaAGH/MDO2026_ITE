@@ -1,0 +1,53 @@
+
+> proton@0.0.1 start:dev
+> nest start --watch
+
+[2J[3J[H[[90m11:18:17 AM[0m] Starting compilation in watch mode...
+
+[[90m11:18:20 AM[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 2244  - [39m06/09/2026, 11:18:21 AM [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 2244  - [39m06/09/2026, 11:18:21 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPrismaModule dependencies initialized[39m[38;5;3m +13ms[39m
+[32m[Nest] 2244  - [39m06/09/2026, 11:18:21 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPassportModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 2244  - [39m06/09/2026, 11:18:21 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 2244  - [39m06/09/2026, 11:18:21 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 2244  - [39m06/09/2026, 11:18:21 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUsersModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 2244  - [39m06/09/2026, 11:18:21 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAuthModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 2244  - [39m06/09/2026, 11:18:21 AM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPostsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 2244  - [39m06/09/2026, 11:18:21 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +12ms[39m
+[32m[Nest] 2244  - [39m06/09/2026, 11:18:21 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 2244  - [39m06/09/2026, 11:18:21 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mUsersController {/users}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 2244  - [39m06/09/2026, 11:18:21 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/test, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 2244  - [39m06/09/2026, 11:18:21 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPostsController {/posts}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 2244  - [39m06/09/2026, 11:18:21 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/posts/test, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 2244  - [39m06/09/2026, 11:18:21 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/posts, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 2244  - [39m06/09/2026, 11:18:21 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/posts, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 2244  - [39m06/09/2026, 11:18:21 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/posts/:id, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 2244  - [39m06/09/2026, 11:18:21 AM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAuthController {/auth}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 2244  - [39m06/09/2026, 11:18:21 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/register, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 2244  - [39m06/09/2026, 11:18:21 AM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/login, POST} route[39m[38;5;3m +0ms[39m
+/home/runner/work/Proton-blog/Proton-blog/backend/node_modules/@prisma/client/runtime/library.js:112
+You may have to run ${Ve("prisma generate")} for your changes to take effect.`,this.config.clientVersion);return t}}parseEngineResponse(t){if(!t)throw new B("Response from the Engine was empty",{clientVersion:this.config.clientVersion});try{return JSON.parse(t)}catch{throw new B("Unable to JSON.parse response from engine",{clientVersion:this.config.clientVersion})}}async loadEngine(){if(!this.engine){this.QueryEngineConstructor||(this.library=await this.libraryLoader.loadLibrary(this.config),this.QueryEngineConstructor=this.library.QueryEngine);try{let t=new WeakRef(this),{adapter:r}=this.config;r&&Ie("Using driver adapter: %O",r),this.engine=this.wrapEngine(new this.QueryEngineConstructor({datamodel:this.datamodel,env:process.env,logQueries:this.config.logQueries??!1,ignoreEnvVarErrors:!0,datasourceOverrides:this.datasourceOverrides??{},logLevel:this.logLevel,configDir:this.config.cwd,engineProtocol:"json",enableTracing:this.tracingHelper.isEnabled()},n=>{t.deref()?.logger(n)},r))}catch(t){let r=t,n=this.parseInitError(r.message);throw typeof n=="string"?r:new T(n.message,this.config.clientVersion,n.error_code)}}}logger(t){let r=this.parseEngineResponse(t);r&&(r.level=r?.level.toLowerCase()??"unknown",vm(r)?this.logEmitter.emit("query",{timestamp:new Date,query:r.query,params:r.params,duration:Number(r.duration_ms),target:r.module_path}):Tm(r)?this.loggerRustPanic=new ce(ho(this,`${r.message}: ${r.reason} in ${r.file}:${r.line}:${r.column}`),this.config.clientVersion):this.logEmitter.emit(r.level,{timestamp:new Date,message:r.message,target:r.module_path}))}parseInitError(t){try{return JSON.parse(t)}catch{}return t}parseRequestError(t){try{return JSON.parse(t)}catch{}return t}onBeforeExit(){throw new Error('"beforeExit" hook is not applicable to the library engine since Prisma 5.0.0, it is only relevant and implemented for the binary engine. Please add your event listener to the `process` object directly instead.')}async start(){if(await this.libraryInstantiationPromise,await this.libraryStoppingPromise,this.libraryStartingPromise)return Ie(`library already starting, this.libraryStarted: ${this.libraryStarted}`),this.libraryStartingPromise;if(this.libraryStarted)return;let t=async()=>{Ie("library starting");try{let r={traceparent:this.tracingHelper.getTraceParent()};await this.engine?.connect(JSON.stringify(r)),this.libraryStarted=!0,Ie("library started")}catch(r){let n=this.parseInitError(r.message);throw typeof n=="string"?r:new T(n.message,this.config.clientVersion,n.error_code)}finally{this.libraryStartingPromise=void 0}};return this.libraryStartingPromise=this.tracingHelper.runInChildSpan("connect",t),this.libraryStartingPromise}async stop(){if(await this.libraryStartingPromise,await this.executingQueryPromise,this.libraryStoppingPromise)return Ie("library is already stopping"),this.libraryStoppingPromise;if(!this.libraryStarted)return;let t=async()=>{await new Promise(n=>setTimeout(n,5)),Ie("library stopping");let r={traceparent:this.tracingHelper.getTraceParent()};await this.engine?.disconnect(JSON.stringify(r)),this.libraryStarted=!1,this.libraryStoppingPromise=void 0,Ie("library stopped")};return this.libraryStoppingPromise=this.tracingHelper.runInChildSpan("disconnect",t),this.libraryStoppingPromise}version(){return this.versionInfo=this.library?.version(),this.versionInfo?.version??"unknown"}debugPanic(t){return this.library?.debugPanic(t)}async request(t,{traceparent:r,interactiveTransaction:n}){Ie(`sending request, this.libraryStarted: ${this.libraryStarted}`);let i=JSON.stringify({traceparent:r}),o=JSON.stringify(t);try{await this.start(),this.executingQueryPromise=this.engine?.query(o,i,n?.id),this.lastQuery=o;let s=this.parseEngineResponse(await this.executingQueryPromise);if(s.errors)throw s.errors.length===1?this.buildQueryError(s.errors[0]):new B(JSON.stringify(s.errors),{clientVersion:this.config.clientVersion});if(this.loggerRustPanic)throw this.loggerRustPanic;return{data:s}}catch(s){if(s instanceof T)throw s;if(s.code==="GenericFailure"&&s.message?.startsWith("PANIC:"))throw new ce(ho(this,s.message),this.config.clientVersion);let a=this.parseRequestError(s.message);throw typeof a=="string"?s:new B(`${a.message}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+
+PrismaClientInitializationError: error: Environment variable not found: DATABASE_URL.
+  -->  schema.prisma:13
+   | 
+12 |   provider = "mysql"
+13 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+    at t (/home/runner/work/Proton-blog/Proton-blog/backend/node_modules/@prisma/client/runtime/library.js:112:2473)
+    at async Proxy.onModuleInit (/home/runner/work/Proton-blog/Proton-blog/backend/src/prisma/prisma.service.ts:12:5)
+    at async Promise.all (index 0)
+    at async callModuleInitHook (/home/runner/work/Proton-blog/Proton-blog/backend/node_modules/@nestjs/core/hooks/on-module-init.hook.js:43:5)
+    at async NestApplication.callInitHook (/home/runner/work/Proton-blog/Proton-blog/backend/node_modules/@nestjs/core/nest-application-context.js:252:13)
+    at async NestApplication.init (/home/runner/work/Proton-blog/Proton-blog/backend/node_modules/@nestjs/core/nest-application.js:103:9)
+    at async NestApplication.listen (/home/runner/work/Proton-blog/Proton-blog/backend/node_modules/@nestjs/core/nest-application.js:175:13)
+    at async bootstrap (/home/runner/work/Proton-blog/Proton-blog/backend/src/main.ts:9:3) {
+  clientVersion: '6.3.1',
+  errorCode: 'P1012'
+}
+
+Node.js v20.20.2

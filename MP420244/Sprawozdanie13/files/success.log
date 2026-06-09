@@ -1,0 +1,325 @@
+SET UP JOB
+
+Current runner version: '2.334.0'
+> Runner Image Provisioner
+> Operating System
+> Runner Image
+> GITHUB_TOKEN Permissions
+Secret source: Actions
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+Complete job name: verify
+
+INITIALIZE CONTAINERS
+
+> Checking docker version
+> Clean up resources from previous jobs
+> Create local container network
+> Starting mysql service container
+> Waiting for all services to be ready
+
+RUN ACTIONS/CHECKOUT@V4
+
+> Run actions/checkout@v4
+Syncing repository: TheSlowestLearner/Proton-blog
+> Getting Git version info
+Temporarily overriding HOME='/home/runner/work/_temp/a5b9eb9c-0d11-486b-861b-93dd93dca497' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+/usr/bin/git config --global --add safe.directory /home/runner/work/Proton-blog/Proton-blog
+Deleting the contents of '/home/runner/work/Proton-blog/Proton-blog'
+> Initializing the repository
+> Disabling automatic garbage collection
+> Setting up auth
+> Fetching the repository
+> Determining the checkout info
+/usr/bin/git sparse-checkout disable
+/usr/bin/git config --local --unset-all extensions.worktreeConfig
+> Checking out the ref
+/usr/bin/git log -1 --format=%H
+c15eaa77a9dee0ff098a9f9e85dbebd4923b00d0
+
+RUN ACTIONS/SETUP-NODE@V4
+
+> Run actions/setup-node@v4
+Attempting to download 20...
+Acquiring 20.20.2 - x64 from https://github.com/actions/node-versions/releases/download/20.20.2-23521894959/node-20.20.2-linux-x64.tar.gz
+Extracting ...
+/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/95c69cf5-dc8d-4be5-ae3f-ca27213c7b96 -f /home/runner/work/_temp/e6513627-3508-445c-b9c8-18ab577a9a7d
+Adding to the cache ...
+> Environment details
+
+INSTALL BACKEND DEPS
+
+> Run npm ci
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+
+added 754 packages, and audited 755 packages in 17s
+
+149 packages are looking for funding
+  run `npm fund` for details
+
+26 vulnerabilities (2 low, 12 moderate, 11 high, 1 critical)
+
+To address all issues, run:
+  npm audit fix
+
+Run `npm audit` for details.
+
+INSTALL FRONTEND DEPS
+
+> Run npm ci
+
+added 267 packages, and audited 268 packages in 10s
+
+65 packages are looking for funding
+  run `npm fund` for details
+
+14 vulnerabilities (4 moderate, 10 high)
+
+To address all issues, run:
+  npm audit fix
+
+Run `npm audit` for details.
+
+GENERATE PRISMA CLIENT
+
+> Run npx prisma generate
+Prisma schema loaded from prisma/schema.prisma
+
+✔ Generated Prisma Client (v6.3.1) to ./node_modules/@prisma/client in 68ms
+
+Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+
+Tip: Easily identify and fix slow SQL queries in your app. Optimize helps you enhance your visibility: https://pris.ly/--optimize
+
+RUN PRISMA MIGRATIONS
+
+> Run npx prisma migrate deploy
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": MySQL database "proton" at "127.0.0.1:3306"
+
+1 migration found in prisma/migrations
+
+Applying migration `20260519173713_init`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260519173713_init/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+┌─────────────────────────────────────────────────────────┐
+│  Update available 6.3.1 -> 7.8.0                        │
+│                                                         │
+│  This is a major update - please follow the guide at    │
+│  https://pris.ly/d/major-version-upgrade                │
+│                                                         │
+│  Run the following to update                            │
+│    npm i --save-dev prisma@latest                       │
+│    npm i @prisma/client@latest                          │
+└─────────────────────────────────────────────────────────┘
+
+START BACKEND
+
+> Run npm run start:dev > backend.log 2>&1 &
+
+WAIT FOR BACKEND
+
+> Run for i in {1..30}; do
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+curl: (7) Failed to connect to localhost port 3000 after 0 ms: Couldn't connect to server
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+curl: (7) Failed to connect to localhost port 3000 after 1 ms: Couldn't connect to server
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+curl: (7) Failed to connect to localhost port 3000 after 1 ms: Couldn't connect to server
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100    12  100    12    0     0   1548      0 --:--:-- --:--:-- --:--:--  1714
+Hello World!
+
+START FRONTEND
+
+> Run npm run dev > frontend.log 2>&1 &
+
+WAIT FOR FRONTEND
+
+> Run for i in {1..30}; do
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+curl: (7) Failed to connect to localhost port 5173 after 1 ms: Couldn't connect to server
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100   613  100   613    0     0  27361      0 --:--:-- --:--:-- --:--:-- 27863
+<!doctype html>
+<html lang="en">
+  <head>
+    <script type="module">import { injectIntoGlobalHook } from "/@react-refresh";
+injectIntoGlobalHook(window);
+window.$RefreshReg$ = () => {};
+window.$RefreshSig$ = () => (type) => type;</script>
+
+    <script type="module" src="/@vite/client"></script>
+
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>my-webapp</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
+VERIFY INTEGRATION
+
+> Run curl -f http://localhost:5173
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+<!doctype html>
+100   613  100   613    0     0   2239      0 --:--:-- --:--:-- --:--:--  2245
+<html lang="en">
+  <head>
+    <script type="module">import { injectIntoGlobalHook } from "/@react-refresh";
+injectIntoGlobalHook(window);
+window.$RefreshReg$ = () => {};
+window.$RefreshSig$ = () => (type) => type;</script>
+
+    <script type="module" src="/@vite/client"></script>
+
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>my-webapp</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100    12  100    12    0     0   5679      0 --:--:-- --:--:-- --:--:--  6000
+Hello World!
+
+✘ UPLOAD LOGS ON FAILURE
+
+POST RUN ACTIONS/SETUP-NODE@V4
+
+Post job cleanup.
+
+POST RUN ACTIONS/CHECKOUT@V4
+
+Post job cleanup.
+/usr/bin/git version
+git version 2.54.0
+Temporarily overriding HOME='/home/runner/work/_temp/6b0b7804-0344-4272-bf56-7782fbfcc764' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+/usr/bin/git config --global --add safe.directory /home/runner/work/Proton-blog/Proton-blog
+/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+http.https://github.com/.extraheader
+/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+
+STOP CONTAINERS
+
+Print service container logs: 7195bd340b044dc3b11b0d48b6eeee61_mysql80_2e4146
+/usr/bin/docker logs --details df2418010cbda9d71103e7cfabcadd99e0870a12d4b34d8ba3b0c94a1c2dc1ec
+ 2026-06-09 11:51:46+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.46-1.el9 started.
+Warning:  2026-06-09T11:51:47.278150Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+ 2026-06-09 11:51:47+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+ 2026-06-09 11:51:47+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.46-1.el9 started.
+ 2026-06-09 11:51:47+00:00 [Note] [Entrypoint]: Initializing database files
+ 2026-06-09 11:51:50+00:00 [Note] [Entrypoint]: Database files initialized
+ 2026-06-09 11:51:50+00:00 [Note] [Entrypoint]: Starting temporary server
+ 2026-06-09 11:51:50+00:00 [Note] [Entrypoint]: Temporary server started.
+ '/var/lib/mysql/mysql.sock' -> '/var/run/mysqld/mysqld.sock'
+ 2026-06-09 11:51:52+00:00 [Note] [Entrypoint]: Creating database proton
+ 
+ 2026-06-09 11:51:52+00:00 [Note] [Entrypoint]: Stopping temporary server
+ 2026-06-09 11:51:53+00:00 [Note] [Entrypoint]: Temporary server stopped
+ 
+ 2026-06-09 11:51:53+00:00 [Note] [Entrypoint]: MySQL init process done. Ready for start up.
+ 
+ 2026-06-09T11:51:47.278245Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 8.0.46) initializing of server in progress as process 79
+ 2026-06-09T11:51:47.283518Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+ 2026-06-09T11:51:47.415757Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+Warning:  2026-06-09T11:51:48.002995Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+Warning:  2026-06-09T11:51:50.415170Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+ 2026-06-09T11:51:50.416680Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.46) starting as process 121
+ 2026-06-09T11:51:50.427536Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+ 2026-06-09T11:51:50.502164Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+Warning:  2026-06-09T11:51:50.632674Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+ 2026-06-09T11:51:50.632715Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+Warning:  2026-06-09T11:51:50.634306Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+ 2026-06-09T11:51:50.647117Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: /var/run/mysqld/mysqlx.sock
+ 2026-06-09T11:51:50.647438Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.46'  socket: '/var/run/mysqld/mysqld.sock'  port: 0  MySQL Community Server - GPL.
+ Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
+ Warning: Unable to load '/usr/share/zoneinfo/leap-seconds.list' as time zone. Skipping it.
+ Warning: Unable to load '/usr/share/zoneinfo/leapseconds' as time zone. Skipping it.
+ Warning: Unable to load '/usr/share/zoneinfo/tzdata.zi' as time zone. Skipping it.
+ Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
+ Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
+ 2026-06-09T11:51:52.525164Z 11 [System] [MY-013172] [Server] Received SHUTDOWN from user root. Shutting down mysqld (Version: 8.0.46).
+ 2026-06-09T11:51:53.129690Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.46)  MySQL Community Server - GPL.
+Warning:  2026-06-09T11:51:53.715579Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+ 2026-06-09T11:51:53.716275Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.46) starting as process 1
+ 2026-06-09T11:51:53.721613Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+ 2026-06-09T11:51:53.796878Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+Warning:  2026-06-09T11:51:53.904119Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+ 2026-06-09T11:51:53.904166Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+Warning:  2026-06-09T11:51:53.906102Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+ 2026-06-09T11:51:53.922191Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+ 2026-06-09T11:51:53.922519Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.46'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+Stop and remove container: 7195bd340b044dc3b11b0d48b6eeee61_mysql80_2e4146
+/usr/bin/docker rm --force df2418010cbda9d71103e7cfabcadd99e0870a12d4b34d8ba3b0c94a1c2dc1ec
+df2418010cbda9d71103e7cfabcadd99e0870a12d4b34d8ba3b0c94a1c2dc1ec
+Remove container network: github_network_a50a3d88dd144bf9b6a17d867491363e
+/usr/bin/docker network rm github_network_a50a3d88dd144bf9b6a17d867491363e
+github_network_a50a3d88dd144bf9b6a17d867491363e
+
+COMPLETE JOB
+
+Cleaning up orphan processes
+Terminate orphan process: pid (2916) (npm run start:dev)
+Terminate orphan process: pid (2930) (sh)
+Terminate orphan process: pid (2931) (node)
+Terminate orphan process: pid (2964) (sh)
+Terminate orphan process: pid (2965) (node)
+Terminate orphan process: pid (2984) (npm run dev)
+Terminate orphan process: pid (2998) (sh)
+Terminate orphan process: pid (2999) (node)
+Warning: Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4, actions/setup-node@v4. Actions will be forced to run with Node.js 24 by default starting June 16th, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
