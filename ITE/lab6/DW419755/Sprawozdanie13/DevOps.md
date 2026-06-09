@@ -12,7 +12,7 @@ Usuwanie starych workflow:
 
 Własna akcja:
 
-![alt text](<image5.png>)
+![alt text](<image7.png>)
 
 Triggerowanie akcji:
 
