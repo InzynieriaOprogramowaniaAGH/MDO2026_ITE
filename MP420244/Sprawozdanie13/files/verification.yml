@@ -1,0 +1,90 @@
+name: Verify App Starts
+
+on:
+  push:
+    branches:
+      - ino_dev
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: proton
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+    env:
+      DATABASE_URL: mysql://root:root@127.0.0.1:3306/proton
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install backend deps
+        working-directory: backend
+        run: npm ci
+
+      - name: Install frontend deps
+        working-directory: frontend
+        run: npm ci
+
+      - name: Generate Prisma Client
+        working-directory: backend
+        run: npx prisma generate
+
+      - name: Run Prisma migrations
+        working-directory: backend
+        run: npx prisma migrate deploy
+
+      - name: Start backend
+        working-directory: backend
+        run: |
+          npm run start:dev > backend.log 2>&1 &
+          echo $! > backend.pid
+      - name: Wait for backend
+        run: |
+          for i in {1..30}; do
+            curl -f http://localhost:3000 && exit 0
+            sleep 2
+          done
+          echo "Backend failed to start"
+          cat backend/backend.log
+          exit 1
+      - name: Start frontend
+        working-directory: frontend
+        run: |
+          npm run dev > frontend.log 2>&1 &
+          echo $! > frontend.pid
+      - name: Wait for frontend
+        run: |
+          for i in {1..30}; do
+            curl -f http://localhost:5173 && exit 0
+            sleep 2
+          done
+          echo "Frontend failed to start"
+          cat frontend/frontend.log
+          exit 1
+      - name: Verify integration
+        run: |
+          curl -f http://localhost:5173
+          curl -f http://localhost:3000
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs
+          path: |
+            backend/backend.log
+            frontend/frontend.log
