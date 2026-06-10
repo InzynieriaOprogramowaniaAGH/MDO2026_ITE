@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-deployment-canary
+  labels:
+    app: node-app
+
+spec:
+  replicas: 4
+  
+  selector:
+    matchLabels:
+      app: node-app
+  
+  template:
+    metadata:
+      labels:
+        app: node-app
+        version: v2
+    spec:
+      containers:
+      - name: node-container
+        image: martix1008/k8s-app:v2
+        ports:
+        - containerPort: 8080
