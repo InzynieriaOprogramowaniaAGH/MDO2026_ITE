@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-recreate
+  labels:
+    app: express-recreate
+spec:
+  replicas: 4
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: express-recreate
+  template:
+    metadata:
+      labels:
+        app: express-recreate
+        version: v1.0
+    spec:
+      containers:
+      - name: express-app
+        image: szymonmakow/express-app:v2.0
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: express-recreate-svc
+spec:
+  selector:
+    app: express-recreate
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 3000
+  type: NodePort

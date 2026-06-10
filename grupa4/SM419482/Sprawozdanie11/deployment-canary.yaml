@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-stable
+  labels:
+    app: express-canary
+    track: stable
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: express-canary
+      track: stable
+  template:
+    metadata:
+      labels:
+        app: express-canary
+        track: stable
+        version: v1.0
+    spec:
+      containers:
+      - name: express-app
+        image: szymonmakow/express-app:v1.0
+        ports:
+        - containerPort: 3000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-canary
+  labels:
+    app: express-canary
+    track: canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: express-canary
+      track: canary
+  template:
+    metadata:
+      labels:
+        app: express-canary
+        track: canary
+        version: v2.0
+    spec:
+      containers:
+      - name: express-app
+        image: szymonmakow/express-app:v2.0
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: express-canary-svc
+spec:
+  selector:
+    app: express-canary
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 3000
+  type: NodePort
