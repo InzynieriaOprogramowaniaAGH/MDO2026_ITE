@@ -1,0 +1,3 @@
+FROM alpine:3.18
+ARG WERSJA
+CMD echo "Dziala wersja: $WERSJA"; sleep 3600

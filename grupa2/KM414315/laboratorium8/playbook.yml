@@ -1,0 +1,31 @@
+---
+- name: Konfiguracja maszyny docelowej
+  hosts: Endpoints
+  become: yes 
+  tasks:
+    - name: Skopiowanie pliku inwentaryzacji
+      ansible.builtin.copy:
+        src: hosts.ini
+        dest: /home/ansible/hosts.ini
+        owner: ansible
+        mode: '0644'
+
+    - name: Aktualizacja pakietów w systemie (apt update & upgrade)
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: dist
+
+    - name: Upewnienie sie, ze rng-tools jest zainstalowane (dostarcza usługe rngd)
+      ansible.builtin.apt:
+        name: rng-tools-debian
+        state: present
+
+    - name: Restart uslugi sshd
+      ansible.builtin.service:
+        name: ssh
+        state: restarted
+
+    - name: Restart uslugi rngd
+      ansible.builtin.service:
+        name: rng-tools-debian
+        state: restarted

@@ -1,0 +1,6 @@
+---
+- name: Wdrozenie aplikacji z uzyciem Roli Ansible
+  hosts: Endpoints
+  become: yes
+  roles:
+    - deploy_app
