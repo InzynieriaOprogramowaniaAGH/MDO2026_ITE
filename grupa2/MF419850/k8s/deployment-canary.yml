@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mf419850-web-canary
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: mf419850-web
+
+  template:
+    metadata:
+      labels:
+        app: mf419850-web
+
+    spec:
+      containers:
+      - name: mf419850-web
+        image: 10.0.2.3:5000/mf419850-web:v2
+        ports:
+        - containerPort: 80
