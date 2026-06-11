@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apka-canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apka-lab10
+      track: canary
+  template:
+    metadata:
+      labels:
+        app: apka-lab10
+        track: canary
+    spec:
+      containers:
+      - name: nginx
+        image: moja-apka:v2
+        imagePullPolicy: Never

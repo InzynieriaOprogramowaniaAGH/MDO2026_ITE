@@ -1,0 +1,37 @@
+---
+- name: Przeprowadz sanity check docelowej maszyny (sprawdz czy Docker istnieje)
+  ansible.builtin.command: docker --version
+  ignore_errors: yes
+  register: sanity_check
+
+- name: Na maszynie docelowej, Dockera zainstaluj Ansiblem!
+  ansible.builtin.apt:
+    name: docker.io
+    state: present
+    update_cache: yes
+  when: sanity_check.failed
+
+- name: Upewnienie sie, ze usluga Docker dziala i startuje z systemem
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Pobierz z Docker Hub aplikacje i uruchom kontener (uzywamy serwera nginx)
+  ansible.builtin.command: docker run -d --name apka-testowa -p 8080:80 nginx:latest
+
+- name: Czekaj kilka sekund na pelne uruchomienie aplikacji
+  ansible.builtin.pause:
+    seconds: 3
+
+- name: Zweryfikuj lacznosc z kontenerem
+  ansible.builtin.command: curl -s http://localhost:8080
+  register: curl_result
+
+- name: Pokaz wynik weryfikacji (sukces!)
+  ansible.builtin.debug:
+    msg: "Pomyslnie polaczono z aplikacja w kontenerze!"
+  when: curl_result.rc == 0
+
+- name: Zatrzymaj i usun kontener (Oczyszczanie srodowiska)
+  ansible.builtin.command: docker rm -f apka-testowa
