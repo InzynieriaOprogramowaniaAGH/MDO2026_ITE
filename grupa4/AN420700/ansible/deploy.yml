@@ -1,6 +1,0 @@
----
-- name: Pipeline wdrożeniowy artefaktu
-  hosts: Endpoints
-  become: yes
-  roles:
-    - deploy_artifact

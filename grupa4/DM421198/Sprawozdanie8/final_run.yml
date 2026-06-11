@@ -1,6 +1,0 @@
----
-- name: Uruchomienie wdrożenia za pomocą roli
-  hosts: Endpoints
-  become: yes
-  roles:
-    - hiredis_deploy

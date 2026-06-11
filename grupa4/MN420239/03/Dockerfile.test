@@ -1,5 +1,0 @@
-FROM vscode-build
-
-WORKDIR /app
-
-CMD ["npm", "test"]

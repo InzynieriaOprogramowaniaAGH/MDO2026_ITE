@@ -1,2 +1,0 @@
-FROM express-build
-CMD ["npm", "test"]

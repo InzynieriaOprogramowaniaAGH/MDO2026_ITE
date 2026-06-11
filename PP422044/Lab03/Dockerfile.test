@@ -1,7 +1,0 @@
-FROM lab-3-build:latest
-
-WORKDIR /lab3
-
-CMD ["npm", "test"]
-
-

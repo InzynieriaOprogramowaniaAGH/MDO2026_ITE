@@ -1,3 +1,0 @@
-
-FROM app-builder:latest
-CMD ["make", "test"]

@@ -1,6 +1,0 @@
----
-- name: Wdrozenie aplikacji z Jenkinsa na Endpoints
-  hosts: Endpoints
-  become: yes
-  roles:
-    - deploy_app

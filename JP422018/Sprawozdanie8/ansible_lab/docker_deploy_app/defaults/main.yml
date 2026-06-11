@@ -1,4 +1,0 @@
-container_name: "kanye-counter-app"
-image_name: "jpadlo/kanye-counter"
-host_port: 8080
-container_port: 3000

@@ -1,6 +1,0 @@
-services:
-  test:
-    build:
-      context: .
-      target: test
-    container_name: tn420202-compose-test
