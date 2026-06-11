@@ -1,0 +1,2 @@
+FROM app-lab10:v1
+CMD ["to-wywola-blad-systemu"]
