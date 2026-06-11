@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-canary
+  labels:
+    app: express-app
+    track: canary
+spec:
+  replicas: 1        # tylko 1 replika = 25% ruchu (1/4 łącznie)
+  selector:
+    matchLabels:
+      app: express-app
+      track: canary
+  template:
+    metadata:
+      labels:
+        app: express-app
+        track: canary
+        version: "5.2.2"
+    spec:
+      containers:
+      - name: express-app
+        image: express-prod:5.2.2
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3000
