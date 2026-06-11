@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gn-nginx-recreate
+  labels:
+    app: gn-nginx-recreate
+    strategy: recreate
+spec:
+  replicas: 4
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: gn-nginx-recreate
+  template:
+    metadata:
+      labels:
+        app: gn-nginx-recreate
+        version: v2
+    spec:
+      containers:
+      - name: gn-nginx
+        image: gn-nginx:2.0
+        ports:
+        - containerPort: 80
