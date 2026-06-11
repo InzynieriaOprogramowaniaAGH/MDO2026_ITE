@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mdo-deployment
+spec:
+  replicas: 4
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app: mdo-web
+  template:
+    metadata:
+      labels:
+        app: mdo-web
+    spec:
+      containers:
+      - name: web-container
+        image: twój_docker_hub_user/mdo-app:v1
+        ports:
+        - containerPort: 80
