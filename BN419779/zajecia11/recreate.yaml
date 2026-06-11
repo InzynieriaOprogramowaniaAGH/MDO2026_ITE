@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-recreate
+spec:
+  replicas: 4
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: web-recreate
+  template:
+    metadata:
+      labels:
+        app: web-recreate
+    spec:
+      containers:
+      - name: app
+        image: scornax/my-web-app:v1
