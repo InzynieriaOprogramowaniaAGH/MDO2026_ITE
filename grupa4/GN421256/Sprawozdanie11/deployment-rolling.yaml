@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gn-nginx-rolling
+  labels:
+    app: gn-nginx-rolling
+    strategy: rolling
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 2
+      maxSurge: 50%
+  selector:
+    matchLabels:
+      app: gn-nginx-rolling
+  template:
+    metadata:
+      labels:
+        app: gn-nginx-rolling
+        version: v2
+    spec:
+      containers:
+      - name: gn-nginx
+        image: gn-nginx:2.0
+        ports:
+        - containerPort: 80
