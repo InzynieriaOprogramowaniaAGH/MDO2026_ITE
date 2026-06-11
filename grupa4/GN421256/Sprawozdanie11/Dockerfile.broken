@@ -1,0 +1,4 @@
+FROM nginx:1.27-alpine
+COPY index-v2.html /usr/share/nginx/html/index.html
+# celowo psujemy uruchomienie kontenera - natychmiastowy blad
+CMD ["sh", "-c", "echo 'CELOWY BLAD WDROZENIA' >&2; exit 1"]

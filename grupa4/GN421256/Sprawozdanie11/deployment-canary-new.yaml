@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gn-nginx-canary
+  labels:
+    app: gn-nginx-canary
+    track: canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gn-nginx-canary
+      track: canary
+  template:
+    metadata:
+      labels:
+        app: gn-nginx-canary
+        track: canary
+        version: v2
+    spec:
+      containers:
+      - name: gn-nginx
+        image: gn-nginx:2.0
+        ports:
+        - containerPort: 80
