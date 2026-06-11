@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moja-apka
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 2
+      maxSurge: 25%
+  selector:
+    matchLabels:
+      app: moja-apka
+  template:
+    metadata:
+      labels:
+        app: moja-apka
+    spec:
+      containers:
+      - name: moja-apka
+        image: moja-apka:v1
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
