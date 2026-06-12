@@ -1,0 +1,22 @@
+# Wersja 1 (Działająca)
+echo "<h1>Wersja 1</h1>" > index.html
+cat << 'EOF' > Dockerfile
+FROM nginx:alpine
+COPY index.html /usr/share/nginx/html/index.html
+EOF
+docker build -t scornax/my-web-app:v1 .
+docker push scornax/my-web-app:v1
+
+# Wersja 2 (Nowa, działająca)
+echo "<h1>Wersja 2 - Aktualizacja!</h1>" > index.html
+docker build -t scornax/my-web-app:v2 .
+docker push scornax/my-web-app:v2
+
+# Wersja 3 (ZEPSUTA)
+echo "zly config" > nginx.conf
+cat << 'EOF' > Dockerfile
+FROM nginx:alpine
+COPY nginx.conf /etc/nginx/nginx.conf
+EOF
+docker build -t scornax/my-web-app:v3-broken .
+docker push scornax/my-web-app:v3-broken

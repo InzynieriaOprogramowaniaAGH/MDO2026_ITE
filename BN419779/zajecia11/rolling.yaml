@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-rolling
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 2
+  selector:
+    matchLabels:
+      app: web-rolling
+  template:
+    metadata:
+      labels:
+        app: web-rolling
+    spec:
+      containers:
+      - name: app
+        image: scornax/my-web-app:v1
