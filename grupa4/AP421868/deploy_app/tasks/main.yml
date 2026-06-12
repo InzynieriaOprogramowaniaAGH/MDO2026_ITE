@@ -1,0 +1,34 @@
+---
+- name: Sanity check - Sprawdzanie miejsca na dysku
+  ansible.builtin.shell: df -h / | tail -1 | awk '{print $4}'
+  register: disk_free
+  changed_when: false
+
+- name: Instalacja silnika Docker
+  become: yes
+  ansible.builtin.apt:
+    name: docker.io
+    state: present
+    update_cache: yes
+
+- name: Pobranie obrazu z Docker Hub
+  become: yes
+  ansible.builtin.command: "docker pull al5ksandra/list:latest"
+
+- name: Usuniecie starego kontenera
+  become: yes
+  ansible.builtin.command: "docker rm -f moja-aplikacja"
+  ignore_errors: yes
+
+- name: Uruchomienie nowej wersji kontenera
+  become: yes
+  ansible.builtin.command: "docker run -d --name moja-aplikacja al5ksandra/list:latest"
+
+- name: Sprawdzenie czy kontener dziala
+  become: yes
+  ansible.builtin.command: "docker ps -f name=moja-aplikacja"
+  register: docker_status
+
+- name: Wyswietlenie statusu
+  ansible.builtin.debug:
+    var: docker_status.stdout

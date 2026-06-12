@@ -1,0 +1,2 @@
+FROM app-build-stage
+CMD ["make", "test"]

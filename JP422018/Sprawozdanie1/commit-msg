@@ -1,0 +1,12 @@
+#!/bin/bash
+
+INICJALY="JP422018"
+MSG=$(cat "$1")
+
+if [[ ! "$MSG" == "$INICJALY"* ]]; then
+	echo "ERROR: Commit message musi zaczyna sie od '$INICJALY'"
+	exit 1
+fi
+
+exit 0
+

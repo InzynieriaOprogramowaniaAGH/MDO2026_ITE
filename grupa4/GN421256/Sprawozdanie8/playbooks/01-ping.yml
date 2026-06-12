@@ -1,0 +1,7 @@
+---
+- name: Ping wszystkich maszyn z playbooka
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Modul ping
+      ansible.builtin.ping:

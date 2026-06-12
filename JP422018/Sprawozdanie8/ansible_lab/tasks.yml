@@ -1,0 +1,38 @@
+---
+- name: Zadania zdalnego wywoływania procedur
+  hosts: all
+  become: yes  # Wymagane do aktualizacji pakietów i restartu usług
+  tasks:
+
+    # 1. Ping do wszystkich maszyn
+    - name: Ping do wszystkich maszyn
+      ansible.builtin.ping:
+
+    # 2. Skopiowanie pliku inwentaryzacji na Endpoints
+    - name: Kopiowanie pliku inwentaryzacji na Endpoints
+      ansible.builtin.copy:
+        src: ./hosts.ini
+        dest: /home/ansible/inventory_backup.ini
+        owner: ansible
+        group: ansible
+        mode: '0644'
+      when: "'Endpoints' in group_names"
+
+    # 3. Aktualizacja pakietów 
+    - name: Aktualizacja wszystkich pakietów (apt)
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: dist
+      when: ansible_os_family == "Debian"
+
+    # 4. Restart usług sshd oraz rngd
+    - name: Restart usługi sshd
+      ansible.builtin.systemd:
+        name: ssh
+        state: restarted
+
+    - name: Spróbuj zrestartować rngd
+      ansible.builtin.systemd:
+        name: rngd
+        state: restarted
+      failed_when: false # Nie przerywaj, jeśli usługa rngd nie jest zainstalowana

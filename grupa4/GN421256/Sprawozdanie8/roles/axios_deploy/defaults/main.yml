@@ -1,0 +1,4 @@
+---
+deploy_tar: "{{ playbook_dir }}/../artifacts/axios-deploy-image.tar"
+deploy_image: "axios-build-image:3"
+container_name: axios-deploy-smoke

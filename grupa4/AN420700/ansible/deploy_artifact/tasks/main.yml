@@ -1,0 +1,50 @@
+---
+- name: Sanity check
+  ansible.builtin.shell: df -h / | awk 'NR==2 {print $5}' | sed 's/%//'
+  register: disk_space
+  failed_when: false
+  changed_when: false
+
+- name: Informacja po Sanity Check
+  ansible.builtin.debug:
+    msg: "Dysk {{ disk_space.stdout }}%."
+
+- name: Zainstaluj Dockera i biblioteki Pythona
+  ansible.builtin.apt:
+    name:
+      - docker.io
+      - python3-docker
+    state: present
+    update_cache: yes
+
+- name: Upewnij sie, że usługa Docker działa
+  ansible.builtin.systemd:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Uruchom kontener z aplikacja
+  community.docker.docker_container:
+    name: moj_artefakt
+    image: nginx:latest
+    state: started
+    ports:
+      - "8080:80"
+
+- name: Zweryfikuj lacznosc z kontenerem po HTTP
+  ansible.builtin.uri:
+    url: http://localhost:8080
+    status_code: 200
+  register: app_status
+  until: app_status.status == 200
+  retries: 5
+  delay: 3
+
+- name: Sukces weryfikacji
+  ansible.builtin.debug:
+    msg: "Aplikacja działa poprawnie i odpowiada kodem 200!"
+
+- name: Zatrzymaj i usun kontener
+  community.docker.docker_container:
+    name: moj_artefakt
+    state: absent

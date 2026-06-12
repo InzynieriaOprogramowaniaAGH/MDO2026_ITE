@@ -1,0 +1,108 @@
+---
+# tasks file for roles/express_app
+- name: sprawdzenie czy Docker jest zainstalowany
+  ansible.builtin.command: docker --version
+  register: docker_check
+  ignore_errors: true
+
+- name: zainstalowanie zaleznosci Dockera
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+    state: present
+    update_cache: true
+  become: true
+  when: docker_check.failed
+
+- name: dodanie klucza GPG Docker
+  ansible.builtin.shell: |
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+  become: true
+  when: docker_check.failed
+
+- name: dodanie repozytorium Docker
+  ansible.builtin.shell: |
+    echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu noble stable" > /etc/apt/sources.list.d/docker.list
+  become: true
+  when: docker_check.failed
+
+- name: zainstalowanie Dockera
+  ansible.builtin.apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    state: present
+    update_cache: true
+  become: true
+  when: docker_check.failed
+
+- name: uruchomiwnie i wlaczenie Dockera
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: true
+  become: true
+
+- name: dodanie użytkownika ansible do grupy docker
+  ansible.builtin.user:
+    name: ansible
+    groups: docker
+    append: true
+  become: true
+
+# Deploy
+- name: pobranie obrazu z Docker Hub
+  community.docker.docker_image:
+    name: szymonmakow/express-app
+    source: pull
+  become: true
+
+- name: uruchomienie kontenera
+  community.docker.docker_container:
+    name: express-app
+    image: szymonmakow/express-app
+    state: started
+    ports:
+      - "3000:3000"
+  become: true
+  register: container_info
+
+# Weryfikacja
+- name: czekanie na start aplikacji
+  ansible.builtin.wait_for:
+    port: 3000
+    delay: 3
+    timeout: 30
+
+- name: sprawdzenie lacznosci z kontenerem
+  ansible.builtin.uri:
+    url: http://localhost:3000
+    return_content: true
+  register: app_response
+
+- name: wyswietlenie odpowiedzi aplikacji
+  ansible.builtin.debug:
+    var: app_response.content
+
+# Cleanup
+- name: zatrzymanie kontenera
+  community.docker.docker_container:
+    name: express-app
+    state: stopped
+  become: true
+
+- name: usuwanie kontenera
+  community.docker.docker_container:
+    name: express-app
+    state: absent
+  become: true
+
+- name: usuwanie obrazu
+  community.docker.docker_image:
+    name: szymonmakow/express-app
+    state: absent
+  become: true

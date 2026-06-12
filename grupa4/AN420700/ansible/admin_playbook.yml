@@ -1,0 +1,32 @@
+---
+- name: Playbook Administracyjny
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: 1. Wyslij zadanie ping
+      ansible.builtin.ping:
+
+    - name: 2. Skopiuj plik inwentaryzacji na maszyny Endpoints
+      ansible.builtin.copy:
+        src: ./inventory.ini
+        dest: /home/ansible/inventory_backup.ini
+        owner: ansible
+        group: ansible
+        mode: '0644'
+      when: "'Endpoints' in group_names"
+
+    - name: 3. Zaktualizuj pakiety systemowe (apt update & upgrade)
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: dist
+      when: "'Endpoints' in group_names"
+
+    - name: 4. Zrestartuj usługi sshd i rngd
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        state: restarted
+      loop:
+        - ssh
+        - rng-tools-debian
+      ignore_errors: yes

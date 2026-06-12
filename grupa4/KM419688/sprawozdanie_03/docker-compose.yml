@@ -1,0 +1,14 @@
+services:
+  builder:
+    build:
+      context: .
+      dockerfile: Dockerfile.build
+    image: express-build
+
+  tester:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    image: express-test
+    depends_on:
+      - builder

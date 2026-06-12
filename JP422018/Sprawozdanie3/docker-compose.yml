@@ -1,0 +1,14 @@
+services:
+  build:
+    build:
+      context: .
+      dockerfile: Dockerfile.build
+    image: axios-build
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    image: axios-test
+    depends_on:
+      - build

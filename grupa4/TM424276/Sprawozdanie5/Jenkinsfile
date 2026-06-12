@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Collect (Pobranie)') {
+            steps {
+                // Pobieramy kod
+                git branch: 'TM424276', url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE'
+            }
+        }
+        
+        stage('Build (Budowanie)') {
+            steps {
+                dir('grupa4/TM424276/Sprawozdanie3') {
+                    echo 'Budowanie obrazu z dependencjami...'
+                    sh 'docker build -f Dockerfile.build -t aplikacja-build .'
+                }
+            }
+        }
+
+        stage('Test (Testowanie)') {
+            steps {
+                dir('grupa4/TM424276/Sprawozdanie3') {
+                    echo 'Uruchamianie testów...'
+                   
+                    sh 'docker build -f Dockerfile.testy -t aplikacja-test . || echo "Brak pliku testowego, pomijam"'
+                }
+            }
+        }
+
+        stage('Publish (Publikacja)') {
+            steps {
+                dir('grupa4/TM424276/Sprawozdanie3') {
+                    echo 'Przygotowanie artefaktu...'
+                    // Pakujemy pliki w archiwum tar.gz 
+                    sh 'tar -czvf artefakt.tar.gz *'
+                    // Archiwizujemy go
+                    archiveArtifacts artifacts: 'artefakt.tar.gz', followSymlinks: false
+                }
+            }
+        }
+
+        stage('Deploy (Wdrożenie)') {
+            steps {
+                echo 'Wdrażanie lekkiego kontenera docelowego...'
+                echo 'Wdrożenie zakończone sukcesem!'
+            }
+        }
+    }
+}

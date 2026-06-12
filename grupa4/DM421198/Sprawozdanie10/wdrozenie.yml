@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moje-wdrozenie
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: aplikacja-z-pliku
+  template:
+    metadata:
+      labels:
+        app: aplikacja-z-pliku
+    spec:
+      containers:
+      - name: nginx-kontener
+        image: nginx:latest
+        ports:
+        - containerPort: 80

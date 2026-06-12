@@ -1,0 +1,6 @@
+# Dockerfile.test
+FROM axios-build-image:latest
+
+WORKDIR /app
+
+CMD ["npm", "test"]

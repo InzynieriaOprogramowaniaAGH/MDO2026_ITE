@@ -1,0 +1,7 @@
+---
+- name: Proba polaczenia gdy host jest niedostepny
+  hosts: Endpoints
+  gather_facts: false
+  tasks:
+    - name: Ping (powinien FAIL gdy SSH wylaczony lub port forwarding wylaczony)
+      ansible.builtin.ping:

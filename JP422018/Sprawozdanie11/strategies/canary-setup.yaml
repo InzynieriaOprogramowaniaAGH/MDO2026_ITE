@@ -1,0 +1,54 @@
+# WSPÓLNY SERWIS
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextjs-canary-service
+spec:
+  selector:
+    app: nextjs-canary 
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+---
+# WERSJA STABILNA
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextjs-stable
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nextjs-canary
+      version: stable
+  template:
+    metadata:
+      labels:
+        app: nextjs-canary
+        version: stable
+    spec:
+      containers:
+      - name: nextjs-container
+        image: jpadlo/kanye-counter:1.0.18  # STABLINA WERSJA
+---
+# WERSJA KANARKOWA
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextjs-canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nextjs-canary
+      version: canary
+  template:
+    metadata:
+      labels:
+        app: nextjs-canary
+        version: canary
+    spec:
+      containers:
+      - name: nextjs-container
+        image: jpadlo/kanye-counter:broken # TESTOWA WERSJA

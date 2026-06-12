@@ -1,0 +1,3 @@
+FROM axios-build
+
+CMD ["npm", "run", "test"]

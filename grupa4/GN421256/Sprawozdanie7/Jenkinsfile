@@ -1,0 +1,153 @@
+pipeline {
+  agent any
+
+  options {
+    timestamps()
+  }
+
+  environment {
+    REPO_URL = 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git'
+    BRANCH   = 'GN421256'
+
+    DOCKERFILE_BUILD  = 'grupa4/GN421256/Sprawozdanie7/Dockerfile.build'
+    DOCKERFILE_TEST   = 'grupa4/GN421256/Sprawozdanie7/Dockerfile.test'
+    DOCKERFILE_DEPLOY = 'grupa4/GN421256/Sprawozdanie7/Dockerfile.deploy'
+  }
+
+  stages {
+    stage('Checkout') {
+      steps {
+        checkout([$class: 'GitSCM',
+          branches: [[name: "*/${env.BRANCH}"]],
+          userRemoteConfigs: [[url: env.REPO_URL]]
+        ])
+      }
+    }
+
+    stage('Prepare metadata') {
+      steps {
+        sh '''
+          set -euxo pipefail
+          GIT_SHA="$(git rev-parse --short HEAD)"
+          VERSION="0.7.${BUILD_NUMBER}"
+
+          echo "$GIT_SHA" > .git_sha
+          echo "$VERSION" > .version
+
+          echo "branch=${BRANCH}" > build-info.txt
+          echo "git_sha=${GIT_SHA}" >> build-info.txt
+          echo "build_number=${BUILD_NUMBER}" >> build-info.txt
+          echo "version=${VERSION}" >> build-info.txt
+        '''
+      }
+    }
+
+    stage('Build (BLDR)') {
+      steps {
+        sh '''
+          set -euxo pipefail
+          docker version
+
+          GIT_SHA="$(cat .git_sha)"
+          VERSION="$(cat .version)"
+
+          BLDR_IMAGE="axios-bldr:${VERSION}-${GIT_SHA}"
+          echo "$BLDR_IMAGE" > .bldr_image
+
+          docker build --no-cache \
+            -f "$DOCKERFILE_BUILD" \
+            -t "$BLDR_IMAGE" \
+            .
+        '''
+      }
+    }
+
+    stage('Test') {
+      steps {
+        sh '''
+          set -euxo pipefail
+
+          BLDR_IMAGE="$(cat .bldr_image)"
+          GIT_SHA="$(cat .git_sha)"
+          VERSION="$(cat .version)"
+
+          TEST_IMAGE="axios-test:${VERSION}-${GIT_SHA}"
+          echo "$TEST_IMAGE" > .test_image
+
+          docker build --no-cache \
+            --build-arg BLDR_IMAGE="$BLDR_IMAGE" \
+            -f "$DOCKERFILE_TEST" \
+            -t "$TEST_IMAGE" \
+            .
+
+          docker run --rm "$TEST_IMAGE"
+        '''
+      }
+    }
+
+    stage('Deploy (prepare image)') {
+      steps {
+        sh '''
+          set -euxo pipefail
+
+          BLDR_IMAGE="$(cat .bldr_image)"
+          GIT_SHA="$(cat .git_sha)"
+          VERSION="$(cat .version)"
+
+          DEPLOY_IMAGE="axios-deploy:${VERSION}-${GIT_SHA}"
+          echo "$DEPLOY_IMAGE" > .deploy_image
+
+          docker build --no-cache \
+            --build-arg BLDR_IMAGE="$BLDR_IMAGE" \
+            -f "$DOCKERFILE_DEPLOY" \
+            -t "$DEPLOY_IMAGE" \
+            .
+        '''
+      }
+    }
+
+    stage('Deploy (start + smoke)') {
+      steps {
+        sh '''
+          set -euxo pipefail
+          DEPLOY_IMAGE="$(cat .deploy_image)"
+
+          docker run --rm --name axios-smoke "$DEPLOY_IMAGE"
+        '''
+      }
+    }
+
+    stage('Publish') {
+      steps {
+        sh '''
+          set -euxo pipefail
+
+          DEPLOY_IMAGE="$(cat .deploy_image)"
+          GIT_SHA="$(cat .git_sha)"
+          VERSION="$(cat .version)"
+
+          ARTIFACT_TAR="axios-deploy-image-${VERSION}-${GIT_SHA}.tar"
+          echo "$ARTIFACT_TAR" > .artifact_tar
+
+          docker save "$DEPLOY_IMAGE" -o "$ARTIFACT_TAR"
+          ls -lah "$ARTIFACT_TAR"
+        '''
+
+        archiveArtifacts artifacts: "build-info.txt,*.tar", fingerprint: true
+      }
+    }
+  }
+
+  post {
+    always {
+      sh '''
+        set +e
+        if [ -f .test_image ]; then docker image rm -f "$(cat .test_image)" 2>/dev/null || true; fi
+        if [ -f .deploy_image ]; then docker image rm -f "$(cat .deploy_image)" 2>/dev/null || true; fi
+        if [ -f .bldr_image ]; then docker image rm -f "$(cat .bldr_image)" 2>/dev/null || true; fi
+      '''
+      cleanWs()
+    }
+  }
+}
+

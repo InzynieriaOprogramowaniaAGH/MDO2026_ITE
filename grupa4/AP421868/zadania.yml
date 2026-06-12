@@ -1,0 +1,33 @@
+---
+- name: Realizacja zadan zdalnych
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: 1. Wyslij zadanie ping do wszystkich maszyn
+      ping:
+
+    - name: 2. Skopiuj plik inwentaryzacji na maszyny Endpoints
+      copy:
+        src: ./inventory.ini
+        dest: /home/ansible/inventory_backup.ini
+      when: inventory_hostname in groups['Endpoints']
+
+    - name: 3. Zaktualizuj pakiety w systemie
+      become: yes
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: dist
+      when:
+        - ansible_os_family == "Debian"
+        - inventory_hostname != 'ansible-master'
+
+    - name: 4. Zrestartuj uslugi sshd i rngd
+      service:
+        name: "{{ item }}"
+        state: restarted
+      loop:
+        - ssh
+        - rng-tools-debian
+      when: inventory_hostname != 'ansible-master'
+      ignore_errors: yes

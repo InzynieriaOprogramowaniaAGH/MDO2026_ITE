@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moja-aplikacja-canary
+spec:
+  replicas: 1 # Tylko 1 replika kanarkowa
+  selector:
+    matchLabels:
+      app: moja-aplikacja
+      track: canary # Dodatkowa etykieta
+  template:
+    metadata:
+      labels:
+        app: moja-aplikacja
+        track: canary
+    spec:
+      containers:
+      - name: app
+        image: al5ksandra/moja-aplikacja:v2
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80

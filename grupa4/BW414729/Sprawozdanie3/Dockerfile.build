@@ -1,0 +1,6 @@
+FROM python:3.10-slim
+RUN apt-get update && apt-get install -y git make zip pandoc
+RUN pip install pytest
+WORKDIR /app
+RUN git clone https://github.com/yt-dlp/yt-dlp.git .
+RUN make yt-dlp
