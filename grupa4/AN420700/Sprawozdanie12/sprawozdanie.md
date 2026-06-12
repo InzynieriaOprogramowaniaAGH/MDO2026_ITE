@@ -1,15 +1,7 @@
 # Sprawozdanie – Zajęcia 12  
 ## Wdrażanie na zarządzalne kontenery w chmurze Azure
 
-**Autor:** Artur Niemiec  
-**Temat:** Wdrożenie własnego kontenera z Docker Hub do Azure Container Instances  
-**Obraz Docker Hub:** `mrntex/k8s-lab-app:1.0`  
-**Nazwa kontenera w Azure:** `lab12-app`  
-**Resource group:** `rg-lab12-artur`  
-**Publiczny adres usługi:** `lab12-artur-48291.austriaeast.azurecontainer.io`  
-**Port:** `80`
-
----
+Artur Niemiec  
 
 ## 1. Przygotowanie i lokalna weryfikacja kontenera
 
