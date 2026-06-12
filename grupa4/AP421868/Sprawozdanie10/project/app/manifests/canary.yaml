@@ -3,11 +3,11 @@ kind: Deployment
 metadata:
   name: moja-aplikacja-canary
 spec:
-  replicas: 1 # Tylko 1 replika kanarkowa
+  replicas: 1 
   selector:
     matchLabels:
       app: moja-aplikacja
-      track: canary # Dodatkowa etykieta
+      track: canary 
   template:
     metadata:
       labels:
