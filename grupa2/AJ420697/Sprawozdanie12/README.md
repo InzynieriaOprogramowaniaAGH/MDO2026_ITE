@@ -34,16 +34,16 @@ az container create \
 
 Sprawdzenie działania kontenera `az container show --resource-group GrupaZasobow --name moj-kontener-httpd --output table`
 
-![](/img/1_running_container.png)
+![](./img/1_running_container.png)
 
 Sprwdzenie logów: `az container logs --resource-group GrupaZasobow --name moj-kontener-httpd`
 
 
-![](/img/2_logi.png)
+![](./img/2_logi.png)
 
 ### Srawdzenie działania (http)
 
-![](/img/3_http_dziala.png)
+![](./img/3_http_dziala.png)
 
 ### Sprzątanie
 
@@ -51,4 +51,4 @@ Ususnięcie grupy: `az group delete --name GrupaZasobow --yes --no-wait`
 
 Sprwdzenie czy żadne zsoby nie wiszą jeszcze w tle
 
-![](/img/4_sprawdzenie.png)
+![](./img/4_sprawdzenie.png)
