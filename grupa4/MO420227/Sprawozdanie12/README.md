@@ -58,3 +58,13 @@ Po zweryfikowaniu poprawności działania aplikacji, przystąpiono do procedury 
 3. Ostatecznie usunięto całą grupę zasobów `GrupaAGH_sweden` wraz ze wszystkimi powiązanymi elementami.
 
 ![Usuwanie grupy](7.png)
+
+## 5. Podsumowanie
+
+* **Efektywność technologii:** Usługa Azure demonstruje zalety podejścia bezserwerowego w kontekście konteneryzacji. Umożliwia ona natychmiastowe uruchomienie pojedynczych mikroaplikacji bez konieczności wdrażania, konfiguracji i opłacania pełnych maszyn wirtualnych czy klastrów (np. Kubernetes), co minimalizuje czas konfiguracji.
+
+* **Zależność od dostawców zasobów:** Architektura chmury Microsoft Azure ma charakter modularny. Pojawienie się błędu rejestracji przestrzeni nazw (`Microsoft.ContainerInstance`) dowodzi, że subskrypcje chmurowe nie mają domyślnie aktywnych wszystkich interfejsów API. Dostęp do określonych usług wymaga uprzedniej rejestracji odpowiedniego dostawcy zasobów w danej subskrypcji.
+
+* **Znaczenie deklaratywności i alokacji zasobów:** Środowiska chmurowe wymagają precyzyjnego definiowania wymagań sprzętowych aplikacji. Brak określenia parametrów takich jak system operacyjny (`--os-type`), limity pamięci RAM czy rdzeni procesora uniemożliwia systemowi zarządzania chmury optymalne zaplanowanie kontenera na fizycznej infrastrukturze dostawcy.
+
+* **Zarządzanie cyklem życia i aspekt ekonomiczny chmury:** Praca w chmurze publicznej opiera się na modelu rozliczeń za rzeczywiste zużycie. Agregacja zasobów w logiczne struktury Resource Groups ułatwia nie tylko zarządzanie uprawnieniami, ale pozwala na szybkie i bezresztkowe usunięcie całej powiązanej infrastruktury, co jest kluczowe z punktu widzenia kontroli budżetu projektu.
