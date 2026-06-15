@@ -1,4 +1,4 @@
-```markdown
+
 # Sprawozdanie zbiorcze – Automatyzacja, Konteneryzacja i Wdrożenia DevOps
 
 ## Autor
