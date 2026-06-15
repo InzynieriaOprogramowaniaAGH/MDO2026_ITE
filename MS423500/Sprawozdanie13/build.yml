@@ -1,0 +1,72 @@
+name: Build Project on ino_dev
+
+on:
+  push:
+    branches:
+      - ino_dev
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pobranie kodu repozytorium (Checkout)
+        uses: actions/checkout@v4
+
+      - name: Konfiguracja Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalacja zależności
+        run: npm ci
+
+      - name: Uruchomienie lintingu
+        run: npm run lint
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pobranie kodu repozytorium (Checkout)
+        uses: actions/checkout@v4
+
+      - name: Konfiguracja Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalacja zależności
+        run: npm ci
+
+      - name: Uruchomienie testów
+        run: npm run test
+
+      - name: Uruchomienie testów e2e
+        run: npm run test:e2e
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    steps:
+      - name: Pobranie kodu repozytorium (Checkout)
+        uses: actions/checkout@v4
+
+      - name: Konfiguracja Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalacja zależności
+        run: npm ci
+
+      - name: Uruchomienie buildu
+        run: npm run build
+
+      - name: Upload artefaktu buildu
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-dist
+          path: dist/
+          if-no-files-found: error
