@@ -1,0 +1,42 @@
+name: Build NGINX on ite_dev
+
+on:
+  push:
+    branches: [ ite_dev ]
+  pull_request:
+    branches: [ ite_dev ]
+
+jobs:
+  # GŁÓWNY JOB: Budowanie NGINX (domyślnie uruchamiany)
+  build-nginx:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ite_dev   # upewnia się, że pracujemy na właściwej gałęzi
+
+      - name: Update package list
+        run: sudo apt update
+
+      - name: Install compiler and make
+        run: sudo apt install -y gcc make
+
+      - name: Install dependency libraries (minimal)
+        run: sudo apt install -y libpcre3-dev zlib1g-dev
+
+      - name: Install OpenSSL
+        run: sudo apt install -y libssl-dev
+
+      - name: Configure build
+        run: auto/configure
+
+      - name: Compile NGINX
+        run: make
+
+      - name: Upload binary artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nginx-binary
+          path: objs/nginx
+          if-no-files-found: error
