@@ -1,0 +1,41 @@
+name: Node.js CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - ino_dev
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Klonowanie kodu
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      # 2. Instalacja odpowiedniej wersji środowiska Node.js
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm' 
+
+      # 3. Instalacja paczek
+      - name: Install dependencies
+        run: npm install
+
+      # 4. Sprawdzanie Linterem
+      - name: Run Code Quality Checks (Lint)
+        run: npm run lint
+
+      # 5. Budowanie projektu
+      - name: Build TypeScript application
+        run: npm run build
+      
+      # 6. Pakowanie i wysyłanie artefaktow
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-build
+          path: build/
