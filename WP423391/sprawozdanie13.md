@@ -14,18 +14,22 @@ Repozytorium zostało pobrane lokalnie, aby można było utworzyć gałąź i do
 Utworzenie gałęzi ino_dev i pierwszy push.
 Zgodnie z wymaganiami, workflow miał reagować na zmiany w gałęzi ino_dev.
 Dlatego utworzono ją i wypchnięto na GitHuba:
+
 ![2](sprawozdanie13/2.png)
 
 Utworzenie workflowa build.yml
 W katalogu .github/workflows/ utworzono plik build.yml
+
 ![3](sprawozdanie13/3.png)
 
 Dodanie testowego pliku, aby wywołać drugi run
 Aby potwierdzić, że workflow reaguje na zmiany, dodano testowy plik:
+
 ![4](sprawozdanie13/4.png)
 
 Widok w zakładce Actions z dwoma wykonaniami workflowa.
 W zakładce Actions pojawiły się:
 pierwszy run - po dodaniu workflowa,
 drugi run - po dodaniu testowego pliku.
+
 ![5](sprawozdanie13/5.png)
