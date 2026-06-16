@@ -45,11 +45,11 @@ Cel: Bezprzestojowe aktualizacje i obsługa błędów wdrożeniowych.
 Na Docker Hub  opublikowano wersje :v1, :v2 oraz uszkodzoną :broken - błędna komenda CMD.
 Po wdrożeniu obrazu :broken pody weszły w stan awarii CrashLoopBackOff. Wykonano natychmiastowe rollout, przywracając bezprzestojowo stabilną wersję oprogramowania.
 
-[v1](MF420115/Sprawozdanie03/11-Class/deployment-v1.yaml)
+![v1](MF420115/Sprawozdanie03/11-Class/ss/deploymentV1.png)
 
-[rolling](MF420115/Sprawozdanie03/11-Class/deployment-rolling.yaml)
+![Rolling](MF420115/Sprawozdanie03/11-Class/ss/deploymentRollingFile.png)
 
-[recreate](MF420115/Sprawozdanie03/11-Class/deployment-recreate.yaml)
+![Recreate](MF420115/Sprawozdanie03/11-Class/ss/deploymentRecreateFile.png)
 
 Napisano skrypt sprawdzający dostępność replik. Przeanalizowano strategie: 
 Recreate -  generuje downtime, brak konfliktów wersji
