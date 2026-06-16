@@ -8,10 +8,10 @@ Data: 16 Czerwca 2026 r.
 Wdrażanie na zarządzalne kontenery w chmurze (Azure)
 
 2. Przygotowanie kontenera aplikacyjnego
-Do realizacji wdrożenia chmurowego wykorzystano obraz kontenera aplikacyjnego użyty w poprzednich laboratoriach: lemonx26/mdo-app:v2, który jest publicznie dostępny w rejestrze Docker Hub. Pominięto proces tworzenia wewnętrznej usługi Azure Container Registry, decydując się na bezpośrednie pobieranie warstw obrazu z zewnętrznego repozytorium.
+Do realizacji wdrożenia chmurowego wykorzystano obraz kontenera aplikacyjnego użyty w poprzednich laboratoriach: lemonx26/mdo-app:v2, który jest publicznie dostępny w rejestrze Docker Hub. 
 
 3. Konfiguracja środowiska i alokacja zasobów 
-Prace zostały przeprowadzone za pomocą powłoki chmurowej Azure Cloud Shell w trybie Bash. Po zarejestrowaniu odpowiedniego dostawcy     (Microsoft.ContainerInstance), powołano grupę zasobów w dedykowanym przez polityke subskrypcji akademickiej regionie  polandcentral:
+Prace zostały przeprowadzone za pomocą powłoki chmurowej Azure Cloud Shell w trybie Bash. Po zarejestrowaniu odpowiedniego dostawcy  (Microsoft.ContainerInstance), powołano grupę zasobów w dedykowanym przez polityke subskrypcji akademickiej regionie  polandcentral:
 
 ![azureResourceGroup.](ss/azureResourceGroup.png)
 
