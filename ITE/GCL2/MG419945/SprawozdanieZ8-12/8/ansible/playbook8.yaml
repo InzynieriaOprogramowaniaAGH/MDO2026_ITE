@@ -1,0 +1,36 @@
+- name: Lab8
+  hosts: Endpoints
+  become_method: sudo
+  become_user: root
+  tasks:
+    - name: Ping
+      ansible.builtin.ping:
+
+    - name: Copy
+      ansible.builtin.copy:
+        src: /home/vboxuser/ansible/inventory.ini
+        dest: /home/ansible/inventory.ini
+        force: true
+
+    - name: Copy - again
+      ansible.builtin.copy:
+        src: /home/vboxuser/ansible/inventory.ini
+        dest: /home/ansible/inventory.ini
+
+    - name: Update packages
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: safe
+      become: yes
+
+    - name: Reload sshd
+      ansible.builtin.systemd_service:
+        name: sshd
+        state: restarted
+      become: yes
+
+    # - name: Reload rngd
+    #   ansible.builtin.systemd_service:
+    #     name: rngd
+    #     state: restarted
+    #   become: yes
