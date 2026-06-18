@@ -11,7 +11,10 @@ Dla zabezpieczenia stanu maszyny przed modyfikacjami wykonano migawkę systemu (
 Do zapewnienia bezhasłowego i bezpiecznego uwierzytelniania Ansible użyto asymetrycznej kryptografii klucza publicznego (RSA):
 1.	Wygenerowano parę kluczy za pomocą ssh-keygen.
 2.	Przesłano klucz publiczny na maszynę docelową za pomocą ssh-copy-id.
+ <img width="789" height="559" alt="image" src="https://github.com/user-attachments/assets/fcdbc14b-62fd-41fb-a49e-53352fa7df09" />
  
+<img width="933" height="347" alt="image" src="https://github.com/user-attachments/assets/1484373e-3c25-4164-baf9-e4e1674e145c" />
+
  
 
 ## Inwentaryzacja
@@ -20,7 +23,10 @@ Zarządzanie środowiskiem oparto na logicznych nazwach DNS. W pliku /etc/hosts 
 •	[Endpoints] – maszyny docelowe.
 Komunikację zweryfikowano komendą ad-hoc: ansible all -i hosts.ini -m ping.
  
- 
+ <img width="716" height="197" alt="image" src="https://github.com/user-attachments/assets/9157437f-7098-4877-bbb1-aa56402a3ccd" />
+
+<img width="894" height="341" alt="image" src="https://github.com/user-attachments/assets/a17d2f43-1f08-4158-a448-33adef3ff127" />
+
 
 
 ## Zdalne wywołanie procedur
@@ -28,12 +34,15 @@ Procedury konfiguracyjne zdefiniowano w pliku YAML, używając dyrektywy become:
 •	Zastosowane moduły (np. apt, service, copy) wprowadzają zmiany w systemie tylko wtedy, gdy stan rzeczywisty różni się od zadeklarowanego.
 •	Przy aktualizacji pakietów użyto parametru ignore_errors: yes w celu ominięcia problemu zablokowanego procesu menedżera dpkg.
 •	Podczas wykonywania zadań zaobserwowano poprawne zachowanie Ansible w przypadku odcięcia maszyny (błąd UNREACHABLE z powodu braku miejsca na dysku, skutkującego zatrzymaniem działania hosta docelowego).
- 
+
+ <img width="831" height="825" alt="image" src="https://github.com/user-attachments/assets/d53339fd-a0a9-4eda-ad4b-0dbcaebd6e7d" />
+
 
 ## Modularyzacja infrastruktury
 W celu uporządkowania kodu i możliwości jego ponownego wykorzystania, zadania przeniesiono do Roli. Strukturę wygenerowano poleceniem ansible-galaxy role init. Konfigurację umieszczono w tasks/main.yml, a niezbędne metadane (autor, licencja) zadeklarowano w meta/main.yml.
 
- 
+ <img width="905" height="777" alt="image" src="https://github.com/user-attachments/assets/d9da6385-231a-4a4c-bf56-eb149ac5ac33" />
+
 
 ## Wdrożenie artefaktu – Docker
 W ramach działania zbudowanej Roli zautomatyzowano proces wdrożenia aplikacji:
@@ -49,6 +58,7 @@ Wykorzystanie Ansible pozwoliło całkowicie wyeliminować ręczne błędy konfi
 Celem zadania było zapoznanie się z automatyzacją procesu instalacji systemu operacyjnego z wykorzystaniem plików odpowiedzi. 
 W systemach typu Fedora proces ten realizowany jest za pomocą narzędzia Kickstart i instalatora Anaconda. Zamiast ręcznego przeklikiwania opcji instalatora, wszystkie parametry – od układu partycji, przez konfigurację sieci, po wybór pakietów – definiuje się w jednym pliku tekstowym (.cfg). Pozwala to na masowe i powtarzalne wdrażanie identycznych środowisk.
 Z powodu braku wystarczającej przestrzeni na dysku nie udało się wykonać ćwiczenia – początek problemu był widoczny już we wcześniejszym ćwiczeniu. Warunki sprzętowe nie pozwoliły na zwolnienie ponad 20 GB pamięci do pełnego wykonania ćwiczenia.
+
 ## Projekt i modyfikacja pliku odpowiedzi
 Aby przygotować w pełni nienadzorowaną instalację, należy odpowiednio zmodyfikować plik wygenerowany przez instalator  anaconda-ks.cfg. Zgodnie z wytycznymi, zaplanowano następujące modyfikacje:
 1.	Konfiguracja dysku:
@@ -68,6 +78,9 @@ Zastosowanie dyrektywy reboot, dzięki której maszyna po zakończonym procesie 
 Zgodnie z wymaganiami, maszyna natychmiast po instalacji powinna uruchomić wybraną aplikację w kontenerze Docker. Wymaga to odpowiedniego przygotowania sekcji %post w pliku Kickstart.
 
 W sekcji %packages zaplanowano instalację pakietu Dockera. Następnie w sekcji %post zaprojektowano aktywację usługi Dockera oraz stworzenie dedykowanej usługi Systemd, która uruchomi kontener dopiero podczas pierwszego, właściwego startu systemu:
+
+<img width="644" height="470" alt="image" src="https://github.com/user-attachments/assets/9401bf0e-a057-4634-a3d9-d93c586c8f8d" />
+
  
 ## Oczekiwany przebieg instalacji
 Tak przygotowany plik należało udostępnić w sieci lokalnej (np. za pomocą prostego serwera python3 -m http.server). Następnie, po zbootowaniu nowej maszyny wirtualnej z obrazu ISO Fedory, należało w menu GRUB dopisać parametr jądra.
@@ -102,6 +115,9 @@ Kluczowe elementy zdefiniowane w pliku YAML:
 •	replicas: 4 – mechanizm skalowania. Informuje klaster, że w każdej chwili mają działać dokładnie 4 identyczne instancje aplikacji.
 •	image: nginx:latest – wskazanie obrazu kontenera.
 Wdrożenie uruchomiono poleceniem kubectl apply, a jego przebieg monitorowano za pomocą kubectl rollout status deployment/wdrozenie. System zaraportował płynne wdrożenie replik.
+
+<img width="833" height="555" alt="image" src="https://github.com/user-attachments/assets/552ebeaa-4cf5-4a4d-b8a9-0032b9171184" />
+
  
 ## Service
 Posiadanie 4 replik aplikacji rodzi problem dostępu: każdy z 4 Podów ma własny, zmienny adres IP wewnątrz klastra. Aby połączyć je w jeden spójny punkt dostępowy, Kubernetes wykorzystuje zasób typu Service.
@@ -110,11 +126,17 @@ Użyto polecenia minikube service wdrozenie. Wygenerowało to usługę łącząc
 Zrzut ekranu wskazuje, że Minikube powiązał wewnętrzny port 80 aplikacji z wyeksponowanym na zewnątrz klastra adresem URL: http://192.168.49.2:31653.
 
 Usługa Servic działa tutaj jako wewnętrzny router. Użytkownik wpisując w przeglądarkę adres 192.168.49.2:31653 trafia do Usługi, która następnie przekierowuje ten ruch do jednego z 4 działających Podów NGINX. Jeśli jeden z Podów ulegnie awarii, Deployment automatycznie powoła nowy, a Service zaktualizuje listę dostępnych adresów IP, zapewniając ciągłość działania aplikacji.
+
+<img width="834" height="191" alt="image" src="https://github.com/user-attachments/assets/5384360c-4403-494f-93e3-0def101a6afd" />
+
  
 Ostatni zrzut ekranu z Dashboardu stanowi doskonałe podsumowanie wykonanej pracy:
 •	Widoczny jest 1 Deployment .
 •	Widoczny jest 1 Replica Set (kontroler dbający o utrzymanie określonej liczby replik, utworzony automatycznie przez Deployment).
 •	Widoczne są 4 Pody działające równolegle (skalowanie poziome).
+
+<img width="909" height="459" alt="image" src="https://github.com/user-attachments/assets/c33c47ef-df5b-4b4d-942d-ac045c032385" />
+
  
 ## Podsumowanie
 Przejście od ręcznego uruchamiania pojedynczego kontenera do wdrożenia za pomocą pliku YAML z mechanizmem skalowania (4 repliki) i udostępnieniem usługi, obrazuje główną zaletę platformy Kubernetes. Narzędzie to nie tylko uruchamia kontenery, ale przede wszystkim nimi zarządza  – dba o ich odporność na awarie. Użycie środowiska Minikube z silnikiem Dockerowym pozwoliło na sprawną realizację zadań w izolowanym, bezpiecznym środowisku lokalnym.
@@ -143,15 +165,27 @@ Przetestowano cykl życia aplikacji pod kątem aktualizacji wersji oprogramowani
 
 ## Automatyzacja weryfikacji wdrożenia
 Zaprojektowano i zaimplementowano skrypt powłoki, np. w celu ewentualnego włączenia go w potoki CI/CD (np. Jenkins). Skrypt wykorzystywał polecenie kubectl rollout status z parametrem --timeout=60s. Mechanizm ten został skonstruowany na bazie instrukcji warunkowej (if...else), dzięki czemu systematycznie i programowo weryfikował, czy wdrożenie zostało przeprowadzone w wymaganym limicie czasu, kończąc się pomyślnym statusem wyjścia (exit 0) lub błędem (exit 1).
+
+<img width="938" height="228" alt="image" src="https://github.com/user-attachments/assets/59926fa9-5c5a-4fea-bc59-9e9213f580bc" />
+
  
 ## Zaawansowane strategie wdrożenia
 •	Recreate: Wymuszenie strategii (type: Recreate), w której w pierwszej kolejności niszczone są wszystkie istniejące pody, a nowe uruchamiane są dopiero na zwolnionych zasobach. Strategia ta generuje jednak krótkotrwałą przerwę w dostępności usługi.
+
+<img width="905" height="591" alt="image" src="https://github.com/user-attachments/assets/2af6d2ca-8e0d-48fd-860c-a55bd481228e" />
+
  
 •	Rolling Update: Skonfigurowano domyślną strategię aktualizacji stopniowej, ustalając zaawansowane reguły ograniczające: maxUnavailable: 2 (maksymalnie dwa pody niedostępne) i maxSurge: 25% (możliwość tymczasowego przekroczenia puli podów). Pozwoliło to na płynną aktualizację z zachowaniem dostępności.
+
+<img width="838" height="672" alt="image" src="https://github.com/user-attachments/assets/fa28066c-605a-4701-8159-66bab1d59a2d" />
+
  
 •	Canary Deployment: Wdrożono strategię kanarkową za pomocą dwóch osobnych manifestów wdrożeń. Stworzono stabilną część (wersja:v1 – 4 repliki) oraz zaledwie 1 replikę z nową wersją oprogramowania (wersja:v2). Obu wdrożeniom nadano tę samą etykietę (app: canary-app), co pozwoliło wspólnemu Serwisowi Kubernetes (Canary Service) na rozdzielanie ruchu sieciowego w proporcji zbliżonej do 80% do 20% – umożliwiając bezpieczne testy nowej aplikacji na ułamku realnego obciążenia.
  
- 
+ <img width="852" height="566" alt="image" src="https://github.com/user-attachments/assets/c8f10971-291b-4905-bb68-e150fcf08a95" />
+
+<img width="855" height="578" alt="image" src="https://github.com/user-attachments/assets/38121591-cf2f-4b73-afe2-71516e9e443d" />
+
 
 ## Podsumowanie
 Przeprowadzone ćwiczenia udowodniły, że Kubernetes to nie tylko środowisko uruchomieniowe, ale potężne narzędzie do  bezpiecznego wdrażania zmian. Przejście od prostej strategii Recreate do Rolling Update pokazało, jak można realizować aktualizacje bez przerw w dostępie do usługi. Z kolei zastosowanie strategii Canary udowodniło możliwość bezpiecznego testowania nowych funkcjonalności na wyizolowanym ułamku realnego ruchu sieciowego. 
@@ -175,15 +209,24 @@ Użyte parametry definiują infrastrukturę jako kod:
 •	--dns-name-label testjakarekk – deleguje do Azure utworzenie w pełni kwalifikowanej nazwy domeny. Dzięki temu kontener będzie dostępny pod przyjaznym adresem URL, a nie tylko pod zmiennym adresem IP.
 •	--ports 80 – otwiera port HTTP na zewnątrz, pozwalając na ruch sieciowy do kontenera.
 •	--cpu 1 --memory 1.5 – ściśle określa limity zasobów dla instancji (1 rdzeń procesora, 1.5 GB RAM).
+
+<img width="945" height="166" alt="image" src="https://github.com/user-attachments/assets/bfa68510-fc21-4a36-9f2b-190823c0c5b2" />
+
  
 ## Weryfikacja działania
 Ponieważ kontenery ACI są bezstanowe i mogą być restartowane, adres IP może ulec zmianie. Niezawodnym sposobem komunikacji jest użycie wygenerowanego wcześniej adresu FQDN. Azure CLI pozwala na filtrowanie odpowiedzi API (parametr --query), co ułatwia automatyczne wyciągnięcie samego adresu URL bez czytania całego pliku JSON.
 Za pomocą terminala pobrano przypisany adres FQDN, a następnie wprowadzono go do przeglądarki internetowej, co poskutkowało wyświetleniem interfejsu aplikacji webowej ("Aplikacja v1"). Z sukcesem pobrano również logi z wewnątrz kontenera (logi serwera Nginx potwierdzające m.in. start procesów workerów).
+
+<img width="945" height="221" alt="image" src="https://github.com/user-attachments/assets/a0317caf-5cd6-4e37-8062-e18622d1519a" />
+
  
 ## Czyszczenie środowiska
 Utrzymywanie włączonego kontenera generowałoby niepotrzebne zużycie limitu kredytów. Zamiast usuwać pojedynczy kontener, najlepszą praktyką jest usunięcie całej Grupy Zasobów. Gwarantuje to, że żaden powiązany komponent (np. karta sieciowa, wolumen) nie pozostanie w chmurze i nie będzie generował kosztów.
 
 Zlecono usunięcie grupy zasobów lab12. Parametr --no-wait pozwolił na natychmiastowe zwrócenie kontroli w terminalu, zlecając zadanie usunięcia jako proces w tle po stronie serwerów Microsoft Azure. 
+
+<img width="945" height="537" alt="image" src="https://github.com/user-attachments/assets/07e69010-86c6-43ec-ba37-aa84d8b6e11c" />
+
  
 ## Podsumowanie 
 
