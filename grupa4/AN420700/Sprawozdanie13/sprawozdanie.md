@@ -99,9 +99,6 @@ Najważniejsze elementy konfiguracji:
 ## 5. Wynik działania workflow
 
 Workflow zakończył się sukcesem. Na stronie GitHub Actions widoczny jest zielony status wykonania joba `build`.
-
-![Podsumowanie uruchomienia workflow](img/04_workflow_run_summary.png)
-
 W ramach joba zostały wykonane kolejne kroki: checkout repozytorium, konfiguracja CMake, build projektu, uruchomienie testu oraz upload artefaktów.
 
 ![Kroki joba build](img/05_job_steps.png)
