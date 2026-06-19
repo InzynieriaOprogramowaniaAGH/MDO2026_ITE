@@ -18,7 +18,7 @@ Kolejnym krokiem było utworzenie własnej akcji automatyzującej proces weryfik
 
 Kluczowym elementem skryptu jest jego wyzwalacz (*trigger*). Został on skonfigurowany w taki sposób, aby reagować wyłącznie na operację `push` (wypchnięcie kodu) zrealizowaną na gałęzi `ino_dev`. Dodatkowo skrypt symuluje sprawdzanie jakości kodu (*code quality*) oraz tworzy zarchiwizowaną paczkę z oprogramowaniem.
 
-![alt text](image-2.png)
+![alt text](image-5.png)
 
 ## 3. Weryfikacja działania i publikacja artefaktu
 Zatwierdzenie (commit) pliku konfiguracyjnego na gałęzi `ino_dev` natychmiast wyzwoliło zaprojektowaną Akcję. Środowisko GitHub Actions wykryło zmianę i automatycznie uruchomiło środowisko uruchomieniowe (Runner) bazujące na systemie Ubuntu.
