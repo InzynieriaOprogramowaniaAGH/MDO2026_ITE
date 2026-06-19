@@ -1,0 +1,25 @@
+name: ino-dev CI
+
+on:
+  push:
+    branches: [ "ino-dev" ]
+  workflow_dispatch:
+
+jobs:
+  build-test-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: make all, make run_test
+        run: |
+          make all
+          make run_test
+
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: main-binary
+          path: |
+            bin/main
