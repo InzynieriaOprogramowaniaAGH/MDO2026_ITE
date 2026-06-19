@@ -1,0 +1,97 @@
+name: Express.js CI – Build and Test
+
+on:
+  push:
+    branches:
+      - ino_dev
+  pull_request:
+    branches:
+      - ino_dev
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repozytorium
+        uses: actions/checkout@v4
+
+      - name: Konfiguracja Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalacja zależności (build)
+        run: npm install
+
+      - name: Weryfikacja wersji
+        run: node -e "console.log('Express version:', require('./package.json').version)"
+
+      - name: Zapisz node_modules jako artefakt
+        uses: actions/upload-artifact@v4
+        with:
+          name: node-modules
+          path: node_modules/
+          retention-days: 1
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout repozytorium
+        uses: actions/checkout@v4
+
+      - name: Konfiguracja Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalacja zależności
+        run: npm install
+
+      - name: Uruchom testy
+        run: npm test
+
+      - name: Zapisz wyniki testów
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            test-results.txt
+            coverage/
+          retention-days: 7
+
+  package:
+    name: Publish Artifact
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Checkout repozytorium
+        uses: actions/checkout@v4
+
+      - name: Konfiguracja Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalacja zależności produkcyjnych
+        run: npm install --omit=dev
+
+      - name: Pakowanie artefaktu npm
+        run: npm pack
+
+      - name: Upload artefaktu .tgz
+        uses: actions/upload-artifact@v4
+        with:
+          name: express-package
+          path: express-*.tgz
+          retention-days: 30
+        
