@@ -1,0 +1,57 @@
+name: "Build Next.js (kanye-countdown)"
+description: "Custom composite action: instaluje zależności pnpm, lintuje, testuje i buduje aplikację Next.js."
+
+inputs:
+  node-version:
+    description: "Wersja Node.js"
+    required: false
+    default: "22"
+  pnpm-version:
+    description: "Wersja pnpm"
+    required: false
+    default: "10"
+  run-lint:
+    description: "Czy uruchomić lint (true/false)"
+    required: false
+    default: "true"
+  run-tests:
+    description: "Czy uruchomić testy (true/false)"
+    required: false
+    default: "true"
+
+outputs:
+  artifact-path:
+    description: "Ścieżka do katalogu z artefaktem standalone"
+    value: ".next/standalone"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: ${{ inputs.pnpm-version }}
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: "pnpm"
+
+    - name: Install dependencies
+      shell: bash
+      run: pnpm install --frozen-lockfile
+
+    - name: Lint
+      if: ${{ inputs.run-lint == 'true' }}
+      shell: bash
+      run: pnpm run lint
+
+    - name: Test
+      if: ${{ inputs.run-tests == 'true' }}
+      shell: bash
+      run: pnpm run test
+
+    - name: Build
+      shell: bash
+      run: pnpm run build
