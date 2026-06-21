@@ -8,6 +8,9 @@ on:
     branches:
       - ino_dev
 
+permissions:
+  contents: read
+
 jobs:
   build-and-quality:
     runs-on: ubuntu-latest
