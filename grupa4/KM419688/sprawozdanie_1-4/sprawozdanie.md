@@ -343,7 +343,7 @@ npm install
 npm run test
 ```
 
-![Wynik testów](<img/Screenshot 2026-05-01 at 13.09.04>)
+![Wynik testów](<img/Screenshot 2026-05-01 at 13.09.04.png>)
 
 ### Tworzenie plików Dockerfile
 
