@@ -1,0 +1,42 @@
+name: Shift-Left CI Pipeline
+
+on:
+  push:
+    branches:
+      - ino_dev
+  pull_request:
+    branches:
+      - ino_dev
+
+jobs:
+  build-and-quality:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Source Code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js Environment
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Run Code Quality Check (Lint)
+      run: npm run lint --if-present
+
+    - name: Build Application Artefact
+      run: npm run build --if-present
+
+    - name: Upload Build Artifact
+      if: success()
+      uses: actions/upload-artifact@v4
+      with:
+        name: production-build-package
+        path: |
+          dist/
+          build/
+          index.html
+        retention-days: 5
