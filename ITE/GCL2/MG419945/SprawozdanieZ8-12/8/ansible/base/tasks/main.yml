@@ -1,0 +1,34 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for base
+
+    - name: Copy
+      ansible.builtin.copy:
+        src: /home/vboxuser/ansible/nvim-99
+        dest: /home/ansible/nvim-99
+        mode: '0755'  # Make sure it's executable
+
+    - name: Install docker
+      ansible.builtin.apt:
+        update_cache: yes
+        name: docker.io
+      become: yes
+
+    - name: Uruchomienie usługi Docker
+      ansible.builtin.systemd:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Run container
+      community.docker.docker_container:
+        name: please-neovim-work
+        image: ubuntu:latest
+        working_dir: "/artifact"
+        volumes:
+          - "/home/ansible:/artifact"
+        command: sh -c "chmod +x ./nvim-99 && ./nvim-99 -v"
+        state: started
+        detach: no
+        cleanup: yes
+      become: yes
