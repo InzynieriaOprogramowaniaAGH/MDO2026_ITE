@@ -1,0 +1,44 @@
+name: ite_dev build
+
+on:
+  push:
+    branches:
+      - ite_dev
+  pull_request:
+    branches:
+      - ite_dev
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ite_dev-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build na ite_dev
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build aplikacji Next.js
+        id: build
+        uses: ./.github/actions/build-nextjs
+        with:
+          node-version: "22"
+          pnpm-version: "10"
+
+      - name: Upload artefaktu (standalone)
+        uses: actions/upload-artifact@v4
+        with:
+          name: kanye-countdown-build-${{ github.sha }}
+          path: |
+            .next/standalone
+            .next/static
+            public
+          if-no-files-found: error
+          retention-days: 7
