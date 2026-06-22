@@ -8,6 +8,7 @@
 
 **Zakres:** zarządzanie wdrożeniami, aktualizacje obrazów, skalowanie aplikacji, rollback, strategie wdrożeń
 
+
 ---
 
 # Cel ćwiczenia
