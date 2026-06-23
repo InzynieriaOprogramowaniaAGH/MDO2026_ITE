@@ -19,7 +19,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    docker.build(B_IMG, "-f ${DIR}/Dockerfile.build --pull .")
+                    docker.build(B_IMG, "--no-cache -f ${DIR}/Dockerfile.build --pull .")
                 }
             }
         }
