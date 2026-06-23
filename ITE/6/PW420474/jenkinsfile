@@ -4,9 +4,10 @@ pipeline {
         skipDefaultCheckout()
     }
     environment {
-        DIR = "ITE/6/PW420474"
-        B_IMG = "abralang-build:${env.BUILD_ID}"
-        T_IMG = "abralang-test:${env.BUILD_ID}"
+        DIR   = "ITE/6/PW420474"
+        B_IMG = "abralang-build:${env.BUILD_NUMBER}"
+        T_IMG = "abralang-test:${env.BUILD_NUMBER}"
+        R_IMG = "abralang:1.0.${env.BUILD_NUMBER}"
     }
     stages {
         stage('Clone & Clean') {
@@ -26,7 +27,7 @@ pipeline {
             steps {
                 script {
                     docker.build(T_IMG, "--build-arg BASE_IMAGE=${B_IMG} -f ${DIR}/Dockerfile.test .")
-                    sh "docker run --rm ${T_IMG} > test.log"
+                    sh "docker run --rm ${T_IMG} 2>&1 | tee test.log; exit \${PIPESTATUS[0]}"
                 }
             }
             post { always { archiveArtifacts 'test.log' } }
@@ -34,17 +35,24 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sh "docker run -d --name abr-svc -p 8080:8080 ${B_IMG}"
-                    sh "sleep 5 && curl -sI http://docker:8080 | grep '200 OK'"
-                    sh "docker stop abr-svc && docker rm abr-svc"
+                    def output = sh(
+                        script: "docker run --rm ${B_IMG} --version",
+                        returnStdout: true
+                    ).trim()
+                    echo "Smoke test output: ${output}"
+                    if (!output) {
+                        error("Smoke test FAILED: brak outputu z binarki")
+                    }
+                    echo "Smoke test PASSED"
                 }
             }
         }
         stage('Publish') {
             steps {
                 script {
+                    sh "docker tag ${B_IMG} ${R_IMG}"
                     sh "docker tag ${B_IMG} abralang:latest"
-                    sh "docker save abralang:latest | gzip > abralang-${env.BUILD_ID}.tar.gz"
+                    sh "docker save ${R_IMG} | gzip > abralang-${env.BUILD_NUMBER}.tar.gz"
                     archiveArtifacts artifacts: "*.tar.gz", fingerprint: true
                 }
             }
