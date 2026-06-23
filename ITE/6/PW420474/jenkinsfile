@@ -26,7 +26,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    docker.build(T_IMG, "--build-arg BASE_IMAGE=${B_IMG} -f ${DIR}/Dockerfile.test .")
+                    docker.build(T_IMG, "--no-cache --build-arg BASE_IMAGE=${B_IMG} -f ${DIR}/Dockerfile.test .")
                     sh "docker run --rm ${T_IMG} 2>&1 | tee test.log; exit \${PIPESTATUS[0]}"
                 }
             }
