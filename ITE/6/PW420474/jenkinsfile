@@ -27,7 +27,12 @@ pipeline {
             steps {
                 script {
                     docker.build(T_IMG, "--no-cache --build-arg BASE_IMAGE=${B_IMG} -f ${DIR}/Dockerfile.test .")
-                    sh "docker run --rm ${T_IMG} 2>&1 | tee test.log; exit \${PIPESTATUS[0]}"
+                    // Naprawione: Wymuszamy Bash i używamy pipefail, żeby błąd z dockera nie był ucinany przez tee
+                    sh """
+                        #!/bin/bash
+                        set -o pipefail
+                        docker run --rm ${T_IMG} 2>&1 | tee test.log
+                    """
                 }
             }
             post { always { archiveArtifacts 'test.log' } }
