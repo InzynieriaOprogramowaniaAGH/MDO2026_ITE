@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git branch: 'IZ422043', url: 'https://github.com/InzynieriaOprogramowaniaAGH/MDO2026_ITE.git'
+            }
+        }
+
+        stage('Build image') {
+            steps {
+                sh '''
+                cd ITE/6/IZ422043/Sprawozdanie3
+                docker build -f Dockerfile.build -t jest-build .
+                '''
+            }
+        }
+
+        stage('Test image') {
+            steps {
+                sh '''
+                cd ITE/6/IZ422043/Sprawozdanie3
+                docker build -f Dockerfile.test -t jest-test .
+                docker run --rm jest-test
+                '''
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                sh '''
+                docker run -d --name jest-runtime -p 3000:3000 jest-build
+                '''
+            }
+        }
+
+        stage('Publish') {
+            steps {
+                archiveArtifacts artifacts: '**/*', fingerprint: true
+            }
+        }
+    }
+}

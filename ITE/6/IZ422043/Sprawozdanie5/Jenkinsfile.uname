@@ -1,0 +1,11 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('uname') {
+            steps {
+                sh 'uname -a'
+            }
+        }
+    }
+}

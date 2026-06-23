@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('time check') {
+            steps {
+                script {
+                    def hour = new Date().format('H') as int
+
+                    if (hour % 2 != 0) {
+                        error("Nieparzysta godzina → FAIL")
+                    }
+                }
+            }
+        }
+    }
+}
