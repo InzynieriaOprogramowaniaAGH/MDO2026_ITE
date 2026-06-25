@@ -1,0 +1,5 @@
+FROM node:latest
+WORKDIR /app
+RUN git clone --depth 1 https://github.com/expressjs/express.git .
+RUN npm install
+RUN apt-get update && apt-get install -y tar

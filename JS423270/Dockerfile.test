@@ -1,0 +1,2 @@
+FROM lab-build:latest
+RUN npm test
