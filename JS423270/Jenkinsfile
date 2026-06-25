@@ -1,0 +1,54 @@
+pipeline {
+    agent any
+    stages {
+        stage('Cleanup') {
+            steps {
+                sh 'docker rm -f express-deploy || true'
+                sh 'docker rmi -f lab-build lab-test express-deploy-img || true'
+            }
+        }
+        stage('Build') {
+            steps {
+                // Budowa obrazu i stworzenie artefaktu
+                sh 'docker build -t lab-build -f JS423270/Dockerfile.build .'
+                sh 'mkdir -p artifact'
+                sh 'docker run --rm -v $(pwd)/artifact:/artifact lab-build tar -czf /artifact/express-1.0.0.tar.gz -C /app .'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'docker build -t lab-test -f JS423270/Dockerfile.test .'
+                sh 'docker run --rm lab-test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                // Tworzenie dedykowanego obrazu dla Deploy
+                sh '''cat > JS423270/Dockerfile.deploy << EOF
+FROM lab-build:latest
+EXPOSE 3000
+CMD ["node", "/app/index.js"]
+EOF'''
+                sh 'docker build -t express-deploy-img -f JS423270/Dockerfile.deploy .'
+                sh 'docker rm -f express-deploy || true'
+                sh 'docker run -d --name express-deploy -p 3000:3000 express-deploy-img'
+                sh 'sleep 5'
+            }
+        }
+        stage('Smoke Test') {
+            steps {
+                sh 'docker exec express-deploy curl -s http://localhost:3000 || true'
+            }
+        }
+        stage('Publish') {
+            steps {
+                archiveArtifacts artifacts: 'artifact/express-1.0.0.tar.gz', onlyIfSuccessful: true
+            }
+        }
+    }
+    post {
+        always {
+            sh 'docker rm -f express-deploy || true'
+        }
+    }
+}
