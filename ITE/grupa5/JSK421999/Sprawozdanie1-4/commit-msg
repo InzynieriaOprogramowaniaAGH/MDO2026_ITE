@@ -1,0 +1,19 @@
+#!/bin/bash
+
+COMMIT_MSG=$1
+
+FIRST_LINE=$(head -n 1 "$COMMIT_MSG")
+
+MOJ_PREFIKS="JSK421999"
+
+if [[ "$FIRST_LINE" != "$MOJ_PREFIKS"* ]]; then
+    echo "==========================================================="
+    echo "BŁĄD: Brak inicjalu"
+    echo "Oczekiwano na początku: '$MOJ_PREFIKS'"
+    echo "Twoja wiadomość:        '$FIRST_LINE'"
+    echo "==========================================================="
+    
+    exit 1
+fi
+
+exit 0
